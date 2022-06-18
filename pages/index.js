@@ -7,6 +7,10 @@ import tutor from "../assets/images/teacher.png";
 import Button from "../components/UI/Button";
 import TestSection from "../components/UI/TestSection";
 import Card from "../components/UI/Card";
+import JobCard from "../components/UI/JobCard";
+import Job from "../components/UI/Job";
+import FeatureCard from "../components/UI/FeatureCard";
+import Footer from "../components/UI/Footer";
 
 export default function Home() {
   return (
@@ -18,8 +22,8 @@ export default function Home() {
       </Head>
       <div className="bg-white">
         <Navbar />
-        <main className="container mx-auto max-w-screen-xl">
-          <section className="bg-white mx-auto p-4 items-center lg:flex md:p-8">
+        <main className="container mx-auto max-w-screen-xl min-h-[93vh] ">
+          <section className="bg-white mx-auto p-4 items-center lg:flex md:px-8">
             <div className="space-y-4 flex-1 sm:text-center lg:text-left">
               <h1 className="text-white font-bold text-4xl xl:text-5xl">
                 <span className="text-emerald-500">
@@ -51,22 +55,28 @@ export default function Home() {
               />
             </div>
           </section>
+          <section className="bg-white mx-auto p-4 items-center lg:flex md:px-8">
+            <div className="grid w-full grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+              <FeatureCard />
+              <FeatureCard />
+              <FeatureCard />
+            </div>
+          </section>
         </main>
         <main className="bg-gray-100">
-          <section className="container mx-auto max-w-screen-xl py-6 dark:bg-gray-800 dark:text-gray-100">
+          <section className="container mx-auto max-w-screen-xl py-6 dark:bg-gray-800 dark:text-gray-800">
             <div className="container p-4 mx-auto space-y-16 sm:p-10">
               <div className="space-y-4">
                 <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                   Find the best tutor
                 </h3>
-                <p className="max-w-2xl dark:text-gray-400">
+                <p className="max-w-2xl dark:text-gray-800">
                   At a assumenda quas cum earum ut itaque commodi saepe rem
                   aspernatur quam natus quis nihil quod, hic explicabo doloribus
                   magnam neque, exercitationem eius sunt!
                 </p>
               </div>
-              <div className="grid w-full grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-                <Card />
+              <div className="grid w-full grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
                 <Card />
                 <Card />
                 <Card />
@@ -74,8 +84,135 @@ export default function Home() {
             </div>
           </section>
         </main>
+        <main className="bg-white">
+          <section className="container mx-auto max-w-screen-xl py-6 dark:bg-gray-800 dark:text-gray-800">
+            <div className="container p-4 mx-auto space-y-16 sm:p-10">
+              <div className="space-y-4">
+                <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+                  Best Tution Jobs
+                </h3>
+                <p className="max-w-2xl dark:text-gray-800">
+                  At a assumenda quas cum earum ut itaque commodi saepe rem
+                  aspernatur quam natus quis nihil quod, hic explicabo doloribus
+                  magnam neque, exercitationem eius sunt!
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+                <JobCard />
+                <JobCard />
+                <JobCard />
+              </div>
+            </div>
+          </section>
+        </main>
+        <main className=" bg-gray-100">
+          <section className="container mx-auto max-w-screen-xl py-6 dark:bg-gray-800 dark:text-gray-800">
+            <section className="text-gray-800 bg-gray-100 body-font relative">
+              <div className="container p-4 mx-auto space-y-16 sm:p-10">
+                <div className="space-y-4">
+                  <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+                    Post Your Requirements
+                  </h3>
+                  <p className="max-w-2xl dark:text-gray-800">
+                    At a assumenda quas cum earum ut itaque commodi saepe rem
+                    aspernatur quam natus quis nihil quod, hic explicabo
+                    doloribus magnam neque, exercitationem eius sunt!
+                  </p>
+                </div>
+                <div className="lg:w-1/2 md:w-2/3 mx-auto">
+                  <div className="flex flex-wrap -m-2">
+                    <div className="p-2 w-1/2">
+                      <div className="relative">
+                        <label
+                          htmlFor="name"
+                          className="leading-7 text-sm text-gray-800"
+                        >
+                          Name
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          className="w-full bg-white bg-opacity-40 rounded border border-gray-700 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary text-base outline-none text-gray-800 py-1 px-3 leading-8 transition-colors duration-100 ease-in-out"
+                        />
+                      </div>
+                    </div>
+                    <div className="p-2 w-1/2">
+                      <div className="relative">
+                        <label
+                          htmlFor="email"
+                          className="leading-7 text-sm text-gray-800"
+                        >
+                          I am a:
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          className="w-full bg-white bg-opacity-40 rounded border border-gray-700 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary text-base outline-none text-gray-800 py-1 px-3 leading-8 transition-colors duration-100 ease-in-out"
+                        />
+                      </div>
+                    </div>
+                    <div className="p-2 w-1/2">
+                      <div className="relative">
+                        <label
+                          htmlFor="name"
+                          className="leading-7 text-sm text-gray-800"
+                        >
+                          Phone Number
+                        </label>
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          className="w-full bg-white bg-opacity-40 rounded border border-gray-700 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary text-base outline-none text-gray-800 py-1 px-3 leading-8 transition-colors duration-100 ease-in-out"
+                        />
+                      </div>
+                    </div>
+                    <div className="p-2 w-1/2">
+                      <div className="relative">
+                        <label
+                          htmlFor="email"
+                          className="leading-7 text-sm text-gray-800"
+                        >
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          className="w-full bg-white bg-opacity-40 rounded border border-gray-700 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary text-base outline-none text-gray-800 py-1 px-3 leading-8 transition-colors duration-100 ease-in-out"
+                        />
+                      </div>
+                    </div>
+                    <div className="p-2 w-full">
+                      <div className="relative">
+                        <label
+                          htmlFor="message"
+                          className="leading-7 text-sm text-gray-800"
+                        >
+                          Requirement
+                        </label>
+                        <textarea
+                          id="message"
+                          name="message"
+                          className="w-full bg-white bg-opacity-40 rounded border border-gray-700 focus:border-primary focus:bg-white focus:ring-2 focus:ring-primary h-32 text-base outline-none text-gray-800 py-1 px-3 resize-none leading-6 transition-colors duration-100 ease-in-out"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div className="flex justify-center p-2 w-full ">
+                      <Button>Submit</Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </section>
+        </main>
 
-        <footer className=""></footer>
+        <footer className="">
+          <Footer />
+        </footer>
       </div>
     </>
   );

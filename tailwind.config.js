@@ -42,6 +42,15 @@ module.exports = {
         "light-gray": "#F7F7F7",
         "half-transparent": "rgba(0, 0, 0, 0.5)",
       },
+      ringColor: {
+        color: "rgba(0, 0, 0, 0.1)",
+        primary: "#10b981",
+        "primary-dark": "#047857",
+        "primary-light": "#34d399",
+        "secondary-dark-bg": "#33373E",
+        "light-gray": "#F7F7F7",
+        "half-transparent": "rgba(0, 0, 0, 0.5)",
+      },
       width: {
         400: "400px",
         760: "760px",
@@ -63,5 +72,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };
