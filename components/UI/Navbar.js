@@ -1,27 +1,27 @@
+import Link from "next/link";
 import React, { useState } from "react";
 import logo from "../../assets/images/lion-logo.png";
-import Image from "next/image";
 
 const Navbar = () => {
   const [state, setState] = useState(false);
 
   // Replace javascript:void(0) path with your path
   const navigation = [
-    { title: "Post a Job", path: "javascript:void(0)" },
-    { title: "Tution Jobs", path: "javascript:void(0)" },
-    { title: "Tutors", path: "javascript:void(0)" },
-    { title: "Institutions", path: "javascript:void(0)" },
+    { title: "Post a Job", path: "/" },
+    { title: "Tution Jobs", path: "/" },
+    { title: "Tutors", path: "/tutors" },
+    { title: "Institutions", path: "/" },
   ];
   return (
     <header className="bg-primary drop-shadow-md shadow shadow-slate-300">
       <nav className="container mx-auto max-w-screen-xl items-center p-5 sm:px-3 sm:py-2 md:flex md:space-x-6">
         <div className="flex justify-between">
           <a href="#">
-            <Image
+            <img
               className="object-contain"
               height={50}
               width={140}
-              src={logo}
+              src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
               alt="Float UI logo"
             />
           </a>
@@ -85,14 +85,14 @@ const Navbar = () => {
           </li>
           <div className="order-1 flex-1 justify-center items-center space-y-5 md:flex md:space-x-2 md:space-y-0">
             {navigation.map((item, idx) => (
-              <a
-                className="font-medium text-base text-white py-1 px-3 rounded border-2 border-primary 
+              <Link key={idx} href={item.path}>
+                <a
+                  className="font-medium text-base text-white py-1 px-3 rounded border-2 border-primary 
                         hover:border-white transition-all duration-300 active:bg-primary-dark"
-                key={idx}
-                href={item.path}
-              >
-                <li>{item.title}</li>
-              </a>
+                >
+                  <li>{item.title}</li>
+                </a>
+              </Link>
             ))}
           </div>
         </ul>

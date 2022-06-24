@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 import logo from "../../assets/images/lion-logo.png";
 
@@ -23,11 +22,11 @@ const Footer = () => {
               title="Company"
               className="inline-flex items-center"
             >
-              <Image
+              <img
                 className="object-contain"
                 height={50}
                 width={140}
-                src={logo}
+                src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
                 alt="Float UI logo"
               />
             </a>
