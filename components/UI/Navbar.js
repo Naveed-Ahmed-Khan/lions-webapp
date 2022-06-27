@@ -5,7 +5,6 @@ import logo from "../../assets/images/lion-logo.png";
 const Navbar = () => {
   const [state, setState] = useState(false);
 
-  // Replace javascript:void(0) path with your path
   const navigation = [
     { title: "Post a Job", path: "/" },
     { title: "Tution Jobs", path: "/" },
