@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Button from "../components/UI/Button";
-import Card from "../components/UI/Card";
-import JobCard from "../components/UI/JobCard";
-import FeatureCard from "../components/UI/FeatureCard";
+import Card from "../components/UI/cards/TutorCard";
+import JobCard from "../components/UI/cards/JobCard";
+import FeatureCard from "../components/UI/cards/FeatureCard";
 import Container from "../components/UI/Container";
 import Carousel from "../components/UI/Carousel";
 

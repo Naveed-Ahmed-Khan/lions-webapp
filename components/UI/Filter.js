@@ -1,23 +1,26 @@
 import React from "react";
+import Container from "./Container";
 
 export default function Filter() {
   return (
     <form
-      className="relative w-screen max-w-lg mx-auto overflow-auto bg-white divide-y divide-gray-100 rounded-lg shadow-2xl"
+      className="w-full max-w-2xl lg:w-screen lg:max-w-xs mx-auto overflow-auto bg-white divide-y divide-gray-100 rounded-md shadow-md lg:shadow-2xl"
       role="dialog"
       aria-label="Filters"
     >
       <header className="p-6 text-center">
-        <p className="text-lg font-medium">Search courses</p>
+        <p className="text-lg font-medium">Search Tutors</p>
       </header>
 
-      <main className="flow-root p-6 overflow-y-auto h-96">
+      <main className="flow-root p-6 overflow-y-auto h-96 lg:h-[60vh]">
         <div className="-my-8 divide-y divide-gray-100">
           <div className="py-8">
             <fieldset>
-              <legend className="text-xl font-medium">Study Type</legend>
+              <legend className="text-xl text-primary font-medium">
+                Study Type
+              </legend>
 
-              <ul className="grid grid-cols-1 gap-4 mt-6 sm:grid-cols-2">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-6">
                 <li>
                   <label className="flex items-center text-sm">
                     <input type="radio" className="w-6 h-6 border-gray-200" />
@@ -41,9 +44,11 @@ export default function Filter() {
 
           <div className="py-8">
             <fieldset>
-              <legend className="text-xl font-medium">Locations</legend>
+              <legend className="text-xl text-primary font-medium">
+                Locations
+              </legend>
 
-              <ul className="grid grid-cols-1 gap-4 mt-6 sm:grid-cols-2">
+              <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-6 ">
                 <li>
                   <label className="flex items-center text-sm">
                     <input
@@ -89,9 +94,11 @@ export default function Filter() {
 
           <div className="py-8">
             <fieldset>
-              <legend className="text-xl font-medium">Universities</legend>
+              <legend className="text-xl text-primary font-medium">
+                Universities
+              </legend>
 
-              <ul className="grid grid-cols-1 gap-4 mt-6 sm:grid-cols-2">
+              <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-6 ">
                 <li>
                   <label className="flex items-center text-sm">
                     <input
@@ -158,9 +165,11 @@ export default function Filter() {
 
           <div className="py-8">
             <fieldset>
-              <legend className="text-xl font-medium">Commitment</legend>
+              <legend className="text-xl text-primary font-medium">
+                Commitment
+              </legend>
 
-              <ul className="grid grid-cols-1 gap-4 mt-6 sm:grid-cols-2">
+              <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-6 ">
                 <li>
                   <label className="flex items-center text-sm">
                     <input
@@ -186,9 +195,11 @@ export default function Filter() {
 
           <div className="py-8">
             <fieldset>
-              <legend className="text-xl font-medium">University Rating</legend>
+              <legend className="text-xl text-primary font-medium">
+                Rating
+              </legend>
 
-              <ul className="grid grid-cols-1 gap-4 mt-6 sm:grid-cols-2">
+              <ul className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-6 ">
                 <li>
                   <label className="flex items-center text-sm">
                     <input
@@ -246,7 +257,7 @@ export default function Filter() {
           className="px-5 py-3 font-medium text-white bg-black rounded-lg"
           type="submit"
         >
-          Show 300+ results
+          Show results
         </button>
       </footer>
     </form>

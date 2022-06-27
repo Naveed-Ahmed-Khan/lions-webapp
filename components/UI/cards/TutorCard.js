@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
-import Button from "./Button";
 
-const Card = () => {
+const TutorCard = () => {
   return (
     <div className="flex flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
       <div>
@@ -10,7 +10,7 @@ const Card = () => {
           src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
           alt="avatar"
         />
-        <div className="flex items-center px-6 py-3 bg-primary-light">
+        <div className="flex items-center px-6 py-3 bg-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 text-white "
@@ -235,4 +235,4 @@ const Card = () => {
   );
 };
 
-export default Card;
+export default TutorCard;
