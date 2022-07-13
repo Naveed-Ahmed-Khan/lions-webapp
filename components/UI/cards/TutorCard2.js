@@ -1,13 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 
 import React from "react";
-import badge from "../../../public/images/lion-logo.png";
-import Button from "../Button";
 
 const TutorCard2 = () => {
   return (
     <div className="sm:flex mx-auto overflow-hidden bg-white rounded-lg shadow-2xl dark:bg-gray-800">
-      <div className="min-w-[240px]">
+      <div className="lg:w-64">
         <img
           className="object-cover w-full h-64"
           src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"

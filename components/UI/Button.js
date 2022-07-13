@@ -16,7 +16,7 @@ const Button = ({ children, alt, onClick, type, disabled }) => {
                      hover:scale-110 hover:drop-shadow-xl hover:shadow-lg hover:shadow-zinc-400 
                     `
             } `
-      } transition-all duration-200 py-[.75em] px-[1.75em] rounded-md`}
+      }w-full transition-all duration-200 py-[.75em] px-[1.75em] rounded-md`}
       // style={{ backgroundColor: currentColor }}
       disabled={disabled}
       onClick={onClick}

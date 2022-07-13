@@ -17,9 +17,11 @@ const FeatureCard = () => {
             haven&apos;t.
           </p>
           <div className=" items-center justify-center sm:space-x-6 sm:flex ">
-            <Button>
-              <p className="text-lg font-medium"> Find Tutors Now</p>
-            </Button>
+            <div className="w-fit">
+              <Button>
+                <p className="text-lg font-medium"> Find Tutors Now</p>
+              </Button>
+            </div>
             <a className="px-7 py-3 w-full bg-gray-700 text-white font-medium text-center rounded-md block sm:w-auto">
               Post a Job
             </a>

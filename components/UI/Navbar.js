@@ -6,10 +6,10 @@ const Navbar = () => {
   const [state, setState] = useState(false);
 
   const navigation = [
-    { title: "Post a Job", path: "/" },
-    { title: "Tution Jobs", path: "/" },
+    { title: "Home", path: "/" },
+    { title: "Post a Job", path: "/job-posting" },
+    { title: "Tution Jobs", path: "/jobs" },
     { title: "Tutors", path: "/tutors" },
-    { title: "Institutions", path: "/" },
   ];
   return (
     <header className="bg-primary drop-shadow-md shadow shadow-slate-300">
@@ -84,7 +84,7 @@ const Navbar = () => {
           </li>
           <div className="order-1 flex-1 justify-center items-center space-y-5 md:flex md:space-x-2 md:space-y-0">
             {navigation.map((item, idx) => (
-              <Link key={idx} href={item.path}>
+              <Link key={item.title} href={item.path}>
                 <a
                   className="font-medium text-base text-white py-1 px-3 rounded border-2 border-primary 
                         hover:border-white transition-all duration-300 active:bg-primary-dark"
