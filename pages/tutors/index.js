@@ -12,7 +12,7 @@ export default function Tutors() {
           <div className="px-4 sm:px-10 lg:px-0 lg:pr-6 mb-8">
             <Filter />
           </div>
-          <div className="p-4 mx-auto space-y-8 sm:p-10 lg:p-0">
+          <div className="p-4 h-[89vh] overflow-auto mx-auto space-y-8 sm:p-10 lg:p-0">
             <div className="space-y-4">
               <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Find the best tutor

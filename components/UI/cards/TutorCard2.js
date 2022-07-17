@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import React from "react";
+import Link from "next/dist/client/link";
 
 const TutorCard2 = () => {
   return (
@@ -294,9 +295,12 @@ const TutorCard2 = () => {
             </div>
 
             <div className="-mb-2 flex items-center justify-start space-x-4">
-              <button className="w-full sm:w-fit px-4 py-2 bg-primary rounded-md text-white font-medium">
-                View Profile
-              </button>
+              <Link href="/tutorprofile">
+                <a className="w-full sm:w-fit px-4 py-2 bg-primary rounded-md text-white font-medium">
+                  View Profile
+                </a>
+              </Link>
+
               <button className="w-full sm:w-fit px-4 py-2 border border-primary bg-white rounded-md text-primary font-medium">
                 Contact
               </button>

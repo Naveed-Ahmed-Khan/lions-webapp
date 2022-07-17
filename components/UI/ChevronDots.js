@@ -33,6 +33,13 @@ function ChevronDots({
   });
   return (
     <div className={finalClass} {...newProps}>
+      {/*  <li className="flex items-center p-2 bg-white">
+        <span className="w-6 h-6 text-[10px] font-bold leading-6 bg-gray-100 text-center rounded-full">
+          1
+        </span>
+
+        <span className="hidden sm:block sm:ml-2"> Details </span>
+      </li> */}
       <div className="h-0.5 w-full bg-gray-300 relative">
         <div
           className={progressClass}
