@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Container from "../components/UI/Container";
 import { useRouter } from "next/dist/client/router";

@@ -6,7 +6,7 @@ import SelectGroup from "../components/UI/SelectGroup";
 import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 // import CheckboxGroup from "../components/CheckboxGroup";
 // import TextareaGroup from "../components/UI/TextareaGroup";
 // import Button from "../components/UI/Button";
@@ -129,20 +129,15 @@ function Class({ setCurrentStep }) {
       </h1>
       <form className="mt-2 w-full">
         <FormGroup>
-          {/* <InputGroup label="Profile Picture" type="file" name="resume" /> */}
           <InputGroup label="About Student" type="text" name="firstName" />
-          <InputGroup label="Subjects" type="text" name="firstName" />
-          <InputGroup label="Achievements" type="text" name="firstName" />
-          {/* <InputGroup label="Achievements" type="file" name="resume" /> */}
-          {/* <InputGroup label="Intermediate" type="text" name="lastName" />
-      <InputGroup label="Matric" type="text" name="lastName" /> */}
         </FormGroup>
         <FormGroup>
-          {/* <InputGroup label="Resume" type="file" name="resume" /> */}
+          <InputGroup label="Subjects" type="text" name="firstName" />
         </FormGroup>
-        <FormGroup>{/* <Button text="Next" submit full /> */}</FormGroup>
+        <FormGroup>
+          <InputGroup label="Achievements" type="text" name="firstName" />
+        </FormGroup>
         <Button
-          type={"button"}
           onClick={() => {
             router.push("/");
           }}

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Collapse from "../components/UI/Collapse";
 import Container from "../components/UI/Container";

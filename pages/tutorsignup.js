@@ -6,7 +6,7 @@ import SelectGroup from "../components/UI/SelectGroup";
 import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
-import { useRouter } from "next/router";
+import { useRouter } from "next/dist/client/router";
 // import CheckboxGroup from "../components/CheckboxGroup";
 // import TextareaGroup from "../components/UI/TextareaGroup";
 // import Button from "../components/UI/Button";
@@ -17,11 +17,6 @@ export default function TutorSignup() {
   return (
     <Container color={"gray-50"}>
       <div className="bg-white w-full mx-auto">
-        {/* <div className="pt-12 px-16">
-          <h1 className="text-3xl text-gray-500 font-semibold">
-            Tutor Registration
-          </h1>
-        </div> */}
         <div className="py-12 px-8">
           <ChevronDots
             steps={["Personal", "Career", "Profile"]}
@@ -131,7 +126,7 @@ function Profile({ setCurrentStep }) {
           <InputGroup label="Certificates" type="file" name="resume" />
 
           {/* <InputGroup label="Intermediate" type="text" name="lastName" />
-      <InputGroup label="Matric" type="text" name="lastName" /> */}
+          <InputGroup label="Matric" type="text" name="lastName" /> */}
         </FormGroup>
         <FormGroup>
           {/* <InputGroup label="Resume" type="file" name="resume" /> */}
