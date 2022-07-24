@@ -6,13 +6,12 @@ import SelectGroup from "../components/UI/SelectGroup";
 import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 // import CheckboxGroup from "../components/CheckboxGroup";
 // import TextareaGroup from "../components/UI/TextareaGroup";
 // import Button from "../components/UI/Button";
 
 export default function StudentSignup() {
-  const router = useRouter();
   const [currentStep, setCurrentStep] = useState(1);
 
   return (
@@ -122,6 +121,7 @@ function Student({ setCurrentStep }) {
   );
 }
 function Class({ setCurrentStep }) {
+  const router = useRouter();
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
       <h1 className="text-4xl font-bold text-center text-primary">
@@ -142,9 +142,9 @@ function Class({ setCurrentStep }) {
         </FormGroup>
         <FormGroup>{/* <Button text="Next" submit full /> */}</FormGroup>
         <Button
+          type={"button"}
           onClick={() => {
-            router.push("/job-posting");
-            setCurrentStep(1);
+            router.push("/");
           }}
         >
           Submit

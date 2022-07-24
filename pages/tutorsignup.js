@@ -6,6 +6,7 @@ import SelectGroup from "../components/UI/SelectGroup";
 import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
+import { useRouter } from "next/router";
 // import CheckboxGroup from "../components/CheckboxGroup";
 // import TextareaGroup from "../components/UI/TextareaGroup";
 // import Button from "../components/UI/Button";
@@ -116,6 +117,7 @@ function Career({ setCurrentStep }) {
   );
 }
 function Profile({ setCurrentStep }) {
+  const router = useRouter();
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
       <h1 className="text-4xl font-bold text-center text-primary">
@@ -135,7 +137,13 @@ function Profile({ setCurrentStep }) {
           {/* <InputGroup label="Resume" type="file" name="resume" /> */}
         </FormGroup>
         <FormGroup>{/* <Button text="Next" submit full /> */}</FormGroup>
-        <Button onClick={() => setCurrentStep(1)}>Submit</Button>
+        <Button
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          Submit
+        </Button>
       </form>
     </div>
   );
