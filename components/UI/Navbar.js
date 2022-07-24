@@ -68,19 +68,19 @@ const Navbar = () => {
           }`}
         >
           <li className="order-2 pb-5 md:pb-0 space-x-4">
-            <a
-              href="javascript:void(0)"
-              className="p-1 font-medium mr-4 border-b-2 text-white  border-b-primary text-center transition-all duration-300
+            <Link href={"/login"}>
+              <a
+                className="p-1 font-medium mr-4 border-b-2 text-white  border-b-primary text-center transition-all duration-300
                  hover:border-b-2 hover:border-gray-600 hover:text-gray-600 focus:shadow-none block md:inline"
-            >
-              Sign In
-            </a>
-            <a
-              href="javascript:void(0)"
-              className="py-3 px-6 rounded-md shadow-md text-white text-center bg-gray-700 focus:shadow-none block md:inline"
-            >
-              Register
-            </a>
+              >
+                Sign In
+              </a>
+            </Link>
+            <Link href={"/register"}>
+              <a className="py-3 px-6 rounded-md shadow-md text-white text-center bg-gray-700 focus:shadow-none block md:inline">
+                Register
+              </a>
+            </Link>
           </li>
           <div className="order-1 flex-1 justify-center items-center space-y-5 md:flex md:space-x-2 md:space-y-0">
             {navigation.map((item, idx) => (

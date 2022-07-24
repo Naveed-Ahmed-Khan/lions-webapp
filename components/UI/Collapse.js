@@ -33,7 +33,7 @@ const Collapse = ({ label, children }) => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M5 15l7-7 7 7"
+                d="M19 9l-7 7-7-7"
               />
             </svg>
           </div>
