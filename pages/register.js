@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
 import Container from "../components/UI/Container";
+import Image from "next/image";
 
 export default function Register() {
   const router = useRouter();
@@ -13,19 +14,19 @@ export default function Register() {
             router.push("/studentsignup");
           }}
         >
-          {/* <Image
+          <Image
             layout="fill"
             className="absolute group-hover:scale-110 
             blur-none group-hover:blur-[2px] transition-all duration-300 ease-out"
             src="/images/student.jpg"
             alt=""
-          /> */}
-          <img
+          />
+          {/* <img
             className="absolute object-cover group-hover:scale-110 
             blur-none group-hover:blur-[2px] transition-all duration-300 ease-out"
             src="images/student.jpg"
             alt=""
-          />
+          /> */}
           <div
             className="p-6 bg-white bg-opacity-50 absolute w-full h-full flex items-center justify-center
             translate-y-full group-hover:translate-y-0 
@@ -42,19 +43,19 @@ export default function Register() {
             router.push("/tutorsignup");
           }}
         >
-          {/* <Image
+          <Image
             layout="fill"
             className="absolute group-hover:scale-110 
             blur-none group-hover:blur-[2px] transition-all duration-300 ease-out"
             src="/images/teacher.jpg"
             alt=""
-          /> */}
-          <img
+          />
+          {/* <img
             className="absolute object-cover group-hover:scale-110 
             blur-none group-hover:blur-[2px] transition-all duration-300 ease-out"
             src="images/teacher.jpg"
             alt=""
-          />
+          /> */}
           <div
             className="p-6 bg-white bg-opacity-50 absolute w-full h-full flex items-center justify-center
             -translate-y-full group-hover:translate-y-0 
