@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Button from "./Button";
 /* import profileImg from "../../Assets/Images/profile.png";

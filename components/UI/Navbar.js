@@ -1,6 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import React, { useState } from "react";
-import logo from "../../assets/images/lion-logo.png";
 
 const Navbar = () => {
   const [state, setState] = useState(false);
