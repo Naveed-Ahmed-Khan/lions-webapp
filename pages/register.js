@@ -16,7 +16,7 @@ export default function Register() {
         >
           <Image
             layout="fill"
-            className="absolute group-hover:scale-110 
+            className="absolute object-cover group-hover:scale-110 
             blur-none group-hover:blur-[2px] transition-all duration-300 ease-out"
             src="/images/student.jpg"
             alt=""
@@ -45,7 +45,7 @@ export default function Register() {
         >
           <Image
             layout="fill"
-            className="absolute group-hover:scale-110 
+            className="absolute object-cover group-hover:scale-110 
             blur-none group-hover:blur-[2px] transition-all duration-300 ease-out"
             src="/images/teacher.jpg"
             alt=""

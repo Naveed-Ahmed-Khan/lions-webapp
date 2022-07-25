@@ -2,6 +2,7 @@
 import React from "react";
 import Container from "../components/UI/Container";
 import { useRouter } from "next/dist/client/router";
+import Image from "next/image";
 
 export default function Login() {
   const router = useRouter();
@@ -135,11 +136,17 @@ export default function Login() {
         </div>
 
         <div className="relative w-full h-64 sm:h-96 lg:w-1/2 lg:h-full">
-          <img
+          <Image
+            layout="fill"
+            className="absolute object-cover"
+            src="/images/class.jpg"
+            alt=""
+          />
+          {/* <img
             className="absolute inset-0 object-cover"
             src="images/class.jpg"
             alt=""
-          />
+          /> */}
         </div>
       </section>
     </Container>
