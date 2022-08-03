@@ -4,18 +4,18 @@ import Button from "../Button";
 const JobCard2 = () => {
   return (
     <div className="relative flex flex-col max-w-[340] overflow-hidden rounded-md shadow-lg ">
-      <div className="flex flex-col p-8 space-y-4 bg-gray-200 ">
+      <div className="flex flex-col p-4 sm:p-8 space-y-4 bg-gray-200 ">
         {/* <h3 className="text-xl font-semibold text-gray-700">Tutor Required</h3> */}
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            <p className="text-gray-700 text-2xl font-semibold">
+        <div className="sm:flex justify-between items-center">
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-gray-700 text-lg sm:text-2xl font-semibold">
               Tutor Required
             </p>
-            <p className="bg-primary-light py-1 px-2 rounded-full text-sm text-center text-white font-medium">
+            <p className="bg-primary-light py-1 px-2 w-fit rounded-full text-sm text-center text-white font-medium">
               Featured
             </p>
           </div>
-          <p className="text-gray-700 text-sm">4 hours ago</p>
+          <p className="self-end text-gray-500 text-sm">4 hours ago</p>
         </div>
         <p className="mt-6 text-gray-700 h-24 overflow-y-auto">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
@@ -94,7 +94,7 @@ const JobCard2 = () => {
           </ul>
         </div> */}
       </div>
-      <div className=" p-6 flex flex-col bg-white ">
+      <div className="p-4 sm:p-8 flex flex-col bg-white ">
         <p className="flex text-gray-800">
           <span className="mb-4 text-2xl font-semibold">Requirements</span>
         </p>

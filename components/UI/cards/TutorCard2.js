@@ -33,7 +33,7 @@ const TutorCard2 = () => {
       </div>
 
       <div className="flex-auto p-4">
-        <div className="flex justify-between">
+        <div className="sm:flex justify-between">
           <h1 className="text-xl font-semibold text-gray-700 dark:text-white">
             Patterson johnson
           </h1>
@@ -76,13 +76,13 @@ const TutorCard2 = () => {
           </div>
         </div>
 
-        <p className="py-1 text-gray-700 dark:text-gray-400">
+        <p className="hidden sm:block py-1 text-gray-700 dark:text-gray-400">
           Full Stack maker and UI / UX Designer , Author of Building UI.Full
           Stack maker and UI / UX Designer , Author of Building UI.
         </p>
 
         {/* {Details} */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-2 sm:mt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           <h3 className="-mb-2 col-span-full text-primary font-medium underline underline-offset-2">
             Details:
           </h3>
@@ -199,16 +199,16 @@ const TutorCard2 = () => {
 
         {/* {Badges} */}
         <div className="mb-2">
-          <h3 className="my-2 col-span-full text-primary font-medium underline underline-offset-2">
+          <h3 className="hidden sm:block my-2 col-span-full text-primary font-medium underline underline-offset-2">
             Badges:
           </h3>
 
           <div className="sm:flex space-y-2 sm:space-y-0 items-center justify-between">
-            <div className="flex space-x-3">
+            <div className="hidden sm:flex space-x-3">
               <div
                 className="h-11 w-11 text-primary hover:text-white bg-white hover:bg-primary rounded-full 
-            border-1 border-primary hover:border-1 hover:border-primary grid place-content-center
-            transition-all duration-300 ease-out"
+                border border-primary hover:border hover:border-primary grid place-content-center
+                transition-all duration-300 ease-out"
               >
                 {/* <img
                 className="object-contain h-16 w-16"
@@ -226,7 +226,7 @@ const TutorCard2 = () => {
               </div>
               <div
                 className="h-11 w-11 text-primary hover:text-white bg-white hover:bg-primary rounded-full 
-            border-1 border-primary hover:border-1 hover:border-primary grid place-content-center
+            border border-primary hover:border hover:border-primary grid place-content-center
             transition-all duration-300 ease-out"
               >
                 {/* <img
@@ -251,7 +251,7 @@ const TutorCard2 = () => {
               </div>
               <div
                 className="h-11 w-11 text-primary hover:text-white bg-white hover:bg-primary rounded-full 
-            border-1 border-primary hover:border-1 hover:border-primary grid place-content-center
+            border border-primary hover:border hover:border-primary grid place-content-center
             transition-all duration-300 ease-out"
               >
                 {/* <img
@@ -270,7 +270,7 @@ const TutorCard2 = () => {
               </div>
               <div
                 className="h-11 w-11 text-primary hover:text-white bg-white hover:bg-primary rounded-full 
-            border-1 border-primary hover:border-1 hover:border-primary grid place-content-center
+            border border-primary hover:border hover:border-primary grid place-content-center
             transition-all duration-300 ease-out"
               >
                 {/* <img
@@ -294,12 +294,12 @@ const TutorCard2 = () => {
               </div>
             </div>
 
-            <div className="-mb-2 flex items-center justify-start space-x-4">
-              <Link href="/tutorprofile">
-                <a className="w-full sm:w-fit px-4 py-2 bg-primary rounded-md text-white font-medium">
-                  View Profile
-                </a>
-              </Link>
+            <div className="sm:flex items-center justify-start sm:space-x-4">
+              <div className="my-4 sm:my-0 text-center px-4 py-2 bg-primary rounded-md text-white font-medium">
+                <Link href="/tutorprofile" className="">
+                  <a>View Profile</a>
+                </Link>
+              </div>
 
               <button className="w-full sm:w-fit px-4 py-2 border border-primary bg-white rounded-md text-primary font-medium">
                 Contact

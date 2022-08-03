@@ -29,35 +29,35 @@ const Carousel = () => {
       <div className="flex items-center justify-start w-full h-full gap-6 py-4 mx-auto overflow-auto lg:gap-8">
         <div className="relative flex flex-shrink-0 w-full sm:w-auto">
           <img
-            className="object-cover object-center h-96 aspect-square dark:bg-gray-500"
+            className="object-cover object-center sm:h-96 aspect-square dark:bg-gray-500"
             src="https://source.unsplash.com/random/240x360/?1"
             alt="Image 1"
           />
         </div>
         <div className="relative flex flex-shrink-0 w-full sm:w-auto">
           <img
-            className="object-cover object-center h-96 aspect-square dark:bg-gray-500"
+            className="object-cover object-center sm:h-96 aspect-square dark:bg-gray-500"
             src="https://source.unsplash.com/random/240x360/?2"
             alt="Image 2"
           />
         </div>
         <div className="relative flex flex-shrink-0 w-full sm:w-auto">
           <img
-            className="object-cover object-center h-96 aspect-square dark:bg-gray-500"
+            className="object-cover object-center sm:h-96 aspect-square dark:bg-gray-500"
             src="https://source.unsplash.com/random/240x360/?3"
             alt="Image 3"
           />
         </div>
         <div className="relative flex flex-shrink-0 w-full sm:w-auto">
           <img
-            className="object-cover object-center h-96 aspect-square dark:bg-gray-500"
+            className="object-cover object-center sm:h-96 aspect-square dark:bg-gray-500"
             src="https://source.unsplash.com/random/240x360/?4"
             alt="Image 4"
           />
         </div>
         <div className="relative flex flex-shrink-0 w-full sm:w-auto">
           <img
-            className="object-cover object-center h-96 aspect-square dark:bg-gray-500"
+            className="object-cover object-center sm:h-96 aspect-square dark:bg-gray-500"
             src="https://source.unsplash.com/random/240x360/?5"
             alt="Image 5"
           />

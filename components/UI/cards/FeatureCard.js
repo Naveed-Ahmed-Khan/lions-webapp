@@ -4,7 +4,7 @@ import Button from "../Button";
 const FeatureCard = () => {
   return (
     <section className="text-gray-600 body-font">
-      <div className="container px-5 mx-auto">
+      <div className="container px-0 sm:px-5  mx-auto">
         <div className="flex flex-col gap-4 text-center w-full mb-6">
           <div className="space-y-4">
             <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
@@ -16,9 +16,9 @@ const FeatureCard = () => {
             gentrify, subway tile poke farm-to-table. Franzen you probably
             haven&apos;t.
           </p>
-          <div className=" items-center justify-center sm:space-x-6 sm:flex ">
-            <div className="w-fit">
-              <Button>
+          <div className=" items-center justify-center sm:space-x-6 sm:flex">
+            <div className="mb-4 sm:mb-0 w-full sm:w-fit">
+              <Button full>
                 <p className="text-lg font-medium"> Find Tutors Now</p>
               </Button>
             </div>
@@ -27,9 +27,9 @@ const FeatureCard = () => {
             </a>
           </div>
         </div>
-        <div className="flex flex-wrap -m-4 text-center">
-          <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
-            <div className="border-2 border-gray-200 px-2 py-4 rounded-lg">
+        <div className="flex sm:flex-wrap -m-4 text-center overflow-auto">
+          <div className="p-4 w-full sm:w-1/2 md:w-1/4">
+            <div className="w-36 sm:w-full border-2 border-gray-200 px-2 py-4 rounded-lg">
               <svg
                 fill="none"
                 stroke="currentColor"
@@ -48,8 +48,8 @@ const FeatureCard = () => {
               <p className="leading-relaxed">Downloads</p>
             </div>
           </div>
-          <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
-            <div className="border-2 border-gray-200 px-2 py-4 rounded-lg">
+          <div className="p-4 w-full sm:w-1/2 md:w-1/4">
+            <div className="w-36 sm:w-full border-2 border-gray-200 px-2 py-4 rounded-lg">
               <svg
                 fill="none"
                 stroke="currentColor"
@@ -69,8 +69,8 @@ const FeatureCard = () => {
               <p className="leading-relaxed">Users</p>
             </div>
           </div>
-          <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
-            <div className="border-2 border-gray-200 px-2 py-4 rounded-lg">
+          <div className="p-4 w-full sm:w-1/2 md:w-1/4">
+            <div className="w-36 sm:w-full border-2 border-gray-200 px-2 py-4 rounded-lg">
               <svg
                 fill="none"
                 stroke="currentColor"
@@ -89,8 +89,8 @@ const FeatureCard = () => {
               <p className="leading-relaxed">Files</p>
             </div>
           </div>
-          <div className="p-4 md:w-1/4 sm:w-1/2 w-full">
-            <div className="border-2 border-gray-200 px-2 py-4 rounded-lg">
+          <div className="p-4 w-full sm:w-1/2 md:w-1/4">
+            <div className="w-36 sm:w-full border-2 border-gray-200 px-2 py-4 rounded-lg">
               <svg
                 fill="none"
                 stroke="currentColor"

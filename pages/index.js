@@ -11,10 +11,10 @@ export default function Home() {
     <>
       <Container color={"white"}>
         <section className="grid grid-cols-12 grid-rows-2 gap-4 bg-white p-4 md:px-8">
-          <div className="col-span-9 row-span-1">
+          <div className="col-span-12 sm:col-span-9 row-span-2 sm:row-span-1">
             <Carousel />
           </div>
-          <div className="h-[790px] col-span-3 row-span-2 relative w-full flex flex-col gap-4 mt-4 overflow-y-scroll">
+          <div className="hidden h-[790px] sm:col-span-3 sm:row-span-2 relative w-full sm:flex flex-col gap-4 mt-4 overflow-y-scroll">
             <img
               className="h-48 aspect-video rounded-sm object-cover object-center dark:bg-gray-500"
               src="https://source.unsplash.com/random/241x361/?1"
@@ -46,7 +46,7 @@ export default function Home() {
               alt="Image 3"
             />
           </div>
-          <div className="col-span-9 row-span-1 space-y-4 sm:text-center lg:text-left">
+          <div className="col-span-12 sm:col-span-9 row-span-2 sm:row-span-1 space-y-4 sm:text-center lg:text-left">
             <FeatureCard />
           </div>
         </section>

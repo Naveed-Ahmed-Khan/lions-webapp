@@ -7,6 +7,8 @@ import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
 import { useRouter } from "next/dist/client/router";
+import Input from "../components/UI/Input";
+import { useFormik } from "formik";
 // import CheckboxGroup from "../components/CheckboxGroup";
 // import TextareaGroup from "../components/UI/TextareaGroup";
 // import Button from "../components/UI/Button";
@@ -17,13 +19,16 @@ export default function TutorSignup() {
   return (
     <Container color={"gray-50"}>
       <div className="bg-white w-full mx-auto">
-        <div className="py-12 px-8">
+        <h1 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
+          Tutor Signup
+        </h1>
+        <div className="hidden sm:block pt-6 pb-12 px-8">
           <ChevronDots
             steps={["Personal", "Career", "Profile"]}
             currentStep={currentStep}
           />
         </div>
-        <div>
+        <div className="px-5">
           {currentStep === 1 && <Personal setCurrentStep={setCurrentStep} />}
           {currentStep === 2 && <Career setCurrentStep={setCurrentStep} />}
           {currentStep === 3 && <Profile setCurrentStep={setCurrentStep} />}
@@ -34,58 +39,75 @@ export default function TutorSignup() {
 }
 
 function Personal({ setCurrentStep }) {
+  const formik = useFormik({
+    initialValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      address: "",
+    },
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+      setCurrentStep((prev) => ++prev);
+    },
+  });
+
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-4xl font-bold text-center text-primary">
+      <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
         Personal Details
       </h1>
-      <form className="mt-2 w-full">
+      <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup horizontal>
-          <InputGroup label="First Name" type="text" name="firstName" />
-          <InputGroup label="Last Name" type="text" name="lastName" />
-        </FormGroup>
-        <FormGroup>
-          <InputGroup label="Email" type="text" />
-        </FormGroup>
-        <FormGroup horizontal>
-          <SelectGroup
-            label="Country of Residence"
-            placeholder="Select..."
-            name="country"
-            options={[
-              {
-                value: "Australia",
-                label: "Australia",
-              },
-              {
-                value: "Japan",
-                label: "Japan",
-              },
-              {
-                value: "United States",
-                label: "United States",
-              },
-              {
-                value: "United Kingdom",
-                label: "United Kingdom",
-              },
-            ]}
+          <Input
+            label="First Name"
+            type="text"
+            name="firstName"
+            value={formik.values.firstName}
+            onChange={formik.handleChange}
           />
-          <InputGroup label="City" type="text" name="city" />
+          <Input
+            name="lastName"
+            label="Last Name"
+            type="text"
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
+          />
         </FormGroup>
+
         <FormGroup>
-          <InputGroup label="Address" type="text" />
+          <Input
+            label="Email"
+            type="text"
+            name={"email"}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+          />
         </FormGroup>
+
+        <FormGroup>
+          <Input
+            label="Address"
+            type="text"
+            name={"address"}
+            value={formik.values.address}
+            onChange={formik.handleChange}
+          />
+        </FormGroup>
+
         <FormGroup>
           {/* <InputGroup label="Short Bio" type="text" /> */}
           {/* <TextareaGroup label="Short Bio" name="bio" /> */}
           {/* <InputGroup label="Short Bio" type="file" name="resume" /> */}
         </FormGroup>
+
         <FormGroup>
           {/* <InputGroup label="Resume" type="file" name="resume" /> */}
         </FormGroup>
+
         <FormGroup>{/* <Button text="Next" submit full /> */}</FormGroup>
-        <Button onClick={() => setCurrentStep((prev) => ++prev)}>Next</Button>
+
+        <Button type={"submit"}>Next</Button>
       </form>
     </div>
   );
@@ -93,7 +115,7 @@ function Personal({ setCurrentStep }) {
 function Career({ setCurrentStep }) {
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-4xl font-bold text-center text-primary">
+      <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
         Career Details
       </h1>
       <form className="mt-2 w-full">
@@ -115,7 +137,7 @@ function Profile({ setCurrentStep }) {
   const router = useRouter();
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-4xl font-bold text-center text-primary">
+      <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
         Profile Details
       </h1>
       <form className="mt-2 w-full">

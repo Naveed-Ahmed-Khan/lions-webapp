@@ -9,10 +9,10 @@ export default function Tutors() {
     <>
       <Container color={"gray-100"}>
         <section className="lg:flex p-6">
-          <div className="px-4 sm:px-10 lg:px-0 lg:pr-6 mb-8">
+          <div className="px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
             <Filter />
           </div>
-          <div className="p-4 h-[89vh] overflow-auto mx-auto space-y-8 sm:p-10 lg:p-0">
+          <div className="w-full p-0 sm:p-10 lg:p-0 lg:h-[89vh] lg:overflow-auto mx-auto space-y-8 ">
             <div className="space-y-4">
               <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Find the best tutor
@@ -23,7 +23,7 @@ export default function Tutors() {
                 magnam neque, exercitationem eius sunt!
               </p>
             </div>
-            <div className="space-y-8">
+            <div className="w-full space-y-8">
               <TutorCard2 />
               <TutorCard2 />
               <TutorCard2 />

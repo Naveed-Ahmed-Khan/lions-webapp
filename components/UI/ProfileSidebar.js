@@ -10,8 +10,8 @@ import Button from "./Button"; */
 
 const ProfileSidebar = () => {
   return (
-    <div className=" -mt-28 flex flex-col gap-8">
-      <section className="flex flex-col items-center">
+    <div className=" flex flex-col gap-8">
+      {/* <section className="flex flex-col items-center">
         <img
           src="images/teacher-illustration.jpg"
           alt=""
@@ -20,7 +20,7 @@ const ProfileSidebar = () => {
         <h2 className="mt-4 text-black text-xl font-semibold">
           Chandri Anggara
         </h2>
-      </section>
+      </section> */}
       <section className="flex flex-col gap-8">
         <div className="flex flex-col gap-4">
           <p className="text-black opacity-80 text-base font-medium">

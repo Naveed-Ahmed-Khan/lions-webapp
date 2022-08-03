@@ -12,7 +12,7 @@ const Collapse = ({ label, children }) => {
   return (
     <div>
       <div
-        className="bg-primary px-8 py-3 rounded"
+        className="bg-primary px-4 md:px-8 py-2 md:py-3 rounded"
         onClick={() => {
           setIsOpen(!isOpen);
         }}
@@ -47,11 +47,13 @@ const Collapse = ({ label, children }) => {
         ref={parentRef}
       > */}
       <div
-        className={`h-0 overflow-hidden transition-all ease-out duration-300 bg-white  `}
+        className={`h-0 overflow-hidden transition-all ease-out duration-300 bg-neutral-100 md:bg-white  `}
         ref={parentRef}
         style={isOpen ? { height: collapseHeight + "px" } : { height: "0px" }}
       >
-        <p className="text-gray-700 mx-9 my-6">{children}</p>
+        <p className="text-sm sm:text-base tracking-wide sm:tracking-normal text-gray-700 text-justify md:text-gray-600 px-4 md:px-8 py-6">
+          {children}
+        </p>
       </div>
     </div>
   );

@@ -2,9 +2,9 @@
 import Link from "next/link";
 import React, { useState } from "react";
 
-const Navbar = () => {
-  const [state, setState] = useState(false);
-
+const Navbar = ({ open, setOpen, setShowBackdrop }) => {
+  // const [state, setState] = useState(false);
+  console.log(open);
   const navigation = [
     { title: "Home", path: "/" },
     { title: "Post a Job", path: "/job-posting" },
@@ -26,25 +26,13 @@ const Navbar = () => {
           </a>
 
           <button
-            className="text-gray-500 outline-none md:hidden"
-            onClick={() => setState(!state)}
+            className="text-white outline-none md:hidden"
+            onClick={() => {
+              setOpen(true);
+              setShowBackdrop(true);
+            }}
           >
-            {state ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            ) : (
+            {!open && (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -64,7 +52,7 @@ const Navbar = () => {
         </div>
         <ul
           className={`flex-1 items-center justify-between mt-12 md:flex md:mt-0 ${
-            state ? "" : "hidden"
+            open ? "" : "hidden"
           }`}
         >
           <li className="order-2 pb-5 md:pb-0 space-x-4">
