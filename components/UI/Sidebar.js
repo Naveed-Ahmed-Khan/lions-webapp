@@ -18,7 +18,7 @@ const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
         ${
           open === true
             ? "translate-x-0 opacity-100"
-            : "-translate-x-full opacity-20"
+            : "-translate-x-full opacity-0"
         } transition ease-out duration-300`}
       >
         <nav className="bg-primary-200 px-5 w-[260px] h-screen justify-between flex flex-col">
@@ -31,7 +31,12 @@ const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                 }}
               ></a>
             </Link>
-            <div>
+            <button
+              onClick={() => {
+                setShowBackdrop(false);
+                setOpen(false);
+              }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6 text-white"
@@ -46,7 +51,8 @@ const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
-            </div>
+            </button>
+
             <div className="mt-4">
               <p className="p-3 text-gray-200 text-xs tracking-widest border-b border-b-gray-300">
                 MENU

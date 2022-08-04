@@ -13,13 +13,11 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
   ];
   return (
     <header className="bg-primary drop-shadow-md shadow shadow-slate-300">
-      <nav className="container mx-auto max-w-screen-xl items-center p-5 sm:px-3 sm:py-2 md:flex md:space-x-6">
+      <nav className="container mx-auto max-w-screen-xl items-center px-3 py-3 sm:px-3 sm:py-2 md:flex md:space-x-6">
         <div className="flex justify-between">
           <a href="#">
             <img
-              className="object-contain"
-              height={50}
-              width={140}
+              className="object-contain h-10 sm:h-12"
               src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
               alt="Float UI logo"
             />
@@ -51,9 +49,7 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
           </button>
         </div>
         <ul
-          className={`flex-1 items-center justify-between mt-12 md:flex md:mt-0 ${
-            open ? "" : "hidden"
-          }`}
+          className={`flex-1 hidden md:flex items-center justify-between mt-12 md:mt-0`}
         >
           <li className="order-2 pb-5 md:pb-0 space-x-4">
             <Link href={"/login"}>
