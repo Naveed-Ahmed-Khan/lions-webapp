@@ -37,7 +37,7 @@ export default function TutorSignup() {
           {currentStep === 3 && (
             <Qualification setCurrentStep={setCurrentStep} />
           )}
-          {currentStep === 4 && <Profile />}
+          {currentStep === 4 && <Profile setCurrentStep={setCurrentStep} />}
         </div>
       </div>
     </Container>
@@ -52,7 +52,7 @@ function Account({ setCurrentStep }) {
       confirmPassword: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       setCurrentStep((prev) => ++prev);
     },
   });
@@ -96,7 +96,7 @@ function Account({ setCurrentStep }) {
           />
         </FormGroup>
 
-        <Button type={"submit"}>Next</Button>
+        <Button type="submit">Next</Button>
       </form>
     </div>
   );
@@ -114,7 +114,7 @@ function Personal({ setCurrentStep }) {
       address: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       setCurrentStep((prev) => ++prev);
     },
   });
@@ -191,7 +191,17 @@ function Personal({ setCurrentStep }) {
           />
         </FormGroup>
 
-        <Button type={"submit"}>Next</Button>
+        <div className="space-y-4 sm:space-y-0 sm:flex gap-8">
+          <Button
+            onClick={() => {
+              setCurrentStep((prev) => --prev);
+            }}
+            type="button"
+          >
+            Back
+          </Button>
+          <Button type="submit">Next</Button>
+        </div>
       </form>
     </div>
   );
@@ -208,7 +218,7 @@ function Qualification({ setCurrentStep }) {
       experience: 0,
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+      // alert(JSON.stringify(values, null, 2));
       setCurrentStep((prev) => ++prev);
     },
   });
@@ -275,21 +285,23 @@ function Qualification({ setCurrentStep }) {
             onChange={formik.handleChange}
           />
         </FormGroup>
-        <Button type="submit">Next</Button>
-        <Button
-          onClick={() => {
-            setCurrentStep((prev) => --prev);
-          }}
-          type="button"
-        >
-          Back
-        </Button>
+        <div className="space-y-4 sm:space-y-0 sm:flex gap-8">
+          <Button
+            onClick={() => {
+              setCurrentStep((prev) => --prev);
+            }}
+            type="button"
+          >
+            Back
+          </Button>
+          <Button type="submit">Next</Button>
+        </div>
       </form>
     </div>
   );
 }
 
-function Profile() {
+function Profile({ setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
       profilePic: "",
@@ -300,8 +312,8 @@ function Profile() {
       achievement: "",
     },
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-      // router.push("/");
+      // alert(JSON.stringify(values, null, 2));
+      router.push("/");
     },
   });
   const router = useRouter();
@@ -375,16 +387,17 @@ function Profile() {
             onChange={formik.handleChange}
           />
         </FormGroup>
-
-        <Button type="submit">Create and Account</Button>
-        <Button
-          onClick={() => {
-            setCurrentStep((prev) => --prev);
-          }}
-          type="button"
-        >
-          Back
-        </Button>
+        <div className="flex gap-8">
+          <Button
+            type="button"
+            onClick={() => {
+              setCurrentStep((prev) => --prev);
+            }}
+          >
+            Back
+          </Button>
+          <Button type="submit">Create and Account</Button>
+        </div>
       </form>
     </div>
   );
