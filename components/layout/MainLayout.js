@@ -8,7 +8,7 @@ const MainLayout = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [showBackdrop, setShowBackdrop] = useState(false);
 
-  console.log(open);
+  // console.log(open);
 
   return (
     <div className="bg-white">

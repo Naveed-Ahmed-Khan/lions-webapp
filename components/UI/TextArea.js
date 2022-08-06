@@ -1,7 +1,9 @@
 import React from "react";
-const Input = ({
+
+const TextArea = ({
   label,
   required,
+  rows,
   placeholder,
   name,
   value,
@@ -12,7 +14,6 @@ const Input = ({
 }) => {
   const secondary = "py-3 px-6 placeholder:text-sm sm:placeholder:text-base";
   const primary = "py-3 px-6 placeholder:text-xs";
-
   return (
     <div className="flex flex-col">
       {label && (
@@ -20,11 +21,12 @@ const Input = ({
           {label}
         </label>
       )}
-      <input
+      <textarea
         required={required}
         className={`w-full px-5 py-3 text-base placeholder-gray-300 transition duration-500 rounded-sm
         transform border border-transparent focus:border-transparent text-neutral-600 bg-white focus:outline-none 
         ring-1 ring-gray-300 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary`}
+        rows={rows}
         placeholder={placeholder}
         name={name}
         onChange={onChange}
@@ -36,4 +38,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default TextArea;
