@@ -2,19 +2,17 @@ import React, { useState } from "react";
 
 import ChevronDots from "../components/UI/ChevronDots";
 import FormGroup from "../components/UI/FormGroup";
-import SelectGroup from "../components/UI/SelectGroup";
-import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 import Input from "../components/UI/Input";
 import { useFormik } from "formik";
 import InputFile from "../components/UI/InputFile";
 import TextArea from "../components/UI/TextArea";
 import Select from "../components/UI/Select";
-// import CheckboxGroup from "../components/CheckboxGroup";
-// import TextareaGroup from "../components/UI/TextareaGroup";
-// import Button from "../components/UI/Button";
+import DatePicker from "../components/UI/DatePicker";
+import fileToBase64 from "../utility/filetobase64";
+import Image from "next/image";
 
 export default function TutorSignup() {
   const [currentStep, setCurrentStep] = useState(1);
@@ -58,7 +56,7 @@ function Account({ setCurrentStep }) {
   });
 
   return (
-    <div className=" pb-12 w-full max-w-screen-md mx-auto">
+    <div className="pb-12 w-full max-w-screen-md mx-auto">
       <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
         Account Details
       </h1>
@@ -78,7 +76,7 @@ function Account({ setCurrentStep }) {
           <Input
             required
             label="Password"
-            type="password"
+            type="text"
             name={"password"}
             value={formik.values.password}
             onChange={formik.handleChange}
@@ -110,7 +108,7 @@ function Personal({ setCurrentStep }) {
       mobile: "",
       watsapp: "",
       gender: "",
-      dateOfBirth: "",
+      dateOfBirth: new Date(),
       address: "",
     },
     onSubmit: (values) => {
@@ -144,22 +142,25 @@ function Personal({ setCurrentStep }) {
         </FormGroup>
 
         <FormGroup horizontal>
-          <Input
+          <DatePicker
             required
             label="Date of Birth"
-            type="text"
             name={"dateOfBirth"}
             value={formik.values.dateOfBirth}
             onChange={formik.handleChange}
           />
-          <Input
+
+          <Select
             required
             label="Gender"
-            type="text"
-            name={"gender"}
+            name="gender"
             value={formik.values.gender}
             onChange={formik.handleChange}
-          />
+          >
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </Select>
         </FormGroup>
 
         <FormGroup horizontal>
@@ -181,8 +182,9 @@ function Personal({ setCurrentStep }) {
           />
         </FormGroup>
         <FormGroup>
-          <Input
+          <TextArea
             required
+            rows={6}
             label="Address"
             type="text"
             name={"address"}
@@ -212,10 +214,10 @@ function Qualification({ setCurrentStep }) {
     initialValues: {
       qualification: "",
       Institute: "",
-      passingYear: new Date().getFullYear(),
+      passingYear: "",
       job: "",
       jobInstitute: "",
-      experience: 0,
+      experience: "",
     },
     onSubmit: (values) => {
       // alert(JSON.stringify(values, null, 2));
@@ -230,14 +232,21 @@ function Qualification({ setCurrentStep }) {
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup horizontal>
-          <Input
+          <Select
             required
             label="Highest Qualification"
             type="text"
             name={"qualification"}
             value={formik.values.qualification}
             onChange={formik.handleChange}
-          />
+          >
+            <option value="">Select</option>
+            <option value="Matric">Matric</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Bachelors">Bachelors</option>
+            <option value="Masters">Masters</option>
+            <option value="PhD">PhD</option>
+          </Select>
         </FormGroup>
         <FormGroup horizontal>
           <Input
@@ -251,7 +260,7 @@ function Qualification({ setCurrentStep }) {
           <Input
             required
             label="Passing Year"
-            type="text"
+            type="number"
             name={"passingYear"}
             value={formik.values.passingYear}
             onChange={formik.handleChange}
@@ -269,7 +278,7 @@ function Qualification({ setCurrentStep }) {
           <Input
             required
             label="Experience"
-            type="text"
+            type="number"
             name={"experience"}
             value={formik.values.experience}
             onChange={formik.handleChange}
@@ -302,9 +311,12 @@ function Qualification({ setCurrentStep }) {
 }
 
 function Profile({ setCurrentStep }) {
+  const [imagePath, setImagePath] = useState(null);
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
-      profilePic: "",
+      profilePic: imagePath,
       aboutMe: "",
       subjects: [],
       classes: [],
@@ -316,17 +328,38 @@ function Profile({ setCurrentStep }) {
       router.push("/");
     },
   });
-  const router = useRouter();
+
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
       <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
         Profile Details
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
-        <div className="sm:flex gap-6">
-          <div className=" mb-6 sm:mb-0 bg-gray-300 h-40 w-40" />
+        <div className="relative sm:flex gap-6">
+          {imagePath ? (
+            <Image
+              height={160}
+              width={160}
+              layout="fixed"
+              className="object-cover rounded"
+              src={imagePath}
+              alt=""
+            />
+          ) : (
+            <div className=" mb-6 sm:mb-0 bg-gray-300 h-40 w-40" />
+          )}
+
           <div className="flex-auto self-end">
-            <InputFile label="Profile Picture" />
+            <InputFile
+              label="Profile Picture"
+              name={"profilePic"}
+              value={imagePath}
+              onChange={async (e) => {
+                console.log(e.target.files[0].size / (1024 * 1024) + "MB");
+                const path = await fileToBase64(e.target.files[0]);
+                setImagePath(path);
+              }}
+            />
           </div>
         </div>
 
@@ -354,11 +387,11 @@ function Profile({ setCurrentStep }) {
           <Select
             required
             label="Mode of Teaching"
-            type="text"
-            name={"modeOfTeaching"}
+            name="modesOfTeaching"
             value={formik.values.modesOfTeaching}
             onChange={formik.handleChange}
           >
+            <option value={""}>Select</option>
             <option value={"One to One"}>One to One</option>
             <option value={"Online"}>Online</option>
           </Select>

@@ -2,148 +2,189 @@ import React, { useState } from "react";
 
 import ChevronDots from "../components/UI/ChevronDots";
 import FormGroup from "../components/UI/FormGroup";
-import SelectGroup from "../components/UI/SelectGroup";
-import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
-import { useRouter } from "next/dist/client/router";
-// import CheckboxGroup from "../components/CheckboxGroup";
-// import TextareaGroup from "../components/UI/TextareaGroup";
-// import Button from "../components/UI/Button";
+import Input from "../components/UI/Input";
+import { useFormik } from "formik";
+import InputFile from "../components/UI/InputFile";
+import TextArea from "../components/UI/TextArea";
+import fileToBase64 from "../utility/filetobase64";
+import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function StudentSignup() {
   const [currentStep, setCurrentStep] = useState(1);
-
+  console.log(currentStep);
   return (
     <Container color={"gray-50"}>
       <div className="bg-white w-full mx-auto">
-        <div className="py-12 px-8">
+        <h1 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
+          Student Signup
+        </h1>
+        <div className="hidden sm:block pt-6 pb-12 px-8">
           <ChevronDots
-            steps={["Personal", "Student", "Academics"]}
+            steps={["Account", "Student"]}
             currentStep={currentStep}
           />
         </div>
-        <div className="">
-          {currentStep === 1 && <Personal setCurrentStep={setCurrentStep} />}
-          {currentStep === 2 && <Student setCurrentStep={setCurrentStep} />}
-          {currentStep === 3 && <Class setCurrentStep={setCurrentStep} />}
+        <div className="px-5">
+          {currentStep === 1 && <Account setCurrentStep={setCurrentStep} />}
+          {currentStep === 2 && <Personal setCurrentStep={setCurrentStep} />}
         </div>
       </div>
     </Container>
   );
 }
 
-function Personal({ setCurrentStep }) {
+function Account({ setCurrentStep }) {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    onSubmit: (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      setCurrentStep((prev) => ++prev);
+    },
+  });
+
   return (
     <div className="pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-4xl font-bold text-center text-primary">
-        Personal Details
+      <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
+        Account Details
       </h1>
-      <form className="mt-2 w-full">
+      <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup>
-          <InputGroup
-            label="Parent/Gurdian Name"
+          <Input
+            required
+            label="Email"
+            type="email"
+            name={"email"}
+            value={formik.values.email}
+            onChange={formik.handleChange}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <Input
+            required
+            label="Password"
             type="text"
-            name="firstName"
+            name={"password"}
+            value={formik.values.password}
+            onChange={formik.handleChange}
           />
         </FormGroup>
+
         <FormGroup>
-          <InputGroup label="Email" type="text" />
-        </FormGroup>
-        <FormGroup horizontal>
-          <SelectGroup
-            label="Country of Residence"
-            placeholder="Select..."
-            name="country"
-            options={[
-              {
-                value: "Australia",
-                label: "Australia",
-              },
-              {
-                value: "Japan",
-                label: "Japan",
-              },
-              {
-                value: "United States",
-                label: "United States",
-              },
-              {
-                value: "United Kingdom",
-                label: "United Kingdom",
-              },
-            ]}
+          <Input
+            required
+            label="Confirm Password"
+            type="text"
+            name={"confirmPassword"}
+            value={formik.values.confirmPassword}
+            onChange={formik.handleChange}
           />
-          <InputGroup label="City" type="text" name="city" />
         </FormGroup>
-        <FormGroup>
-          <InputGroup label="Address" type="text" />
-        </FormGroup>
-        <FormGroup>
-          {/* <InputGroup label="Short Bio" type="text" /> */}
-          {/* <TextareaGroup label="Short Bio" name="bio" /> */}
-          {/* <InputGroup label="Short Bio" type="file" name="resume" /> */}
-        </FormGroup>
-        <FormGroup>
-          {/* <InputGroup label="Resume" type="file" name="resume" /> */}
-        </FormGroup>
-        <FormGroup>{/* <Button text="Next" submit full /> */}</FormGroup>
-        <Button onClick={() => setCurrentStep((prev) => ++prev)}>Next</Button>
+
+        <Button type="submit">Next</Button>
       </form>
     </div>
   );
 }
-function Student({ setCurrentStep }) {
+
+function Personal({ setCurrentStep }) {
+  const [imagePath, setImagePath] = useState(null);
+  const router = useRouter();
+
+  const formik = useFormik({
+    initialValues: {
+      fullName: "",
+      profilePic: "",
+      city: "",
+      address: "",
+    },
+    onSubmit: (values) => {
+      // alert(JSON.stringify(values, null, 2));
+      router.push("/");
+    },
+  });
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-4xl font-bold text-center text-primary">
+      <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
         Student Details
       </h1>
-      <form className="mt-2 w-full">
-        <FormGroup>
-          <InputGroup label="Student Name" type="text" name="lastName" />
-        </FormGroup>
+      <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
+        <div className="relative sm:flex gap-6">
+          {imagePath ? (
+            <Image
+              height={160}
+              width={160}
+              layout="fixed"
+              className="object-cover rounded"
+              src={imagePath}
+              alt=""
+            />
+          ) : (
+            <div className=" mb-6 sm:mb-0 bg-gray-300 h-40 w-40" />
+          )}
+
+          <div className="flex-auto self-end">
+            <InputFile
+              label="Profile Picture"
+              name={"profilePic"}
+              value={imagePath}
+              onChange={async (e) => {
+                console.log(e.target.files[0].size / (1024 * 1024) + "MB");
+                const path = await fileToBase64(e.target.files[0]);
+                setImagePath(path);
+              }}
+            />
+          </div>
+        </div>
         <FormGroup horizontal>
-          <InputGroup label="Age" type="text" name="lastName" />
-          <InputGroup label="Gender" type="text" name="lastName" />
+          <Input
+            required
+            label="Student Name"
+            type="text"
+            name={"fullName"}
+            value={formik.values.fullName}
+            onChange={formik.handleChange}
+          />
+          <Input
+            required
+            label="City"
+            type="text"
+            name={"city"}
+            value={formik.values.city}
+            onChange={formik.handleChange}
+          />
         </FormGroup>
-        <FormGroup horizontal>
-          <InputGroup label="Class" type="text" name="firstName" />
-          <InputGroup label="Institute" type="text" name="lastName" />
-        </FormGroup>
+
         <FormGroup>
-          {/* <InputGroup label="Resume" type="file" name="resume" /> */}
+          <TextArea
+            required
+            rows={6}
+            label="Address"
+            type="text"
+            name={"address"}
+            value={formik.values.address}
+            onChange={formik.handleChange}
+          />
         </FormGroup>
-        <FormGroup>{/* <Button text="Next" submit full /> */}</FormGroup>
-        <Button onClick={() => setCurrentStep((prev) => ++prev)}>Next</Button>
-      </form>
-    </div>
-  );
-}
-function Class({ setCurrentStep }) {
-  const router = useRouter();
-  return (
-    <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-4xl font-bold text-center text-primary">
-        Academics Details
-      </h1>
-      <form className="mt-2 w-full">
-        <FormGroup>
-          <InputGroup label="About Student" type="text" name="firstName" />
-        </FormGroup>
-        <FormGroup>
-          <InputGroup label="Subjects" type="text" name="firstName" />
-        </FormGroup>
-        <FormGroup>
-          <InputGroup label="Achievements" type="text" name="firstName" />
-        </FormGroup>
-        <Button
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          Submit
-        </Button>
+
+        <div className="flex gap-8">
+          <Button
+            type="button"
+            onClick={() => {
+              setCurrentStep((prev) => --prev);
+            }}
+          >
+            Back
+          </Button>
+          <Button type="submit">Create and Account</Button>
+        </div>
       </form>
     </div>
   );

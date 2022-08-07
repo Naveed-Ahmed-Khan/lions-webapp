@@ -1,6 +1,6 @@
 import React, { Children } from "react";
 
-export default function Select({
+export default function Multiselect({
   required,
   children,
   placeholder,
@@ -8,7 +8,6 @@ export default function Select({
   onChange,
   label,
   name,
-  multiple,
   alt,
 }) {
   const secondary =
@@ -32,7 +31,6 @@ export default function Select({
           name={name}
           value={value}
           onChange={onChange}
-          multiple={multiple}
         >
           {children}
         </select>
