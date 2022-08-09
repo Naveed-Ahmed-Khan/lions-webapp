@@ -11,7 +11,7 @@ import InputFile from "../components/UI/InputFile";
 import TextArea from "../components/UI/TextArea";
 import Select from "../components/UI/Select";
 import DatePicker from "../components/UI/DatePicker";
-import { fileToBase64 } from "../utility/filetobase64";
+import { fileToBase64 } from "../public/utility/filetobase64";
 import Image from "next/image";
 import { useAuth } from "../contexts/AuthContext";
 import * as yup from "yup";

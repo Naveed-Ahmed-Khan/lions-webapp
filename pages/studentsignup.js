@@ -8,7 +8,7 @@ import Input from "../components/UI/Input";
 import { useFormik } from "formik";
 import InputFile from "../components/UI/InputFile";
 import TextArea from "../components/UI/TextArea";
-import { fileToBase64 } from "../utility/fileToBase64";
+import { fileToBase64 } from "../public/utility/fileToBase64";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
