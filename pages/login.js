@@ -1,17 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import Container from "../components/UI/Container";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import Input from "../components/UI/Input";
+import { useFormik } from "formik";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Login() {
+  const { signin, currentUser } = useAuth();
+  console.log(currentUser);
   const router = useRouter();
-  const submitHandler = (e) => {
-    e.preventDefault();
-    router.push("/");
-    console.log("submit");
-  };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+
+    onSubmit: async (values) => {
+      console.log(values);
+      // await signin(values);
+    },
+  });
+
   return (
     <Container color={"gray-100"}>
       <section className="bg-white relative flex flex-wrap lg:h-screen lg:items-center">
@@ -29,28 +41,30 @@ export default function Login() {
                 </div>
                 <div className="mt-8">
                   <div className="mt-6">
-                    <form onSubmit={submitHandler} className="space-y-6">
+                    <form onSubmit={formik.handleSubmit} className="space-y-6">
                       <div>
                         <div className="mt-1">
                           <Input
-                            label="Email address"
-                            name="email"
+                            required
                             type="email"
-                            autoComplete="email"
-                            required=""
+                            label="Email address"
                             placeholder="Your Email"
+                            name="email"
+                            value={formik.values.email}
+                            onChange={formik.handleChange}
                           />
                         </div>
                       </div>
                       <div className="space-y-1">
                         <div className="mt-1">
                           <Input
-                            label="Password"
-                            name="password"
+                            required
                             type="password"
-                            autoComplete="current-password"
-                            required=""
+                            label="Password"
                             placeholder="Your Password"
+                            name="password"
+                            value={formik.values.password}
+                            onChange={formik.handleChange}
                           />
                         </div>
                       </div>
@@ -118,15 +132,10 @@ export default function Login() {
         <div className="hidden sm:block relative w-full h-64 sm:h-96 lg:w-1/2 lg:h-full">
           <Image
             layout="fill"
-            className="absolute object-cover"
+            className=" object-cover"
             src="/images/class.jpg"
             alt=""
           />
-          {/* <img
-            className="absolute inset-0 object-cover"
-            src="images/class.jpg"
-            alt=""
-          /> */}
         </div>
       </section>
     </Container>

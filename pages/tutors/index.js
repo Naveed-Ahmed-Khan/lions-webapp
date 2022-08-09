@@ -14,9 +14,9 @@ export default function Tutors() {
           </div>
           <div className="w-full p-0 sm:p-10 lg:p-0 lg:h-[89vh] lg:overflow-auto mx-auto space-y-8 ">
             <div className="space-y-4">
-              <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+              <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Find the best tutor
-              </h3>
+              </h1>
               <p className="max-w-2xl">
                 At a assumenda quas cum earum ut itaque commodi saepe rem
                 aspernatur quam natus quis nihil quod, hic explicabo doloribus

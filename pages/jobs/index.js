@@ -13,9 +13,9 @@ export default function index() {
           </div>
           <div className="w-full lg:h-[89vh] lg:overflow-auto p-0 mx-auto space-y-8 sm:p-10 lg:p-0">
             <div className="space-y-4">
-              <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+              <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Best Jobs for You
-              </h3>
+              </h1>
               <p className="max-w-2xl">
                 At a assumenda quas cum earum ut itaque commodi saepe rem
                 aspernatur quam natus quis nihil quod, hic explicabo doloribus

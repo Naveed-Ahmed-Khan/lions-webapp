@@ -10,6 +10,7 @@ const TextArea = ({
   onChange,
   type,
   disabled,
+  formik,
   alt,
 }) => {
   const secondary = "py-3 px-6 placeholder:text-sm sm:placeholder:text-base";
@@ -26,14 +27,17 @@ const TextArea = ({
         className={`w-full px-5 py-3 text-base placeholder-gray-300 transition duration-500 rounded-sm
         transform border border-transparent focus:border-transparent text-neutral-600 bg-white focus:outline-none 
         ring-1 ring-gray-300 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary`}
-        rows={rows}
+        rows={rows ? rows : 6}
         placeholder={placeholder}
         name={name}
-        onChange={onChange}
-        value={value}
-        type={type}
+        value={formik ? formik.values[name] : value}
+        onChange={formik ? formik.handleChange : onChange}
+        type={type ? type : "text"}
         disabled={disabled}
       />
+      {formik && formik.touched[name] && formik.errors[name] ? (
+        <p className="mt-2 text-sm text-red-600">{formik.errors[name]}</p>
+      ) : null}
     </div>
   );
 };

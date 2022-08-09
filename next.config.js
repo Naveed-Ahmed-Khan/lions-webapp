@@ -5,8 +5,7 @@ const nextConfig = {
 
 module.exports = {
   nextConfig,
-  /* images: {
-    loader: "akamai",
-    path: "",
-  }, */
+  images: {
+    domains: ["lions.edu.pk"],
+  },
 };

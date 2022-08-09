@@ -7,59 +7,67 @@ import Container from "../components/UI/Container";
 import Carousel from "../components/UI/Carousel";
 
 export default function Home() {
+  const images = [
+    {
+      src: "https://lions.edu.pk/images/users/21655733138.jpg",
+      title: "Cadets",
+      details: "Secured Admission in cadet college",
+    },
+    {
+      src: "https://lions.edu.pk/images/users/551655733090.jpeg",
+      title: "Hammad Safi",
+      details: "Trainer O/A level",
+    },
+  ];
+
   return (
     <>
       <Container color={"white"}>
         <section className="grid grid-cols-12 grid-rows-2 gap-4 bg-white p-4 md:px-8">
-          <div className="col-span-12 sm:col-span-9 row-span-2 sm:row-span-1">
+          <div className="z-0 col-span-12 lg:col-span-9 row-span-2 lg:row-span-1">
             <Carousel />
           </div>
-          <div className="hidden h-[790px] sm:col-span-3 sm:row-span-2 relative w-full sm:flex flex-col gap-4 mt-4 overflow-y-scroll">
-            <img
-              className="h-48 aspect-video rounded-sm object-cover object-center dark:bg-gray-500"
-              src="https://source.unsplash.com/random/241x361/?1"
-              alt="Image 1"
-            />
-            <img
-              className="h-48 aspect-video rounded-sm object-cover object-center dark:bg-gray-500"
-              src="https://source.unsplash.com/random/241x361/?2"
-              alt="Image 2"
-            />
-            <img
-              className="h-48 aspect-video rounded-sm object-cover object-center dark:bg-gray-500"
-              src="https://source.unsplash.com/random/241x361/?3"
-              alt="Image 3"
-            />
-            <img
-              className="h-48 aspect-video rounded-sm object-cover object-center dark:bg-gray-500"
-              src="https://source.unsplash.com/random/241x361/?4"
-              alt="Image 4"
-            />
-            <img
-              className="h-48 aspect-video rounded-sm object-cover object-center dark:bg-gray-500"
-              src="https://source.unsplash.com/random/241x361/?3"
-              alt="Image 3"
-            />
-            <img
-              className="h-48 aspect-video rounded-sm object-cover object-center dark:bg-gray-500"
-              src="https://source.unsplash.com/random/241x361/?3"
-              alt="Image 3"
-            />
+          <div
+            className="hidden col-span-12 lg:col-span-3 row-span-1 lg:row-span-2 lg:h-[860px] 
+          relative w-full lg:flex lg:flex-col gap-4 overflow-y-auto"
+          >
+            <h2 className="text-2xl text-primary text-center font-bold">
+              News
+            </h2>
+            {images.map((image) => {
+              return (
+                <div
+                  key={image.src}
+                  className="mt-2 mx-4 px-2 py-4 rounded drop-shadow-sm bg-white"
+                >
+                  <img
+                    className="rounded-sm object-cover object-center dark:bg-gray-500"
+                    src={image.src}
+                    alt=""
+                  />
+                  <div>
+                    <h4 className="text-lg text-gray-700 font-medium">
+                      {image.title}
+                    </h4>
+                    <p className="text-sm text-gray-700">{image.details}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
-          <div className="col-span-12 sm:col-span-9 row-span-2 sm:row-span-1 space-y-4 sm:text-center lg:text-left">
+          <div className="col-span-12 lg:col-span-9 row-span-2 lg:row-span-1 space-y-4 lg:text-center">
             <FeatureCard />
           </div>
         </section>
-        <section className="bg-white mx-auto p-4 items-center lg:flex md:px-8"></section>
       </Container>
 
       <Container color={"gray-100"}>
         <section className=" py-6 dark:bg-gray-800 dark:text-gray-800">
           <div className="container p-4 mx-auto space-y-16 sm:p-10">
             <div className="space-y-4">
-              <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+              <h1 className="text-primary text-2xl leading-none font-bold sm:text-4xl">
                 Find the best tutor
-              </h3>
+              </h1>
               <p className="max-w-2xl dark:text-gray-800">
                 At a assumenda quas cum earum ut itaque commodi saepe rem
                 aspernatur quam natus quis nihil quod, hic explicabo doloribus
@@ -79,9 +87,9 @@ export default function Home() {
         <section className=" py-6 dark:bg-gray-800 dark:text-gray-800">
           <div className="container p-4 mx-auto space-y-16 sm:p-10">
             <div className="space-y-4">
-              <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+              <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Best Tution Jobs
-              </h3>
+              </h1>
               <p className="max-w-2xl dark:text-gray-800">
                 At a assumenda quas cum earum ut itaque commodi saepe rem
                 aspernatur quam natus quis nihil quod, hic explicabo doloribus
@@ -102,9 +110,9 @@ export default function Home() {
           <section className="text-gray-800 bg-gray-100 body-font relative">
             <div className="container p-4 mx-auto space-y-16 sm:p-10">
               <div className="space-y-4">
-                <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+                <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                   Post Your Requirements
-                </h3>
+                </h1>
                 <p className="max-w-2xl dark:text-gray-800">
                   At a assumenda quas cum earum ut itaque commodi saepe rem
                   aspernatur quam natus quis nihil quod, hic explicabo doloribus

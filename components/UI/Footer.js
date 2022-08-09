@@ -3,7 +3,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="relative bg-primary">
+    <div className="relative bg-gradient-to-br from-green-700 via-green-600 to-green-700">
       {/* <svg
         className="absolute top-0 w-full h-6 -mt-5 sm:-mt-10 sm:h-16 bg-gray-100 text-primary"
         preserveAspectRatio="none"

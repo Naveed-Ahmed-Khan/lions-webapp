@@ -26,15 +26,15 @@ const TutorCard = () => {
             />
           </svg>
 
-          <h1 className="mx-3 text-lg font-semibold text-white">Verified</h1>
+          <h2 className="mx-3 text-lg font-semibold text-white">Verified</h2>
         </div>
       </div>
 
       <div>
         <div className="p-4">
-          <h1 className="text-xl font-semibold text-gray-700 dark:text-white">
-            Patterson johnson
-          </h1>
+          <h3 className="text-xl sm:text-2xl font-medium text-gray-700 dark:text-white">
+            Patterson Johnson
+          </h3>
           <div className="flex mt-2 item-center">
             <svg
               className="w-5 h-5 text-yellow-400 fill-current dark:text-gray-300"
@@ -73,7 +73,7 @@ const TutorCard = () => {
             <p className="ml-1 -mt-0.5 text-gray-600">(25)</p>
           </div>
 
-          <p className="py-1 text-gray-700 dark:text-gray-400">
+          <p className="py-1 text-sm sm:text-base text-gray-700 dark:text-gray-400">
             Full Stack maker & UI / UX Designer , Author of Building UI.
           </p>
 
@@ -94,7 +94,7 @@ const TutorCard = () => {
                   />
                 </svg>
 
-                <h1 className="px-2 text-sm font-medium">BS | Mathematics</h1>
+                <h6 className="px-2 text-sm font-semibold">BS | Mathematics</h6>
               </div>
 
               <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
@@ -116,7 +116,7 @@ const TutorCard = () => {
                   />
                 </svg>
 
-                <h1 className="px-2 text-sm font-medium">Rawalpindi</h1>
+                <h6 className="px-2 text-sm font-semibold">Rawalpindi</h6>
               </div>
             </div>
 
@@ -136,9 +136,9 @@ const TutorCard = () => {
                     d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
                   />
                 </svg>
-                <h1 className="px-2 text-sm font-medium">
+                <h6 className="px-2 text-sm font-semibold">
                   4 | Students taught
-                </h1>
+                </h6>
               </div>
 
               <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
@@ -156,7 +156,9 @@ const TutorCard = () => {
                     d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
                   />
                 </svg>
-                <h1 className="px-2 text-sm font-medium">2 | Trial lessons</h1>
+                <h6 className="px-2 text-sm font-semibold">
+                  2 | Trial lessons
+                </h6>
               </div>
             </div>
           </div>

@@ -1,10 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 import BackdropModal from "./BackdropModal";
 import { useRouter } from "next/router";
 import Backdrop from "./Backdrop";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
-  // const { currentUser } = useAuth();
+  const { currentUser } = useAuth();
   // console.log(currentUser);
   // const location = useLocation();
   /*const { logout } = useAuth(); */
@@ -14,24 +16,18 @@ const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
     <>
       {/* Mobile Sidebar */}
       <div
-        className={`md:hidden fixed flex flex-col z-[200] w-full max-w-fit bg-gradient-to-br from-primary-light to-primary-dark
+        className={`md:hidden fixed flex flex-col z-[200] w-full max-w-fit 
+        bg-gradient-to-br from-green-700 via-green-600 to-green-700
         ${
           open === true
             ? "translate-x-0 opacity-100"
             : "-translate-x-full opacity-0"
         } transition ease-out duration-300`}
       >
-        <nav className="bg-primary-200 px-5 w-[260px] h-screen justify-between flex flex-col">
-          <div className="mt-6 mb-10">
-            <Link className="flex items-center justify-center" href={"/"}>
-              <a
-                onClick={() => {
-                  setShowBackdrop(false);
-                  setOpen(false);
-                }}
-              ></a>
-            </Link>
+        <nav className="bg-primary-200 px-5 w-[260px] h-screen justify-between">
+          <div className="mt-6 mb-10 flex flex-col">
             <button
+              className="self-end"
               onClick={() => {
                 setShowBackdrop(false);
                 setOpen(false);
@@ -52,6 +48,20 @@ const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                 />
               </svg>
             </button>
+
+            {currentUser && (
+              <div className="my-2 flex flex-col items-center gap-4">
+                <Image
+                  width={70}
+                  height={70}
+                  layout="fixed"
+                  className="rounded-full object-cover"
+                  src="/images/student.jpg"
+                  alt="Profile"
+                />
+                {/* <p className=" text-white">{currentUser.userID}</p> */}
+              </div>
+            )}
 
             <div className="mt-4">
               <p className="p-3 text-gray-200 text-xs tracking-widest border-b border-b-gray-300">
@@ -149,48 +159,77 @@ const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                 ACCOUNT
               </p>
               <ul className="space-y-1">
-                <li>
-                  <Link href={"/login"}>
-                    <a
-                      onClick={() => {
-                        setShowBackdrop(false);
-                        setOpen(false);
-                      }}
-                    >
-                      <div
-                        className={`px-3 py-[14px] ${
-                          router.pathname === "/login"
-                            ? "text-secondary-300 bg-primary-100"
-                            : "text-white"
-                        } rounded flex items-center gap-3 hover:text-secondary-300 hover:bg-primary-100 transition-all duration-300`}
+                {currentUser ? (
+                  <li>
+                    <Link href={"/"}>
+                      <a
+                        onClick={() => {
+                          setShowBackdrop(false);
+                          setOpen(false);
+                        }}
                       >
-                        <p className="text-lg text-white font-medium">SignIn</p>
-                      </div>
-                    </a>
-                  </Link>
-                </li>
-                <li>
-                  <Link href={"/register"}>
-                    <a
-                      onClick={() => {
-                        setShowBackdrop(false);
-                        setOpen(false);
-                      }}
-                    >
-                      <div
-                        className={`px-3 py-[14px] ${
-                          router.pathname === "/register"
-                            ? "text-secondary-300 bg-primary-100"
-                            : "text-white"
-                        } rounded flex items-center gap-3 hover:text-secondary-300 hover:bg-primary-100 transition-all duration-300`}
-                      >
-                        <p className="text-lg text-white font-medium">
-                          Register
-                        </p>
-                      </div>
-                    </a>
-                  </Link>
-                </li>
+                        <div
+                          className={`px-3 py-[14px] ${
+                            router.pathname === "/register"
+                              ? "text-secondary-300 bg-primary-100"
+                              : "text-white"
+                          } rounded flex items-center gap-3 hover:text-secondary-300 hover:bg-primary-100 transition-all duration-300`}
+                        >
+                          <p className="text-lg text-white font-medium">
+                            Logout
+                          </p>
+                        </div>
+                      </a>
+                    </Link>
+                  </li>
+                ) : (
+                  <>
+                    <li>
+                      <Link href={"/login"}>
+                        <a
+                          onClick={() => {
+                            setShowBackdrop(false);
+                            setOpen(false);
+                          }}
+                        >
+                          <div
+                            className={`px-3 py-[14px] ${
+                              router.pathname === "/login"
+                                ? "text-secondary-300 bg-primary-100"
+                                : "text-white"
+                            } rounded flex items-center gap-3 hover:text-secondary-300 hover:bg-primary-100 transition-all duration-300`}
+                          >
+                            <p className="text-lg text-white font-medium">
+                              SignIn
+                            </p>
+                          </div>
+                        </a>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={"/register"}>
+                        <a
+                          onClick={() => {
+                            setShowBackdrop(false);
+                            setOpen(false);
+                          }}
+                        >
+                          <div
+                            className={`px-3 py-[14px] ${
+                              router.pathname === "/register"
+                                ? "text-secondary-300 bg-primary-100"
+                                : "text-white"
+                            } rounded flex items-center gap-3 hover:text-secondary-300 hover:bg-primary-100 transition-all duration-300`}
+                          >
+                            <p className="text-lg text-white font-medium">
+                              Register
+                            </p>
+                          </div>
+                        </a>
+                      </Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
           </div>

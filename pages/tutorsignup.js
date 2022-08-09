@@ -1,22 +1,24 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 
 import ChevronDots from "../components/UI/ChevronDots";
 import FormGroup from "../components/UI/FormGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
 import { useRouter } from "next/router";
-import Input from "../components/UI/Input";
 import { useFormik } from "formik";
+import Input from "../components/UI/Input";
 import InputFile from "../components/UI/InputFile";
 import TextArea from "../components/UI/TextArea";
 import Select from "../components/UI/Select";
 import DatePicker from "../components/UI/DatePicker";
 import fileToBase64 from "../utility/filetobase64";
 import Image from "next/image";
+import { useAuth } from "../contexts/AuthContext";
+import * as yup from "yup";
 
 export default function TutorSignup() {
   const [currentStep, setCurrentStep] = useState(1);
-  console.log(currentStep);
+  // console.log(currentStep);
   return (
     <Container color={"gray-50"}>
       <div className="bg-white w-full mx-auto">
@@ -43,54 +45,50 @@ export default function TutorSignup() {
 }
 
 function Account({ setCurrentStep }) {
+  const signupSchema = yup.object({
+    email: yup.string("Enter your email").email("Enter a valid email"),
+    password: yup
+      .string("Enter your password")
+      .min(6, "Password should be of minimum 6 characters length"),
+    confirmPassword: yup
+      .string("Confirm your password")
+      .oneOf([yup.ref("password"), null], "Passwords must match"),
+  });
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
       confirmPassword: "",
     },
+    validationSchema: signupSchema,
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
+      // console.log(values);
+      localStorage.setItem("Account", JSON.stringify(values));
       setCurrentStep((prev) => ++prev);
     },
   });
 
   return (
     <div className="pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
+      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
         Account Details
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup>
-          <Input
-            required
-            label="Email"
-            type="email"
-            name={"email"}
-            value={formik.values.email}
-            onChange={formik.handleChange}
-          />
+          <Input required label="Email" name={"email"} formik={formik} />
         </FormGroup>
 
         <FormGroup>
-          <Input
-            required
-            label="Password"
-            type="text"
-            name={"password"}
-            value={formik.values.password}
-            onChange={formik.handleChange}
-          />
+          <Input required label="Password" name={"password"} formik={formik} />
         </FormGroup>
 
         <FormGroup>
           <Input
             required
             label="Confirm Password"
-            type="text"
             name={"confirmPassword"}
-            value={formik.values.confirmPassword}
-            onChange={formik.handleChange}
+            formik={formik}
           />
         </FormGroup>
 
@@ -110,53 +108,34 @@ function Personal({ setCurrentStep }) {
       gender: "",
       dateOfBirth: new Date(),
       address: "",
+      city: "",
     },
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
+      // console.log(values);
+      localStorage.setItem("Personal", JSON.stringify(values));
       setCurrentStep((prev) => ++prev);
     },
   });
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
+      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
         Personal Details
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup horizontal>
-          <Input
-            required
-            label="Full Name"
-            type="text"
-            name={"fullName"}
-            value={formik.values.fullName}
-            onChange={formik.handleChange}
-          />
-          <Input
-            required
-            label="CNIC"
-            type="text"
-            name={"cnic"}
-            value={formik.values.cnic}
-            onChange={formik.handleChange}
-          />
+          <Input required label="Full Name" name={"fullName"} formik={formik} />
+          <Input required label="CNIC" name={"cnic"} formik={formik} />
         </FormGroup>
 
         <FormGroup horizontal>
-          <DatePicker
+          <Input
             required
+            type={"date"}
             label="Date of Birth"
             name={"dateOfBirth"}
-            value={formik.values.dateOfBirth}
-            onChange={formik.handleChange}
+            formik={formik}
           />
-
-          <Select
-            required
-            label="Gender"
-            name="gender"
-            value={formik.values.gender}
-            onChange={formik.handleChange}
-          >
+          <Select required label="Gender" name="gender" formik={formik}>
             <option value="">Select</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -167,30 +146,25 @@ function Personal({ setCurrentStep }) {
           <Input
             required
             label="Mobile No."
-            type="text"
+            type="tel"
             name={"mobile"}
-            value={formik.values.mobile}
-            onChange={formik.handleChange}
+            formik={formik}
           />
           <Input
             required
             label="Watsapp No."
-            type="text"
+            type="tel"
             name={"watsapp"}
-            value={formik.values.watsapp}
-            onChange={formik.handleChange}
+            formik={formik}
           />
         </FormGroup>
+
         <FormGroup>
-          <TextArea
-            required
-            rows={6}
-            label="Address"
-            type="text"
-            name={"address"}
-            value={formik.values.address}
-            onChange={formik.handleChange}
-          />
+          <Input required label="City" name={"city"} formik={formik} />
+        </FormGroup>
+
+        <FormGroup>
+          <TextArea required label="Address" name={"address"} formik={formik} />
         </FormGroup>
 
         <div className="space-y-4 sm:space-y-0 sm:flex gap-8">
@@ -213,21 +187,22 @@ function Qualification({ setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
       qualification: "",
-      Institute: "",
+      institute: "",
       passingYear: "",
       job: "",
       jobInstitute: "",
       experience: "",
     },
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
+      // console.log(values);
+      localStorage.setItem("Qualification", JSON.stringify(values));
       setCurrentStep((prev) => ++prev);
     },
   });
 
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
+      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
         Qualification Details
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
@@ -235,10 +210,8 @@ function Qualification({ setCurrentStep }) {
           <Select
             required
             label="Highest Qualification"
-            type="text"
             name={"qualification"}
-            value={formik.values.qualification}
-            onChange={formik.handleChange}
+            formik={formik}
           >
             <option value="">Select</option>
             <option value="Matric">Matric</option>
@@ -252,46 +225,33 @@ function Qualification({ setCurrentStep }) {
           <Input
             required
             label="Institute"
-            type="text"
             name={"institute"}
-            value={formik.values.institute}
-            onChange={formik.handleChange}
+            formik={formik}
           />
           <Input
             required
             label="Passing Year"
             type="number"
             name={"passingYear"}
-            value={formik.values.passingYear}
-            onChange={formik.handleChange}
+            formik={formik}
           />
         </FormGroup>
         <FormGroup horizontal>
-          <Input
-            required
-            label="Current Job"
-            type="text"
-            name={"job"}
-            value={formik.values.job}
-            onChange={formik.handleChange}
-          />
+          <Input required label="Current Job" name={"job"} formik={formik} />
           <Input
             required
             label="Experience"
             type="number"
             name={"experience"}
-            value={formik.values.experience}
-            onChange={formik.handleChange}
+            formik={formik}
           />
         </FormGroup>
         <FormGroup>
           <Input
             required
             label="Associated Institute"
-            type="text"
             name={"jobInstitute"}
-            value={formik.values.jobInstitute}
-            onChange={formik.handleChange}
+            formik={formik}
           />
         </FormGroup>
         <div className="space-y-4 sm:space-y-0 sm:flex gap-8">
@@ -312,84 +272,92 @@ function Qualification({ setCurrentStep }) {
 
 function Profile({ setCurrentStep }) {
   const [imagePath, setImagePath] = useState(null);
+  const [data, setData] = useState(null);
+  console.log(data);
   const router = useRouter();
+
+  // console.log(imagePath);
+
+  const path = useMemo(
+    () => imagePath && URL.createObjectURL(imagePath),
+    [imagePath]
+  );
 
   const formik = useFormik({
     initialValues: {
-      profilePic: imagePath,
+      profilePic: "",
       aboutMe: "",
-      subjects: [],
-      classes: [],
+      subjects: "",
+      classes: "",
       modesOfTeaching: "",
-      achievement: "",
+      achievements: "",
     },
-    onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      try {
+        values.profilePic = await fileToBase64(imagePath);
+        // console.log(values);
+        localStorage.setItem("Profile", JSON.stringify(values));
+      } catch (error) {
+        console.log(error);
+      }
+
+      const account = JSON.parse(localStorage.getItem("Account"));
+      const profile = JSON.parse(localStorage.getItem("Profile"));
+      const personal = JSON.parse(localStorage.getItem("Personal"));
+      const qualification = JSON.parse(localStorage.getItem("Qualification"));
+
+      if (account && profile && personal && qualification) {
+        setData({ ...account, ...profile, ...personal, ...qualification });
+      }
       router.push("/");
+      localStorage.clear();
     },
   });
 
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-left text-primary">
+      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
         Profile Details
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <div className="relative sm:flex gap-6">
-          {imagePath ? (
+          {path ? (
             <Image
               height={160}
               width={160}
               layout="fixed"
-              className="object-cover rounded"
-              src={imagePath}
+              className="object-cover rounded-lg"
+              src={path}
               alt=""
             />
           ) : (
-            <div className=" mb-6 sm:mb-0 bg-gray-300 h-40 w-40" />
+            <div className=" mb-6 sm:mb-0 bg-gray-300 h-40 w-40 rounded-lg" />
           )}
 
           <div className="flex-auto self-end">
-            <InputFile
+            <Input
+              type="file"
               label="Profile Picture"
               name={"profilePic"}
-              value={imagePath}
-              onChange={async (e) => {
-                console.log(e.target.files[0].size / (1024 * 1024) + "MB");
-                const path = await fileToBase64(e.target.files[0]);
-                setImagePath(path);
+              onChange={(e) => {
+                setImagePath(e.target.files[0]);
               }}
             />
           </div>
         </div>
 
         <FormGroup>
-          <Input
-            required
-            label="Subjects"
-            type="text"
-            name={"subjects"}
-            value={formik.values.subjects}
-            onChange={formik.handleChange}
-          />
+          <Input required label="Subjects" name={"subjects"} formik={formik} />
         </FormGroup>
         <FormGroup>
-          <Input
-            required
-            label="Classes"
-            type="text"
-            name={"classes"}
-            value={formik.values.classes}
-            onChange={formik.handleChange}
-          />
+          <Input required label="Classes" name={"classes"} formik={formik} />
         </FormGroup>
         <FormGroup>
           <Select
             required
             label="Mode of Teaching"
             name="modesOfTeaching"
-            value={formik.values.modesOfTeaching}
-            onChange={formik.handleChange}
+            formik={formik}
           >
             <option value={""}>Select</option>
             <option value={"One to One"}>One to One</option>
@@ -400,24 +368,18 @@ function Profile({ setCurrentStep }) {
         <FormGroup>
           <TextArea
             required
-            rows={6}
             label="About Me"
-            type="text"
             name={"aboutMe"}
-            value={formik.values.aboutMe}
-            onChange={formik.handleChange}
+            formik={formik}
           />
         </FormGroup>
 
         <FormGroup>
           <TextArea
             required
-            rows={6}
             label="Achievements"
-            type="text"
             name={"achievements"}
-            value={formik.values.achievements}
-            onChange={formik.handleChange}
+            formik={formik}
           />
         </FormGroup>
         <div className="flex gap-8">

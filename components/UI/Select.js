@@ -8,7 +8,7 @@ export default function Select({
   onChange,
   label,
   name,
-  multiple,
+  formik,
   alt,
 }) {
   const secondary =
@@ -25,14 +25,13 @@ export default function Select({
       <div className="relative">
         <select
           className={`w-full px-5 py-3 text-base placeholder-gray-300 transition duration-500 rounded-sm
-        transform border border-transparent focus:border-transparent text-neutral-600 bg-white focus:outline-none 
-        ring-1 ring-gray-300 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary`}
+          transform border border-transparent focus:border-transparent text-neutral-600 bg-white focus:outline-none 
+          ring-1 ring-gray-300 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary`}
           required={required}
           placeholder={placeholder}
           name={name}
-          value={value}
-          onChange={onChange}
-          multiple={multiple}
+          value={formik ? formik.values[name] : value}
+          onChange={formik ? formik.handleChange : onChange}
         >
           {children}
         </select>
@@ -47,6 +46,9 @@ export default function Select({
           </svg>
         </div>
       </div>
+      {formik && formik.touched[name] && formik.errors[name] ? (
+        <p className="mt-2 text-sm text-red-600">{formik.errors[name]}</p>
+      ) : null}
     </div>
   );
 }

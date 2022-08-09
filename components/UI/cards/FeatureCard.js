@@ -1,30 +1,46 @@
 import React from "react";
 import Button from "../Button";
+import { useRouter } from "next/router";
 
 const FeatureCard = () => {
+  const router = useRouter();
   return (
-    <section className="text-gray-600 body-font">
+    <section className="text-gray-600 mt-4">
       <div className="container px-0 sm:px-5  mx-auto">
         <div className="flex flex-col gap-4 text-center w-full mb-6">
           <div className="space-y-4">
-            <h3 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
-              Learn from Expert Tutors with us today
-            </h3>
+            <h1 className="text-primary text-2xl font-bold  sm:text-4xl">
+              Learn From Expert Tutors With Us Today
+            </h1>
           </div>
-          <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
+          <p className="lg:w-2/3 p-2 lg:p-4 mx-auto text-base">
             Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
             gentrify, subway tile poke farm-to-table. Franzen you probably
             haven&apos;t.
           </p>
           <div className=" items-center justify-center sm:space-x-6 sm:flex">
             <div className="mb-4 sm:mb-0 w-full sm:w-fit">
-              <Button full>
-                <p className="text-lg font-medium"> Find Tutors Now</p>
+              <Button
+                onClick={() => {
+                  router.push("/tutors");
+                }}
+              >
+                <p className=" font-medium"> Find Tutors Now</p>
               </Button>
             </div>
-            <a className="px-7 py-3 w-full bg-gray-700 text-white font-medium text-center rounded-md block sm:w-auto">
+            <div className="mb-4 sm:mb-0 w-full sm:w-fit">
+              <Button
+                alt
+                onClick={() => {
+                  router.push("/job-posting");
+                }}
+              >
+                <p className=" font-medium">Post a Job</p>
+              </Button>
+            </div>
+            {/*  <a className="px-7 py-3 w-full bg-gray-700 text-white font-medium text-center rounded-md block sm:w-auto">
               Post a Job
-            </a>
+            </a> */}
           </div>
         </div>
         <div className="flex sm:flex-wrap -m-4 text-center overflow-auto">
@@ -45,7 +61,7 @@ const FeatureCard = () => {
               <h2 className="title-font font-medium text-3xl text-gray-900">
                 2.7K
               </h2>
-              <p className="leading-relaxed">Downloads</p>
+              <p className="">Downloads</p>
             </div>
           </div>
           <div className="p-4 w-full sm:w-1/2 md:w-1/4">
@@ -66,7 +82,7 @@ const FeatureCard = () => {
               <h2 className="title-font font-medium text-3xl text-gray-900">
                 1.3K
               </h2>
-              <p className="leading-relaxed">Users</p>
+              <p className="">Users</p>
             </div>
           </div>
           <div className="p-4 w-full sm:w-1/2 md:w-1/4">
@@ -86,7 +102,7 @@ const FeatureCard = () => {
               <h2 className="title-font font-medium text-3xl text-gray-900">
                 74
               </h2>
-              <p className="leading-relaxed">Files</p>
+              <p className="">Files</p>
             </div>
           </div>
           <div className="p-4 w-full sm:w-1/2 md:w-1/4">
@@ -105,7 +121,7 @@ const FeatureCard = () => {
               <h2 className="title-font font-medium text-3xl text-gray-900">
                 46
               </h2>
-              <p className="leading-relaxed">Places</p>
+              <p className="">Places</p>
             </div>
           </div>
         </div>

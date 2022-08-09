@@ -7,8 +7,10 @@ module.exports = {
   darkMode: "class",
   theme: {
     fontFamily: {
-      display: ["Open Sans", "sans-serif"],
-      body: ["Open Sans", "sans-serif"],
+      archivo: ["Archivo", "sans-serif"],
+      poppins: ["Poppins", "sans-serif"],
+      roboto: ["Roboto", "sans-serif"],
+      merri: ["Merriweather", "serif"],
     },
     extend: {
       colors: {

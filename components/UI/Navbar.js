@@ -1,8 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import Image from "next/image";
 import React, { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import Dropdown from "./Dropdown";
 
 const Navbar = ({ open, setOpen, setShowBackdrop }) => {
+  const { currentUser, setCurrentUser } = useAuth();
+  console.log(currentUser);
   // const [state, setState] = useState(false);
   console.log(open);
   const navigation = [
@@ -12,17 +17,18 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
     { title: "Tutors", path: "/tutors" },
   ];
   return (
-    <header className="bg-primary drop-shadow-md shadow shadow-slate-300">
+    <header className="sticky top-0 z-30 bg-gradient-to-br from-green-700 via-green-600 to-green-700 drop-shadow-md">
       <nav className="container mx-auto max-w-screen-xl items-center px-3 py-3 sm:px-3 sm:py-2 md:flex md:space-x-6">
         <div className="flex justify-between">
-          <a href="#">
-            <img
-              className="object-contain h-10 sm:h-12"
-              src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
-              alt="Float UI logo"
-            />
-          </a>
-
+          <Link href="/">
+            <a>
+              <img
+                className="object-contain h-10 sm:h-12"
+                src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
+                alt="Float UI logo"
+              />
+            </a>
+          </Link>
           <button
             className="text-white outline-none md:hidden"
             onClick={() => {
@@ -51,33 +57,65 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
         <ul
           className={`flex-1 hidden md:flex items-center justify-between mt-12 md:mt-0`}
         >
-          <li className="order-2 pb-5 md:pb-0 space-x-4">
-            <Link href={"/login"}>
-              <a
-                className="p-1 font-medium mr-4 border-b-2 text-white  border-b-primary text-center transition-all duration-300
-                 hover:border-b-2 hover:border-gray-600 hover:text-gray-600 focus:shadow-none block md:inline"
-              >
-                Sign In
-              </a>
-            </Link>
-            <Link href={"/register"}>
-              <a className="py-3 px-6 rounded-md shadow-md text-white text-center bg-gray-700 focus:shadow-none block md:inline">
-                Register
-              </a>
-            </Link>
-          </li>
-          <div className="order-1 flex-1 justify-center items-center space-y-5 md:flex md:space-x-2 md:space-y-0">
-            {navigation.map((item, idx) => (
+          <li className="flex-1 justify-center items-center space-y-5 md:flex md:space-x-2 md:space-y-0">
+            {navigation.map((item) => (
               <Link key={item.title} href={item.path}>
                 <a
-                  className="font-medium text-base text-white py-1 px-3 rounded border-2 border-primary 
+                  className="font-medium text-base text-white py-1 px-3 rounded border-2 border-transparent 
                         hover:border-white transition-all duration-300 active:bg-primary-dark"
                 >
-                  <li>{item.title}</li>
+                  <p>{item.title}</p>
                 </a>
               </Link>
             ))}
-          </div>
+          </li>
+          {currentUser ? (
+            <li className="flex items-center gap-2">
+              <Dropdown
+                options={[
+                  { title: "Profile", href: "/profile" },
+                  { title: "Logout", href: "/" },
+                ]}
+              >
+                <Image
+                  width={45}
+                  height={45}
+                  layout="fixed"
+                  className="rounded-full object-cover"
+                  src="/images/student.jpg"
+                  alt="Profile"
+                />
+              </Dropdown>
+              <Link href={"/"}>
+                <a
+                  className="p-1 font-medium mr-4 border-b-2 text-white border-b-transparent text-center transition-all duration-300
+                hover:border-b-2 hover:border-gray-600 hover:text-gray-600 focus:shadow-none block md:inline"
+                  onClick={() => {
+                    setCurrentUser(null);
+                  }}
+                >
+                  Logout
+                </a>
+              </Link>
+            </li>
+          ) : (
+            <li className="pb-5 md:pb-0 space-x-4">
+              <Link href={"/login"}>
+                <a
+                  className="p-1 font-medium mr-4 border-b-2 text-white border-b-transparent text-center transition-all duration-300
+                hover:border-b-2 hover:border-gray-600 hover:text-gray-600 focus:shadow-none block md:inline"
+                >
+                  Sign In
+                </a>
+              </Link>
+
+              <Link href={"/register"}>
+                <a className="py-3 px-6 rounded-md shadow-md text-white text-center bg-gray-700 focus:shadow-none block md:inline">
+                  Register
+                </a>
+              </Link>
+            </li>
+          )}
         </ul>
       </nav>
     </header>
