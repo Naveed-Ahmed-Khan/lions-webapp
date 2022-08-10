@@ -8,7 +8,7 @@ import Input from "../components/UI/Input";
 import { useFormik } from "formik";
 import InputFile from "../components/UI/InputFile";
 import TextArea from "../components/UI/TextArea";
-import { fileToBase64 } from "../public/utility/fileToBase64";
+import { filetobase64 } from "../utility/filetobase64";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -137,7 +137,7 @@ function Personal({ setCurrentStep }) {
               value={imagePath}
               onChange={async (e) => {
                 console.log(e.target.files[0].size / (1024 * 1024) + "MB");
-                const path = await fileToBase64(e.target.files[0]);
+                const path = await filetobase64(e.target.files[0]);
                 setImagePath(path);
               }}
             />

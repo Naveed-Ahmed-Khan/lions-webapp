@@ -11,7 +11,7 @@ import InputFile from "../components/UI/InputFile";
 import TextArea from "../components/UI/TextArea";
 import Select from "../components/UI/Select";
 import DatePicker from "../components/UI/DatePicker";
-import { fileToBase64 } from "../public/utility/filetobase64";
+import { filetobase64 } from "../utility/filetobase64";
 import Image from "next/image";
 import { useAuth } from "../contexts/AuthContext";
 import * as yup from "yup";
@@ -294,8 +294,8 @@ function Profile({ setCurrentStep }) {
     },
     onSubmit: async (values) => {
       try {
-        values.profilePic = await fileToBase64(imagePath);
-        // console.log(values);
+        values.profilePic = await filetobase64(imagePath);
+        console.log(values.profilePic);
         localStorage.setItem("Profile", JSON.stringify(values));
       } catch (error) {
         console.log(error);
