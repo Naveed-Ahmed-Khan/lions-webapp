@@ -59,27 +59,8 @@ export default function Profile({ tutor }) {
       <div className="block md:hidden pt-8 bg-white md:bg-neutral-100 rounded px-5 sm:p-8">
         <h2 className=" mb-8 text-primary text-xl font-semibold">My Profile</h2>
         <div className="flex flex-col gap-6 md:gap-8">
-          <Collapse label="Personal Information">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-            odio distinctio deleniti deserunt est ad perspiciatis veritatis
-            delectus voluptatibus fuga? Quia qui repudiandae ratione. Sint vero
-            impedit saepe et quidem expedita quisquam ex debitis cupiditate? Qui
-            similique totam ut atque.
-          </Collapse>
-          <Collapse label="About me">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-            odio distinctio deleniti deserunt est ad perspiciatis veritatis
-            delectus voluptatibus fuga? Quia qui repudiandae ratione. Sint vero
-            impedit saepe et quidem expedita quisquam ex debitis cupiditate? Qui
-            similique totam ut atque.
-          </Collapse>
-          <Collapse label="Looking for">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-            odio distinctio deleniti deserunt est ad perspiciatis veritatis
-            delectus voluptatibus fuga? Quia qui repudiandae ratione. Sint vero
-            impedit saepe et quidem expedita quisquam ex debitis cupiditate? Qui
-            similique totam ut atque.
-          </Collapse>
+          <Collapse label="About me">{tutor.aboutMe}</Collapse>
+          <Collapse label="Achievements">{tutor.achievements}</Collapse>
         </div>
       </div>
       <main className="p-6 md:flex gap-6 bg-white ">
