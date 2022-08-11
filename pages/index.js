@@ -79,7 +79,9 @@ export default function Home() {
             </div>
             <div className="grid w-full grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
               {tutors?.map((tutor) => {
-                return tutor.isFeatured && <Card tutor={tutor} />;
+                return (
+                  tutor.isFeatured && <Card key={tutor._id} tutor={tutor} />
+                );
               })}
             </div>
           </div>
@@ -101,7 +103,7 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
               {jobs?.map((job) => {
-                return job.isFeatured && <JobCard job={job} />;
+                return job.isFeatured && <JobCard key={job._id} job={job} />;
               })}
             </div>
           </div>

@@ -27,7 +27,7 @@ export default function Tutors() {
             </div>
             <div className="w-full space-y-8">
               {tutors?.map((tutor) => {
-                return <TutorCard2 tutor={tutor} />;
+                return <TutorCard2 key={tutor._id} tutor={tutor} />;
               })}
             </div>
           </div>

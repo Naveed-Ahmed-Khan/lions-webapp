@@ -10,7 +10,7 @@ export default function AccessDenied() {
         <div className="flex flex-col gap-4 max-w-lg bg-white rounded-lg px-10 py-8">
           <h3 className="text-xl text-red-500">Access denied !</h3>
           <p className="text-gray-600">
-            Sign in as Parent/Student to post a job. Don't have an account?
+            Sign in as Parent/Student to post a job. Don&apos;t have an account?
             Register as a Parent/Student.
           </p>
           <div className="flex gap-4 mt-4">
