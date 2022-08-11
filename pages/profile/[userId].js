@@ -1,39 +1,59 @@
 /* eslint-disable @next/next/no-img-element */
+import axios from "axios";
 import { useRouter } from "next/router";
 import React from "react";
+import Image from "next/image";
 import Collapse from "../../components/UI/Collapse";
 import Container from "../../components/UI/Container";
 import ProfileSidebar from "../../components/UI/ProfileSidebar";
 
-export default function Profile() {
-  const { query } = useRouter();
-  console.log(query);
-  // const { id } = query;
+export async function getServerSideProps(context) {
+  const { userId } = context.params;
+
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
+  );
+  // console.log(response);
+
+  return {
+    props: {
+      tutor: response.data,
+    },
+  };
+}
+
+export default function Profile({ tutor }) {
+  console.log(tutor);
+  // console.log(userId);
   return (
-    <Container color={"gray-100"}>
-      <header
-        className="h-[25vh] bg-no-repeat bg-cover bg-white"
-        style={{
-          backgroundImage: "/images/flag.jpg",
-        }}
-      >
-        <img
-          className="h-full w-full object-cover"
-          src="/images/flag.png"
-          alt=""
-        />
-      </header>
-      <div className="pl-0 md:pl-24 -mt-20 bg-white flex justify-center md:justify-start  gap-8">
-        <section className="flex flex-col items-center">
+    <Container color={"white"}>
+      <div className="flex flex-col">
+        <header
+          className="h-[25vh] bg-no-repeat bg-cover bg-white"
+          style={{
+            backgroundImage: "/images/flag.jpg",
+          }}
+        >
           <img
-            src="/images/teacher-illustration.jpg"
+            className="h-full w-full object-cover"
+            src="/images/flag.png"
             alt=""
-            className="h-40 object-contain rounded-full"
           />
-          <h2 className="mt-4 text-black text-xl font-semibold">
-            Chandri Anggara
+        </header>
+        <div className="pl-0 md:w-full md:max-w-[360px] -mt-20  flex flex-col items-center justify-center ">
+          <div className="relative h-40 w-40">
+            <Image
+              layout="fill"
+              className="object-cover object-center rounded-full"
+              src={tutor.profilePic}
+              alt={""}
+            />
+          </div>
+
+          <h2 className="mt-4 text-gray-800 text-2xl font-bold">
+            {tutor.name}
           </h2>
-        </section>
+        </div>
       </div>
       {/* Mobile Collapse */}
       <div className="block md:hidden pt-8 bg-white md:bg-neutral-100 rounded px-5 sm:p-8">
@@ -64,7 +84,7 @@ export default function Profile() {
       </div>
       <main className="p-6 md:flex gap-6 bg-white ">
         <div className="w-full md:w-[420px]">
-          <ProfileSidebar />
+          <ProfileSidebar tutor={tutor} />
         </div>
         <section className="-mt-8 md:-mt-[8.5rem] w-full flex flex-col gap-10 ">
           <div className="hidden md:block mt-8 bg-white md:bg-neutral-100 rounded sm:p-8">
@@ -74,33 +94,16 @@ export default function Profile() {
 
             {/* Desktop Collapse */}
             <div className="hidden md:flex flex-col gap-6 md:gap-8">
-              <Collapse label="Personal Information">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus odio distinctio deleniti deserunt est ad perspiciatis
-                veritatis delectus voluptatibus fuga? Quia qui repudiandae
-                ratione. Sint vero impedit saepe et quidem expedita quisquam ex
-                debitis cupiditate? Qui similique totam ut atque.
-              </Collapse>
-              <Collapse label="About me">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus odio distinctio deleniti deserunt est ad perspiciatis
-                veritatis delectus voluptatibus fuga? Quia qui repudiandae
-                ratione. Sint vero impedit saepe et quidem expedita quisquam ex
-                debitis cupiditate? Qui similique totam ut atque.
-              </Collapse>
-              <Collapse label="Looking for">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Accusamus odio distinctio deleniti deserunt est ad perspiciatis
-                veritatis delectus voluptatibus fuga? Quia qui repudiandae
-                ratione. Sint vero impedit saepe et quidem expedita quisquam ex
-                debitis cupiditate? Qui similique totam ut atque.
-              </Collapse>
+              <Collapse label="About me">{tutor.aboutMe}</Collapse>
+              <Collapse label="Achievements">{tutor.achievements}</Collapse>
             </div>
           </div>
 
           <div className="mt-20 md:mt-0 bg-white md:bg-neutral-100 rounded md:p-8">
             <div className="mb-8 md:flex items-center justify-between">
-              <h2 className="text-primary text-xl font-semibold">Feedbacks</h2>
+              <h2 className="text-primary-dark text-xl font-semibold">
+                Feedbacks
+              </h2>
               <div className="flex mt-2 item-center">
                 <svg
                   className="w-5 h-5 text-yellow-400 fill-current dark:text-gray-300"

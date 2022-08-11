@@ -4,8 +4,6 @@ import ChevronDots from "../components/UI/ChevronDots";
 import FormGroup from "../components/UI/FormGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
-import { useRouter } from "next/router";
-import { useFormik } from "formik";
 import Input from "../components/UI/Input";
 import InputFile from "../components/UI/InputFile";
 import TextArea from "../components/UI/TextArea";
@@ -13,6 +11,8 @@ import Select from "../components/UI/Select";
 import DatePicker from "../components/UI/DatePicker";
 import { filetobase64 } from "../utility/filetobase64";
 import Image from "next/image";
+import { useRouter } from "next/router";
+import { useFormik } from "formik";
 import { useAuth } from "../contexts/AuthContext";
 import * as yup from "yup";
 
@@ -64,7 +64,10 @@ function Account({ setCurrentStep }) {
     validationSchema: signupSchema,
     onSubmit: (values) => {
       // console.log(values);
-      localStorage.setItem("Account", JSON.stringify(values));
+      localStorage.setItem(
+        "Account",
+        JSON.stringify({ email: values.email, password: values.password })
+      );
       setCurrentStep((prev) => ++prev);
     },
   });
@@ -91,8 +94,9 @@ function Account({ setCurrentStep }) {
             formik={formik}
           />
         </FormGroup>
-
-        <Button type="submit">Next</Button>
+        <div className="sm:pt-4">
+          <Button type="submit">Next</Button>
+        </div>
       </form>
     </div>
   );
@@ -101,14 +105,14 @@ function Account({ setCurrentStep }) {
 function Personal({ setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
-      fullName: "",
+      name: "",
       cnic: "",
+      birth: "",
+      gender: "",
       mobile: "",
       watsapp: "",
-      gender: "",
-      dateOfBirth: new Date(),
-      address: "",
       city: "",
+      address: "",
     },
     onSubmit: (values) => {
       // console.log(values);
@@ -123,7 +127,7 @@ function Personal({ setCurrentStep }) {
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup horizontal>
-          <Input required label="Full Name" name={"fullName"} formik={formik} />
+          <Input required label="Full Name" name={"name"} formik={formik} />
           <Input required label="CNIC" name={"cnic"} formik={formik} />
         </FormGroup>
 
@@ -132,7 +136,7 @@ function Personal({ setCurrentStep }) {
             required
             type={"date"}
             label="Date of Birth"
-            name={"dateOfBirth"}
+            name={"birth"}
             formik={formik}
           />
           <Select required label="Gender" name="gender" formik={formik}>
@@ -167,7 +171,7 @@ function Personal({ setCurrentStep }) {
           <TextArea required label="Address" name={"address"} formik={formik} />
         </FormGroup>
 
-        <div className="space-y-4 sm:space-y-0 sm:flex gap-8">
+        <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
           <Button
             onClick={() => {
               setCurrentStep((prev) => --prev);
@@ -187,9 +191,9 @@ function Qualification({ setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
       qualification: "",
-      institute: "",
+      degreeInstitute: "",
       passingYear: "",
-      job: "",
+      jobTitle: "",
       jobInstitute: "",
       experience: "",
     },
@@ -225,7 +229,7 @@ function Qualification({ setCurrentStep }) {
           <Input
             required
             label="Institute"
-            name={"institute"}
+            name={"degreeInstitute"}
             formik={formik}
           />
           <Input
@@ -237,7 +241,12 @@ function Qualification({ setCurrentStep }) {
           />
         </FormGroup>
         <FormGroup horizontal>
-          <Input required label="Current Job" name={"job"} formik={formik} />
+          <Input
+            required
+            label="Current Job"
+            name={"jobTitle"}
+            formik={formik}
+          />
           <Input
             required
             label="Experience"
@@ -254,7 +263,7 @@ function Qualification({ setCurrentStep }) {
             formik={formik}
           />
         </FormGroup>
-        <div className="space-y-4 sm:space-y-0 sm:flex gap-8">
+        <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
           <Button
             onClick={() => {
               setCurrentStep((prev) => --prev);
@@ -271,9 +280,10 @@ function Qualification({ setCurrentStep }) {
 }
 
 function Profile({ setCurrentStep }) {
+  const { signup } = useAuth();
   const [imagePath, setImagePath] = useState(null);
-  const [data, setData] = useState(null);
-  console.log(data);
+  const [error, setError] = useState("");
+
   const router = useRouter();
 
   // console.log(imagePath);
@@ -286,16 +296,16 @@ function Profile({ setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
       profilePic: "",
-      aboutMe: "",
       subjects: "",
       classes: "",
-      modesOfTeaching: "",
+      teachingMode: "",
+      aboutMe: "",
       achievements: "",
     },
     onSubmit: async (values) => {
       try {
         values.profilePic = await filetobase64(imagePath);
-        console.log(values.profilePic);
+        // console.log(values.profilePic);
         localStorage.setItem("Profile", JSON.stringify(values));
       } catch (error) {
         console.log(error);
@@ -307,10 +317,30 @@ function Profile({ setCurrentStep }) {
       const qualification = JSON.parse(localStorage.getItem("Qualification"));
 
       if (account && profile && personal && qualification) {
-        setData({ ...account, ...profile, ...personal, ...qualification });
+        setError("");
+        const data = {
+          ...account,
+          ...profile,
+          ...personal,
+          ...qualification,
+          userType: "tutor",
+          userStatus: "unverified",
+          tag: "none",
+        };
+        console.log(data);
+        try {
+          const response = await signup(data);
+          console.log(response);
+          if (response.error) {
+            setError(response.error);
+          } else {
+            router.push("/");
+          }
+        } catch (error) {
+          console.log(error);
+          setError(error.message);
+        }
       }
-      router.push("/");
-      localStorage.clear();
     },
   });
 
@@ -356,7 +386,7 @@ function Profile({ setCurrentStep }) {
           <Select
             required
             label="Mode of Teaching"
-            name="modesOfTeaching"
+            name="teachingMode"
             formik={formik}
           >
             <option value={""}>Select</option>
@@ -382,7 +412,7 @@ function Profile({ setCurrentStep }) {
             formik={formik}
           />
         </FormGroup>
-        <div className="flex gap-8">
+        <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
           <Button
             type="button"
             onClick={() => {

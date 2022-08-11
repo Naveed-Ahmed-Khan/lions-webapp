@@ -1,26 +1,47 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import Container from "../components/UI/Container";
-import { useRouter } from "next/router";
+
 import Image from "next/image";
 import Input from "../components/UI/Input";
 import { useFormik } from "formik";
 import { useAuth } from "../contexts/AuthContext";
+import * as yup from "yup";
+import { useRouter } from "next/router";
 
 export default function Login() {
-  const { signin, currentUser } = useAuth();
-  console.log(currentUser);
   const router = useRouter();
+  const { signin, currentUser } = useAuth();
+  const [error, setError] = useState("");
+
+  const loginSchema = yup.object({
+    email: yup.string("").email("Enter a valid email"),
+    password: yup
+      .string("")
+      .min(6, "Password should be of minimum 6 characters length"),
+  });
 
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-
+    validationSchema: loginSchema,
     onSubmit: async (values) => {
-      console.log(values);
-      // await signin(values);
+      setError("");
+      try {
+        const response = await signin(values);
+        console.log(response);
+        localStorage.setItem("user", JSON.stringify(response));
+        if (response.error) {
+          setError(response.error);
+        } else {
+          router.push("/");
+        }
+      } catch (error) {
+        console.log(error);
+        setError(error.message);
+      }
     },
   });
 
@@ -39,6 +60,16 @@ export default function Login() {
                     Welcome back! Sign in to continue.
                   </p>
                 </div>
+                {error && (
+                  <p
+                    onClick={() => {
+                      setError("");
+                    }}
+                    className="cursor-pointer mt-4 text-center font-archivo text-red-500 px-6 py-3 border border-red-500 rounded-lg"
+                  >
+                    {error}, please try again.
+                  </p>
+                )}
                 <div className="mt-8">
                   <div className="mt-6">
                     <form onSubmit={formik.handleSubmit} className="space-y-6">
@@ -46,12 +77,10 @@ export default function Login() {
                         <div className="mt-1">
                           <Input
                             required
-                            type="email"
                             label="Email address"
                             placeholder="Your Email"
                             name="email"
-                            value={formik.values.email}
-                            onChange={formik.handleChange}
+                            formik={formik}
                           />
                         </div>
                       </div>
@@ -63,8 +92,7 @@ export default function Login() {
                             label="Password"
                             placeholder="Your Password"
                             name="password"
-                            value={formik.values.password}
-                            onChange={formik.handleChange}
+                            formik={formik}
                           />
                         </div>
                       </div>

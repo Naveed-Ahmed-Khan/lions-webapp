@@ -6,7 +6,7 @@ export default function Dropdown({ children, options }) {
   const router = useRouter();
   // const { selectedUserInfo } = useStateContext();
   // console.log(selectedItem);
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -31,17 +31,19 @@ export default function Dropdown({ children, options }) {
                   key={option.title}
                   className="group w-full flex items-center py-2 hover:bg-gray-200 "
                   onClick={() => {
-                    if (option.title === "Profile") {
+                    if (option.title === "My Profile") {
                       router.push({
                         pathname: "/profile/[userId]",
-                        query: { userId: currentUser.userID },
+                        query: { userId: currentUser.userId },
                       });
                     } else {
+                      logout();
+                      router.push("/");
                     }
                     setOpen(false);
                   }}
                 >
-                  <div className="mx-2 h-8 w-1 group-hover:bg-primary" />
+                  <div className="mx-2 h-8 w-1 bg-primary" />
                   <p className="font-semibold text-gray-600 ">{option.title}</p>
                   {/* <p className="text-sm text-gray-500">
                           {option.message}

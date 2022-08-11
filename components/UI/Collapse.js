@@ -12,7 +12,7 @@ const Collapse = ({ label, children }) => {
   return (
     <div>
       <div
-        className="bg-primary px-4 md:px-8 py-2 md:py-3 rounded"
+        className="bg-gradient-to-br from-green-700 via-green-600 to-green-700 drop-shadow-md px-4 md:px-8 py-2 md:py-3 rounded"
         onClick={() => {
           setIsOpen(!isOpen);
         }}

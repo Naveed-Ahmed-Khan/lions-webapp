@@ -11,41 +11,52 @@ import { useFormik } from "formik";
 import Input from "../components/UI/Input";
 import Select from "../components/UI/Select";
 import TextArea from "../components/UI/TextArea";
+import { useAuth } from "../contexts/AuthContext";
+import AccessDenied from "../components/UI/AccessDenied";
+import axios from "axios";
 
 export default function JobPosting() {
-  const [currentStep, setCurrentStep] = useState(1);
+  const router = useRouter();
+  const [currentStep, setCurrentStep] = useState(3);
+  const { currentUser } = useAuth();
   console.log(currentStep);
   return (
-    <Container color={"gray-50"}>
-      <div className="bg-white w-full mx-auto">
-        <h1 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
-          Job Posting
-        </h1>
-        <div className="hidden sm:block pt-6 pb-12 px-8">
-          <ChevronDots
-            steps={["Account", "Tutor", "Description"]}
-            currentStep={currentStep}
-          />
+    <>
+      {currentUser?.userType !== "student" && <AccessDenied />}
+
+      <Container color={"gray-50"}>
+        <div className="bg-white w-full mx-auto">
+          <h1 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
+            Job Posting
+          </h1>
+          <div className="hidden sm:block pt-6 pb-12 px-8">
+            <ChevronDots
+              steps={["Student", "Tutor", "Description"]}
+              currentStep={currentStep}
+            />
+          </div>
+          <div className="px-5">
+            {currentStep === 1 && <Student setCurrentStep={setCurrentStep} />}
+            {currentStep === 2 && <Tutor setCurrentStep={setCurrentStep} />}
+            {currentStep === 3 && (
+              <Description setCurrentStep={setCurrentStep} />
+            )}
+          </div>
         </div>
-        <div className="px-5">
-          {currentStep === 1 && <Personal setCurrentStep={setCurrentStep} />}
-          {currentStep === 2 && <Tutor setCurrentStep={setCurrentStep} />}
-          {currentStep === 3 && <Profile setCurrentStep={setCurrentStep} />}
-        </div>
-      </div>
-    </Container>
+      </Container>
+    </>
   );
 }
-function Personal({ setCurrentStep }) {
+function Student({ setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
-      subjects: [],
+      subjects: "",
       class: "",
       institute: "",
       duration: "",
     },
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
+      localStorage.setItem("Student", JSON.stringify(values));
       setCurrentStep((prev) => ++prev);
     },
   });
@@ -62,38 +73,18 @@ function Personal({ setCurrentStep }) {
             label="Subjects"
             type="text"
             name="subjects"
-            value={formik.values.subjects}
-            onChange={formik.handleChange}
+            formik={formik}
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup horizontal>
           <Input
             required
             label="Class"
             type="text"
             name="class"
-            value={formik.values.class}
-            onChange={formik.handleChange}
+            formik={formik}
           />
-        </FormGroup>
-        <FormGroup>
-          <Input
-            required
-            label="Institute"
-            type="text"
-            name="institute"
-            value={formik.values.institute}
-            onChange={formik.handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <Select
-            required
-            label="Duration"
-            name="duration"
-            value={formik.values.duration}
-            onChange={formik.handleChange}
-          >
+          <Select required label="Duration" name="duration" formik={formik}>
             <option value="">Select</option>
             <option value="1 Month">1 Month</option>
             <option value="2 Months">2 Months</option>
@@ -101,7 +92,19 @@ function Personal({ setCurrentStep }) {
             <option value="More Than 3 Months">More Than 3 Months</option>
           </Select>
         </FormGroup>
-        <Button type="submit">Next</Button>
+        <FormGroup>
+          <Input
+            required
+            label="Institute"
+            type="text"
+            name="institute"
+            formik={formik}
+          />
+        </FormGroup>
+
+        <div className="sm:pt-4">
+          <Button type="submit">Next</Button>
+        </div>
       </form>
     </div>
   );
@@ -110,12 +113,13 @@ function Tutor({ setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
       qualification: "",
+      teachingMode: "",
       gender: "",
       city: "",
       experience: "",
     },
     onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
+      localStorage.setItem("Tutor", JSON.stringify(values));
       setCurrentStep((prev) => ++prev);
     },
   });
@@ -131,8 +135,7 @@ function Tutor({ setCurrentStep }) {
             label="Qualification"
             type="text"
             name="qualification"
-            value={formik.values.qualification}
-            onChange={formik.handleChange}
+            formik={formik}
           >
             <option value="">Select</option>
             <option value="Matric">Matric</option>
@@ -145,12 +148,31 @@ function Tutor({ setCurrentStep }) {
         </FormGroup>
 
         <FormGroup>
+          <Input
+            required
+            label="Experience"
+            type="text"
+            name="experience"
+            formik={formik}
+          />
+        </FormGroup>
+
+        <FormGroup horizontal>
+          <Select
+            required
+            label="Mode of Teaching"
+            name="teachingMode"
+            formik={formik}
+          >
+            <option value="">Select</option>
+            <option value="One to One">One to One</option>
+            <option value="Online">Online</option>
+          </Select>
           <Select
             required
             label="Gender Preference"
             name="gender"
-            value={formik.values.gender}
-            onChange={formik.handleChange}
+            formik={formik}
           >
             <option value="">Select</option>
             <option value="Male">Male</option>
@@ -158,27 +180,18 @@ function Tutor({ setCurrentStep }) {
             <option value="None">None</option>
           </Select>
         </FormGroup>
+
         <FormGroup>
           <Input
             required
             label="City"
             type="text"
             name="city"
-            value={formik.values.city}
-            onChange={formik.handleChange}
+            formik={formik}
           />
         </FormGroup>
-        <FormGroup>
-          <Input
-            required
-            label="Experience"
-            type="text"
-            name="experience"
-            value={formik.values.experience}
-            onChange={formik.handleChange}
-          />
-        </FormGroup>
-        <div className="space-y-4 sm:space-y-0 sm:flex gap-8">
+
+        <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
           <Button
             onClick={() => {
               setCurrentStep((prev) => --prev);
@@ -193,20 +206,54 @@ function Tutor({ setCurrentStep }) {
     </div>
   );
 }
-function Profile({ setCurrentStep }) {
+function Description({ setCurrentStep }) {
+  const { currentUser } = useAuth();
   const router = useRouter();
+  const [error, setError] = useState("");
 
   const formik = useFormik({
     initialValues: {
-      jobDescription: "",
-      aboutStudent: "",
       budget: "",
+      description: "",
     },
-    onSubmit: (values) => {
-      // alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values) => {
+      localStorage.setItem("Description", JSON.stringify(values));
+
+      const student = JSON.parse(localStorage.getItem("Student"));
+      const tutor = JSON.parse(localStorage.getItem("Tutor"));
+      const description = JSON.parse(localStorage.getItem("Description"));
+
+      if (student && tutor && description) {
+        setError("");
+        const data = {
+          ...student,
+          ...tutor,
+          ...description,
+          user_id: currentUser.userId,
+          isFeatured: false,
+        };
+        console.log(data);
+        try {
+          const response = await axios.post(
+            `${process.env.NEXT_PUBLIC_API}/add-job`,
+            data
+          );
+          console.log(response.data);
+          if (response.error) {
+            setError(response.error);
+          } else {
+            router.push("/");
+          }
+        } catch (error) {
+          console.log(error);
+          setError(error.message);
+        }
+      }
+
       router.push("/");
     },
   });
+
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
       <h1 className="text-xl sm:text-2xl font-semibold text-primary">
@@ -219,34 +266,20 @@ function Profile({ setCurrentStep }) {
             label="Expected budget"
             type="text"
             name="budget"
-            value={formik.values.budget}
-            onChange={formik.handleChange}
+            formik={formik}
           />
         </FormGroup>
         <FormGroup>
           <TextArea
             required
-            rows={6}
             label="Job Description"
             type="text"
-            name="jobDescription"
-            value={formik.values.jobDescription}
-            onChange={formik.handleChange}
-          />
-        </FormGroup>
-        <FormGroup>
-          <TextArea
-            required
-            rows={6}
-            label="About Student"
-            type="text"
-            name="aboutStudent"
-            value={formik.values.aboutStudent}
-            onChange={formik.handleChange}
+            name="description"
+            formik={formik}
           />
         </FormGroup>
 
-        <div className="space-y-4 sm:space-y-0 sm:flex gap-8">
+        <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
           <Button
             onClick={() => {
               setCurrentStep((prev) => --prev);

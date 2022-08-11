@@ -1,18 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 
-import Container from "../../components/UI/Container";
-import Filter from "../../components/UI/Filter";
-import TutorCard2 from "../../components/UI/cards/TutorCard2";
+import Container from "../components/UI/Container";
+import Filter from "../components/UI/Filter";
+import TutorCard2 from "../components/UI/cards/TutorCard2";
+import { useStateContext } from "../contexts/StateContext";
 
 export default function Tutors() {
+  const { tutors } = useStateContext();
   return (
     <>
       <Container color={"gray-100"}>
-        <section className="lg:flex p-6">
-          <div className="px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
+        <section className="lg:flex p-5">
+          <div className=" lg:pr-6 mb-8">
             <Filter />
           </div>
-          <div className="w-full p-0 sm:p-10 lg:p-0 lg:h-[89vh] lg:overflow-auto mx-auto space-y-8 ">
+          <div className="w-full lg:h-[89vh] lg:overflow-auto mx-auto space-y-8 ">
             <div className="space-y-4">
               <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Find the best tutor
@@ -24,9 +26,9 @@ export default function Tutors() {
               </p>
             </div>
             <div className="w-full space-y-8">
-              <TutorCard2 />
-              <TutorCard2 />
-              <TutorCard2 />
+              {tutors?.map((tutor) => {
+                return <TutorCard2 tutor={tutor} />;
+              })}
             </div>
           </div>
         </section>

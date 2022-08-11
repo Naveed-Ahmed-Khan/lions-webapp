@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useContext, useState, useEffect } from "react";
 
 const AuthContext = React.createContext();
@@ -9,32 +10,52 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
+  const [check, setCheck] = useState(true);
 
-  function signup(userData) {
-    // return createUserWithEmailAndPassword(auth, email, password);
+  const checkAuth = () => {
+    setCheck((prev) => !prev);
+  };
+
+  async function signup(values) {
+    let signupData = null;
+    setLoading(true);
+    try {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/signup`,
+        values
+      );
+      signupData = data;
+    } catch ({ response: { data } }) {
+      signupData = data;
+    } finally {
+      setLoading(false);
+      checkAuth();
+      return signupData;
+    }
   }
 
-  async function signin(data) {
-    // console.log(data);
-    const options = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    };
-    console.log(options);
-
+  async function signin(values) {
+    let signinData = null;
+    setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/signin", options);
-      const user = await res.json();
-      setCurrentUser(user);
-    } catch (error) {
-      console.log(error.message);
-      setCurrentUser(null);
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/signin`,
+        values
+      );
+      localStorage.setItem("user", JSON.stringify(data));
+      signinData = data;
+    } catch ({ response: { data } }) {
+      signinData = data;
+    } finally {
+      setLoading(false);
+      checkAuth();
+      return signinData;
     }
   }
 
   function logout() {
-    // return signOut(auth);
+    localStorage.clear();
+    checkAuth();
   }
 
   /*   function googleSignIn() {
@@ -62,18 +83,20 @@ export function AuthProvider({ children }) {
     return updatePassword(currentUser, password);
   } */
 
-  /*   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user) {
       setCurrentUser(user);
       setLoading(false);
-    });
-
-    return unsubscribe;
-  }, []); */
+    } else {
+      setCurrentUser(null);
+    }
+  }, [check]);
 
   const value = {
     currentUser,
-    setCurrentUser,
+    checkAuth,
     signup,
     signin,
     logout,

@@ -2,16 +2,24 @@
 
 import React from "react";
 import Link from "next/dist/client/link";
+import Image from "next/image";
+import Button from "../Button";
+import { useRouter } from "next/router";
 
-const TutorCard2 = () => {
+const TutorCard2 = ({ tutor }) => {
+  const router = useRouter();
   return (
     <div className="sm:flex mx-auto overflow-hidden bg-white rounded-lg shadow-2xl dark:bg-gray-800">
-      <div className="lg:w-64">
-        <img
-          className="object-cover w-full h-64"
-          src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
-          alt="avatar"
-        />
+      <div className="flex flex-col">
+        <div className="relative w-full lg:w-64 h-64 sm:h-full">
+          <Image
+            layout="fill"
+            className="object-cover object-center"
+            src={tutor.profilePic}
+            alt={""}
+          />
+        </div>
+
         <div className="flex items-center justify-center px-6 py-3 bg-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -28,14 +36,16 @@ const TutorCard2 = () => {
             />
           </svg>
 
-          <h3 className="mx-3 text-lg font-semibold text-white">Verified</h3>
+          <h3 className="mx-3 text-lg font-semibold text-white">
+            {tutor.userStatus}
+          </h3>
         </div>
       </div>
 
-      <div className="flex-auto p-4">
+      <div className="flex flex-col flex-auto justify-between p-4">
         <div className="sm:flex justify-between">
           <h3 className="text-xl font-semibold text-gray-700 dark:text-white">
-            Patterson johnson
+            {tutor.name}
           </h3>
           <div className="flex mt-2 item-center">
             <svg
@@ -76,9 +86,8 @@ const TutorCard2 = () => {
           </div>
         </div>
 
-        <p className="hidden sm:block py-1 text-gray-700 dark:text-gray-400">
-          Full Stack maker and UI / UX Designer , Author of Building UI.Full
-          Stack maker and UI / UX Designer , Author of Building UI.
+        <p className="hidden sm:block py-1 text-gray-700 dark:text-gray-400 h-20 overflow-auto">
+          {tutor.aboutMe}
         </p>
 
         {/* {Details} */}
@@ -101,7 +110,7 @@ const TutorCard2 = () => {
               />
             </svg>
 
-            <h3 className="px-2 text-sm font-medium">BS | Mathematics</h3>
+            <h3 className="px-2 text-sm font-medium">{tutor.qualification}</h3>
           </div>
 
           <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
@@ -123,7 +132,7 @@ const TutorCard2 = () => {
               />
             </svg>
 
-            <h3 className="px-2 text-sm font-medium">Rawalpindi</h3>
+            <h3 className="px-2 text-sm font-medium">{tutor.city}</h3>
           </div>
 
           <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
@@ -141,6 +150,7 @@ const TutorCard2 = () => {
                 d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
               />
             </svg>
+
             <h3 className="px-2 text-sm font-medium">4 | Students taught</h3>
           </div>
 
@@ -159,6 +169,7 @@ const TutorCard2 = () => {
                 d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
               />
             </svg>
+
             <h3 className="px-2 text-sm font-medium">2 | Trial lessons</h3>
           </div>
           <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
@@ -176,7 +187,10 @@ const TutorCard2 = () => {
                 d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
               />
             </svg>
-            <h3 className="px-2 text-sm font-medium">2 | Trial lessons</h3>
+
+            <h3 className="px-2 text-sm font-medium">
+              {tutor.degreeInstitute}
+            </h3>
           </div>
           <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
             <svg
@@ -193,12 +207,15 @@ const TutorCard2 = () => {
                 d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
               />
             </svg>
-            <h3 className="px-2 text-sm font-medium">2 | Trial lessons</h3>
+
+            <h3 className="px-2 text-sm font-medium">
+              {tutor.experience} Years
+            </h3>
           </div>
         </div>
 
         {/* {Badges} */}
-        <div className="mb-2">
+        <div className="">
           <h3 className="hidden sm:block my-2 col-span-full text-primary font-medium underline underline-offset-2">
             Badges:
           </h3>
@@ -295,11 +312,16 @@ const TutorCard2 = () => {
             </div>
 
             <div className="sm:flex items-center justify-start sm:space-x-4">
-              <div className="my-4 sm:my-0 text-center px-4 py-2 bg-primary rounded-md text-white font-medium">
-                <Link href="/tutorprofile" className="">
-                  <a>View Profile</a>
-                </Link>
-              </div>
+              <Button
+                onClick={() => {
+                  router.push({
+                    pathname: "/profile/[userId]",
+                    query: { userId: tutor._id },
+                  });
+                }}
+              >
+                <p> View Profile</p>
+              </Button>
 
               <button className="w-full sm:w-fit px-4 py-2 border border-primary bg-white rounded-md text-primary font-medium">
                 Contact
@@ -307,8 +329,6 @@ const TutorCard2 = () => {
             </div>
           </div>
         </div>
-
-        {/* {bottom-Buttons} */}
       </div>
     </div>
   );

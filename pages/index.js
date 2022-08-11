@@ -5,8 +5,11 @@ import JobCard from "../components/UI/cards/JobCard";
 import FeatureCard from "../components/UI/cards/FeatureCard";
 import Container from "../components/UI/Container";
 import Carousel from "../components/UI/Carousel";
+import { useStateContext } from "../contexts/StateContext";
 
 export default function Home() {
+  const { tutors, jobs } = useStateContext();
+
   const images = [
     {
       src: "https://lions.edu.pk/images/users/21655733138.jpg",
@@ -75,9 +78,9 @@ export default function Home() {
               </p>
             </div>
             <div className="grid w-full grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-              <Card />
-              <Card />
-              <Card />
+              {tutors?.map((tutor) => {
+                return tutor.isFeatured && <Card tutor={tutor} />;
+              })}
             </div>
           </div>
         </section>
@@ -97,15 +100,15 @@ export default function Home() {
               </p>
             </div>
             <div className="grid grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-              <JobCard />
-              <JobCard />
-              <JobCard />
+              {jobs?.map((job) => {
+                return job.isFeatured && <JobCard job={job} />;
+              })}
             </div>
           </div>
         </section>
       </Container>
 
-      <Container color={"gray-100"}>
+      {/* <Container color={"gray-100"}>
         <section className=" py-6 dark:bg-gray-800 dark:text-gray-800">
           <section className="text-gray-800 bg-gray-100 body-font relative">
             <div className="container p-4 mx-auto space-y-16 sm:p-10">
@@ -208,7 +211,7 @@ export default function Home() {
             </div>
           </section>
         </section>
-      </Container>
+      </Container> */}
     </>
   );
 }

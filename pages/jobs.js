@@ -1,9 +1,11 @@
 import React from "react";
-import JobCard2 from "../../components/UI/cards/JobCard2";
-import Container from "../../components/UI/Container";
-import Filter from "../../components/UI/Filter";
+import JobCard2 from "../components/UI/cards/JobCard2";
+import Container from "../components/UI/Container";
+import Filter from "../components/UI/Filter";
+import { useStateContext } from "../contexts/StateContext";
 
-export default function index() {
+export default function Jobs() {
+  const { jobs } = useStateContext();
   return (
     <>
       <Container color={"gray-100"}>
@@ -23,9 +25,9 @@ export default function index() {
               </p>
             </div>
             <div className="space-y-8 w-full">
-              <JobCard2 />
-              <JobCard2 />
-              <JobCard2 />
+              {jobs?.map((job) => {
+                return <JobCard2 key={job._id} job={job} />;
+              })}
             </div>
           </div>
         </section>
