@@ -4,7 +4,7 @@ import Button from "../Button";
 
 const JobCard2 = ({ job }) => {
   return (
-    <div className="relative flex flex-col max-w-[340] overflow-hidden rounded-md shadow-lg ">
+    <div className="relative flex flex-col max-w-[340] overflow-hidden rounded-md shadow-xl">
       <div className="flex flex-col p-4 sm:p-8 space-y-4 bg-gray-200 ">
         {/* <h3 className="text-xl font-semibold text-gray-700">Tutor Required</h3> */}
         <div className="sm:flex justify-between items-center">
@@ -194,7 +194,7 @@ const JobCard2 = ({ job }) => {
             <span>Duration | {job.duration}</span>
           </li>
         </ul>
-        <div className="w-[90%] mx-auto">
+        <div className="w-full sm:w-fit self-end">
           <Button>
             <p>Apply Now</p>
           </Button>

@@ -6,7 +6,8 @@ import Backdrop from "./Backdrop";
 import { useAuth } from "../../contexts/AuthContext";
 
 const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
-  const { currentUser } = useAuth();
+  const { currentUser, logout } = useAuth();
+
   // console.log(currentUser);
   // const location = useLocation();
   /*const { logout } = useAuth(); */
@@ -56,10 +57,10 @@ const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                   height={70}
                   layout="fixed"
                   className="rounded-full object-cover"
-                  src="/images/student.jpg"
+                  src={currentUser.profilePic}
                   alt="Profile"
                 />
-                {/* <p className=" text-white">{currentUser.userID}</p> */}
+                <p className=" text-white">{currentUser.name}</p>
               </div>
             )}
 
@@ -166,6 +167,7 @@ const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                         onClick={() => {
                           setShowBackdrop(false);
                           setOpen(false);
+                          logout();
                         }}
                       >
                         <div

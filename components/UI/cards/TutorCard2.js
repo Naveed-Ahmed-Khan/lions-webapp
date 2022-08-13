@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 const TutorCard2 = ({ tutor }) => {
   const router = useRouter();
   return (
-    <div className="sm:flex mx-auto overflow-hidden bg-white rounded-lg shadow-2xl dark:bg-gray-800">
+    <div className="sm:flex mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
       <div className="flex flex-col">
         <div className="relative w-full lg:w-64 h-64 sm:h-full">
           <Image
@@ -170,7 +170,7 @@ const TutorCard2 = ({ tutor }) => {
               />
             </svg>
 
-            <h3 className="px-2 text-sm font-medium">2 | Trial lessons</h3>
+            <h3 className="px-2 text-sm font-medium">Class {tutor.classes}</h3>
           </div>
           <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
             <svg
@@ -188,9 +188,7 @@ const TutorCard2 = ({ tutor }) => {
               />
             </svg>
 
-            <h3 className="px-2 text-sm font-medium">
-              {tutor.degreeInstitute}
-            </h3>
+            <h3 className="px-2 text-sm font-medium">{tutor.subjects}</h3>
           </div>
           <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
             <svg
@@ -311,7 +309,7 @@ const TutorCard2 = ({ tutor }) => {
               </div>
             </div>
 
-            <div className="sm:flex items-center justify-start sm:space-x-4">
+            <div className="space-y-4 md:space-y-0 sm:flex items-center justify-start sm:space-x-4">
               <Button
                 onClick={() => {
                   router.push({

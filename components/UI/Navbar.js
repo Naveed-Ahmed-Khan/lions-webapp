@@ -9,7 +9,7 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
   const { currentUser, logout } = useAuth();
   // console.log(currentUser);
   // const [state, setState] = useState(false);
-  console.log(open);
+  // console.log(open);
   const navigation = [
     { title: "Home", path: "/" },
     { title: "Post a Job", path: "/job-posting" },

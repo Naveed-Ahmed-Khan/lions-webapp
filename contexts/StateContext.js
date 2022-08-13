@@ -15,7 +15,7 @@ export const StateProvider = ({ children }) => {
   const [tutors, setTutors] = useState(null);
   const [jobs, setJobs] = useState(null);
 
-  console.log(tutors);
+  // console.log(tutors);
 
   useEffect(() => {
     const fetchTutors = async () => {
