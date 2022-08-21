@@ -59,7 +59,7 @@ const ProfileSidebar = ({ tutor }) => {
             Gender: {tutor.gender}
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 text-primary"
@@ -99,7 +99,7 @@ const ProfileSidebar = ({ tutor }) => {
           <p className="font-archivo text-gray-700 text-base font-medium">
             Works At: {tutor.experience[0].institute}
           </p>
-        </div>
+        </div> */}
         <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
