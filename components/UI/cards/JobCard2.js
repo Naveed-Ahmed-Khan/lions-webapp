@@ -1,8 +1,10 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { jobTimeStamp } from "../../../utility/jobTimeStamp";
 import Button from "../Button";
 
 const JobCard2 = ({ job }) => {
+  const router = useRouter();
   return (
     <div className="relative flex flex-col max-w-[340] overflow-hidden rounded-md shadow-xl">
       <div className="flex flex-col p-4 sm:p-8 space-y-4 bg-gray-200 ">
@@ -25,66 +27,23 @@ const JobCard2 = ({ job }) => {
         <p className="mt-6 text-gray-700 h-24 overflow-y-auto">
           {job.description}
         </p>
-        <div>
-          <p className="text-gray-800 text-sm font-medium">
-            Job posted by | {job.user_id.name}
-          </p>
-        </div>
-        {/* <div className="flex flex-col items-center bg-gray-200 ">
-          <ul className="self-stretch flex-1 space-y-2">
-            <li className="flex space-x-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-6 h-6 text-primary "
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                ></path>
-              </svg>
-              <span>Class | 6th</span>
-            </li>
-            <li className="flex space-x-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-6 h-6 text-primary "
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                ></path>
-              </svg>
-              <span>Subject | English, Urdu</span>
-            </li>
-            <li className="flex space-x-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                className="w-6 h-6 text-primary "
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
-                ></path>
-              </svg>
-              <span>Institute | The Educators</span>
-            </li>
-          </ul>
-        </div> */}
+        {router.pathname !== "/my-jobs" && (
+          <div className="flex justify-between">
+            <div>
+              <p className="text-gray-800 text-sm font-medium">
+                Job posted by | {job.user_id.name}
+              </p>
+            </div>
+            <div>
+              <p className="text-gray-800 text-sm font-medium">
+                Job Status:
+                <span className="ml-2 px-1 py-0.5 border-2 border-primary rounded-full">
+                  {job.jobType}
+                </span>
+              </p>
+            </div>
+          </div>
+        )}
       </div>
       <div className="p-4 sm:p-8 flex flex-col bg-white ">
         <p className="flex text-gray-800">
@@ -194,11 +153,61 @@ const JobCard2 = ({ job }) => {
             <span>Duration | {job.duration}</span>
           </li>
         </ul>
-        <div className="w-full sm:w-fit self-end">
-          <Button>
-            <p>Apply Now</p>
-          </Button>
-        </div>
+
+        {router.pathname === "/jobs" && (
+          <div className="w-full sm:w-fit self-end">
+            <Button
+              onClick={() => {
+                router.push({
+                  pathname: "/job-description/[jobId]",
+                  query: {
+                    jobId: job._id,
+                  },
+                });
+              }}
+            >
+              <p>Apply Now</p>
+            </Button>
+          </div>
+        )}
+
+        {router.pathname.includes("/my-jobs") && (
+          <div className="space-y-4 sm:space-y-0 sm:flex items-end justify-between">
+            <div className="w-full sm:w-fit self-end">
+              <Button
+                onClick={() => {
+                  router.push({
+                    pathname: "/view-applicants/[jobId]",
+                    query: {
+                      jobId: job._id,
+                    },
+                  });
+                }}
+              >
+                <p>View Applicants</p>
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {router.pathname.includes("/applied-jobs") && (
+          <div className="space-y-4 sm:space-y-0 sm:flex items-end justify-between">
+            <div className="w-full sm:w-fit self-end">
+              <Button
+                onClick={() => {
+                  router.push({
+                    pathname: "/my-application/[jobId]",
+                    query: {
+                      jobId: job._id,
+                    },
+                  });
+                }}
+              >
+                <p>View My application</p>
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

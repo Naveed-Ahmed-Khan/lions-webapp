@@ -12,14 +12,12 @@ const ProfileSidebar = ({ tutor }) => {
   return (
     <div className=" flex flex-col gap-8 mt-4">
       <section className="flex flex-col gap-5">
-        <h2 className="text-xl text-primary-dark font-semibold mb-1">
-          Details
-        </h2>
+        <h3 className="text-2xl text-gray-700 font-medium mb-1">Summary</h3>
 
         <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-primary-dark"
+            className="h-6 w-6 text-primary"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -44,7 +42,7 @@ const ProfileSidebar = ({ tutor }) => {
           <div>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-primary-dark"
+              className="h-6 w-6 text-primary"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -64,7 +62,7 @@ const ProfileSidebar = ({ tutor }) => {
         <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-primary-dark"
+            className="h-6 w-6 text-primary"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -79,55 +77,14 @@ const ProfileSidebar = ({ tutor }) => {
             />
           </svg>
           <p className="font-archivo text-gray-700 text-base font-medium">
-            Qualification: {tutor.qualification}
+            Qualification: {tutor.qualifications[2].degree}
           </p>
         </div>
+
         <div className="flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-primary-dark"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M12 14l9-5-9-5-9 5 9 5z" />
-            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-            />
-          </svg>
-          <p className="font-archivo text-gray-700 text-base font-medium">
-            Institute: {tutor.degreeInstitute}
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-primary-dark"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M12 14l9-5-9-5-9 5 9 5z" />
-            <path d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222"
-            />
-          </svg>
-          <p className="font-archivo text-gray-700 text-base font-medium">
-            Passing Year: {tutor.passingYear}
-          </p>
-        </div>
-        <div className="flex items-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-primary-dark"
+            className="h-6 w-6 text-primary"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -140,115 +97,121 @@ const ProfileSidebar = ({ tutor }) => {
             />
           </svg>
           <p className="font-archivo text-gray-700 text-base font-medium">
-            Works At: {tutor.jobInstitute}
+            Works At: {tutor.experience[0].institute}
           </p>
         </div>
-
-        {/*  <section>
-          <div className="flex flex-col gap-6">
-            <h3 className="text-gray-700 text-xl font-semibold">
-              Qualification
-            </h3>
-            <div className="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-primary-dark"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                />
-              </svg>
-              <p className="font-archivo text-gray-700 text-base">
-                Matric - Siddeeq Public School | 2011
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-primary-dark"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                />
-              </svg>
-              <p className="font-archivo text-gray-700 text-base ">
-                Intermediate - Punjab College | 2014
-              </p>
-            </div>
-            <div className="flex items-center gap-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-primary-dark"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                />
-              </svg>
-              <p className="font-archivo text-gray-700 text-base ">
-                Graduation - Comsats University | 2019
-              </p>
-            </div>
-          </div>
-        </section> */}
-      </section>
-      <section className="flex flex-col gap-5">
-        <h2 className="text-xl text-primary-dark font-semibold mb-1">
-          Portfolio
-        </h2>
-        <p className="font-archivo text-gray-700 text-base font-medium">
-          <span className="font-semibold">Subjects:</span> {tutor.subjects}
-        </p>
-        <p className="font-archivo text-gray-700 text-base font-medium">
-          <span className="font-semibold">Classes:</span> {tutor.classes}
-        </p>
-        <p className="font-archivo text-gray-700 text-base font-medium">
-          <span className="font-semibold">Mode:</span> {tutor.teachingMode}
-        </p>
-        <p className="font-archivo text-gray-700 text-base font-medium">
-          <span className="font-semibold">Experience </span> {tutor.experience}{" "}
-          Years
-        </p>
-      </section>
-      <section>
-        <div className="flex flex-col">
-          <div className="flex items-center justify-between gap-4 mb-8">
-            <Button>
-              <div className="text-base">
-                <div className="flex gap-2">
-                  <p>8</p>
-                  <p className="font-archivo text-left">Students Taught</p>
-                </div>
-              </div>
-            </Button>
-            <Button fullWidth>
-              <p className="font-archivo text-base">4 Trial Lessons</p>
-            </Button>
-          </div>
-          <div className="flex-auto">
-            <Button fullWidth>
-              <p className="font-archivo text-base"> Apply Now</p>
-            </Button>
-          </div>
+        <div className="flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6 text-primary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+            />
+          </svg>
+          <p className="font-archivo text-gray-700 text-base font-medium">
+            Students Taught: 5
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6 text-primary"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
+            />
+          </svg>
+          <p className="font-archivo text-gray-700 text-base font-medium">
+            Trial Lessons: 11
+          </p>
         </div>
       </section>
+      <section className="flex flex-col gap-5">
+        <div className="space-y-6 ">
+          <h3 className="text-2xl text-gray-700 font-medium mb-1">
+            Subjects Taught
+          </h3>
+          {tutor.subjectsTaught.length > 0 ? (
+            tutor.subjectsTaught.map((subject) => {
+              return (
+                <div
+                  key={subject._id}
+                  className="w-full p-6 border border-gray-300 rounded-lg"
+                >
+                  <div className="mb-4 flex items-center justify-between">
+                    <h3 className="text-lg text-primary font-medium">
+                      {subject.name}
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {subject.classes.map((item) => {
+                      return (
+                        <div key={item._id}>
+                          <p className="text-gray-600 font-medium">
+                            {item.title}
+                          </p>
+                          <p className="text-gray-600">@ Rs.{item.rate}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <>No Subjects</>
+          )}
+        </div>
+      </section>
+      <section className="flex flex-col gap-5">
+        <div className="space-y-6 ">
+          <h3 className="text-2xl text-gray-700 font-medium mb-1">Places</h3>
+          {tutor.locations.length > 0 ? (
+            tutor.locations.map((location) => {
+              return (
+                <div
+                  key={location._id}
+                  className="w-full p-6 border border-gray-300 rounded-lg"
+                >
+                  <div className="mb-4 flex items-center justify-between">
+                    <h3 className="text-lg text-primary font-medium">
+                      {location.city}
+                    </h3>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    {location.places.map((place, index) => {
+                      return (
+                        <p key={index} className="text-gray-700">
+                          {place}
+                        </p>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <>No Locations</>
+          )}
+        </div>
+      </section>
+
+      <Button>
+        <p className="text-lg"> Apply Now</p>
+      </Button>
     </div>
   );
 };

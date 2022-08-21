@@ -9,6 +9,7 @@ export default function Select({
   label,
   name,
   formik,
+  multiple,
   alt,
 }) {
   const secondary =
@@ -32,6 +33,7 @@ export default function Select({
           name={name}
           value={formik ? formik.values[name] : value}
           onChange={formik ? formik.handleChange : onChange}
+          multiple={multiple}
         >
           {children}
         </select>

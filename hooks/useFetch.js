@@ -1,32 +1,21 @@
-/* import { useEffect, useState } from "react";
+import axios from "axios";
+import useSWR, { useSWRConfig } from "swr";
 
-const useFetch = (collectionName, check) => {
-  const [isloading, setIsloading] = useState(true);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [data, setData] = useState([]);
+const useFetch = (url) => {
+  const { mutate } = useSWRConfig();
 
-  useEffect(() => {
-    const collectionRef = collection(db, collectionName);
+  const { data, error } = useSWR(url, () =>
+    axios.get(url).then((res) => res.data)
+  );
 
-    const fetchData = async () => {
-      setIsloading(true);
-      try {
-        const fetchedData = await getDocs(collectionRef);
-        setData(fetchedData.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-        setIsloading(false);
-      } catch (error) {
-        console.log(error);
-        setErrorMessage(error.message);
-        alert(error);
-      }
-    };
-
-    fetchData();
-  }, [check]);
-  // console.log(data);
-
-  return { data, isloading, errorMessage };
+  return {
+    data: data,
+    isLoading: !error && !data,
+    isError: error,
+    updateData: function () {
+      mutate(url);
+    },
+  };
 };
 
 export default useFetch;
- */

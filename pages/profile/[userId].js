@@ -6,6 +6,7 @@ import Image from "next/image";
 import Collapse from "../../components/UI/Collapse";
 import Container from "../../components/UI/Container";
 import ProfileSidebar from "../../components/UI/ProfileSidebar";
+import Button from "../../components/UI/Button";
 
 export async function getServerSideProps(context) {
   const { userId } = context.params;
@@ -26,27 +27,24 @@ export default function Profile({ tutor }) {
   console.log(tutor);
   // console.log(userId);
   return (
-    <Container color={"white"}>
-      <div className="flex flex-col">
-        <header
-          className="h-[25vh] bg-no-repeat bg-cover bg-white"
-          style={{
-            backgroundImage: "/images/flag.jpg",
-          }}
-        >
-          <img
-            className="h-full w-full object-cover"
-            src="/images/flag.png"
+    <Container color={"gray-50"}>
+      <div className="relative flex flex-col bg-white">
+        <header className="relative h-[35vh]">
+          <Image
+            layout="fill"
+            objectFit="cover"
+            src={tutor.bannerImage}
             alt=""
           />
         </header>
+
         <div className="pl-0 md:w-full md:max-w-[360px] -mt-20  flex flex-col items-center justify-center ">
-          <div className="relative h-40 w-40">
+          <div className="relative h-40 w-40 rounded-full overflow-clip">
             <Image
               layout="fill"
-              className="object-cover object-center rounded-full"
+              objectFit="cover"
               src={tutor.profilePic}
-              alt={""}
+              alt=""
             />
           </div>
 
@@ -57,12 +55,13 @@ export default function Profile({ tutor }) {
       </div>
       {/* Mobile Collapse */}
       <div className="block md:hidden pt-8 bg-white md:bg-neutral-100 rounded px-5 sm:p-8">
-        <h2 className=" mb-8 text-primary text-xl font-semibold">My Profile</h2>
+        <h3 className=" text-primary text-2xl font-medium">My Profile</h3>
         <div className="flex flex-col gap-6 md:gap-8">
           <Collapse label="About me">{tutor.aboutMe}</Collapse>
           <Collapse label="Achievements">{tutor.achievements}</Collapse>
         </div>
       </div>
+
       <main className="p-6 md:flex gap-6 bg-white ">
         <div className="w-full md:w-[420px]">
           <ProfileSidebar tutor={tutor} />
@@ -75,10 +74,38 @@ export default function Profile({ tutor }) {
 
             {/* Desktop Collapse */}
             <div className="hidden md:flex flex-col gap-6 md:gap-8">
+              <h3 className=" text-gray-700 text-2xl font-medium">
+                My Profile
+              </h3>
               <Collapse label="About me">{tutor.aboutMe}</Collapse>
               <Collapse label="Achievements">{tutor.achievements}</Collapse>
             </div>
           </div>
+
+          {tutor.sections.map((section) => {
+            return (
+              <div className="p-8 flex flex-col gap-6 md:gap-8 bg-gray-100">
+                <h3 className=" text-gray-700 text-2xl font-medium">
+                  {section.title}
+                </h3>
+                {section.subSections.map((subsection) => {
+                  return (
+                    <div className="flex flex-col gap-4 bg-white p-8">
+                      <h5 className=" text-gray-700 text-xl font-medium">
+                        {subsection.heading}:
+                      </h5>
+                      <p
+                        className="text-sm sm:text-base tracking-wide sm:tracking-normal 
+                      text-gray-700 text-justify md:text-gray-600"
+                      >
+                        {subsection.content}:
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
 
           <div className="mt-20 md:mt-0 bg-white md:bg-neutral-100 rounded md:p-8">
             <div className="mb-8 md:flex items-center justify-between">

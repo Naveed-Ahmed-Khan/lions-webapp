@@ -8,7 +8,7 @@ const Collapse = ({ label, children }) => {
   if (parentRef.current) {
     collapseHeight = parentRef.current.scrollHeight;
   }
-  console.log(collapseHeight);
+  // console.log(collapseHeight);
   return (
     <div>
       <div

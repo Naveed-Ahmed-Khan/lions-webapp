@@ -8,6 +8,8 @@ export default function Dropdown({ children, options }) {
   // console.log(selectedItem);
   const { currentUser, logout } = useAuth();
   const [open, setOpen] = useState(false);
+
+  console.log(router.pathname);
   return (
     <div
       className="cursor-pointer"
@@ -31,15 +33,23 @@ export default function Dropdown({ children, options }) {
                   key={option.title}
                   className="group w-full flex items-center py-2 hover:bg-gray-200 "
                   onClick={() => {
-                    if (option.title === "My Profile") {
+                    if (option.title === "Logout") {
+                      router.push("/");
+                      logout();
+                    } else {
                       router.push({
-                        pathname: "/profile/[userId]",
+                        pathname: `${option.href}/[userId]`,
+                        query: { userId: currentUser.userId },
+                      });
+                    }
+                    /* if (option.title === "My Profile") {
+                    } else if (option.title === "My Jobs") {
+                      router.push({
+                        pathname: "/my-jobs/[userId]",
                         query: { userId: currentUser.userId },
                       });
                     } else {
-                      logout();
-                      router.push("/");
-                    }
+                    } */
                     setOpen(false);
                   }}
                 >

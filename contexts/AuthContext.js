@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, createContext, useState, useEffect } from "react";
 
-const AuthContext = React.createContext();
+const AuthContext = createContext();
 
 export function useAuth() {
   return useContext(AuthContext);
