@@ -135,7 +135,7 @@ const ProfileSidebar = ({ tutor }) => {
             />
           </svg>
           <p className="font-archivo text-gray-700 text-base font-medium">
-            Trial Lessons: 11
+            Trial Lessons: 10
           </p>
         </div>
       </section>
