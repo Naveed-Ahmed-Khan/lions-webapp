@@ -222,7 +222,10 @@ export default function JobDescription({ job, applications }) {
                 applications.map((application) => {
                   const applicant = application.applicant_id;
                   return (
-                    <div className=" flex flex-col gap-3 md:bg-white bg-neutral-100 rounded p-4 md:p-8">
+                    <div
+                      key={application._id}
+                      className=" flex flex-col gap-3 md:bg-white bg-neutral-100 rounded p-4 md:p-8"
+                    >
                       <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
                         {applicant.name}
                       </h3>

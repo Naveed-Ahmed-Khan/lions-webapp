@@ -156,7 +156,10 @@ export default function EditSections({ tutor, updateData }) {
 
             {sections.map((section, index) => {
               return (
-                <div className="px-5 border border-gray-300 rounded-lg">
+                <div
+                  key={section}
+                  className="px-5 border border-gray-300 rounded-lg"
+                >
                   <FormGroup>
                     <Input
                       required

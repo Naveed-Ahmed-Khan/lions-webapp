@@ -84,13 +84,19 @@ export default function Profile({ tutor }) {
 
           {tutor.sections.map((section) => {
             return (
-              <div className="p-8 flex flex-col gap-6 md:gap-8 bg-gray-100">
+              <div
+                key={section._id}
+                className="p-8 flex flex-col gap-6 md:gap-8 bg-gray-100"
+              >
                 <h3 className=" text-gray-700 text-2xl font-medium">
                   {section.title}
                 </h3>
                 {section.subSections.map((subsection) => {
                   return (
-                    <div className="flex flex-col gap-4 bg-white p-8">
+                    <div
+                      key={subsection._id}
+                      className="flex flex-col gap-4 bg-white p-8"
+                    >
                       <h5 className=" text-gray-700 text-xl font-medium">
                         {subsection.heading}:
                       </h5>
