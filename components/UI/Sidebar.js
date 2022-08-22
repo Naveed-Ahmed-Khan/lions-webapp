@@ -133,7 +133,7 @@ const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                     </a>
                   </Link>
                 </li>
-                {/*  <li>
+                <li>
                   <Link href={"/tutors"}>
                     <a
                       onClick={() => {
@@ -152,7 +152,7 @@ const Sidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                       </div>
                     </a>
                   </Link>
-                </li> */}
+                </li>
               </ul>
             </div>
             <div className="mt-4">

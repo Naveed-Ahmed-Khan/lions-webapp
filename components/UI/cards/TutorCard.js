@@ -2,9 +2,11 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import React from "react";
+import { findHighestQualification } from "../../../utility/findHighestQualification";
 
 const TutorCard = ({ tutor }) => {
   const router = useRouter();
+
   return (
     <div className="flex flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
       <div>
@@ -16,12 +18,8 @@ const TutorCard = ({ tutor }) => {
           src={tutor.profilePic}
           alt={""}
         />
-        {/* <img
-          className="object-cover object-center w-full h-48"
-          src={tutor.profilePic}
-          alt="avatar"
-        /> */}
-        <div className="flex items-center px-6 py-3 bg-primary">
+
+        <div className="flex items-center justify-center px-6 py-3 bg-primary">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6 text-white "
@@ -86,9 +84,9 @@ const TutorCard = ({ tutor }) => {
             <p className="ml-1 -mt-0.5 text-gray-600">(25)</p>
           </div>
 
-          <p className="py-1 text-sm sm:text-base text-gray-700 dark:text-gray-400">
+          {/* <p className="py-1 text-sm sm:text-base text-gray-700 dark:text-gray-400">
             Full Stack maker & UI / UX Designer , Author of Building UI.
-          </p>
+          </p> */}
 
           <div className="flex justify-between gap-1">
             <div>
@@ -108,7 +106,7 @@ const TutorCard = ({ tutor }) => {
                 </svg>
 
                 <h6 className="px-2 text-sm font-semibold">
-                  {tutor.qualification}
+                  {findHighestQualification(tutor.qualifications)}
                 </h6>
               </div>
 
@@ -152,7 +150,7 @@ const TutorCard = ({ tutor }) => {
                   />
                 </svg>
                 <h6 className="px-2 text-sm font-semibold">
-                  4 | Students taught
+                  {tutor.students} | Students taught
                 </h6>
               </div>
 
@@ -172,7 +170,7 @@ const TutorCard = ({ tutor }) => {
                   />
                 </svg>
                 <h6 className="px-2 text-sm font-semibold">
-                  2 | Trial lessons
+                  {tutor.trials} | Trial lessons
                 </h6>
               </div>
             </div>

@@ -14,7 +14,7 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
     { title: "Home", path: "/" },
     { title: "Post a Job", path: "/job-posting" },
     { title: "Tution Jobs", path: "/jobs" },
-    // { title: "Tutors", path: "/tutors" },
+    { title: "Tutors", path: "/tutors" },
   ];
   return (
     <header className="sticky top-0 z-30 bg-gradient-to-br from-green-700 via-green-600 to-green-700 drop-shadow-md">

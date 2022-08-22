@@ -5,6 +5,7 @@ import Link from "next/dist/client/link";
 import Image from "next/image";
 import Button from "../Button";
 import { useRouter } from "next/router";
+import { findHighestQualification } from "../../../utility/findHighestQualification";
 
 const TutorCard2 = ({ tutor }) => {
   const router = useRouter();
@@ -110,7 +111,9 @@ const TutorCard2 = ({ tutor }) => {
               />
             </svg>
 
-            <h3 className="px-2 text-sm font-medium">{tutor.qualification}</h3>
+            <h3 className="px-2 text-sm font-medium">
+              {findHighestQualification(tutor.qualifications)}
+            </h3>
           </div>
 
           <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
@@ -151,26 +154,9 @@ const TutorCard2 = ({ tutor }) => {
               />
             </svg>
 
-            <h3 className="px-2 text-sm font-medium">4 | Students taught</h3>
-          </div>
-
-          <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 text-primary"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
-              />
-            </svg>
-
-            <h3 className="px-2 text-sm font-medium">Class {tutor.classes}</h3>
+            <h3 className="px-2 text-sm font-medium">
+              {tutor.students} | Students taught
+            </h3>
           </div>
           <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
             <svg
@@ -184,30 +170,53 @@ const TutorCard2 = ({ tutor }) => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
-              />
-            </svg>
-
-            <h3 className="px-2 text-sm font-medium">{tutor.subjects}</h3>
-          </div>
-          <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 text-primary"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
               />
             </svg>
 
             <h3 className="px-2 text-sm font-medium">
-              {tutor.experience} Years
+              {tutor.trials} | Trial lessons
+            </h3>
+          </div>
+          <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              />
+            </svg>
+
+            <h3 className="px-2 text-sm font-medium">
+              {tutor.subjectsTaught[0]?.name}, {tutor.subjectsTaught[1]?.name}
+            </h3>
+          </div>
+
+          <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
+              />
+            </svg>
+            <h3 className="px-2 text-sm font-medium">
+              {tutor.subjectsTaught[0].classes[0]?.title},{" "}
+              {tutor.subjectsTaught[1].classes[1]?.title}
             </h3>
           </div>
         </div>
@@ -241,8 +250,8 @@ const TutorCard2 = ({ tutor }) => {
               </div>
               <div
                 className="h-11 w-11 text-primary hover:text-white bg-white hover:bg-primary rounded-full 
-            border border-primary hover:border hover:border-primary grid place-content-center
-            transition-all duration-300 ease-out"
+                border border-primary hover:border hover:border-primary grid place-content-center
+                transition-all duration-300 ease-out"
               >
                 {/* <img
                 className="object-contain h-16 w-16"
@@ -266,8 +275,8 @@ const TutorCard2 = ({ tutor }) => {
               </div>
               <div
                 className="h-11 w-11 text-primary hover:text-white bg-white hover:bg-primary rounded-full 
-            border border-primary hover:border hover:border-primary grid place-content-center
-            transition-all duration-300 ease-out"
+                border border-primary hover:border hover:border-primary grid place-content-center
+                transition-all duration-300 ease-out"
               >
                 {/* <img
                 className="object-contain h-16 w-16"
