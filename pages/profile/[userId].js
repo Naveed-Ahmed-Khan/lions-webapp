@@ -15,25 +15,6 @@ import {
 import Rating from "../../components/UI/Rating";
 import { idToDate } from "../../utility/idToDate";
 
-/* export async function getServerSideProps(context) {
-  const { userId } = context.params;
-
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
-  );
-
-  const application = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
-  );
-
-  return {
-    props: {
-      tutor: response.data,
-      applications: application.data,
-    },
-  };
-} */
-
 export async function getStaticPaths() {
   const users = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`);
 

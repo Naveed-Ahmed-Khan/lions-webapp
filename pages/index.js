@@ -6,10 +6,22 @@ import FeatureCard from "../components/UI/cards/FeatureCard";
 import Container from "../components/UI/Container";
 import Carousel from "../components/UI/Carousel";
 import { useStateContext } from "../contexts/StateContext";
+import axios from "axios";
 
-export default function Home() {
-  const { tutors, jobs } = useStateContext();
+export async function getStaticProps() {
+  const tutors = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`);
+  const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
 
+  return {
+    props: {
+      tutors: tutors.data,
+      jobs: jobs.data,
+    },
+    revalidate: 30,
+  };
+}
+
+export default function Home({ tutors, jobs }) {
   const images = [
     {
       src: "https://lions.edu.pk/images/users/21655733138.jpg",
