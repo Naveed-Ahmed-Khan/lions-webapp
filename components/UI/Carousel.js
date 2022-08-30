@@ -19,7 +19,7 @@ const Carousel = () => {
   ];
   const [currentImage, setCurrentImage] = useState(0);
 
-  console.log(currentImage);
+  // console.log(currentImage);
 
   return (
     <div className="group relative flex items-center justify-center w-full">

@@ -15,9 +15,9 @@ import {
 import Rating from "../../components/UI/Rating";
 import { idToDate } from "../../utility/idToDate";
 
-export async function getServerSideProps(context) {
+/* export async function getServerSideProps(context) {
   const { userId } = context.params;
-  console.log(userId);
+
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
   );
@@ -25,7 +25,6 @@ export async function getServerSideProps(context) {
   const application = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
   );
-  // console.log(response);
 
   return {
     props: {
@@ -33,10 +32,39 @@ export async function getServerSideProps(context) {
       applications: application.data,
     },
   };
+} */
+
+export async function getStaticPaths() {
+  const users = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`);
+
+  return {
+    paths: users.data.map((user) => ({
+      params: { userId: user._id },
+    })),
+    fallback: false,
+  };
+}
+export async function getStaticProps({ params }) {
+  const { userId } = params;
+
+  const tutor = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
+  );
+  const application = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
+  );
+
+  return {
+    props: {
+      tutor: tutor.data,
+      applications: application.data,
+    },
+    revalidate: 30,
+  };
 }
 
 export default function Profile({ tutor, applications }) {
-  console.log(tutor);
+  console.log(applications);
   // console.log(userId);
   return (
     <Container color={"gray-50"}>
@@ -145,9 +173,6 @@ export default function Profile({ tutor, applications }) {
                           <Rating isEditable={false} rating={rating} />
                           <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
                             {comment}
-                            {/* <span className="text-primary text-end text-sm cursor-pointer">
-                      Read More
-                      </span> */}
                           </p>
                         </div>
                       </div>
