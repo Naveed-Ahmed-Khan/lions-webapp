@@ -2,7 +2,7 @@ export const findHighestQualification = (qualifications) => {
   const highest = qualifications.reduce((max, curr) => {
     if (curr.passingYear > max) {
       max = curr.passingYear;
-      console.log(max);
+      // console.log(max);
     }
     return max;
   }, 0);

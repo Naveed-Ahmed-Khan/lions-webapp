@@ -15,6 +15,8 @@ import FormGroup from "../../components/UI/FormGroup";
 import Select from "../../components/UI/Select";
 import TextArea from "../../components/UI/TextArea";
 import CheckBox from "../../components/UI/CheckBox";
+import { filetobase64 } from "../../utility/filetobase64";
+import ProfileCarousel from "../UI/ProfileCarousel";
 
 export default function EditSections({ tutor, updateData }) {
   const [editMode, setEditMode] = useState(false);
@@ -136,12 +138,8 @@ export default function EditSections({ tutor, updateData }) {
               >
                 <option value="">Select</option>
                 <option value="Simple">Simple</option>
-                <option disabled value="Collapsable">
-                  Collapsable
-                </option>
-                <option disabled value="Gallery">
-                  Gallery
-                </option>
+                <option value="Collapsable">Collapsable</option>
+                <option value="Gallery">Gallery</option>
               </Select>
               <Input
                 required
@@ -161,24 +159,49 @@ export default function EditSections({ tutor, updateData }) {
                   className="px-5 border border-gray-300 rounded-lg"
                 >
                   <FormGroup>
-                    <Input
-                      required
-                      label="Sub Heading"
-                      name={`heading${index + 1}`}
-                      onChange={(e) => {
-                        data[`heading${index + 1}`] = e.target.value;
-                      }}
-                    />
+                    {type === "Gallery" ? (
+                      <Input
+                        type={"file"}
+                        required
+                        name={`heading${index + 1}`}
+                        onChange={async (e) => {
+                          const imagePath = await filetobase64(
+                            e.target.files[0]
+                          );
+                          data[`heading${index + 1}`] = imagePath;
+                        }}
+                      />
+                    ) : (
+                      <Input
+                        required
+                        label="Sub Heading"
+                        name={`heading${index + 1}`}
+                        onChange={(e) => {
+                          data[`heading${index + 1}`] = e.target.value;
+                        }}
+                      />
+                    )}
                   </FormGroup>
                   <FormGroup>
-                    <TextArea
-                      required
-                      label="Content"
-                      name={`content${index + 1}`}
-                      onChange={(e) => {
-                        data[`content${index + 1}`] = e.target.value;
-                      }}
-                    />
+                    {type === "Gallery" ? (
+                      <Input
+                        required
+                        label="Image Title"
+                        name={`content${index + 1}`}
+                        onChange={(e) => {
+                          data[`content${index + 1}`] = e.target.value;
+                        }}
+                      />
+                    ) : (
+                      <TextArea
+                        required
+                        label="Content"
+                        name={`content${index + 1}`}
+                        onChange={(e) => {
+                          data[`content${index + 1}`] = e.target.value;
+                        }}
+                      />
+                    )}
                   </FormGroup>
                 </div>
               );
@@ -202,10 +225,25 @@ export default function EditSections({ tutor, updateData }) {
         ) : (
           <div className="mt-6 space-y-8">
             {tutor.sections.map((section) => {
+              console.log(section);
               return (
                 <div key={section._id}>
-                  {type === "Simple" && (
+                  {section.type === "Simple" && (
                     <Simple
+                      section={section}
+                      tutor={tutor}
+                      updateTutor={updateTutor}
+                    />
+                  )}
+                  {section.type === "Gallery" && (
+                    <Gallery
+                      section={section}
+                      tutor={tutor}
+                      updateTutor={updateTutor}
+                    />
+                  )}
+                  {section.type === "Collapsable" && (
+                    <Collapsable
                       section={section}
                       tutor={tutor}
                       updateTutor={updateTutor}
@@ -221,7 +259,7 @@ export default function EditSections({ tutor, updateData }) {
   );
 }
 
-function Simple({ section, tutor, updateTutor }) {
+export function Simple({ section, tutor, updateTutor }) {
   const { title, subSections } = section;
   return (
     <div className="p-2 sm:p-6 bg-gray-100 rounded-lg">
@@ -229,36 +267,38 @@ function Simple({ section, tutor, updateTutor }) {
         <h2 className="text-lg sm:text-xl text-primary font-semibold">
           {title}
         </h2>
-        <button
-          onClick={async () => {
-            const filtered = tutor.sections.filter(
-              (item) => item._id !== section._id
-            );
-            // console.log(filtered);
-            try {
-              await updateTutor({
-                sections: filtered,
-              });
-            } catch (error) {
-              console.log(error);
-            }
-          }}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 text-red-500 opacity-60 hover:opacity-100 cursor-pointer"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
+        {tutor && updateTutor && (
+          <button
+            onClick={async () => {
+              const filtered = tutor.sections.filter(
+                (item) => item._id !== section._id
+              );
+              // console.log(filtered);
+              try {
+                await updateTutor({
+                  sections: filtered,
+                });
+              } catch (error) {
+                console.log(error);
+              }
+            }}
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-            />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-red-500 opacity-60 hover:opacity-100 cursor-pointer"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+          </button>
+        )}
       </div>
       <div className="space-y-5 bg-white rounded p-4 sm:p-6">
         {subSections.map((subSection) => {
@@ -270,6 +310,105 @@ function Simple({ section, tutor, updateTutor }) {
               </h3>
               <p className="text-gray-600">{content}</p>
             </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+export function Gallery({ section, tutor, updateTutor }) {
+  const { title, subSections } = section;
+  return (
+    <div className="p-2 sm:p-6 bg-gray-100 rounded-lg">
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-lg sm:text-xl text-primary font-semibold">
+          {title}
+        </h2>
+        {tutor && updateTutor && (
+          <button
+            onClick={async () => {
+              const filtered = tutor.sections.filter(
+                (item) => item._id !== section._id
+              );
+              // console.log(filtered);
+              try {
+                await updateTutor({
+                  sections: filtered,
+                });
+              } catch (error) {
+                console.log(error);
+              }
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-red-500 opacity-60 hover:opacity-100 cursor-pointer"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+          </button>
+        )}
+      </div>
+      <ProfileCarousel images={subSections} />
+    </div>
+  );
+}
+export function Collapsable({ section, tutor, updateTutor }) {
+  const { title, subSections } = section;
+  return (
+    <div className="p-2 sm:p-6 bg-gray-100 rounded-lg">
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-lg sm:text-xl text-primary font-semibold">
+          {title}
+        </h2>
+        {tutor && updateTutor && (
+          <button
+            onClick={async () => {
+              const filtered = tutor.sections.filter(
+                (item) => item._id !== section._id
+              );
+              // console.log(filtered);
+              try {
+                await updateTutor({
+                  sections: filtered,
+                });
+              } catch (error) {
+                console.log(error);
+              }
+            }}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 text-red-500 opacity-60 hover:opacity-100 cursor-pointer"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+              />
+            </svg>
+          </button>
+        )}
+      </div>
+      <div className="space-y-5 bg-white rounded p-4 sm:p-6">
+        {subSections.map((subSection) => {
+          const { heading, content } = subSection;
+          return (
+            <Collapse key={subSection._id} label={heading}>
+              {content}
+            </Collapse>
           );
         })}
       </div>

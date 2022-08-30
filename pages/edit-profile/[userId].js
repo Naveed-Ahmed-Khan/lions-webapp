@@ -21,6 +21,7 @@ import EditLocations from "../../components/EditProfile/EditLocations";
 import EditQualification from "../../components/EditProfile/EditQualification";
 import EditExperience from "../../components/EditProfile/EditExperience";
 import useFetch from "../../hooks/useFetch";
+import EditGallery from "../../components/EditProfile/EditGallery";
 
 export default function EditProfile() {
   const router = useRouter();
@@ -40,6 +41,7 @@ export default function EditProfile() {
     "Subjects",
     "Locations",
     "Sections",
+    // "Gallery",
   ];
 
   return (
@@ -81,6 +83,9 @@ export default function EditProfile() {
               {currentTab === "Qualification" && (
                 <EditQualification tutor={tutor} updateData={updateData} />
               )}
+              {/* {currentTab === "Gallery" && (
+                <EditGallery tutor={tutor} updateData={updateData} />
+              )} */}
             </>
           )}
         </div>

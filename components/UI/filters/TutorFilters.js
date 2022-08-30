@@ -6,51 +6,39 @@ import InputFile from "../InputFile";
 import { useFormik } from "formik";
 import Button from "../Button";
 import { useStateContext } from "../../../contexts/StateContext";
+import axios from "axios";
+import { useRouter } from "next/router";
 
-export default function TutorFilters({
-  tutors,
-  setFilteredTutors,
-  setOpenFilter,
-}) {
-  const [classes, setClasses] = useState([]);
-  const [qualification, setQualification] = useState([]);
-  const [subjects, setSubjects] = useState([]);
+export default function TutorFilters({ setFilteredTutors, setOpenFilter }) {
+  const router = useRouter();
+  const [classes, setClasses] = useState("");
+  const [qualification, setQualification] = useState("");
+  const [subjects, setSubjects] = useState("");
+  // const [queryParams, setQueryParams] = useState(null);
   // const [clear, setClear] = useState(false);
   // const [gender, setGender] = useState([]);
 
-  // console.log(subjects);
+  console.log(subjects);
   // console.log(classes);
   // console.log(qualification);
 
-  useEffect(() => {
-    tutors && setFilteredTutors(tutors);
-  }, []);
-
-  /*   useEffect(() => {
-    clear && setFilteredTutors(tutors);
-  }, []); */
-
   const allClasses = [
-    { label: "Class 1", value: "1" },
-    { label: "Class 2", value: "2" },
-    { label: "Class 3", value: "3" },
-    { label: "Class 4", value: "4" },
-    { label: "Class 5", value: "5" },
-    { label: "Class 6", value: "6" },
-    { label: "Class 7", value: "7" },
-    { label: "Class 8", value: "8" },
-    { label: "Class 9", value: "9" },
-    { label: "Class 10", value: "10" },
-    { label: "Class 11", value: "11" },
-    { label: "Class 12", value: "12" },
+    { value: "Pre-School", id: "1" },
+    { value: "Junior", id: "2" },
+    { value: "Middle", id: "3" },
+    { value: "Secondary", id: "4" },
+    { value: "Intermediate", id: "5" },
+    { value: "Bachelors", id: "6" },
+    { value: "Masters", id: "7" },
+    { value: "PhD", id: "8" },
   ];
 
   const allQualifications = [
-    { label: "Matric", value: "matric" },
-    { label: "Intermediate", value: "intermediate" },
-    { label: "Bachelors", value: "bachelors" },
-    { label: "Masters", value: "masters" },
-    { label: "PhD", value: "phd" },
+    { label: "Matric", value: "Matric" },
+    { label: "Intermediate", value: "Intermediate" },
+    { label: "Bachelors", value: "Bachelors" },
+    { label: "Masters", value: "Masters" },
+    { label: "PhD", value: "PhD" },
   ];
 
   const allSubjects = [
@@ -100,35 +88,52 @@ export default function TutorFilters({
     }
   };
 
+  const createQueryString = () => {
+    let query = {};
+    if (qualification.length > 0) {
+      query["qualification"] = qualification.map((qual) => {
+        return qual.name;
+      });
+    }
+
+    if (subjects.length > 0) {
+      query["subject"] = subjects.map((sub) => {
+        return sub.name;
+      });
+    }
+
+    if (classes.length > 0) {
+      query["class"] = classes.map((clas) => {
+        return clas.name;
+      });
+    }
+    console.log(query);
+    return query;
+  };
+
+  const getTutors = async (query) => {
+    const tutors = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/get-tutors`,
+      { params: query }
+    );
+    console.log(tutors.data);
+    setFilteredTutors(tutors.data);
+    router.push(
+      {
+        pathname: "/tutors",
+        query: query,
+      },
+      undefined,
+      {
+        shallow: true,
+      }
+    );
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    let filteredTutors = tutors;
-    const applyFilters = () => {
-      classes &&
-        classes.forEach((item) => {
-          filteredTutors = filteredTutors.filter((job) =>
-            job.classes[0].includes(item.name)
-          );
-        });
-
-      qualification &&
-        qualification.forEach((item) => {
-          filteredTutors = filteredTutors.filter((job) =>
-            job.qualification.toLowerCase().includes(item.name.toLowerCase())
-          );
-        });
-
-      subjects &&
-        subjects.forEach((item) => {
-          filteredTutors = filteredTutors.filter((job) =>
-            job.subjects[0].toLowerCase().includes(item.name.toLowerCase())
-          );
-        });
-
-      setFilteredTutors(filteredTutors);
-      console.log(filteredTutors);
-    };
-    applyFilters();
+    const queryParams = createQueryString();
+    queryParams && getTutors(queryParams);
     setOpenFilter && setOpenFilter(false);
   };
 
@@ -177,9 +182,9 @@ export default function TutorFilters({
               <ul className="px-2  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto ">
                 {allClasses.map((item) => {
                   return (
-                    <li key={item.value}>
+                    <li key={item.id}>
                       <CheckBox
-                        label={item.label}
+                        label={item.value}
                         name={item.value}
                         onChange={classesHandler}
                       />

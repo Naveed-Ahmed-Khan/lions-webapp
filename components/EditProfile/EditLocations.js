@@ -19,6 +19,14 @@ import CheckBox from "../UI/CheckBox";
 export default function EditLocations({ tutor, updateData }) {
   const [editMode, setEditMode] = useState(false);
 
+  const update = async (data) => {
+    await axios.patch(
+      `${process.env.NEXT_PUBLIC_API}/update-locations/${tutor._id}`,
+      data
+    );
+    // updateData();
+    // setEditMode(false);
+  };
   const updateTutor = async (data) => {
     await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
@@ -37,9 +45,10 @@ export default function EditLocations({ tutor, updateData }) {
     onSubmit: async (values) => {
       console.log(values);
       try {
-        await updateTutor({
+        await update({
           locations: [...tutor.locations, { ...values }],
         });
+        formik.setFieldValue("places", []);
       } catch (error) {
         console.log(error);
       }

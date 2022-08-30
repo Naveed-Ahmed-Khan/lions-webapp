@@ -6,43 +6,41 @@ import InputFile from "../InputFile";
 import { useFormik } from "formik";
 import Button from "../Button";
 import { useStateContext } from "../../../contexts/StateContext";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function JobFilters({ setFilteredJobs, setOpenFilter }) {
-  const { jobs } = useStateContext();
+  const router = useRouter();
   const [classes, setClasses] = useState([]);
   const [qualification, setQualification] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [gender, setGender] = useState([]);
+  // const [gender, setGender] = useState([]);
 
   // console.log(subjects);
   // console.log(classes);
   // console.log(qualification);
 
-  useEffect(() => {
-    jobs && setFilteredJobs(jobs);
-  }, []);
-
   const allClasses = [
-    { label: "Class 1", value: "1" },
-    { label: "Class 2", value: "2" },
-    { label: "Class 3", value: "3" },
-    { label: "Class 4", value: "4" },
-    { label: "Class 5", value: "5" },
-    { label: "Class 6", value: "6" },
-    { label: "Class 7", value: "7" },
-    { label: "Class 8", value: "8" },
-    { label: "Class 9", value: "9" },
-    { label: "Class 10", value: "10" },
-    { label: "Class 11", value: "11" },
-    { label: "Class 12", value: "12" },
+    { label: "Class 1", value: "Class 1" },
+    { label: "Class 2", value: "Class 2" },
+    { label: "Class 3", value: "Class 3" },
+    { label: "Class 4", value: "Class 4" },
+    { label: "Class 5", value: "Class 5" },
+    { label: "Class 6", value: "Class 6" },
+    { label: "Class 7", value: "Class 7" },
+    { label: "Class 8", value: "Class 8" },
+    { label: "Class 9", value: "Class 9" },
+    { label: "Class 10", value: "Class 10" },
+    { label: "Class 11", value: "Class 11" },
+    { label: "Class 12", value: "Class 12" },
   ];
 
   const allQualifications = [
-    { label: "Matric", value: "matric" },
-    { label: "Intermediate", value: "intermediate" },
-    { label: "Bachelors", value: "bachelors" },
-    { label: "Masters", value: "masters" },
-    { label: "PhD", value: "phd" },
+    { label: "Matric", value: "Matric" },
+    { label: "Intermediate", value: "Intermediate" },
+    { label: "Bachelors", value: "Bachelors" },
+    { label: "Masters", value: "Masters" },
+    { label: "PhD", value: "PhD" },
   ];
 
   const allSubjects = [
@@ -90,35 +88,50 @@ export default function JobFilters({ setFilteredJobs, setOpenFilter }) {
     }
   };
 
+  const createQueryString = () => {
+    let query = {};
+    if (qualification.length > 0) {
+      query["qualification"] = qualification.map((qual) => {
+        return qual.name;
+      });
+    }
+
+    if (subjects.length > 0) {
+      query["subject"] = subjects.map((sub) => {
+        return sub.name;
+      });
+    }
+
+    if (classes.length > 0) {
+      query["class"] = classes.map((clas) => {
+        return clas.name;
+      });
+    }
+    console.log(query);
+    return query;
+  };
+  const getJobs = async (query) => {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`, {
+      params: query,
+    });
+    console.log(res.data);
+    setFilteredJobs(res.data);
+    router.push(
+      {
+        pathname: "/jobs",
+        query: query,
+      },
+      undefined,
+      {
+        shallow: true,
+      }
+    );
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
-    let filteredJobs = jobs;
-    const applyFilters = () => {
-      classes &&
-        classes.forEach((item) => {
-          filteredJobs = filteredJobs.filter((job) =>
-            job.class[0].includes(item.name)
-          );
-        });
-
-      qualification &&
-        qualification.forEach((item) => {
-          filteredJobs = filteredJobs.filter((job) =>
-            job.qualification.toLowerCase().includes(item.name.toLowerCase())
-          );
-        });
-
-      subjects &&
-        subjects.forEach((item) => {
-          filteredJobs = filteredJobs.filter((job) =>
-            job.subjects[0].toLowerCase().includes(item.name.toLowerCase())
-          );
-        });
-
-      setFilteredJobs(filteredJobs);
-      console.log(filteredJobs);
-    };
-    applyFilters();
+    const queryParams = createQueryString();
+    queryParams && getJobs(queryParams);
     setOpenFilter && setOpenFilter(false);
   };
 

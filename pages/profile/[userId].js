@@ -7,6 +7,13 @@ import Collapse from "../../components/UI/Collapse";
 import Container from "../../components/UI/Container";
 import ProfileSidebar from "../../components/UI/ProfileSidebar";
 import Button from "../../components/UI/Button";
+import {
+  Collapsable,
+  Gallery,
+  Simple,
+} from "../../components/EditProfile/EditSections";
+import Rating from "../../components/UI/Rating";
+import { idToDate } from "../../utility/idToDate";
 
 export async function getServerSideProps(context) {
   const { userId } = context.params;
@@ -14,16 +21,20 @@ export async function getServerSideProps(context) {
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
   );
+  const application = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
+  );
   // console.log(response);
 
   return {
     props: {
       tutor: response.data,
+      applications: application.data,
     },
   };
 }
 
-export default function Profile({ tutor }) {
+export default function Profile({ tutor, applications }) {
   console.log(tutor);
   // console.log(userId);
   return (
@@ -88,116 +99,63 @@ export default function Profile({ tutor }) {
                 key={section._id}
                 className="p-8 flex flex-col gap-6 md:gap-8 bg-gray-100"
               >
-                <h3 className=" text-gray-700 text-2xl font-medium">
-                  {section.title}
-                </h3>
-                {section.subSections.map((subsection) => {
-                  return (
-                    <div
-                      key={subsection._id}
-                      className="flex flex-col gap-4 bg-white p-8"
-                    >
-                      <h5 className=" text-gray-700 text-xl font-medium">
-                        {subsection.heading}:
-                      </h5>
-                      <p
-                        className="text-sm sm:text-base tracking-wide sm:tracking-normal 
-                      text-gray-700 text-justify md:text-gray-600"
-                      >
-                        {subsection.content}:
-                      </p>
-                    </div>
-                  );
-                })}
+                {section.type === "Simple" && <Simple section={section} />}
+                {section.type === "Gallery" && <Gallery section={section} />}
+                {section.type === "Collapsable" && (
+                  <Collapsable section={section} />
+                )}
               </div>
             );
           })}
 
-          <div className="mt-20 md:mt-0 bg-white md:bg-neutral-100 rounded md:p-8">
+          <section className="mt-20 md:mt-0 bg-white md:bg-neutral-100 rounded md:p-8">
             <div className="mb-8 md:flex items-center justify-between">
               <h2 className="text-primary-dark text-xl font-semibold">
                 Feedbacks
               </h2>
-              <div className="flex mt-2 item-center">
-                <svg
-                  className="w-5 h-5 text-yellow-400 fill-current dark:text-gray-300"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
-                </svg>
-
-                <svg
-                  className="w-5 h-5 text-yellow-400 fill-current dark:text-gray-300"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
-                </svg>
-
-                <svg
-                  className="w-5 h-5 text-yellow-400 fill-current dark:text-gray-300"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
-                </svg>
-
-                <svg
-                  className="w-5 h-5 text-gray-400 fill-current"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
-                </svg>
-
-                <svg
-                  className="w-5 h-5 text-gray-400 fill-current"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
-                </svg>
-                <p className="ml-1 -mt-0.5 text-gray-600">(25)</p>
-              </div>
             </div>
-            <div className="flex flex-col gap-8">
-              <div className=" flex flex-col gap-2 md:bg-white bg-neutral-100 rounded py-4 px-4 md:px-8">
-                <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
-                  Awais
-                </h3>
-                <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Tempore aut numquam voluptatem eveniet velit doloribus
-                  quisquam autem rem cupiditate possimus!
-                  {/* <span className="text-primary text-end text-sm cursor-pointer">
-                    Read More
-                  </span> */}
-                </p>
-              </div>
-              <div className=" flex flex-col gap-2 md:bg-white bg-neutral-100 rounded py-3 px-4 md:px-8">
-                <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
-                  Awais
-                </h3>
-                <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Tempore aut numquam voluptatem eveniet velit doloribus
-                  quisquam autem rem cupiditate possimus!
-                  {/* <span className="text-primary text-end text-sm cursor-pointer">
-                    Read More
-                  </span> */}
-                </p>
-              </div>
-              <div className=" flex flex-col gap-2 md:bg-white bg-neutral-100 rounded py-3 px-4 md:px-8">
-                <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
-                  Awais
-                </h3>
-                <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
-                  Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Tempore aut numquam voluptatem eveniet velit doloribus
-                  quisquam autem rem cupiditate possimus!
-                  {/* <span className="text-primary text-end text-sm cursor-pointer">
-                    Read More
-                  </span> */}
-                </p>
-              </div>
+            <div className="space-y-6">
+              {applications.map((application) => {
+                const {
+                  feedback: { rating, comment },
+                  job_id: {
+                    user_id: { name, profilePic },
+                  },
+                } = application;
+
+                return (
+                  <>
+                    {comment && (
+                      <div className="flex flex-col gap-8">
+                        <div className=" flex flex-col gap-4 md:bg-white bg-neutral-100 rounded py-4 px-4 md:px-8">
+                          <div className="flex gap-4 items-center">
+                            <Image
+                              height={50}
+                              width={50}
+                              objectFit={"cover"}
+                              className="rounded-full"
+                              src={profilePic}
+                              alt={""}
+                            />
+                            <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
+                              {name}
+                            </h3>
+                          </div>
+                          <Rating isEditable={false} rating={rating} />
+                          <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
+                            {comment}
+                            {/* <span className="text-primary text-end text-sm cursor-pointer">
+                      Read More
+                      </span> */}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                );
+              })}
             </div>
-          </div>
+          </section>
         </section>
       </main>
     </Container>

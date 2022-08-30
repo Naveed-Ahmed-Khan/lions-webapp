@@ -1,13 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 
-import FormGroup from "../../components/UI/FormGroup";
-import Button from "../../components/UI/Button";
-import Container from "../../components/UI/Container";
-import Input from "../../components/UI/Input";
-import InputFile from "../../components/UI/InputFile";
-import TextArea from "../../components/UI/TextArea";
-import Select from "../../components/UI/Select";
-import DatePicker from "../../components/UI/DatePicker";
+import FormGroup from "../UI/FormGroup";
+import Button from "../UI/Button";
+import Container from "../UI/Container";
+import Input from "../UI/Input";
+import InputFile from "../UI/InputFile";
+import TextArea from "../UI/TextArea";
+import Select from "../UI/Select";
+import DatePicker from "../UI/DatePicker";
 
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -16,9 +16,8 @@ import { useAuth } from "../../contexts/AuthContext";
 import * as yup from "yup";
 import axios from "axios";
 import { filetobase64 } from "../../utility/filetobase64";
-import CheckBox from "../UI/CheckBox";
 
-export default function EditPersonal({ tutor, updateData }) {
+export default function EditGallery({ tutor, updateData }) {
   const { signup } = useAuth();
   const [imagePath, setImagePath] = useState(null);
   const [bannerPath, setBannerPath] = useState(null);
@@ -39,18 +38,10 @@ export default function EditPersonal({ tutor, updateData }) {
     [imagePath]
   );
 
-  const bannerImagePath = useMemo(
-    () => bannerPath && URL.createObjectURL(bannerPath),
-    [bannerPath]
-  );
-
   const formik = useFormik({
     initialValues: {
-      availableFrom: tutor.availableFrom || "",
-      availableTo: tutor.availableTo || "",
-      teachingModes: tutor.teachingModes || [],
       profilePic: "",
-      bannerImage: "",
+
       mobile: tutor.mobile || "",
       watsapp: tutor.watsapp || "",
       city: tutor.city || "",
@@ -62,53 +53,25 @@ export default function EditPersonal({ tutor, updateData }) {
         if (imagePath) {
           values.profilePic = await filetobase64(imagePath);
         }
-        if (bannerPath) {
-          values.bannerImage = await filetobase64(bannerPath);
-        }
 
-        await updateTutor({
-          availableFrom: values.availableFrom,
-          availableTo: values.availableTo,
-          teachingModes: values.teachingModes,
+        /* await updateTutor({
           mobile: values.mobile,
           watsapp: values.watsapp,
           city: values.city,
           address: values.address,
           profilePic: values.profilePic || tutor.profilePic,
           bannerImage: values.bannerImage || tutor.bannerImage,
-        });
+        }); */
       } catch (error) {
         console.log(error);
       }
     },
   });
 
-  useEffect(() => {
-    formik.setFieldValue("teachingModes", tutor.teachingModes);
-  }, []);
-
-  const modes = ["Tutor travels", "Student travels", "Online"];
-
-  const modesHandler = (e) => {
-    if (e.target.checked) {
-      formik.setFieldValue("teachingModes", [
-        ...formik.values.teachingModes,
-        e.target.name,
-      ]);
-    } else {
-      formik.setFieldValue(
-        "teachingModes",
-        formik.values.teachingModes.filter(
-          (item) => item.name !== e.target.name
-        )
-      );
-    }
-  };
-
   return (
     <div className="pb-12 w-full max-w-screen-md mx-auto">
       <h1 className="text-xl sm:text-2xl font-semibold text-primary">
-        Profile Details
+        Gallery
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-8 w-full">
         <div className="space-y-8">
@@ -137,61 +100,7 @@ export default function EditPersonal({ tutor, updateData }) {
               />
             </div>
           </div>
-          <div className=" space-y-6 ">
-            {bannerImagePath || tutor.bannerImage ? (
-              <div className="relative h-44 rounded-lg overflow-clip">
-                <Image
-                  layout="fill"
-                  objectFit="cover"
-                  src={bannerImagePath || tutor.bannerImage}
-                  alt=""
-                />
-              </div>
-            ) : (
-              <div className=" mb-6 sm:mb-0 bg-gray-300 h-40 w-full rounded-lg" />
-            )}
-
-            <div className="">
-              <Input
-                type="file"
-                label="Banner Image"
-                name={"bannerImage"}
-                onChange={(e) => {
-                  setBannerPath(e.target.files[0]);
-                }}
-              />
-            </div>
-          </div>
         </div>
-
-        <div className="mt-5">
-          <h3 className="mb-2 text-gray-600 font-medium">
-            Availablity (from - to)
-          </h3>
-          <div className="grid grid-cols-2 gap-6">
-            <Input
-              required
-              type="time"
-              name={"availableFrom"}
-              formik={formik}
-            />
-
-            <Input required type="time" name={"availableTo"} formik={formik} />
-          </div>
-        </div>
-
-        {/* <FormGroup>
-          <ul className="px-2  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-            <h3>Modes of Teaching</h3>
-            {modes.map((item) => {
-              return (
-                <li key={item}>
-                  <CheckBox label={item} name={item} onChange={modesHandler} />
-                </li>
-              );
-            })}
-          </ul>
-        </FormGroup> */}
 
         <FormGroup horizontal>
           <Input

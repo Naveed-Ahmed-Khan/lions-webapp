@@ -39,14 +39,14 @@ export default function Dropdown({ children, options }) {
                     } else {
                       router.push({
                         pathname: `${option.href}/[userId]`,
-                        query: { userId: currentUser.userId },
+                        query: { userId: currentUser?.userId },
                       });
                     }
                     /* if (option.title === "My Profile") {
                     } else if (option.title === "My Jobs") {
                       router.push({
                         pathname: "/my-jobs/[userId]",
-                        query: { userId: currentUser.userId },
+                        query: { userId: currentUser?.userId },
                       });
                     } else {
                     } */

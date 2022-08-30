@@ -4,7 +4,6 @@ import React, { useState } from "react";
 
 const Carousel = () => {
   const images = [
-    /* { src: "https://source.unsplash.com/random/900x500/?1", alt: "Image 1" }, */
     {
       src: "https://lions.edu.pk/images/users/721655733208.jpg",
       alt: "Image 5",

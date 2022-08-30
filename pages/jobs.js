@@ -5,19 +5,23 @@ import JobCard2 from "../components/UI/cards/JobCard2";
 import Container from "../components/UI/Container";
 import JobFilters from "../components/UI/filters/JobFilters";
 
-/* export async function getServerSideProps(context) {
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
-  console.log(response.data);
+export async function getStaticProps({ query }) {
+  console.log(query);
+
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`, {
+    params: query,
+  });
 
   return {
     props: {
       jobs: response.data,
     },
+    revalidate: 30,
   };
-} */
+}
 
-export default function Jobs() {
-  const [filteredJobs, setFilteredJobs] = useState([]);
+export default function Jobs({ jobs }) {
+  const [filteredJobs, setFilteredJobs] = useState(jobs || []);
   const [openFilter, setOpenFilter] = useState(false);
 
   return (

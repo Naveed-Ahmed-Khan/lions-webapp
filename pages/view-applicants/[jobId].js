@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import axios from "axios";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 
 import Container from "../../components/UI/Container";
@@ -10,8 +10,11 @@ import Input from "../../components/UI/Input";
 import InputGroup from "../../components/UI/InputGroup";
 import FormGroup from "../../components/UI/FormGroup";
 import Button from "../../components/UI/Button";
+import useFetch from "../../hooks/useFetch";
+import Rating from "../../components/UI/Rating";
+import { useAuth } from "../../contexts/AuthContext";
 
-export async function getServerSideProps(context) {
+/* export async function getServerSideProps(context) {
   const { jobId } = context.params;
 
   const jobs = await axios.get(
@@ -28,16 +31,35 @@ export async function getServerSideProps(context) {
       applications: applications.data,
     },
   };
-}
+} */
 
-export default function JobDescription({ job, applications }) {
+export default function JobDescription() {
   const router = useRouter();
-  const timestamp = job._id.toString().substring(0, 8);
+  const { jobId } = router.query;
+  const JOB_API = `${process.env.NEXT_PUBLIC_API}/get-job/${jobId}`;
+  const APP_API = `${process.env.NEXT_PUBLIC_API}/get-jobapplications/${jobId}`;
+
+  const { data: job, updateData: updateJob } = useFetch(JOB_API);
+  const { data: applications, updateData: updateApp } = useFetch(APP_API);
+
+  const [isReview, setIsReview] = useState(false);
+
+  const timestamp = job?._id.toString().substring(0, 8);
   const date = new Date(parseInt(timestamp, 16) * 1000);
   const uploadedAt = date.toDateString();
 
-  // console.log(applications);
-  // console.log(job);
+  const acceptApplication = async (appId) => {
+    try {
+      const app = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API}/update-applicant/${appId}`,
+        { isSelected: true }
+      );
+      console.log(app);
+      updateApp();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Container color={"white"}>
@@ -65,7 +87,7 @@ export default function JobDescription({ job, applications }) {
                 Posted on {uploadedAt} by You
               </p>
             </div>
-            <p className="">{job.description}</p>
+            <p className="">{job?.description}</p>
             <ul className="mt-4 grid grid-cols-1 gap-4 ">
               <li className="flex gap-2">
                 <svg
@@ -82,7 +104,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Class | {job.class}</span>
+                <span>Class | {job?.class}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -99,7 +121,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Subject | {job.subjects}</span>
+                <span>Subject | {job?.subjects}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -116,7 +138,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Budget | Rs. {job.budget}</span>
+                <span>Budget | Rs. {job?.budget}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -133,7 +155,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Experience | {job.experience} Year</span>
+                <span>Experience | {job?.experience} Year</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -150,7 +172,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Qualification | {job.qualification}</span>
+                <span>Qualification | {job?.qualification}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -167,7 +189,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Location | {job.city}</span>
+                <span>Location | {job?.city}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -184,7 +206,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Gender Preferance | {job.gender}</span>
+                <span>Gender Preferance | {job?.gender}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -201,7 +223,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Duration | {job.duration}</span>
+                <span>Duration | {job?.duration}</span>
               </li>
             </ul>
           </div>
@@ -213,22 +235,30 @@ export default function JobDescription({ job, applications }) {
               </h2>
               <div className="ml-1 flex item-center">
                 <p className="text-primary text-xl font-semibold">
-                  ({applications.length})
+                  ({applications?.length})
                 </p>
               </div>
             </div>
             <div className="flex flex-col gap-8">
-              {applications.length > 0 ? (
-                applications.map((application) => {
+              {applications?.length > 0 ? (
+                applications?.map((application) => {
+                  const { feedback } = application;
                   const applicant = application.applicant_id;
                   return (
                     <div
                       key={application._id}
                       className=" flex flex-col gap-3 md:bg-white bg-neutral-100 rounded p-4 md:p-8"
                     >
-                      <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
-                        {applicant.name}
-                      </h3>
+                      <div className="flex gap-4 items-center">
+                        <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
+                          {applicant.name}
+                        </h3>
+                        {application.isSelected && (
+                          <p className="border-2 border-primary px-3 py-0.5 rounded-full text-sm text-primary font-medium">
+                            Selected
+                          </p>
+                        )}
+                      </div>
                       <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
                         {application.coverLetter}
                       </p>
@@ -297,11 +327,58 @@ export default function JobDescription({ job, applications }) {
                           <span>Budget | {application.expectedBudget}</span>
                         </p>
                       </div>
-                      <div className="mt-2 flex justify-end">
-                        <div className="w-full sm:w-fit">
-                          <Button>Accept Application</Button>
+
+                      {application.isSelected ? (
+                        <div>
+                          {feedback.comment ? (
+                            <div className="flex flex-col w-full p-4 border border-gray-200 rounded-lg">
+                              <div className="flex justify-between">
+                                <h2 className="text-xl font-semibold  text-primary">
+                                  Feedback
+                                </h2>
+                                <div className="w-full sm:w-fit">
+                                  <Button
+                                    onClick={() => {
+                                      acceptApplication(application._id);
+                                    }}
+                                  >
+                                    Edit Feedback
+                                  </Button>
+                                </div>
+                              </div>
+
+                              <div className="flex flex-col py-6 space-y-3">
+                                <Rating
+                                  isEditable={false}
+                                  rating={feedback.rating}
+                                />
+                              </div>
+                              <div className="flex flex-col w-full">
+                                <p className="text-gray-700">
+                                  {feedback.comment}
+                                </p>
+                              </div>
+                            </div>
+                          ) : (
+                            <Review
+                              application={application}
+                              updateApp={updateApp}
+                            />
+                          )}
                         </div>
-                      </div>
+                      ) : (
+                        <div className="mt-2 flex justify-end">
+                          <div className="w-full sm:w-fit">
+                            <Button
+                              onClick={() => {
+                                acceptApplication(application._id);
+                              }}
+                            >
+                              Accept Application
+                            </Button>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   );
                 })
@@ -315,5 +392,72 @@ export default function JobDescription({ job, applications }) {
         </section>
       </main>
     </Container>
+  );
+}
+
+function Review({ application, updateApp }) {
+  const { feedback } = application;
+  const { currentUser } = useAuth();
+
+  const [rating, setRating] = useState(feedback.rating || 1);
+  const [comment, setComment] = useState(feedback.comment || "");
+
+  const sendFeedback = async (appId) => {
+    try {
+      const app = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API}/update-applicant/${appId}`,
+        {
+          feedback: {
+            user_id: currentUser?.userId,
+            rating: rating,
+            comment: comment,
+          },
+        }
+      );
+      console.log(app);
+      updateApp();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return (
+    <div className="flex flex-col w-full mt-8 shadow-sm rounded-xl ">
+      <div className="flex flex-col w-full p-4 border border-gray-200 rounded-lg">
+        <h2 className="text-xl font-semibold  text-primary">Feedback</h2>
+        <div className="flex flex-col py-6 space-y-3">
+          <span className=" text-gray-700">Share your experience?</span>
+          <Rating isEditable={true} rating={rating} setRating={setRating} />
+        </div>
+        <div className="flex flex-col w-full">
+          <TextArea
+            rows={3}
+            placeholder="Message..."
+            name={"comment"}
+            value={comment}
+            onChange={(e) => {
+              setComment(e.target.value);
+            }}
+          />
+
+          <div className="mt-6 flex justify-end">
+            <div className="w-full sm:w-fit">
+              <Button
+                onClick={() => {
+                  sendFeedback(application._id);
+                }}
+              >
+                Leave Feedback
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* <div className="flex items-center justify-center">
+        <a rel="noopener noreferrer" href="#" className="text-sm text-gray-400">
+          Maybe later
+        </a>
+      </div> */}
+    </div>
   );
 }

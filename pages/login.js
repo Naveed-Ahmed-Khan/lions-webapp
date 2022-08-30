@@ -32,10 +32,10 @@ export default function Login() {
       try {
         const response = await signin(values);
         console.log(response);
-        localStorage.setItem("user", JSON.stringify(response));
         if (response.error) {
           setError(response.error);
         } else {
+          localStorage.setItem("user", JSON.stringify(response));
           router.push("/");
         }
       } catch (error) {
