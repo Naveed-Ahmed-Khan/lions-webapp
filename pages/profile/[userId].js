@@ -17,10 +17,11 @@ import { idToDate } from "../../utility/idToDate";
 
 export async function getServerSideProps(context) {
   const { userId } = context.params;
-
+  console.log(userId);
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
   );
+
   const application = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
   );
@@ -124,7 +125,7 @@ export default function Profile({ tutor, applications }) {
                 } = application;
 
                 return (
-                  <>
+                  <div key={application._id}>
                     {comment && (
                       <div className="flex flex-col gap-8">
                         <div className=" flex flex-col gap-4 md:bg-white bg-neutral-100 rounded py-4 px-4 md:px-8">
@@ -151,7 +152,7 @@ export default function Profile({ tutor, applications }) {
                         </div>
                       </div>
                     )}
-                  </>
+                  </div>
                 );
               })}
             </div>

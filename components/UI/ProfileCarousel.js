@@ -5,7 +5,7 @@ import React, { useState } from "react";
 const ProfileCarousel = ({ images }) => {
   const [currentImage, setCurrentImage] = useState(0);
 
-  console.log(currentImage);
+  // console.log(currentImage);
 
   return (
     <>
