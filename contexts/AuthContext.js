@@ -48,12 +48,12 @@ export function AuthProvider({ pageProps, children }) {
     let signinData = null;
     setLoading(true);
     try {
-      const { data } = await axios.post(
+      const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API}/signin`,
-        values,
-        { withCredentials: true }
+        values
       );
-      signinData = data;
+      console.log(response);
+      signinData = response.data;
     } catch ({ response: { data } }) {
       signinData = data;
     } finally {
