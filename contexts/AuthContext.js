@@ -50,7 +50,8 @@ export function AuthProvider({ pageProps, children }) {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API}/signin`,
-        values
+        values,
+        { withCredentials: true }
       );
       console.log(response);
       signinData = response.data;

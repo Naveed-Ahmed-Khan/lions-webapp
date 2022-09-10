@@ -5,16 +5,17 @@ import FormGroup from "../components/UI/FormGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
 import Input from "../components/UI/Input";
-import InputFile from "../components/UI/InputFile";
+
 import TextArea from "../components/UI/TextArea";
 import { filetobase64 } from "../utility/filetobase64";
 import Image from "next/image";
-import { useRouter } from "next/router";
+
 import { useFormik } from "formik";
 import { useAuth } from "../contexts/AuthContext";
 import * as yup from "yup";
 import axios from "axios";
 import Select from "../components/UI/Select";
+import { useRouter } from "next/router";
 
 export async function getStaticProps() {
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
@@ -204,6 +205,7 @@ function Student({ cities, areas, setCurrentStep }) {
 }
 
 function Account({ setCurrentStep }) {
+  const router = useRouter();
   const { signup } = useAuth();
   const [error, setError] = useState("");
 
