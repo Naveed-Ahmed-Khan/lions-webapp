@@ -52,7 +52,7 @@ export default function JobPosting({ cities, areas, subjects, classes }) {
 
   return (
     <>
-      {/* {currentUser?.userType !== "student" && <AccessDenied />} */}
+      {currentUser?.userType !== "student" && <AccessDenied />}
 
       <Container color={"gray-50"}>
         <div className="bg-white w-full mx-auto">

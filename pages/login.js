@@ -48,6 +48,7 @@ export default function Login() {
           { withCredentials: true }
         );
         console.log(response);
+        checkAuth();
         setUser(response.data);
         router.push("/");
         setIsLoading(false);
