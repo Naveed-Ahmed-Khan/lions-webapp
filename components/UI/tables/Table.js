@@ -67,7 +67,10 @@ export default function Table({ header, body }) {
           <tbody className="text-gray-700 ">
             {body?.map((data) => {
               return (
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr
+                  key={data.id}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                >
                   {header.map((item) => {
                     const { id, value, nestedValue, image } = item;
                     return (
