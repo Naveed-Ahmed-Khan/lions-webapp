@@ -10,12 +10,10 @@ import * as yup from "yup";
 import { useRouter } from "next/router";
 import Button from "../components/UI/Button";
 import Spinner from "../components/UI/loader/Spinner";
-import axios from "axios";
-import { getCookie } from "cookies-next";
 
 export default function Login() {
   const router = useRouter();
-  const { signin, currentUser, checkAuth, setUser } = useAuth();
+  const { signin, currentUser } = useAuth();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,26 +33,20 @@ export default function Login() {
     onSubmit: async (values) => {
       setIsLoading(true);
       setError("");
-      /* if (response.error) {
-        setError(response.error);
-      } else {
-        
-      } */
-
       try {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API}/signin`,
-          values,
-          { withCredentials: true }
-        );
+        const response = await signin(values);
         console.log(response);
-        checkAuth();
-        setUser(response.data);
-        router.push("/");
-        setIsLoading(false);
+        if (response.error) {
+          setError(response.error);
+        } else {
+          router.push("/");
+          setIsLoading(false);
+        }
       } catch (error) {
         console.log(error);
         setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
     },
   });
