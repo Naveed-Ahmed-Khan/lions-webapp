@@ -7,40 +7,34 @@ import Container from "../components/UI/Container";
 import Carousel from "../components/UI/Carousel";
 import { useStateContext } from "../contexts/StateContext";
 import axios from "axios";
+import Alert from "../components/UI/Alert";
+import Image from "next/image";
 
 export async function getStaticProps() {
   const tutors = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`);
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
+  const achievements = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-achievements`
+  );
 
   return {
     props: {
       tutors: tutors.data,
       jobs: jobs.data,
+      achievements: achievements.data,
     },
     revalidate: 30,
   };
 }
 
-export default function Home({ tutors, jobs }) {
-  const images = [
-    {
-      src: "https://lions.edu.pk/images/users/21655733138.jpg",
-      title: "Cadets",
-      details: "Secured Admission in cadet college",
-    },
-    {
-      src: "https://lions.edu.pk/images/users/551655733090.jpeg",
-      title: "Hammad Safi",
-      details: "Trainer O/A level",
-    },
-  ];
-
+export default function Home({ tutors, jobs, achievements }) {
   return (
     <>
       <Container color={"white"}>
+        <Alert />
         <section className="grid grid-cols-12 grid-rows-2 gap-4 bg-white p-4 md:px-8">
           <div className="z-0 col-span-12 lg:col-span-9 row-span-2 lg:row-span-1">
-            <Carousel />
+            <Carousel achievements={achievements} />
           </div>
           <div
             className="hidden col-span-12 lg:col-span-3 row-span-1 lg:row-span-2 lg:h-[860px] 
@@ -49,26 +43,43 @@ export default function Home({ tutors, jobs }) {
             <h2 className="text-2xl text-primary text-center font-bold">
               News
             </h2>
-            {images.map((image) => {
-              return (
-                <div
-                  key={image.src}
-                  className="mt-2 mx-4 px-2 py-4 rounded drop-shadow-sm bg-white"
-                >
-                  <img
-                    className="rounded-sm object-cover object-center dark:bg-gray-500"
-                    src={image.src}
-                    alt=""
-                  />
-                  <div>
-                    <h4 className="text-lg text-gray-700 font-medium">
-                      {image.title}
-                    </h4>
-                    <p className="text-sm text-gray-700">{image.details}</p>
+            {/* {bannerImagePath || tutor?.bannerImage ? (
+              <div className="relative h-44 rounded-lg overflow-clip">
+                <Image
+                  layout="fill"
+                  objectFit="cover"
+                  src={bannerImagePath || tutor?.bannerImage}
+                  alt=""
+                />
+              </div>
+            ) : (
+              <div className=" mb-6 sm:mb-0 bg-gray-300 h-40 w-full rounded-lg" />
+            )} */}
+            {achievements
+              .filter((image) => image.type === "news")
+              .map((image) => {
+                return (
+                  <div
+                    key={image._id}
+                    className=" mt-2 mx-4 px-2 py-4 drop-shadow-sm bg-white"
+                  >
+                    <div className="relative h-44 rounded overflow-clip">
+                      <Image
+                        layout="fill"
+                        objectFit="contain"
+                        src={image.image}
+                        alt=""
+                      />
+                    </div>
+                    <div>
+                      <h4 className="text-lg text-gray-700 font-medium">
+                        {image.title}
+                      </h4>
+                      <p className="text-sm text-gray-700">{image.desc}</p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
           </div>
           <div className="col-span-12 lg:col-span-9 row-span-2 lg:row-span-1 space-y-4 lg:text-center">
             <FeatureCard />

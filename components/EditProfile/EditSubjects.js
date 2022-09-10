@@ -106,7 +106,7 @@ export default function EditSubjects({ tutor, updateData }) {
   });
 
   return (
-    <div className="space-y-8 w-full max-w-screen-md mx-auto">
+    <div className="space-y-8 w-full">
       <h1 className="text-xl sm:text-2xl font-semibold text-primary">
         Subjects Taught
       </h1>

@@ -1,11 +1,28 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import useSWR, { useSWRConfig } from "swr";
+import { useAuth } from "../contexts/AuthContext";
 
-const useFetch = (url) => {
+const useFetch = (url, checkLoggedIn) => {
+  console.log(url);
+  console.log(checkLoggedIn);
+  const router = useRouter();
+  const { currentUser } = useAuth();
   const { mutate } = useSWRConfig();
 
   const { data, error } = useSWR(url, () =>
-    axios.get(url).then((res) => res.data)
+    axios
+      .get(
+        url,
+        checkLoggedIn && {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${currentUser?.userId}`,
+          },
+        }
+      )
+      .then((res) => res.data)
+      .catch((err) => router.push("/"))
   );
 
   return {

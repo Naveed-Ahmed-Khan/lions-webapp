@@ -2,23 +2,11 @@
 import Image from "next/image";
 import React, { useState } from "react";
 
-const Carousel = () => {
-  const images = [
-    {
-      src: "https://lions.edu.pk/images/users/721655733208.jpg",
-      alt: "Image 5",
-      title: "Zara President award",
-      details: "Board Toppers",
-    },
-    {
-      src: "https://lions.edu.pk/images/users/391655733031.jpeg",
-      alt: "Image 6",
-      title: "Gold Medalist",
-      details: "Shafaqat Ali",
-    },
-  ];
+const Carousel = ({ achievements }) => {
+  console.log(achievements);
+  const images = achievements.filter((image) => image?.type === "achievement");
+  console.log(images);
   const [currentImage, setCurrentImage] = useState(0);
-
   // console.log(currentImage);
 
   return (
@@ -53,8 +41,8 @@ const Carousel = () => {
         <Image
           layout="fill"
           className="w-full h-full object-contain scale-100 group-hover:scale-110 transition-all duration-300 ease-out"
-          src={images[currentImage].src}
-          alt={images[currentImage].alt}
+          src={images[currentImage]?.image}
+          alt={images[currentImage]?.title}
         />
         <div
           className="absolute bottom-0 pb-4 flex flex-col items-center justify-end w-full h-1/3 
@@ -62,10 +50,10 @@ const Carousel = () => {
         translate-y-0  bg-gradient-to-t from-white"
         >
           <h1 className="text-2xl sm:text-3xl font-semibold text-primary">
-            {images[currentImage].title}
+            {images[currentImage]?.title}
           </h1>
           <p className="mt-2 text-gray-600 font-medium">
-            {images[currentImage].details}
+            {images[currentImage]?.desc}
           </p>
         </div>
       </div>

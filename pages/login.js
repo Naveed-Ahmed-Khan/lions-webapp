@@ -8,11 +8,16 @@ import { useFormik } from "formik";
 import { useAuth } from "../contexts/AuthContext";
 import * as yup from "yup";
 import { useRouter } from "next/router";
+import Button from "../components/UI/Button";
+import Spinner from "../components/UI/loader/Spinner";
+import axios from "axios";
+import { getCookie } from "cookies-next";
 
 export default function Login() {
   const router = useRouter();
-  const { signin, currentUser } = useAuth();
+  const { signin, currentUser, checkAuth, setUser } = useAuth();
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const loginSchema = yup.object({
     email: yup.string("").email("Enter a valid email"),
@@ -28,16 +33,24 @@ export default function Login() {
     },
     validationSchema: loginSchema,
     onSubmit: async (values) => {
+      setIsLoading(true);
       setError("");
+      /* if (response.error) {
+        setError(response.error);
+      } else {
+        
+      } */
+
       try {
-        const response = await signin(values);
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API}/signin`,
+          values,
+          { withCredentials: true }
+        );
         console.log(response);
-        if (response.error) {
-          setError(response.error);
-        } else {
-          localStorage.setItem("user", JSON.stringify(response));
-          router.push("/");
-        }
+        setUser(response.data);
+        router.push("/");
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
         setError(error.message);
@@ -51,7 +64,7 @@ export default function Login() {
         <div className="w-full px-4 py-6 lg:w-1/2 sm:px-6 lg:px-8 sm:py-16 lg:py-24">
           <div className="flex overflow-hidden">
             <div className="flex flex-col justify-center flex-1 lg:flex-none px-1 py-1 sm:px-6 lg:px-20 xl:px-24  ">
-              <div className="w-full max-w-xl mx-auto lg:w-96">
+              <div className="w-full max-w-xl mx-auto lg:w-96 my-8">
                 <div className="flex flex-col gap-2 items-center">
                   <h2 className="mt-6 text-4xl font-bold text-gray-700">
                     Sign In
@@ -96,7 +109,7 @@ export default function Login() {
                           />
                         </div>
                       </div>
-                      <div className="flex items-center justify-between">
+                      {/* <div className="flex items-center justify-between">
                         <div className="flex items-center">
                           <input
                             id="remember-me"
@@ -120,17 +133,24 @@ export default function Login() {
                             Forgot your password?
                           </a>
                         </div>
-                      </div>
-                      <div>
-                        <button
-                          type="submit"
-                          className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-white transition duration-500 ease-in-out transform bg-primary rounded-xl hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
-                        >
-                          Sign in
-                        </button>
+                      </div> */}
+                      <div className="pt-6">
+                        <Button fullwidth type={"submit"}>
+                          {isLoading ? (
+                            <div className="flex justify-center">
+                              <Spinner
+                                stroke={"stroke-white"}
+                                text={"text-white"}
+                                sm
+                              />
+                            </div>
+                          ) : (
+                            <>Sign in</>
+                          )}
+                        </Button>
                       </div>
                     </form>
-                    <div className="relative my-4">
+                    {/* <div className="relative my-4">
                       <div className="absolute inset-0 flex items-center">
                         <div className="w-full border-t border-gray-300"></div>
                       </div>
@@ -149,7 +169,7 @@ export default function Login() {
                           <span className="ml-4"> Log in with Google</span>
                         </div>
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

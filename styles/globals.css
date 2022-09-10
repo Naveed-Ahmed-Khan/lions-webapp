@@ -2,11 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-h1,
+/* h1,
 h2 {
   font-family: "Merriweather", sans-serif;
-}
-
+} */
+h1,
+h2,
 h5,
 h6 {
   font-family: "Open Sans", sans-serif;

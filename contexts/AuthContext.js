@@ -1,4 +1,8 @@
 import axios from "axios";
+import { getCookie, getCookies } from "cookies-next";
+
+import { useRouter } from "next/router";
+
 import React, { useContext, createContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -7,11 +11,17 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState();
+export function AuthProvider({ pageProps, children }) {
+  console.log(pageProps);
+  const router = useRouter();
+  // console.log(router);
+  const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [check, setCheck] = useState(true);
 
+  const setUser = (user) => {
+    setCurrentUser(user);
+  };
   const checkAuth = () => {
     setCheck((prev) => !prev);
   };
@@ -40,22 +50,29 @@ export function AuthProvider({ children }) {
     try {
       const { data } = await axios.post(
         `${process.env.NEXT_PUBLIC_API}/signin`,
-        values
+        values,
+        { withCredentials: true }
       );
-      localStorage.setItem("user", JSON.stringify(data));
       signinData = data;
     } catch ({ response: { data } }) {
       signinData = data;
     } finally {
-      setLoading(false);
       checkAuth();
+      setLoading(false);
       return signinData;
     }
   }
 
   function logout() {
+    setCurrentUser(null);
     localStorage.clear();
-    checkAuth();
+    let cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i];
+      let eqPos = cookie.indexOf("=");
+      let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
   }
 
   /*   function googleSignIn() {
@@ -84,18 +101,36 @@ export function AuthProvider({ children }) {
   } */
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const setLoggedInUser = async () => {
+      const userId = getCookie("user_id");
+      console.log(userId);
 
-    if (user) {
-      setCurrentUser(user);
-      setLoading(false);
-    } else {
-      setCurrentUser(null);
-    }
+      const token = getCookie("token");
+
+      console.log(token);
+      if (userId) {
+        if (!currentUser) {
+          try {
+            const user = await axios.get(
+              `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
+            );
+            setCurrentUser(user.data);
+          } catch (error) {
+            console.log(error);
+          } finally {
+            setLoading(false);
+          }
+        }
+      } else {
+        setCurrentUser(null);
+      }
+    };
+    setLoggedInUser();
   }, [check]);
 
   const value = {
     currentUser,
+    setUser,
     checkAuth,
     signup,
     signin,

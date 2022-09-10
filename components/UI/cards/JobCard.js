@@ -1,4 +1,5 @@
 import React from "react";
+import Anchor from "../Anchor";
 import Button from "../Button";
 
 const JobCard = ({ job }) => {
@@ -11,7 +12,7 @@ const JobCard = ({ job }) => {
             <span className="text-xl font-semibold">Tutor Required for</span>
           </p>
           {job.isFeatured && (
-            <p className="bg-primary-light py-1 px-2 w-fit rounded-full text-sm text-center text-white font-medium">
+            <p className="bg-primary-light py-1 px-2 w-fit h-fit rounded-full text-sm text-center text-white font-medium">
               Featured
             </p>
           )}
@@ -82,7 +83,7 @@ const JobCard = ({ job }) => {
           <span className="mb-4 text-xl font-semibold">Requirements</span>
         </p>
         <ul className="mb-8 self-stretch flex-1 space-y-2">
-          <li className="flex  space-x-2">
+          <li className="flex space-x-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-primary"
@@ -99,7 +100,7 @@ const JobCard = ({ job }) => {
             </svg>
             <span>Qualification | {job.qualification}</span>
           </li>
-          <li className="flex  space-x-2">
+          <li className="flex space-x-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-primary"
@@ -114,9 +115,9 @@ const JobCard = ({ job }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Location | {job.city}</span>
+            <span>Location | {job.location.city}</span>
           </li>
-          <li className="flex  space-x-2">
+          <li className="flex space-x-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-primary"
@@ -133,7 +134,7 @@ const JobCard = ({ job }) => {
             </svg>
             <span>Gender Preferance | {job.gender}</span>
           </li>
-          <li className="flex  space-x-2">
+          <li className="flex space-x-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-primary"
@@ -151,9 +152,9 @@ const JobCard = ({ job }) => {
             <span>Duration | {job.duration}</span>
           </li>
         </ul>
-        <Button>
-          <p>Apply Now</p>
-        </Button>
+        <Anchor button href={`/job-description/${job._id}`}>
+          Apply Now
+        </Anchor>
       </div>
     </div>
   );

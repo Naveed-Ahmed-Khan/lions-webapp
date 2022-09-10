@@ -11,5 +11,5 @@ export const findHighestQualification = (qualifications) => {
     (qual) => qual.passingYear === highest
   );
 
-  return highestDegree[0].degree;
+  return highestDegree[0]?.degree;
 };

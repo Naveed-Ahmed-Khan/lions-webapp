@@ -16,17 +16,9 @@ import Select from "../UI/Select";
 import TextArea from "../UI/TextArea";
 import CheckBox from "../UI/CheckBox";
 
-export default function EditLocations({ tutor, updateData }) {
+export default function EditLocations({ areas, cities, tutor, updateData }) {
   const [editMode, setEditMode] = useState(false);
 
-  const update = async (data) => {
-    await axios.patch(
-      `${process.env.NEXT_PUBLIC_API}/update-locations/${tutor._id}`,
-      data
-    );
-    // updateData();
-    // setEditMode(false);
-  };
   const updateTutor = async (data) => {
     await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
@@ -45,7 +37,7 @@ export default function EditLocations({ tutor, updateData }) {
     onSubmit: async (values) => {
       console.log(values);
       try {
-        await update({
+        await updateTutor({
           locations: [...tutor.locations, { ...values }],
         });
         formik.setFieldValue("places", []);
@@ -54,26 +46,6 @@ export default function EditLocations({ tutor, updateData }) {
       }
     },
   });
-
-  const allLocations = [
-    { id: 1, city: "Rawalpindi", value: "A-block" },
-    { id: 2, city: "Rawalpindi", value: "B-block" },
-    { id: 3, city: "Rawalpindi", value: "C-block" },
-    { id: 4, city: "Rawalpindi", value: "D-block" },
-    { id: 5, city: "Rawalpindi", value: "E-block" },
-    { id: 6, city: "Islamabad", value: "I-9" },
-    { id: 7, city: "Islamabad", value: "I-10" },
-    { id: 8, city: "Islamabad", value: "I-11" },
-    { id: 9, city: "Islamabad", value: "E-9" },
-    { id: 10, city: "Islamabad", value: "E-10" },
-    { id: 11, city: "Islamabad", value: "E-11" },
-    { id: 12, city: "Islamabad", value: "F-9" },
-    { id: 13, city: "Islamabad", value: "F-10" },
-    { id: 14, city: "Islamabad", value: "F-11" },
-    { id: 15, city: "Islamabad", value: "G-9" },
-    { id: 16, city: "Islamabad", value: "G-10" },
-    { id: 17, city: "Islamabad", value: "G-11" },
-  ];
 
   const locationHandler = (e) => {
     if (e.target.checked) {
@@ -87,7 +59,7 @@ export default function EditLocations({ tutor, updateData }) {
   };
 
   return (
-    <div className=" pb-12 w-full max-w-screen-md mx-auto">
+    <div className=" pb-12 w-full">
       <h1 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
         Locations
       </h1>
@@ -110,25 +82,33 @@ export default function EditLocations({ tutor, updateData }) {
             <FormGroup>
               <Select required label="City" name={"city"} formik={formik}>
                 <option value="">Select</option>
-                <option value="Rawalpindi">Rawalpindi</option>
-                <option value="Islamabad">Islamabad</option>
+                {cities.map((city) => {
+                  return (
+                    <option key={city._id} value={city.name}>
+                      {city.name}
+                    </option>
+                  );
+                })}
               </Select>
             </FormGroup>
 
-            <ul className="px-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-4 overflow-auto">
-              {allLocations
-                .filter((location) => location.city === formik.values.city)
-                .map((item) => {
+            <ul className="px-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-4 max-h-[calc(100vh-500px)] overflow-auto">
+              {areas.map((area) => {
+                const { city_id } = area;
+                if (city_id?.name !== formik.values.city) {
+                  return;
+                } else {
                   return (
-                    <li key={item.id}>
+                    <li key={area._id}>
                       <CheckBox
-                        label={item.value}
-                        name={item.value}
+                        label={area.name}
+                        name={area.name}
                         onChange={locationHandler}
                       />
                     </li>
                   );
-                })}
+                }
+              })}
             </ul>
 
             <div className="pt-10 space-y-4 sm:space-y-0 sm:flex gap-8">

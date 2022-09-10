@@ -19,14 +19,6 @@ import CheckBox from "../UI/CheckBox";
 export default function EditQualification({ tutor, updateData }) {
   const [editMode, setEditMode] = useState(false);
 
-  const update = async (data) => {
-    await axios.patch(
-      `${process.env.NEXT_PUBLIC_API}/update-qualifications/${tutor._id}`,
-      data
-    );
-    updateData();
-    setEditMode(false);
-  };
   const updateTutor = async (data) => {
     await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
@@ -45,7 +37,7 @@ export default function EditQualification({ tutor, updateData }) {
     onSubmit: async (values) => {
       console.log(values);
       try {
-        await update({
+        await updateTutor({
           qualifications: [...tutor.qualifications, { ...values }],
         });
       } catch (error) {
@@ -55,7 +47,7 @@ export default function EditQualification({ tutor, updateData }) {
   });
 
   return (
-    <div className=" pb-12 w-full max-w-screen-md mx-auto">
+    <div className=" pb-12 w-full ">
       <h1 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
         Education Details
       </h1>

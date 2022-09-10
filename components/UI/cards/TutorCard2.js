@@ -6,6 +6,7 @@ import Image from "next/image";
 import Button from "../Button";
 import { useRouter } from "next/router";
 import { findHighestQualification } from "../../../utility/findHighestQualification";
+import Anchor from "../Anchor";
 
 const TutorCard2 = ({ tutor }) => {
   const router = useRouter();
@@ -112,7 +113,8 @@ const TutorCard2 = ({ tutor }) => {
             </svg>
 
             <h3 className="px-2 text-sm font-medium">
-              {findHighestQualification(tutor.qualifications)}
+              {tutor.qualifications &&
+                findHighestQualification(tutor.qualifications)}
             </h3>
           </div>
 
@@ -215,8 +217,8 @@ const TutorCard2 = ({ tutor }) => {
               />
             </svg>
             <h3 className="px-2 text-sm font-medium">
-              {tutor.subjectsTaught[0].classes[0]?.title},{" "}
-              {tutor.subjectsTaught[1].classes[1]?.title}
+              {tutor.subjectsTaught[0]?.classes[0]?.title},{" "}
+              {tutor.subjectsTaught[1]?.classes[1]?.title}
             </h3>
           </div>
         </div>
@@ -234,11 +236,6 @@ const TutorCard2 = ({ tutor }) => {
                 border border-primary hover:border hover:border-primary grid place-content-center
                 transition-all duration-300 ease-out"
               >
-                {/* <img
-                className="object-contain h-16 w-16"
-                src={"/images/badge.png"}
-                alt=""
-              /> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -253,11 +250,6 @@ const TutorCard2 = ({ tutor }) => {
                 border border-primary hover:border hover:border-primary grid place-content-center
                 transition-all duration-300 ease-out"
               >
-                {/* <img
-                className="object-contain h-16 w-16"
-                src={"/images/badge.png"}
-                alt=""
-              /> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -278,11 +270,6 @@ const TutorCard2 = ({ tutor }) => {
                 border border-primary hover:border hover:border-primary grid place-content-center
                 transition-all duration-300 ease-out"
               >
-                {/* <img
-                className="object-contain h-16 w-16"
-                src={"/images/badge.png"}
-                alt=""
-              /> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -297,11 +284,6 @@ const TutorCard2 = ({ tutor }) => {
             border border-primary hover:border hover:border-primary grid place-content-center
             transition-all duration-300 ease-out"
               >
-                {/* <img
-                className="object-contain h-16 w-16"
-                src={"/images/badge.png"}
-                alt=""
-              /> */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6 "
@@ -319,20 +301,12 @@ const TutorCard2 = ({ tutor }) => {
             </div>
 
             <div className="space-y-4 md:space-y-0 sm:flex items-center justify-start sm:space-x-4">
-              <Button
-                onClick={() => {
-                  router.push({
-                    pathname: "/profile/[userId]",
-                    query: { userId: tutor._id },
-                  });
-                }}
-              >
-                <p> View Profile</p>
-              </Button>
-
-              <button className="w-full sm:w-fit px-4 py-2 border border-primary bg-white rounded-md text-primary font-medium">
+              <Anchor button href={`/profile/${tutor._id}`}>
+                View Profile
+              </Anchor>
+              {/* <Anchor link href={`/profile/${tutor._id}`}>
                 Contact
-              </button>
+              </Anchor> */}
             </div>
           </div>
         </div>

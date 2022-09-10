@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import ChevronDots from "../components/UI/ChevronDots";
 import FormGroup from "../components/UI/FormGroup";
-import SelectGroup from "../components/UI/SelectGroup";
-import InputGroup from "../components/UI/InputGroup";
 import Button from "../components/UI/Button";
 import Container from "../components/UI/Container";
 import { useRouter } from "next/router";
@@ -14,15 +12,47 @@ import TextArea from "../components/UI/TextArea";
 import { useAuth } from "../contexts/AuthContext";
 import AccessDenied from "../components/UI/AccessDenied";
 import axios from "axios";
+import CheckBox from "../components/UI/CheckBox";
 
-export default function JobPosting() {
+export async function getStaticProps() {
+  const cities = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-cities`);
+  const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
+  const subjects = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-subjects`
+  );
+  const classes = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-classes`);
+
+  return {
+    props: {
+      cities: cities.data,
+      areas: areas.data,
+      subjects: subjects.data,
+      classes: classes.data,
+    },
+    revalidate: 30,
+  };
+}
+
+export default function JobPosting({ cities, areas, subjects, classes }) {
   const router = useRouter();
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(null);
   const { currentUser } = useAuth();
   console.log(currentStep);
+
+  useEffect(() => {
+    const step = localStorage.getItem("step");
+    step ? setCurrentStep(Number(step)) : setCurrentStep(1);
+    return () => {
+      localStorage.removeItem("Student");
+      localStorage.removeItem("Tutor");
+      localStorage.removeItem("Description");
+      localStorage.removeItem("step");
+    };
+  }, [router.pathname !== "/job-posting"]);
+
   return (
     <>
-      {currentUser?.userType !== "student" && <AccessDenied />}
+      {/* {currentUser?.userType !== "student" && <AccessDenied />} */}
 
       <Container color={"gray-50"}>
         <div className="bg-white w-full mx-auto">
@@ -36,8 +66,12 @@ export default function JobPosting() {
             />
           </div>
           <div className="px-5">
-            {currentStep === 1 && <Student setCurrentStep={setCurrentStep} />}
-            {currentStep === 2 && <Tutor setCurrentStep={setCurrentStep} />}
+            {currentStep === 1 && (
+              <Student allSubjects={subjects} setCurrentStep={setCurrentStep} />
+            )}
+            {currentStep === 2 && (
+              <Tutor cities={cities} setCurrentStep={setCurrentStep} />
+            )}
             {currentStep === 3 && (
               <Description setCurrentStep={setCurrentStep} />
             )}
@@ -47,7 +81,7 @@ export default function JobPosting() {
     </>
   );
 }
-function Student({ setCurrentStep }) {
+function Student({ allSubjects, setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
       subjects: "",
@@ -57,33 +91,70 @@ function Student({ setCurrentStep }) {
     },
     onSubmit: (values) => {
       localStorage.setItem("Student", JSON.stringify(values));
+      localStorage.setItem("step", 2);
       setCurrentStep((prev) => ++prev);
     },
   });
 
+  const allClasses = [
+    { label: "Class 1", value: "Class 1" },
+    { label: "Class 2", value: "Class 2" },
+    { label: "Class 3", value: "Class 3" },
+    { label: "Class 4", value: "Class 4" },
+    { label: "Class 5", value: "Class 5" },
+    { label: "Class 6", value: "Class 6" },
+    { label: "Class 7", value: "Class 7" },
+    { label: "Class 8", value: "Class 8" },
+    { label: "Class 9", value: "Class 9" },
+    { label: "Class 10", value: "Class 10" },
+    { label: "Class 11", value: "Class 11" },
+    { label: "Class 12", value: "Class 12" },
+  ];
+
+  const subjectsHandler = (e) => {
+    if (e.target.checked) {
+      formik.setFieldValue("subjects", [
+        ...formik.values.subjects,
+        e.target.name,
+      ]);
+    } else {
+      formik.setFieldValue(
+        "subjects",
+        formik.values.subjects.filter((item) => item.name !== e.target.name)
+      );
+    }
+  };
+
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+      <h1 className="mb-5 text-xl sm:text-2xl font-semibold text-primary">
         Student Details
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
-        <FormGroup>
-          <Input
-            required
-            label="Subjects"
-            type="text"
-            name="subjects"
-            formik={formik}
-          />
-        </FormGroup>
+        <p className="text-gray-600 font-medium ">Subjects</p>
+        <div className="px-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-6 max-h-[calc(100vh-500px)] overflow-auto">
+          {allSubjects.map((subject) => {
+            return (
+              <div key={subject._id}>
+                <CheckBox
+                  label={subject.name}
+                  name={subject.name}
+                  onChange={subjectsHandler}
+                />
+              </div>
+            );
+          })}
+        </div>
+
         <FormGroup horizontal>
-          <Input
-            required
-            label="Class"
-            type="text"
-            name="class"
-            formik={formik}
-          />
+          <Select required label="Class" name="class" formik={formik}>
+            <option value="">Select</option>
+            {allClasses.map((item) => (
+              <option key={item.value} value={item.value}>
+                {item.label}
+              </option>
+            ))}
+          </Select>
           <Select required label="Duration" name="duration" formik={formik}>
             <option value="">Select</option>
             <option value="1 Month">1 Month</option>
@@ -109,7 +180,7 @@ function Student({ setCurrentStep }) {
     </div>
   );
 }
-function Tutor({ setCurrentStep }) {
+function Tutor({ cities, setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
       qualification: "",
@@ -120,12 +191,13 @@ function Tutor({ setCurrentStep }) {
     },
     onSubmit: (values) => {
       localStorage.setItem("Tutor", JSON.stringify(values));
+      localStorage.setItem("step", 2);
       setCurrentStep((prev) => ++prev);
     },
   });
   return (
-    <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+    <div className="pb-12 w-full max-w-screen-md mx-auto">
+      <h1 className="mb-5 text-xl sm:text-2xl font-semibold text-primary">
         Tutor Requirements
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
@@ -148,13 +220,16 @@ function Tutor({ setCurrentStep }) {
         </FormGroup>
 
         <FormGroup>
-          <Input
-            required
-            label="Experience"
-            type="text"
-            name="experience"
-            formik={formik}
-          />
+          <Select required label="Experience" name="experience" formik={formik}>
+            <option value="">Select</option>
+            <option value="no">No experience</option>
+            <option value="1">1 Year</option>
+            <option value="2">2 Years</option>
+            <option value="3">3 Years</option>
+            <option value="4">4 Years</option>
+            <option value="5">5 Years</option>
+            <option value="5+">5+ Years</option>
+          </Select>
         </FormGroup>
 
         <FormGroup horizontal>
@@ -165,7 +240,9 @@ function Tutor({ setCurrentStep }) {
             formik={formik}
           >
             <option value="">Select</option>
-            <option value="One to One">One to One</option>
+            <option value="Any">Any</option>
+            <option value="Tutor travels">Tuotor travels</option>
+            <option value="Student travels">Student travels</option>
             <option value="Online">Online</option>
           </Select>
           <Select
@@ -181,25 +258,28 @@ function Tutor({ setCurrentStep }) {
           </Select>
         </FormGroup>
 
-        <FormGroup>
-          <Input
-            required
-            label="City"
-            type="text"
-            name="city"
-            formik={formik}
-          />
-        </FormGroup>
+        {formik.values.teachingMode !== "Online" && (
+          <FormGroup>
+            <Select required label="City" name="city" formik={formik}>
+              <option value="">Select</option>
+              {cities.map((item) => (
+                <option key={item._id} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </Select>
+          </FormGroup>
+        )}
 
         <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
-          <Button
+          {/* <Button
             onClick={() => {
               setCurrentStep((prev) => --prev);
             }}
             type="button"
           >
             Back
-          </Button>
+          </Button> */}
           <Button type="submit">Next</Button>
         </div>
       </form>
@@ -213,6 +293,7 @@ function Description({ setCurrentStep }) {
 
   const formik = useFormik({
     initialValues: {
+      title: "",
       budget: "",
       description: "",
     },
@@ -256,10 +337,19 @@ function Description({ setCurrentStep }) {
 
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+      <h1 className="mb-5 text-xl sm:text-2xl font-semibold text-primary">
         Job Description
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
+        <FormGroup>
+          <Input
+            required
+            label="Job Title"
+            type="text"
+            name="title"
+            formik={formik}
+          />
+        </FormGroup>
         <FormGroup>
           <Input
             required
@@ -280,14 +370,14 @@ function Description({ setCurrentStep }) {
         </FormGroup>
 
         <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
-          <Button
+          {/* <Button
             onClick={() => {
               setCurrentStep((prev) => --prev);
             }}
             type="button"
           >
             Back
-          </Button>
+          </Button> */}
           <Button type="submit">Post Job</Button>
         </div>
       </form>

@@ -12,8 +12,18 @@ import FormGroup from "../../components/UI/FormGroup";
 import Button from "../../components/UI/Button";
 import { useAuth } from "../../contexts/AuthContext";
 
-export async function getServerSideProps(context) {
-  const { jobId } = context.params;
+export async function getStaticPaths() {
+  const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
+
+  return {
+    paths: jobs.data.map((job) => ({
+      params: { jobId: job._id },
+    })),
+    fallback: false,
+  };
+}
+export async function getStaticProps({ params }) {
+  const { jobId } = params;
 
   const jobs = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-job/${jobId}`
@@ -21,13 +31,12 @@ export async function getServerSideProps(context) {
   const applications = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-jobapplications/${jobId}`
   );
-  // console.log(response);
-
   return {
     props: {
       job: jobs.data,
       applications: applications.data,
     },
+    revalidate: 30,
   };
 }
 

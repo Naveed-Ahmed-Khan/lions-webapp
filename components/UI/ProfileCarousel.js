@@ -36,7 +36,7 @@ const ProfileCarousel = ({ images }) => {
             />
           </svg>
         </button>
-        <div className="relative w-full h-[350px] bg-neutral-50 overflow-clip">
+        <div className="relative w-full h-[350px] overflow-clip">
           <Image
             layout="fill"
             objectFit="contain"

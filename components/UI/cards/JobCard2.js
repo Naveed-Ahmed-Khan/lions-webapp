@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { jobTimeStamp } from "../../../utility/jobTimeStamp";
+import Anchor from "../Anchor";
 import Button from "../Button";
 
 const JobCard2 = ({ job }) => {
@@ -116,7 +117,7 @@ const JobCard2 = ({ job }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Location | {job.city}</span>
+            <span>Location | {job.location.city}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -135,7 +136,7 @@ const JobCard2 = ({ job }) => {
             </svg>
             <span>Gender Preferance | {job.gender}</span>
           </li>
-          <li className="flex  space-x-2">
+          <li className="flex space-x-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-primary"
@@ -156,18 +157,9 @@ const JobCard2 = ({ job }) => {
 
         {router.pathname === "/jobs" && (
           <div className="w-full sm:w-fit self-end">
-            <Button
-              onClick={() => {
-                router.push({
-                  pathname: "/job-description/[jobId]",
-                  query: {
-                    jobId: job._id,
-                  },
-                });
-              }}
-            >
-              <p>Apply Now</p>
-            </Button>
+            <Anchor button href={`/job-description/${job._id}`}>
+              Apply Now
+            </Anchor>
           </div>
         )}
 

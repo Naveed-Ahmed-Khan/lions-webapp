@@ -4,9 +4,13 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import Dropdown from "./Dropdown";
+import { useRouter } from "next/router";
+import { getCookie } from "cookies-next";
 
 const Navbar = ({ open, setOpen, setShowBackdrop }) => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser, logout, checkAuth } = useAuth();
+  const router = useRouter();
+  const user = getCookie("user_id");
   // console.log(currentUser);
   // const [state, setState] = useState(false);
   // console.log(open);
@@ -69,21 +73,18 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
               </Link>
             ))}
           </li>
+
           {currentUser ? (
             <li className="flex items-center gap-2">
               <Dropdown
                 options={
-                  currentUser.userType === "tutor"
+                  currentUser?.userType === "tutor"
                     ? [
                         { title: "My Profile", href: "/profile" },
                         { title: "Edit Profile", href: "/edit-profile" },
                         { title: "Jobs Applied", href: "/applied-jobs" },
-                        { title: "Logout", href: "/" },
                       ]
-                    : [
-                        { title: "My Jobs", href: "/my-jobs" },
-                        { title: "Logout", href: "/" },
-                      ]
+                    : [{ title: "My Jobs", href: "/my-jobs" }]
                 }
               >
                 <Image
@@ -91,7 +92,7 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
                   height={45}
                   layout="fixed"
                   className="rounded-full object-cover"
-                  src={currentUser.profilePic}
+                  src={currentUser?.profilePic}
                   alt="Profile"
                 />
               </Dropdown>
@@ -100,17 +101,6 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
                   {currentUser?.name}
                 </span>
               </p>
-              {/* <Link href={"/"}>
-                <a
-                  className="p-1 font-medium mr-4 border-b-2 text-white border-b-transparent text-center transition-all duration-300
-                hover:border-b-2 hover:border-gray-600 hover:text-gray-600 focus:shadow-none block md:inline"
-                  onClick={() => {
-                    logout();
-                  }}
-                >
-                  Logout
-                </a>
-              </Link> */}
             </li>
           ) : (
             <li className="pb-5 md:pb-0 space-x-4">

@@ -10,7 +10,7 @@ const CheckBox = ({
   type,
   disabled,
   formik,
-  checked,
+  defaultChecked,
   error,
   alt,
 }) => {
@@ -28,11 +28,11 @@ const CheckBox = ({
             ? "ring-1 ring-red-400 focus:ring-offset-2 focus:ring-offset-red-400"
             : "ring-1 ring-gray-300 focus:ring-offset-2 focus:ring-offset-primary"
         } focus:ring-2 focus:ring-white`}
+          defaultChecked={defaultChecked}
           required={required}
           placeholder={placeholder}
           type={type ? type : "checkbox"}
           name={name}
-          checked={formik ? formik.values[name] : checked}
           value={formik ? formik.values[name] : value}
           onChange={formik ? formik.handleChange : onChange}
           onClick={formik ? formik.handleClick : onClick}

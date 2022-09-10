@@ -28,7 +28,7 @@ export default function EditPersonal({ tutor, updateData }) {
 
   const updateTutor = async (data) => {
     await axios.patch(
-      `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
+      `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor?._id}`,
       data
     );
     updateData();
@@ -46,15 +46,15 @@ export default function EditPersonal({ tutor, updateData }) {
 
   const formik = useFormik({
     initialValues: {
-      availableFrom: tutor.availableFrom || "",
-      availableTo: tutor.availableTo || "",
-      teachingModes: tutor.teachingModes || [],
+      availableFrom: tutor?.availableFrom || "",
+      availableTo: tutor?.availableTo || "",
+      teachingModes: tutor?.teachingModes || [],
       profilePic: "",
       bannerImage: "",
-      mobile: tutor.mobile || "",
-      watsapp: tutor.watsapp || "",
-      city: tutor.city || "",
-      address: tutor.address || "",
+      mobile: tutor?.mobile || "",
+      watsapp: tutor?.watsapp || "",
+      city: tutor?.city || "",
+      address: tutor?.address || "",
     },
     onSubmit: async (values) => {
       console.log(values);
@@ -74,8 +74,8 @@ export default function EditPersonal({ tutor, updateData }) {
           watsapp: values.watsapp,
           city: values.city,
           address: values.address,
-          profilePic: values.profilePic || tutor.profilePic,
-          bannerImage: values.bannerImage || tutor.bannerImage,
+          profilePic: values.profilePic || tutor?.profilePic,
+          bannerImage: values.bannerImage || tutor?.bannerImage,
         });
       } catch (error) {
         console.log(error);
@@ -84,7 +84,7 @@ export default function EditPersonal({ tutor, updateData }) {
   });
 
   useEffect(() => {
-    formik.setFieldValue("teachingModes", tutor.teachingModes);
+    formik.setFieldValue("teachingModes", tutor?.teachingModes);
   }, []);
 
   const modes = ["Tutor travels", "Student travels", "Online"];
@@ -106,19 +106,19 @@ export default function EditPersonal({ tutor, updateData }) {
   };
 
   return (
-    <div className="pb-12 w-full max-w-screen-md mx-auto">
+    <div className="pb-12 w-full">
       <h1 className="text-xl sm:text-2xl font-semibold text-primary">
         Profile Details
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-8 w-full">
         <div className="space-y-8">
           <div className="sm:flex gap-6">
-            {profilePath || tutor.profilePic ? (
+            {profilePath || tutor?.profilePic ? (
               <div className="relative h-44 w-44 rounded-lg overflow-clip">
                 <Image
                   layout="fill"
                   objectFit="cover"
-                  src={profilePath || tutor.profilePic}
+                  src={profilePath || tutor?.profilePic}
                   alt=""
                 />
               </div>
@@ -138,12 +138,12 @@ export default function EditPersonal({ tutor, updateData }) {
             </div>
           </div>
           <div className=" space-y-6 ">
-            {bannerImagePath || tutor.bannerImage ? (
+            {bannerImagePath || tutor?.bannerImage ? (
               <div className="relative h-44 rounded-lg overflow-clip">
                 <Image
                   layout="fill"
                   objectFit="cover"
-                  src={bannerImagePath || tutor.bannerImage}
+                  src={bannerImagePath || tutor?.bannerImage}
                   alt=""
                 />
               </div>
@@ -180,18 +180,27 @@ export default function EditPersonal({ tutor, updateData }) {
           </div>
         </div>
 
-        {/* <FormGroup>
-          <ul className="px-2  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-            <h3>Modes of Teaching</h3>
-            {modes.map((item) => {
-              return (
-                <li key={item}>
-                  <CheckBox label={item} name={item} onChange={modesHandler} />
-                </li>
-              );
-            })}
-          </ul>
-        </FormGroup> */}
+        <FormGroup>
+          <div>
+            <h3 className="text-gray-600 font-medium">Modes of Teaching</h3>
+            <ul className="px-2 grid grid-cols-1 sm:grid-cols-3 gap-8 mt-2">
+              {modes.map((item) => {
+                const checked = formik.values.teachingModes.includes(item);
+                // console.log(checked);
+                return (
+                  <li key={item}>
+                    <CheckBox
+                      defaultChecked={checked}
+                      label={item}
+                      name={item}
+                      onChange={modesHandler}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </FormGroup>
 
         <FormGroup horizontal>
           <Input

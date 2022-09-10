@@ -43,7 +43,7 @@ export default function EditExperience({ tutor, updateData }) {
     },
   });
   return (
-    <div className=" pb-12 w-full max-w-screen-md mx-auto">
+    <div className=" pb-12 w-full">
       <h1 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
         Experience Details
       </h1>

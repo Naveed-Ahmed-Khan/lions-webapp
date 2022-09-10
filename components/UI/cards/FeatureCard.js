@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../Button";
 import { useRouter } from "next/router";
+import Anchor from "../Anchor";
 
 const FeatureCard = () => {
   const router = useRouter();
@@ -19,28 +20,12 @@ const FeatureCard = () => {
             haven&apos;t.
           </p>
           <div className=" items-center justify-center sm:space-x-6 sm:flex">
-            <div className="mb-4 sm:mb-0 w-full sm:w-fit">
-              <Button
-                onClick={() => {
-                  router.push("/tutors");
-                }}
-              >
-                <p className=" font-medium"> Find Tutors Now</p>
-              </Button>
-            </div>
-            <div className="mb-4 sm:mb-0 w-full sm:w-fit">
-              <Button
-                alt
-                onClick={() => {
-                  router.push("/job-posting");
-                }}
-              >
-                <p className=" font-medium">Post a Job</p>
-              </Button>
-            </div>
-            {/*  <a className="px-7 py-3 w-full bg-gray-700 text-white font-medium text-center rounded-md block sm:w-auto">
+            <Anchor button href={`/tutors`}>
+              Find Tutors Now
+            </Anchor>
+            <Anchor buttonAlt href={`/job-posting`}>
               Post a Job
-            </a> */}
+            </Anchor>
           </div>
         </div>
         <div className="flex sm:flex-wrap -m-4 text-center overflow-auto">

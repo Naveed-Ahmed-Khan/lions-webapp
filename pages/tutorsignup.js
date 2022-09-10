@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import ChevronDots from "../components/UI/ChevronDots";
 import FormGroup from "../components/UI/FormGroup";
@@ -11,14 +11,41 @@ import Select from "../components/UI/Select";
 import DatePicker from "../components/UI/DatePicker";
 import { filetobase64 } from "../utility/filetobase64";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import { useFormik } from "formik";
 import { useAuth } from "../contexts/AuthContext";
 import * as yup from "yup";
+import axios from "axios";
+import CheckBox from "../components/UI/CheckBox";
 
-export default function TutorSignup() {
-  const [currentStep, setCurrentStep] = useState(1);
+export async function getStaticProps() {
+  const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
+  const cities = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-cities`);
+
+  return {
+    props: {
+      areas: areas.data,
+      cities: cities.data,
+    },
+    revalidate: 30,
+  };
+}
+
+export default function TutorSignup({ areas, cities }) {
+  console.log(areas);
+  const router = useRouter();
+  const [currentStep, setCurrentStep] = useState(null);
   // console.log(currentStep);
+  useEffect(() => {
+    const step = localStorage.getItem("step");
+    step ? setCurrentStep(Number(step)) : setCurrentStep(1);
+    return () => {
+      localStorage.removeItem("Account");
+      localStorage.removeItem("Personal");
+      localStorage.removeItem("step");
+    };
+  }, [router.pathname !== "/tutorsignup"]);
+
   return (
     <Container color={"gray-50"}>
       <div className="bg-white w-full mx-auto">
@@ -27,82 +54,38 @@ export default function TutorSignup() {
         </h1>
         <div className="hidden sm:block pt-6 pb-12 px-8">
           <ChevronDots
-            steps={["Account", "Personal", "Qualification", "Profile"]}
+            // steps={["Account", "Personal", "Qualification", "Profile"]}
+            steps={["Personal", "Account"]}
             currentStep={currentStep}
           />
         </div>
+
         <div className="px-5">
-          {currentStep === 1 && <Account setCurrentStep={setCurrentStep} />}
-          {currentStep === 2 && <Personal setCurrentStep={setCurrentStep} />}
-          {currentStep === 3 && (
+          {currentStep === 1 && (
+            <Personal
+              cities={cities}
+              areas={areas}
+              setCurrentStep={setCurrentStep}
+            />
+          )}
+          {currentStep === 2 && <Account setCurrentStep={setCurrentStep} />}
+          {/* {currentStep === 3 && (
             <Qualification setCurrentStep={setCurrentStep} />
           )}
-          {currentStep === 4 && <Profile setCurrentStep={setCurrentStep} />}
+          {currentStep === 4 && <Profile setCurrentStep={setCurrentStep} />} */}
         </div>
       </div>
     </Container>
   );
 }
+function Personal({ cities, areas, setCurrentStep }) {
+  console.log(cities);
+  console.log(areas);
 
-function Account({ setCurrentStep }) {
-  const signupSchema = yup.object({
-    email: yup.string("Enter your email").email("Enter a valid email"),
-    password: yup
-      .string("Enter your password")
-      .min(6, "Password should be of minimum 6 characters length"),
-    confirmPassword: yup
-      .string("Confirm your password")
-      .oneOf([yup.ref("password"), null], "Passwords must match"),
-  });
+  const { signup } = useAuth();
+  const [error, setError] = useState("");
+  const router = useRouter();
 
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: signupSchema,
-    onSubmit: (values) => {
-      // console.log(values);
-      localStorage.setItem(
-        "Account",
-        JSON.stringify({ email: values.email, password: values.password })
-      );
-      setCurrentStep((prev) => ++prev);
-    },
-  });
-
-  return (
-    <div className="pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
-        Account Details
-      </h1>
-      <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
-        <FormGroup>
-          <Input required label="Email" name={"email"} formik={formik} />
-        </FormGroup>
-
-        <FormGroup>
-          <Input required label="Password" name={"password"} formik={formik} />
-        </FormGroup>
-
-        <FormGroup>
-          <Input
-            required
-            label="Confirm Password"
-            name={"confirmPassword"}
-            formik={formik}
-          />
-        </FormGroup>
-        <div className="sm:pt-4">
-          <Button type="submit">Next</Button>
-        </div>
-      </form>
-    </div>
-  );
-}
-
-function Personal({ setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -111,15 +94,36 @@ function Personal({ setCurrentStep }) {
       gender: "",
       mobile: "",
       watsapp: "",
+      availableFrom: "",
+      avaiableTo: "",
       city: "",
+      area: "",
+      modes: [],
       address: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       // console.log(values);
       localStorage.setItem("Personal", JSON.stringify(values));
+
       setCurrentStep((prev) => ++prev);
     },
   });
+  const modes = [
+    { label: "Tutor travels", value: "Tutor travels" },
+    { label: "Student travels", value: "Student travels" },
+    { label: "Online", value: "Online" },
+  ];
+
+  const modesHandler = (e) => {
+    if (e.target.checked) {
+      formik.setFieldValue("modes", [...formik.values.modes, e.target.name]);
+    } else {
+      formik.setFieldValue(
+        "modes",
+        formik.values.modes.filter((item) => item.name !== e.target.name)
+      );
+    }
+  };
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
       <h1 className="text-xl sm:text-2xl font-semibold text-primary">
@@ -163,24 +167,180 @@ function Personal({ setCurrentStep }) {
           />
         </FormGroup>
 
-        <FormGroup>
-          <Input required label="City" name={"city"} formik={formik} />
+        <FormGroup horizontal>
+          <Select required label="City" name={"city"} formik={formik}>
+            <option value="">Select</option>
+            {cities.map((city) => {
+              return (
+                <option key={city._id} value={city.name}>
+                  {city.name}
+                </option>
+              );
+            })}
+          </Select>
+          <Select
+            required
+            disabled={!formik.values.city ? true : false}
+            label="Area"
+            name={"area"}
+            formik={formik}
+          >
+            <option value="">Select</option>
+            {areas
+              .filter((area) => area.city_id.name === formik.values.city)
+              .map((area) => {
+                return (
+                  <option key={area._id} value={area.name}>
+                    {area.name}
+                  </option>
+                );
+              })}
+          </Select>
         </FormGroup>
 
+        <div className="mt-5">
+          <h3 className="mb-2 text-gray-600 font-medium">
+            Availablity (from - to)
+          </h3>
+          <div className="grid grid-cols-2 gap-6">
+            <Input
+              required
+              type="time"
+              name={"availableFrom"}
+              formik={formik}
+            />
+
+            <Input required type="time" name={"availableTo"} formik={formik} />
+          </div>
+        </div>
+        <div className="my-5">
+          <p className="text-gray-600 font-medium ">Modes of Teaching</p>
+          <div className="px-2 mt-2 grid grid-cols-1 sm:grid-cols-3 gap-8 ">
+            {modes.map((mode) => {
+              return (
+                <div key={mode.label}>
+                  <CheckBox
+                    label={mode.label}
+                    name={mode.value}
+                    onChange={modesHandler}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
         <FormGroup>
           <TextArea required label="Address" name={"address"} formik={formik} />
         </FormGroup>
 
         <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
-          <Button
+          {/* <Button
             onClick={() => {
               setCurrentStep((prev) => --prev);
             }}
             type="button"
           >
             Back
-          </Button>
+          </Button> */}
           <Button type="submit">Next</Button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+function Account({ setCurrentStep }) {
+  const router = useRouter();
+  const { signup } = useAuth();
+  const [error, setError] = useState("");
+
+  const signupSchema = yup.object({
+    email: yup.string("Enter your email").email("Enter a valid email"),
+    password: yup
+      .string("Enter your password")
+      .min(6, "Password should be of minimum 6 characters length"),
+    confirmPassword: yup
+      .string("Confirm your password")
+      .oneOf([yup.ref("password"), null], "Passwords must match"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+    },
+    validationSchema: signupSchema,
+    onSubmit: async (values) => {
+      // console.log(values);
+      localStorage.setItem(
+        "Account",
+        JSON.stringify({ email: values.email, password: values.password })
+      );
+
+      const account = JSON.parse(localStorage.getItem("Account"));
+      const personal = JSON.parse(localStorage.getItem("Personal"));
+
+      if (account && personal) {
+        // setError("");
+        const data = {
+          ...account,
+          ...personal,
+          userType: "tutor",
+          userStatus: "unverified",
+          tag: "none",
+        };
+        console.log(data);
+        try {
+          const response = await signup(data);
+          console.log(response);
+          if (response.error) {
+            setError(response.error);
+          } else {
+            router.push("/login");
+          }
+        } catch (error) {
+          console.log(error);
+          setError(error.message);
+        }
+      }
+    },
+  });
+
+  return (
+    <div className="pb-12 w-full max-w-screen-md mx-auto">
+      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+        Account Details
+      </h1>
+      <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
+        <FormGroup>
+          <Input required label="Email" name={"email"} formik={formik} />
+        </FormGroup>
+
+        <FormGroup>
+          <Input required label="Password" name={"password"} formik={formik} />
+        </FormGroup>
+
+        <FormGroup>
+          <Input
+            required
+            label="Confirm Password"
+            name={"confirmPassword"}
+            formik={formik}
+          />
+        </FormGroup>
+        {error && (
+          <p
+            onClick={() => {
+              setError("");
+            }}
+            className="cursor-pointer mt-4 text-center font-archivo text-red-500 px-6 py-3 border border-red-500 rounded-lg"
+          >
+            {error}, please try again.
+          </p>
+        )}
+        <div className="sm:pt-4">
+          <Button type="submit">Submit</Button>
         </div>
       </form>
     </div>

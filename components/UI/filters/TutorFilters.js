@@ -8,17 +8,27 @@ import Button from "../Button";
 import { useStateContext } from "../../../contexts/StateContext";
 import axios from "axios";
 import { useRouter } from "next/router";
+import FormGroup from "../FormGroup";
+import Select from "../Select";
 
-export default function TutorFilters({ setFilteredTutors, setOpenFilter }) {
+export default function TutorFilters({
+  setFilteredTutors,
+  setOpenFilter,
+  allAreas,
+  allCities,
+}) {
+  // console.log(allAreas);
   const router = useRouter();
   const [classes, setClasses] = useState("");
   const [qualification, setQualification] = useState("");
   const [subjects, setSubjects] = useState("");
+  const [areas, setAreas] = useState("");
+  const [selectedCity, setSelectedCity] = useState("");
   // const [queryParams, setQueryParams] = useState(null);
   // const [clear, setClear] = useState(false);
   // const [gender, setGender] = useState([]);
 
-  console.log(subjects);
+  // console.log(subjects);
   // console.log(classes);
   // console.log(qualification);
 
@@ -88,6 +98,14 @@ export default function TutorFilters({ setFilteredTutors, setOpenFilter }) {
     }
   };
 
+  const areasHandler = (e) => {
+    if (e.target.checked) {
+      setAreas([...areas, { name: e.target.name, value: e.target.checked }]);
+    } else {
+      setAreas(areas.filter((item) => item.name !== e.target.name));
+    }
+  };
+
   const createQueryString = () => {
     let query = {};
     if (qualification.length > 0) {
@@ -107,6 +125,17 @@ export default function TutorFilters({ setFilteredTutors, setOpenFilter }) {
         return clas.name;
       });
     }
+
+    if (selectedCity) {
+      query["city"] = selectedCity;
+    }
+
+    if (areas.length > 0) {
+      query["area"] = areas.map((area) => {
+        return area.name;
+      });
+    }
+
     console.log(query);
     return query;
   };
@@ -212,6 +241,53 @@ export default function TutorFilters({ setFilteredTutors, setOpenFilter }) {
                       />
                     </li>
                   );
+                })}
+              </ul>
+            </fieldset>
+          </div>
+
+          <div className="py-8">
+            <fieldset>
+              <legend className="text-xl text-primary font-medium">
+                Location
+              </legend>
+
+              <FormGroup>
+                <Select
+                  label="City"
+                  name="city"
+                  value={selectedCity}
+                  onChange={(e) => {
+                    setSelectedCity(e.target.value);
+                  }}
+                >
+                  <option value="">Select</option>
+                  {allCities.map((city) => {
+                    return (
+                      <option key={city._id} value={city.name}>
+                        {city.name}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </FormGroup>
+
+              <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
+                {allAreas.map((area) => {
+                  const { city_id } = area;
+                  if (city_id?.name !== selectedCity) {
+                    return;
+                  } else {
+                    return (
+                      <li key={area._id}>
+                        <CheckBox
+                          label={area.name}
+                          name={area.name}
+                          onChange={areasHandler}
+                        />
+                      </li>
+                    );
+                  }
                 })}
               </ul>
             </fieldset>

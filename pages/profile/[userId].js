@@ -69,14 +69,16 @@ export default function Profile({ tutor, applications }) {
             />
           </div>
 
-          <h2 className="mt-4 text-gray-800 text-2xl font-bold">
+          <h2 className="mt-4 text-gray-700 text-2xl sm:text-3xl font-medium">
             {tutor.name}
           </h2>
         </div>
       </div>
       {/* Mobile Collapse */}
       <div className="block md:hidden pt-8 bg-white md:bg-neutral-100 rounded px-5 sm:p-8">
-        <h3 className=" text-primary text-2xl font-medium">My Profile</h3>
+        <h3 className="mb-6 text-xl sm:text-2xl text-primary font-medium">
+          My Profile
+        </h3>
         <div className="flex flex-col gap-6 md:gap-8">
           <Collapse label="About me">{tutor.aboutMe}</Collapse>
           <Collapse label="Achievements">{tutor.achievements}</Collapse>
@@ -86,41 +88,43 @@ export default function Profile({ tutor, applications }) {
       <main className="p-6 md:flex gap-6 bg-white ">
         <div className="w-full md:w-[420px]">
           <ProfileSidebar tutor={tutor} />
+          <div className="hidden sm:block my-6">
+            <Button fullwidth>Apply Now</Button>
+          </div>
         </div>
-        <section className="-mt-8 md:-mt-[8.5rem] w-full flex flex-col gap-10 ">
-          <div className="hidden md:block mt-8 bg-white md:bg-neutral-100 rounded sm:p-8">
-            <h2 className=" mb-8 text-primary text-xl font-semibold">
-              My Profile
-            </h2>
-
+        <section className="w-full flex flex-col gap-10">
+          <div className="hidden md:block bg-white md:bg-neutral-100 rounded sm:p-6">
             {/* Desktop Collapse */}
             <div className="hidden md:flex flex-col gap-6 md:gap-8">
-              <h3 className=" text-gray-700 text-2xl font-medium">
+              <h3 className="text-xl sm:text-2xl text-primary font-medium">
                 My Profile
               </h3>
-              <Collapse label="About me">{tutor.aboutMe}</Collapse>
-              <Collapse label="Achievements">{tutor.achievements}</Collapse>
+              <div className="flex flex-col gap-6 md:gap-8">
+                <Collapse label="About me">{tutor.aboutMe}</Collapse>
+                <Collapse label="Achievements">{tutor.achievements}</Collapse>
+              </div>
             </div>
           </div>
+          <div className="mt-6 sm:mt-0 flex flex-col gap-6 md:gap-8">
+            {tutor.sections.map((section) => {
+              return (
+                <div key={section._id}>
+                  {section.type === "Simple" && <Simple section={section} />}
+                  {section.type === "Gallery" && <Gallery section={section} />}
+                  {section.type === "Collapsable" && (
+                    <Collapsable section={section} />
+                  )}
+                </div>
+              );
+            })}
+          </div>
+          <div className="block sm:hidden">
+            <Button fullwidth>Apply Now</Button>
+          </div>
 
-          {tutor.sections.map((section) => {
-            return (
-              <div
-                key={section._id}
-                className="p-8 flex flex-col gap-6 md:gap-8 bg-gray-100"
-              >
-                {section.type === "Simple" && <Simple section={section} />}
-                {section.type === "Gallery" && <Gallery section={section} />}
-                {section.type === "Collapsable" && (
-                  <Collapsable section={section} />
-                )}
-              </div>
-            );
-          })}
-
-          <section className="mt-20 md:mt-0 bg-white md:bg-neutral-100 rounded md:p-8">
+          <section className="bg-white md:bg-neutral-100 rounded md:p-8">
             <div className="mb-8 md:flex items-center justify-between">
-              <h2 className="text-primary-dark text-xl font-semibold">
+              <h2 className="text-xl sm:text-2xl text-primary font-medium">
                 Feedbacks
               </h2>
             </div>

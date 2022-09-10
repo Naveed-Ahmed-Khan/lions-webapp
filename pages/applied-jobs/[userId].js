@@ -8,18 +8,28 @@ import Container from "../../components/UI/Container";
 import ProfileSidebar from "../../components/UI/ProfileSidebar";
 import JobCard2 from "../../components/UI/cards/JobCard2";
 
-export async function getServerSideProps(context) {
-  const { userId } = context.params;
+export async function getStaticPaths() {
+  const users = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`);
+
+  return {
+    paths: users.data.map((user) => ({
+      params: { userId: user._id },
+    })),
+    fallback: false,
+  };
+}
+export async function getStaticProps({ params }) {
+  const { userId } = params;
 
   const applications = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
   );
-  // console.log(applications);
 
   return {
     props: {
       myJobs: applications.data,
     },
+    revalidate: 30,
   };
 }
 

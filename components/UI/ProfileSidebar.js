@@ -12,7 +12,9 @@ const ProfileSidebar = ({ tutor }) => {
   return (
     <div className=" flex flex-col gap-8 mt-4">
       <section className="flex flex-col gap-5">
-        <h3 className="text-2xl text-gray-700 font-medium mb-1">Summary</h3>
+        <h3 className="text-xl sm:text-2xl text-primary font-medium mb-1">
+          Summary
+        </h3>
 
         <div className="flex items-center gap-2">
           <svg
@@ -141,7 +143,7 @@ const ProfileSidebar = ({ tutor }) => {
       </section>
       <section className="flex flex-col gap-5">
         <div className="space-y-6 ">
-          <h3 className="text-2xl text-gray-700 font-medium mb-1">
+          <h3 className="text-xl sm:text-2xl text-primary font-medium mb-1">
             Subjects Taught
           </h3>
           {tutor.subjectsTaught.length > 0 ? (
@@ -178,7 +180,9 @@ const ProfileSidebar = ({ tutor }) => {
       </section>
       <section className="flex flex-col gap-5">
         <div className="space-y-6 ">
-          <h3 className="text-2xl text-gray-700 font-medium mb-1">Places</h3>
+          <h3 className="text-xl sm:text-2xl text-primary font-medium mb-1">
+            Places
+          </h3>
           {tutor.locations.length > 0 ? (
             tutor.locations.map((location) => {
               return (
@@ -208,10 +212,6 @@ const ProfileSidebar = ({ tutor }) => {
           )}
         </div>
       </section>
-
-      <Button>
-        <p className="text-lg"> Apply Now</p>
-      </Button>
     </div>
   );
 };

@@ -10,24 +10,29 @@ import Image from "next/image";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Alert from "../components/UI/Alert";
+import Spinner from "../components/UI/loader/Spinner";
 
 export async function getStaticProps({ query }) {
-  console.log(query);
+  console.log({ query });
 
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-tutors`,
-    { params: query }
-  );
+  const tutors = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`, {
+    params: query,
+  });
+  const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
+  const cities = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-cities`);
 
   return {
     props: {
-      tutors: response.data,
+      tutors: tutors.data,
+      areas: areas.data,
+      cities: cities.data,
     },
     revalidate: 30,
   };
 }
 
-export default function Tutors({ tutors }) {
+export default function Tutors({ tutors, areas, cities }) {
   const router = useRouter();
   const [filteredTutors, setFilteredTutors] = useState(tutors || []);
   const [openFilter, setOpenFilter] = useState(false);
@@ -35,6 +40,8 @@ export default function Tutors({ tutors }) {
   return (
     <>
       <Container color={"gray-100"}>
+        {/* <Spinner md /> */}
+        <Alert />
         <section className="lg:flex p-5">
           <div
             className="block lg:hidden fixed z-40 top-20 right-2 bg-white p-2 rounded-full shadow-lg"
@@ -82,13 +89,19 @@ export default function Tutors({ tutors }) {
           {openFilter && (
             <div className="block lg:hidden px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
               <TutorFilters
+                allCities={cities}
+                allAreas={areas}
                 setFilteredTutors={setFilteredTutors}
                 setOpenFilter={setOpenFilter}
               />
             </div>
           )}
           <div className="hidden lg:block px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
-            <TutorFilters setFilteredTutors={setFilteredTutors} />
+            <TutorFilters
+              allCities={cities}
+              allAreas={areas}
+              setFilteredTutors={setFilteredTutors}
+            />
           </div>
           <div className="w-full lg:h-[calc(100vh-110px)] lg:overflow-auto mx-auto space-y-8 ">
             <div className="space-y-4">

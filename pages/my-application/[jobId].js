@@ -12,7 +12,7 @@ import FormGroup from "../../components/UI/FormGroup";
 import Button from "../../components/UI/Button";
 import { useAuth } from "../../contexts/AuthContext";
 
-export async function getServerSideProps(context) {
+/* export async function getServerSideProps(context) {
   const { jobId } = context.params;
 
   const jobs = await axios.get(
@@ -27,6 +27,33 @@ export async function getServerSideProps(context) {
       job: jobs.data,
       applications: applications.data,
     },
+  };
+} */
+export async function getStaticPaths() {
+  const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
+
+  return {
+    paths: jobs.data.map((job) => ({
+      params: { jobId: job._id },
+    })),
+    fallback: false,
+  };
+}
+export async function getStaticProps({ params }) {
+  const { jobId } = params;
+
+  const jobs = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-job/${jobId}`
+  );
+  const applications = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-jobapplications/${jobId}`
+  );
+  return {
+    props: {
+      job: jobs.data,
+      applications: applications.data,
+    },
+    revalidate: 30,
   };
 }
 
@@ -227,8 +254,8 @@ export default function JobDescription({ job, applications }) {
                 applications.map((application) => {
                   const applicant = application.applicant_id;
                   return (
-                    <>
-                      {applicant._id === currentUser.userId ? (
+                    <div key={application._id}>
+                      {applicant._id === currentUser?.userId ? (
                         <div className=" flex flex-col gap-2 md:bg-white bg-neutral-100 rounded py-4 px-4 md:px-8">
                           <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
                             {applicant.name}
@@ -276,7 +303,7 @@ export default function JobDescription({ job, applications }) {
                           </div>
                         </div>
                       ) : null}
-                    </>
+                    </div>
                   );
                 })
               ) : (

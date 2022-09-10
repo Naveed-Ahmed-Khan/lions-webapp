@@ -78,7 +78,7 @@ export default function EditSections({ tutor, updateData }) {
   };
 
   return (
-    <div className=" pb-12 w-full max-w-screen-md mx-auto">
+    <div className=" pb-12 w-full">
       <h1 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
         Sections
       </h1>
@@ -262,9 +262,9 @@ export default function EditSections({ tutor, updateData }) {
 export function Simple({ section, tutor, updateTutor }) {
   const { title, subSections } = section;
   return (
-    <div className="p-2 sm:p-6 bg-gray-100 rounded-lg">
+    <div className="sm:p-6 bg-white sm:bg-gray-100 rounded-lg">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg sm:text-xl text-primary font-semibold">
+        <h2 className="text-xl sm:text-2xl text-primary font-semibold">
           {title}
         </h2>
         {tutor && updateTutor && (
@@ -300,15 +300,15 @@ export function Simple({ section, tutor, updateTutor }) {
           </button>
         )}
       </div>
-      <div className="space-y-5 bg-white rounded p-4 sm:p-6">
+      <div className="space-y-5 bg-white rounded sm:p-6">
         {subSections.map((subSection) => {
           const { heading, content } = subSection;
           return (
-            <div key={subSection._id}>
-              <h3 className="mb-2 text-lg text-gray-700 font-medium">
+            <div className="text-justify" key={subSection._id}>
+              <h3 className="mb-2 text-base sm:text-lg text-gray-700 font-medium">
                 {heading}:
               </h3>
-              <p className="text-gray-600">{content}</p>
+              <p className="text-sm sm:text-base text-gray-600">{content}</p>
             </div>
           );
         })}
@@ -319,9 +319,9 @@ export function Simple({ section, tutor, updateTutor }) {
 export function Gallery({ section, tutor, updateTutor }) {
   const { title, subSections } = section;
   return (
-    <div className="p-2 sm:p-6 bg-gray-100 rounded-lg">
+    <div className="sm:p-6 bg-white sm:bg-gray-100 rounded-lg">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg sm:text-xl text-primary font-semibold">
+        <h2 className="text-xl sm:text-2xl text-primary font-semibold">
           {title}
         </h2>
         {tutor && updateTutor && (
@@ -364,9 +364,9 @@ export function Gallery({ section, tutor, updateTutor }) {
 export function Collapsable({ section, tutor, updateTutor }) {
   const { title, subSections } = section;
   return (
-    <div className="p-2 sm:p-6 bg-gray-100 rounded-lg">
+    <div className="sm:p-6 bg-white sm:bg-gray-100 rounded-lg">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg sm:text-xl text-primary font-semibold">
+        <h2 className="text-xl sm:text-2xl text-primary font-semibold">
           {title}
         </h2>
         {tutor && updateTutor && (

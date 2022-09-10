@@ -1,8 +1,6 @@
 import React from "react";
-// import { useStateContext } from "../contexts/ContextProvider";
 
 const Button = ({ children, alt, onClick, type, disabled, fullwidth }) => {
-  // const { currentColor } = useStateContext();
   return (
     <button
       className={`${
@@ -15,7 +13,6 @@ const Button = ({ children, alt, onClick, type, disabled, fullwidth }) => {
       shadow-md shadow-zinc-300 drop-shadow-lg active:scale-100  hover:scale-105 
       active:drop-shadow-md active:shadow-md active:shadow-zinc-300
       hover:drop-shadow-xl hover:shadow-lg hover:shadow-zinc-400 `}
-      // style={{ backgroundColor: currentColor }}
       disabled={disabled}
       onClick={onClick}
       type={type}
