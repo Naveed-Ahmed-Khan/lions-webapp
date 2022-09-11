@@ -38,7 +38,8 @@ export default function Login() {
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/signin`,
-          values
+          values,
+          { withCredentials: true }
         );
         console.log(response);
         if (response.status === 200) {
