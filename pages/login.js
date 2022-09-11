@@ -19,7 +19,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   const loginSchema = yup.object({
-    email: yup.string("").email("Enter a valid e-mail"),
+    email: yup.string("").email("Enter a valid email"),
     password: yup
       .string("")
       .min(6, "Password should be of minimum 6 characters length"),
@@ -41,13 +41,16 @@ export default function Login() {
           { withCredentials: true }
         );
         console.log(response);
-        if (response.error) {
+        checkAuth();
+        router.push("/");
+        setIsLoading(false);
+        /* if (response.error) {
           setError(response.error);
         } else {
           checkAuth();
           router.push("/");
           setIsLoading(false);
-        }
+        } */
       } catch (error) {
         console.log(error);
         setError(error.message);
