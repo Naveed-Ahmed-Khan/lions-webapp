@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 import Button from "../components/UI/Button";
 import Spinner from "../components/UI/loader/Spinner";
 import axios from "axios";
-import { getCookie } from "cookies-next";
+import { getCookie, setCookie } from "cookies-next";
 
 export default function Login() {
   const router = useRouter();
@@ -42,25 +42,15 @@ export default function Login() {
           { withCredentials: true }
         );
         console.log(response);
-        if (response.status === 200) {
-          setUser(response.data);
-          const token = getCookie("token");
-          const userId = getCookie("user_id");
-          localStorage.setItem("token", token);
-          localStorage.setItem("userId", userId);
-          console.log(token);
-          console.log(userId);
-          // checkAuth();
+        if (response.error) {
+          setError(response.error);
+        } else {
+          setUser(response.data.preUser);
+          setCookie("token", response.data.token);
+          setCookie("user_id", response.data.preUser._id);
           router.push("/");
           setIsLoading(false);
         }
-        /* if (response.error) {
-          setError(response.error);
-        } else {
-          checkAuth();
-          router.push("/");
-          setIsLoading(false);
-        } */
       } catch (error) {
         console.log(error);
         setError(error.message);
