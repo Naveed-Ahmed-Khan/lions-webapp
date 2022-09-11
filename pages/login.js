@@ -46,8 +46,12 @@ export default function Login() {
           setError(response.error);
         } else {
           setUser(response.data.preUser);
-          setCookie("token", response.data.token);
-          setCookie("user_id", response.data.preUser._id);
+          const cookieOptions = {
+            httpOnly: true,
+            secure: true,
+          };
+          setCookie("token", response.data.token, cookieOptions);
+          setCookie("user_id", response.data.preUser._id, cookieOptions);
           router.push("/");
           setIsLoading(false);
         }
