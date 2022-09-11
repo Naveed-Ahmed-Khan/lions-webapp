@@ -45,7 +45,7 @@ export async function getStaticProps({ params }) {
 }
 
 export default function Profile({ tutor, applications }) {
-  console.log(applications);
+  // console.log(applications);
   // console.log(userId);
   return (
     <Container color={"gray-50"}>
