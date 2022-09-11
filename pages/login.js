@@ -19,7 +19,7 @@ export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
 
   const loginSchema = yup.object({
-    email: yup.string("").email("Enter a valid email"),
+    email: yup.string("").email("Enter a valid e-mail"),
     password: yup
       .string("")
       .min(6, "Password should be of minimum 6 characters length"),
