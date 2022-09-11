@@ -12,7 +12,6 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  console.log(pageProps);
   const router = useRouter();
   // console.log(router);
   const [currentUser, setCurrentUser] = useState(null);

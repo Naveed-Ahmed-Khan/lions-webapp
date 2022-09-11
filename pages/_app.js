@@ -30,7 +30,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <StateProvider>
-      <AuthProvider pageProps={pageProps}>
+      <AuthProvider>
         <MainLayout>
           <Component {...pageProps} />
         </MainLayout>
