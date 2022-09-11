@@ -34,7 +34,7 @@ export async function getStaticPaths() {
 
   return {
     paths: jobs.data.map((job) => ({
-      params: { jobId: job._id },
+      params: { jobId: job?._id },
     })),
     fallback: false,
   };
@@ -63,7 +63,7 @@ export default function JobDescription({ job, applications }) {
   const router = useRouter();
   const { currentUser } = useAuth();
 
-  const timestamp = job._id.toString().substring(0, 8);
+  const timestamp = job?._id.toString().substring(0, 8);
   const date = new Date(parseInt(timestamp, 16) * 1000);
   const uploadedAt = date.toDateString();
 
@@ -254,8 +254,8 @@ export default function JobDescription({ job, applications }) {
                 applications.map((application) => {
                   const applicant = application.applicant_id;
                   return (
-                    <div key={application._id}>
-                      {applicant._id === currentUser?.userId ? (
+                    <div key={application?._id}>
+                      {applicant?._id === currentUser?.userId ? (
                         <div className=" flex flex-col gap-2 md:bg-white bg-neutral-100 rounded py-4 px-4 md:px-8">
                           <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
                             {applicant.name}

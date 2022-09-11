@@ -101,7 +101,7 @@ export default function JobDescription({ job, applications }) {
                 Job details
               </h2>
               <p className="text-sm text-gray-700">
-                Posted on {uploadedAt} by {job.user_id.name}
+                Posted on {uploadedAt} by {job.user_id?.name}
               </p>
             </div>
             <p>{job.description}</p>
