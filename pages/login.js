@@ -14,7 +14,7 @@ import axios from "axios";
 
 export default function Login() {
   const router = useRouter();
-  const { signin, currentUser } = useAuth();
+  const { signin, currentUser, checkAuth } = useAuth();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
