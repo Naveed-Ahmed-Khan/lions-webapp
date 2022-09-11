@@ -10,6 +10,7 @@ import * as yup from "yup";
 import { useRouter } from "next/router";
 import Button from "../components/UI/Button";
 import Spinner from "../components/UI/loader/Spinner";
+import axios from "axios";
 
 export default function Login() {
   const router = useRouter();
