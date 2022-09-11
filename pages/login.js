@@ -11,10 +11,11 @@ import { useRouter } from "next/router";
 import Button from "../components/UI/Button";
 import Spinner from "../components/UI/loader/Spinner";
 import axios from "axios";
+import { getCookie } from "cookies-next";
 
 export default function Login() {
   const router = useRouter();
-  const { signin, currentUser, checkAuth } = useAuth();
+  const { signin, currentUser, checkAuth, setUser } = useAuth();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -41,9 +42,16 @@ export default function Login() {
           { withCredentials: true }
         );
         console.log(response);
-        checkAuth();
-        router.push("/");
-        setIsLoading(false);
+        if (response.status === 200) {
+          setUser(response.data);
+          const token = getCookie("token");
+          const userId = getCookie("user_id");
+          console.log(token);
+          console.log(userId);
+          // checkAuth();
+          router.push("/");
+          setIsLoading(false);
+        }
         /* if (response.error) {
           setError(response.error);
         } else {
