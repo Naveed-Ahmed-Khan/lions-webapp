@@ -38,17 +38,18 @@ export default function Login() {
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/signin`,
-          values,
-          { withCredentials: true }
+          values
         );
         console.log(response);
         if (response.status === 200) {
           setUser(response.data);
           const token = getCookie("token");
           const userId = getCookie("user_id");
+          localStorage.setItem("token", token);
+          localStorage.setItem("userId", userId);
           console.log(token);
           console.log(userId);
-          checkAuth();
+          // checkAuth();
           router.push("/");
           setIsLoading(false);
         }
