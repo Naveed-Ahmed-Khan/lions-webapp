@@ -118,7 +118,7 @@ const ProfileSidebar = ({ tutor }) => {
             />
           </svg>
           <p className="font-archivo text-gray-700 text-base font-medium">
-            Students Taught: 5
+            Students Taught: 3
           </p>
         </div>
         <div className="flex items-center gap-2">
