@@ -48,7 +48,7 @@ export default function Login() {
           const userId = getCookie("user_id");
           console.log(token);
           console.log(userId);
-          // checkAuth();
+          checkAuth();
           router.push("/");
           setIsLoading(false);
         }
