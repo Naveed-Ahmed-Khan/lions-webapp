@@ -22,7 +22,7 @@ const JobCard2 = ({ job }) => {
             )}
           </div>
           <p className="self-end text-gray-500 text-sm">
-            {jobTimeStamp(job.user_id._id)}
+            {/* {jobTimeStamp(job.user_id?._id)} */}
           </p>
         </div>
         <p className="mt-6 text-gray-700 h-24 overflow-y-auto">
@@ -32,7 +32,7 @@ const JobCard2 = ({ job }) => {
           <div className="flex justify-between">
             <div>
               <p className="text-gray-800 text-sm font-medium">
-                Job posted by | {job.user_id.name}
+                Job posted by | {job.user_id?.name}
               </p>
             </div>
             <div>
