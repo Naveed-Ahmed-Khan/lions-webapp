@@ -34,11 +34,16 @@ export default function Login() {
       setIsLoading(true);
       setError("");
       try {
-        const response = await signin(values);
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API}/signin`,
+          values,
+          { withCredentials: true }
+        );
         console.log(response);
         if (response.error) {
           setError(response.error);
         } else {
+          checkAuth();
           router.push("/");
           setIsLoading(false);
         }

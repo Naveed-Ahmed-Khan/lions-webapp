@@ -11,7 +11,7 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-export function AuthProvider({ pageProps, children }) {
+export function AuthProvider({ children }) {
   console.log(pageProps);
   const router = useRouter();
   // console.log(router);
