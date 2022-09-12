@@ -4,6 +4,7 @@ import React, { useState } from "react";
 
 const Carousel = ({ achievements }) => {
   console.log(achievements);
+  // const images = achievements.filter((image) => image?.type);
   const images = achievements.filter((image) => image?.type === "achievement");
   console.log(images);
   const [currentImage, setCurrentImage] = useState(0);

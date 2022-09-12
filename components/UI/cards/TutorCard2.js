@@ -225,12 +225,12 @@ const TutorCard2 = ({ tutor }) => {
 
         {/* {Badges} */}
         <div className="">
-          <h3 className="hidden sm:block my-2 col-span-full text-primary font-medium underline underline-offset-2">
+          {/* <h3 className="hidden sm:block my-2 col-span-full text-primary font-medium underline underline-offset-2">
             Badges:
-          </h3>
+          </h3> */}
 
           <div className="sm:flex space-y-2 sm:space-y-0 items-center justify-between">
-            <div className="hidden sm:flex space-x-3">
+            {/* <div className="hidden sm:flex space-x-3">
               <div
                 className="h-11 w-11 text-primary hover:text-white bg-white hover:bg-primary rounded-full 
                 border border-primary hover:border hover:border-primary grid place-content-center
@@ -298,12 +298,14 @@ const TutorCard2 = ({ tutor }) => {
                   <path d="M2 13.692V16a2 2 0 002 2h12a2 2 0 002-2v-2.308A24.974 24.974 0 0110 15c-2.796 0-5.487-.46-8-1.308z" />
                 </svg>
               </div>
-            </div>
+            </div> */}
 
-            <div className="space-y-4 md:space-y-0 sm:flex items-center justify-start sm:space-x-4">
-              <Anchor button href={`/profile/${tutor._id}`}>
-                View Profile
-              </Anchor>
+            <div className="w-full mt-4 space-y-4 md:space-y-0 sm:flex items-center justify-start sm:space-x-4">
+              <div className="w-full sm:flex justify-end">
+                <Anchor button href={`/profile/${tutor._id}`}>
+                  View Profile
+                </Anchor>
+              </div>
               {/* <Anchor link href={`/profile/${tutor._id}`}>
                 Contact
               </Anchor> */}

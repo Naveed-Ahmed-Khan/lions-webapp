@@ -5,111 +5,92 @@ import Anchor from "../Anchor";
 
 const FeatureCard = () => {
   const router = useRouter();
+
+  const features = [
+    {
+      id: "1",
+      title: "24/7 Book a Demo Class",
+      details:
+        "We are available for 24/7 for the demo class booking. Please contact us if you have any enquiry.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: "2",
+      title: "Tutors",
+      details:
+        "Our tutors are available everyday a week, view your timetable to make an appointment.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: "3",
+      title: "Opening hours",
+      details: "Visit us at our medical for a free consulting at office hours.",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+      ),
+    },
+  ];
+
   return (
-    <section className="text-gray-600 mt-4">
-      <div className="container px-0 sm:px-5  mx-auto">
-        <div className="flex flex-col gap-4 text-center w-full mb-6">
-          <div className="space-y-4">
-            <h1 className="text-primary text-2xl font-bold  sm:text-4xl">
-              Learn From Expert Tutors With Us Today
-            </h1>
-          </div>
-          <p className="lg:w-2/3 p-2 lg:p-4 mx-auto text-base">
-            Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical
-            gentrify, subway tile poke farm-to-table. Franzen you probably
-            haven&apos;t.
-          </p>
-          <div className=" items-center justify-center sm:space-x-6 sm:flex">
-            <Anchor button href={`/tutors`}>
-              Find Tutors Now
-            </Anchor>
-            <Anchor buttonAlt href={`/job-posting`}>
-              Post a Job
-            </Anchor>
-          </div>
-        </div>
-        <div className="flex sm:flex-wrap -m-4 text-center overflow-auto">
-          <div className="p-4 w-full sm:w-1/2 md:w-1/4">
-            <div className="w-36 sm:w-full border-2 border-gray-200 px-2 py-4 rounded-lg">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                className="text-primary w-8 h-8 mb-3 inline-block"
-                viewBox="0 0 24 24"
-              >
-                <path d="M8 17l4 4 4-4m-4-5v9"></path>
-                <path d="M20.88 18.09A5 5 0 0018 9h-1.26A8 8 0 103 16.29"></path>
-              </svg>
-              <h2 className="title-font font-medium text-3xl text-gray-900">
-                2.7K
+    <section className="w-full text-gray-600 mt-4">
+      <div className="grid sm:grid-cols-3 justify-items-center gap-8 text-center overflow-auto">
+        {features.map((feat) => {
+          return (
+            <div
+              key={feat.id}
+              className="max-w-xs border-2 border-gray-200 px-2 py-4 rounded-lg"
+            >
+              <div className="flex justify-center items-center">
+                <div className="text-primary w-8 h-8 mb-3">{feat.icon}</div>
+              </div>
+
+              <h2 className="title-font font-medium text-xl text-gray-700">
+                {feat.title}
               </h2>
-              <p className="">Downloads</p>
+              <p className="mt-2">{feat.details}</p>
             </div>
-          </div>
-          <div className="p-4 w-full sm:w-1/2 md:w-1/4">
-            <div className="w-36 sm:w-full border-2 border-gray-200 px-2 py-4 rounded-lg">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                className="text-primary w-8 h-8 mb-3 inline-block"
-                viewBox="0 0 24 24"
-              >
-                <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"></path>
-                <circle cx="9" cy="7" r="4"></circle>
-                <path d="M23 21v-2a4 4 0 00-3-3.87m-4-12a4 4 0 010 7.75"></path>
-              </svg>
-              <h2 className="title-font font-medium text-3xl text-gray-900">
-                1.3K
-              </h2>
-              <p className="">Users</p>
-            </div>
-          </div>
-          <div className="p-4 w-full sm:w-1/2 md:w-1/4">
-            <div className="w-36 sm:w-full border-2 border-gray-200 px-2 py-4 rounded-lg">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                className="text-primary w-8 h-8 mb-3 inline-block"
-                viewBox="0 0 24 24"
-              >
-                <path d="M3 18v-6a9 9 0 0118 0v6"></path>
-                <path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"></path>
-              </svg>
-              <h2 className="title-font font-medium text-3xl text-gray-900">
-                74
-              </h2>
-              <p className="">Files</p>
-            </div>
-          </div>
-          <div className="p-4 w-full sm:w-1/2 md:w-1/4">
-            <div className="w-36 sm:w-full border-2 border-gray-200 px-2 py-4 rounded-lg">
-              <svg
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                className="text-primary w-8 h-8 mb-3 inline-block"
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-              </svg>
-              <h2 className="title-font font-medium text-3xl text-gray-900">
-                46
-              </h2>
-              <p className="">Places</p>
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </section>
   );

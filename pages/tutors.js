@@ -114,7 +114,7 @@ export default function Tutors({ tutors, areas, cities }) {
                 magnam neque, exercitationem eius sunt!
               </p>
             </div>
-            <div className="space-y-8 lg:pr-3 w-full flex flex-col items-center justify-center">
+            <div className="space-y-8 lg:pr-3 w-full">
               {filteredTutors?.length > 0 ? (
                 <>
                   {filteredTutors?.map((tutor) => {

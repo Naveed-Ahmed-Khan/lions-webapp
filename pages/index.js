@@ -9,6 +9,7 @@ import { useStateContext } from "../contexts/StateContext";
 import axios from "axios";
 import Alert from "../components/UI/Alert";
 import Image from "next/image";
+import Anchor from "../components/UI/Anchor";
 
 export async function getStaticProps() {
   const tutors = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`);
@@ -28,60 +29,105 @@ export async function getStaticProps() {
 }
 
 export default function Home({ tutors, jobs, achievements }) {
+  const features = [
+    { id: "1", name: "Affordable Fee" },
+    { id: "2", name: "Free Consultation" },
+    { id: "3", name: "O/A Level Expert Tutors" },
+    { id: "4", name: "Quality Education" },
+  ];
   return (
     <>
       <Container color={"white"}>
-        <Alert />
-        <section className="grid grid-cols-12 grid-rows-2 gap-4 bg-white p-4 md:px-8">
-          <div className="z-0 col-span-12 lg:col-span-9 row-span-2 lg:row-span-1">
-            <Carousel achievements={achievements} />
-          </div>
-          <div
-            className="hidden col-span-12 lg:col-span-3 row-span-1 lg:row-span-2 lg:h-[860px] 
-          relative w-full lg:flex lg:flex-col gap-4 overflow-y-auto"
-          >
-            <h2 className="text-2xl text-primary text-center font-bold">
-              News
-            </h2>
-            {/* {bannerImagePath || tutor?.bannerImage ? (
-              <div className="relative h-44 rounded-lg overflow-clip">
-                <Image
-                  layout="fill"
-                  objectFit="cover"
-                  src={bannerImagePath || tutor?.bannerImage}
-                  alt=""
-                />
-              </div>
-            ) : (
-              <div className=" mb-6 sm:mb-0 bg-gray-300 h-40 w-full rounded-lg" />
-            )} */}
-            {achievements
-              .filter((image) => image.type === "news")
-              .map((image) => {
-                return (
-                  <div
-                    key={image._id}
-                    className=" mt-2 mx-4 px-2 py-4 drop-shadow-sm bg-white"
-                  >
-                    <div className="relative h-44 rounded overflow-clip">
-                      <Image
-                        layout="fill"
-                        objectFit="contain"
-                        src={image.image}
-                        alt=""
-                      />
-                    </div>
-                    <div>
-                      <h4 className="text-lg text-gray-700 font-medium">
-                        {image.title}
-                      </h4>
-                      <p className="text-sm text-gray-700">{image.desc}</p>
-                    </div>
+        <section className="min-h-[calc(100vh-65px)] flex flex-col bg-white p-4 md:px-8">
+          <Alert />
+          <div className="grid grid-cols-1 lg:grid-cols-2">
+            <div className="sm:p-4 flex flex-col items-center justify-center">
+              <div className="flex flex-col gap-4 text-center w-full sm:mb-6">
+                <div className="space-y-4">
+                  <h1 className=" text-primary text-2xl sm:text-3xl lg:text-5xl font-semibold  ">
+                    Welcome To The Lion Tutors
+                  </h1>
+                </div>
+                <p className="sm:px-5 mx-auto text-sm sm:text-base text-gray-600">
+                  LIONS home Tutors is an educational consultancy which provides
+                  Cambridge and Oxford experts professionals for one-to-one
+                  tuition, online or in person.
+                </p>
+                <div className="z-0 block lg:hidden">
+                  <Carousel achievements={achievements} />
+                </div>
+                <p className="sm:px-5 mx-auto text-sm sm:text-base text-gray-600">
+                  We are with an excellent track record of trust,
+                  professionalism and quality of education services provided in
+                  all of Pakistan.
+                </p>
+
+                <div className="sm:flex items-center justify-center sm:space-x-6">
+                  <div className="mb-4 sm:mb-0">
+                    <Anchor button href={`/tutors`}>
+                      Find Tutors Now
+                    </Anchor>
                   </div>
-                );
-              })}
+                  <Anchor buttonAlt href={`/job-posting`}>
+                    Post a Job
+                  </Anchor>
+                </div>
+              </div>
+              {/* <div className="w-full grid grid-cols-2 gap-4">
+                {features.map((feat) => {
+                  return (
+                    <div key={feat.id} className="flex gap-3">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="w-7 h-7 text-primary"
+                      >
+                        <path d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" />
+                      </svg>
+                      <p className="text-gray-600 text-base text-medium">
+                        {feat.name}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div> */}
+              {/* <div className="relative w-full flex gap-4 overflow-auto">
+                <h2 className="text-2xl text-primary text-center font-bold">
+                  News
+                </h2>
+                {achievements
+                  .filter((image) => image.type === "news")
+                  .map((image) => {
+                    return (
+                      <div
+                        key={image._id}
+                        className=" mt-2 mx-4 px-2 py-4 drop-shadow-sm bg-white"
+                      >
+                        <div className="relative h-44 rounded overflow-clip">
+                          <Image
+                            layout="fill"
+                            objectFit="contain"
+                            src={image.image}
+                            alt=""
+                          />
+                        </div>
+                        <div>
+                          <h4 className="text-lg text-gray-700 font-medium">
+                            {image.title}
+                          </h4>
+                          <p className="text-sm text-gray-700">{image.desc}</p>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div> */}
+            </div>
+            <div className="z-0 hidden lg:block">
+              <Carousel achievements={achievements} />
+            </div>
           </div>
-          <div className="col-span-12 lg:col-span-9 row-span-2 lg:row-span-1 space-y-4 lg:text-center">
+          <div className="w-full flex-1 flex items-center justify-center">
             <FeatureCard />
           </div>
         </section>
@@ -94,10 +140,11 @@ export default function Home({ tutors, jobs, achievements }) {
               <h1 className="text-primary text-2xl leading-none font-bold sm:text-4xl">
                 Find the best tutor
               </h1>
-              <p className="max-w-2xl dark:text-gray-800">
-                At a assumenda quas cum earum ut itaque commodi saepe rem
-                aspernatur quam natus quis nihil quod, hic explicabo doloribus
-                magnam neque, exercitationem eius sunt!
+              <p className=" text-gray-700">
+                Our alumni are excelling in multiple fields ,holding key
+                positions in different departments and organizations. We also
+                have the profiles of Army Officers, board toppers, doctors and
+                engineers as our alumni No.1 Home Tutor network.
               </p>
             </div>
             <div className="grid w-full grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
@@ -118,10 +165,9 @@ export default function Home({ tutors, jobs, achievements }) {
               <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Best Tution Jobs
               </h1>
-              <p className="max-w-2xl dark:text-gray-800">
-                At a assumenda quas cum earum ut itaque commodi saepe rem
-                aspernatur quam natus quis nihil quod, hic explicabo doloribus
-                magnam neque, exercitationem eius sunt!
+              <p className="text-gray-700">
+                Find jobs that best suit you, with respect to your avilability
+                and ease of travel or teach at the comfort of your home.
               </p>
             </div>
             <div className="grid grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
