@@ -29,7 +29,7 @@ export async function getStaticProps({ params }) {
   const { userId } = params;
 
   const tutor = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
+    `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`
   );
   const application = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`

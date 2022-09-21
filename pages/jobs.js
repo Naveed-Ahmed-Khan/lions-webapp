@@ -28,7 +28,7 @@ export async function getStaticProps({ query }) {
 export default function Jobs({ jobs, areas, cities }) {
   const [filteredJobs, setFilteredJobs] = useState(jobs || []);
   const [openFilter, setOpenFilter] = useState(false);
-
+  console.log(filteredJobs);
   return (
     <>
       <Container color={"gray-100"}>

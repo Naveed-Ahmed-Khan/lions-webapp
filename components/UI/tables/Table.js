@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 
-export default function Table({ header, body }) {
+export default function Table({ header, body, status, actions }) {
   return (
     <div className="">
       {/* <div className="pb-4 bg-white dark:bg-gray-900">
@@ -48,27 +48,46 @@ export default function Table({ header, body }) {
                   </label>
                 </div>
               </th> */}
-              {header.map((item) => {
+              {header?.map((item) => {
                 return (
                   <th
                     key={item.id}
                     scope="col"
-                    className="py-5 px-6 font-medium"
+                    className="py-5 px-6 font-medium whitespace-nowrap"
                   >
                     {item.name}
                   </th>
                 );
               })}
-              <th scope="col" className="py-5 px-6 font-medium">
-                Actions
-              </th>
+              {status?.map((status) => {
+                return (
+                  <th
+                    key={status.id}
+                    scope="col"
+                    className="py-5 px-6 font-medium whitespace-nowrap"
+                  >
+                    {status.name}
+                  </th>
+                );
+              })}
+              {actions?.map((action) => {
+                return (
+                  <th
+                    key={action.id}
+                    scope="col"
+                    className="py-5 px-6 font-medium whitespace-nowrap"
+                  >
+                    {action.name}
+                  </th>
+                );
+              })}
             </tr>
           </thead>
           <tbody className="text-gray-700 ">
             {body?.map((data) => {
               return (
                 <tr
-                  key={data.id}
+                  key={data._id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   {header.map((item) => {
@@ -94,14 +113,39 @@ export default function Table({ header, body }) {
                       </td>
                     );
                   })}
-                  <td className="py-4 px-6 font-archivo tracking-wide font-medium text-sm whitespace-nowrap">
-                    <a
-                      href="#"
-                      className="font-medium text-primary hover:underline"
-                    >
-                      Edit
-                    </a>
-                  </td>
+                  {status?.map((item) => {
+                    const { id, value, name, colorTrue, colorFalse } = item;
+
+                    return (
+                      <td
+                        key={id}
+                        className="py-3 px-6 font-archivo tracking-wide text-white text-sm text-center whitespace-nowrap "
+                      >
+                        <p
+                          className={` py-1 px-3 rounded-full text-center ${
+                            data[value] ? colorTrue : colorFalse
+                          }`}
+                        >
+                          {data[value] ? name : `not ${name}`}
+                        </p>
+                      </td>
+                    );
+                  })}
+                  {actions?.map((action) => {
+                    return (
+                      <td
+                        key={action.id}
+                        className="py-4 px-6 font-archivo tracking-wide font-medium text-sm whitespace-nowrap "
+                      >
+                        <p
+                          onClick={() => action.onClick(data)}
+                          className="w-fit font-medium text-primary hover:underline cursor-pointer"
+                        >
+                          {action.value}
+                        </p>
+                      </td>
+                    );
+                  })}
                 </tr>
               );
             })}

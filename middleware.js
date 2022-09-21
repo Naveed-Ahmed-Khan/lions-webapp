@@ -6,10 +6,11 @@ export function middleware(request) {
   } = request;
   // console.log(request.nextUrl.pathname);
   const token = request.cookies.get("token");
-  const admin = request.cookies.get("admin");
+  const userType = request.cookies.get("user");
 
   if (
     !token &&
+    (userType === "tutor" || userType === "student") &&
     (pathname.startsWith("/edit-profile") ||
       pathname.startsWith("/applied-jobs") ||
       pathname.startsWith("/my-application") ||
@@ -21,12 +22,13 @@ export function middleware(request) {
 
   if (
     token &&
+    (userType === "tutor" || userType === "student") &&
     (pathname.startsWith("/login") || pathname.startsWith("/register"))
   ) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
-  if (!admin && pathname.startsWith("/admin")) {
+  if (userType !== "admin" && pathname.startsWith("/dashboard/admin")) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 }

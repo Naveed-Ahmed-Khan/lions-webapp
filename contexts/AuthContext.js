@@ -1,5 +1,11 @@
 import axios from "axios";
-import { getCookie, getCookies } from "cookies-next";
+import {
+  deleteCookie,
+  getCookie,
+  getCookies,
+  removeCookies,
+  setCookie,
+} from "cookies-next";
 
 import { useRouter } from "next/router";
 
@@ -15,14 +21,15 @@ export function AuthProvider({ children }) {
   const router = useRouter();
   // console.log(router);
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [check, setCheck] = useState(true);
-
+  console.log(error);
   const setUser = (user) => {
     setCurrentUser(user);
   };
   const checkAuth = () => {
-    setCheck((prev) => !prev);
+    setCheck(!check);
   };
 
   async function signup(values) {
@@ -44,35 +51,73 @@ export function AuthProvider({ children }) {
   }
 
   async function signin(values) {
-    let signinData = null;
-    setLoading(true);
+    let signupData = null;
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API}/signin`,
-        values,
-        { withCredentials: true }
+        values
       );
-      console.log(response);
-      signinData = response.data;
-    } catch ({ response: { data } }) {
-      signinData = data;
+      if (response.status === 200) {
+        signupData = response.data;
+        const cookieOptions = {
+          // httpOnly: true,
+          // secure: true,
+        };
+        setCookie("user_id", response.data.user_id, cookieOptions);
+        setCookie("token", response.data.token, cookieOptions);
+        setCookie("user", response.data.userType, cookieOptions);
+      }
+    } catch (error) {
+      signupData = error.response.data;
     } finally {
       checkAuth();
-      setLoading(false);
-      return signinData;
+      return signupData;
     }
   }
 
+  /* async function signin(values) {
+    // setError("");
+    // setLoading(true);
+
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/signin`,
+        values
+      );
+      console.log(response.data);
+
+      if (response.status === 200) {
+        const cookieOptions = {
+          // httpOnly: true,
+          // secure: true,
+        };
+
+        setCookie("user_id", response.data.user_id, cookieOptions);
+        setCookie("token", response.data.token, cookieOptions);
+        setCookie("user", response.data.userType, cookieOptions);
+        if (response.data.userType === "admin") {
+          router.push("/dashboard/admin");
+        } else {
+          router.push("/");
+        }
+      } else {
+        console.log(response.data.error);
+        setError(response.data.error);
+      }
+    } catch (error) {
+      console.log(error);
+      // setError(error.message);
+    } finally {
+      checkAuth();
+      setLoading(false);
+    }
+  }
+ */
   function logout() {
     setCurrentUser(null);
     localStorage.clear();
-    let cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      let cookie = cookies[i];
-      let eqPos = cookie.indexOf("=");
-      let name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
+    deleteCookie("user_id");
+    deleteCookie("token");
   }
 
   /*   function googleSignIn() {
@@ -114,7 +159,16 @@ export function AuthProvider({ children }) {
             const user = await axios.get(
               `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
             );
-            setCurrentUser(user.data);
+            if (user.data) {
+              setCurrentUser(
+                user.data.tutor ||
+                  user.data.student ||
+                  user.data.institute ||
+                  user.data.admin
+              );
+            } else {
+              setCurrentUser(null);
+            }
           } catch (error) {
             console.log(error);
           } finally {
@@ -130,6 +184,8 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    loading,
+    error,
     setUser,
     checkAuth,
     signup,

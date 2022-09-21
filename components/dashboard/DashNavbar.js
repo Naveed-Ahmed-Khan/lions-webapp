@@ -14,6 +14,7 @@ const DashNavbar = ({ open, setOpen, setShowBackdrop }) => {
   // console.log(open);
   const navigation = [
     { title: "Home", path: "/" },
+    // { title: "Logout", path: "/" },
     /* { title: "Post a Job", path: "/job-posting" },
     { title: "Tution Jobs", path: "/jobs" },
     { title: "Tutors", path: "/tutors" }, */

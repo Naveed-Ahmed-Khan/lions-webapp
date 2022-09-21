@@ -1,13 +1,15 @@
 import { useRouter } from "next/router";
 import React from "react";
+import { useAuth } from "../../../contexts/AuthContext";
 import { jobTimeStamp } from "../../../utility/jobTimeStamp";
 import Anchor from "../Anchor";
 import Button from "../Button";
 
-const JobCard2 = ({ job }) => {
+const JobCard2 = ({ job, isSelected, isShortlisted }) => {
   const router = useRouter();
+  const { currentUser } = useAuth();
   return (
-    <div className="relative flex flex-col max-w-[340] overflow-hidden rounded-md shadow-xl">
+    <div className="relative flex flex-col w-full overflow-hidden rounded-md shadow-xl">
       <div className="flex flex-col p-4 sm:p-8 space-y-4 bg-gray-200 ">
         {/* <h3 className="text-xl font-semibold text-gray-700">Tutor Required</h3> */}
         <div className="sm:flex justify-between items-center">
@@ -39,7 +41,7 @@ const JobCard2 = ({ job }) => {
               <p className="text-gray-800 text-sm font-medium">
                 Job Status:
                 <span className="ml-2 px-1 py-0.5 border-2 border-primary rounded-full">
-                  {job.jobType}
+                  {job.isOpen ? "Open" : "Closed"}
                 </span>
               </p>
             </div>
@@ -117,7 +119,7 @@ const JobCard2 = ({ job }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Location | {job.location.city}</span>
+            <span>Location | {job.city || job.location.city}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -157,7 +159,7 @@ const JobCard2 = ({ job }) => {
 
         {router.pathname === "/jobs" && (
           <div className="w-full sm:w-fit self-end">
-            <Anchor button href={`/job-description/${job._id}`}>
+            <Anchor button href={`/tution-job/${job._id}`}>
               Apply Now
             </Anchor>
           </div>
@@ -183,7 +185,7 @@ const JobCard2 = ({ job }) => {
         )}
 
         {router.pathname.includes("/applied-jobs") && (
-          <div className="space-y-4 sm:space-y-0 sm:flex items-end justify-between">
+          <div className="space-y-4 sm:space-y-0 sm:flex items-center justify-between">
             <div className="w-full sm:w-fit self-end">
               <Button
                 onClick={() => {
@@ -198,6 +200,15 @@ const JobCard2 = ({ job }) => {
                 <p>View My application</p>
               </Button>
             </div>
+            {isSelected ? (
+              <div className="py-2 px-6 border-2 border-primary rounded-lg">
+                <p className="text-primary font-medium">Selected For Job</p>
+              </div>
+            ) : isShortlisted ? (
+              <div className="py-2 px-6 border-2 border-primary rounded-lg">
+                <p className="text-primary font-medium">Selected For Demo</p>
+              </div>
+            ) : null}
           </div>
         )}
       </div>

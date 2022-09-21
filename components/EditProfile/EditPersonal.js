@@ -17,8 +17,9 @@ import * as yup from "yup";
 import axios from "axios";
 import { filetobase64 } from "../../utility/filetobase64";
 import CheckBox from "../UI/CheckBox";
+import { getCookie } from "cookies-next";
 
-export default function EditPersonal({ tutor, updateData }) {
+export default function EditPersonal({ tutor, updateData, cities, areas }) {
   const { signup } = useAuth();
   const [imagePath, setImagePath] = useState(null);
   const [bannerPath, setBannerPath] = useState(null);
@@ -29,7 +30,8 @@ export default function EditPersonal({ tutor, updateData }) {
   const updateTutor = async (data) => {
     await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor?._id}`,
-      data
+      data,
+      { headers: { Authorization: `Bearer ${getCookie("token")}` } }
     );
     updateData();
   };
@@ -46,6 +48,12 @@ export default function EditPersonal({ tutor, updateData }) {
 
   const formik = useFormik({
     initialValues: {
+      name: tutor?.name || "",
+      cnic: tutor?.cnic || "",
+      birth: tutor?.birth || "",
+      gender: tutor?.gender || "",
+      city: tutor?.city || "",
+      area: tutor?.area || "",
       availableFrom: tutor?.availableFrom || "",
       availableTo: tutor?.availableTo || "",
       teachingModes: tutor?.teachingModes || [],
@@ -137,7 +145,7 @@ export default function EditPersonal({ tutor, updateData }) {
               />
             </div>
           </div>
-          <div className=" space-y-6 ">
+          {/* <div className=" space-y-6 ">
             {bannerImagePath || tutor?.bannerImage ? (
               <div className="relative h-44 rounded-lg overflow-clip">
                 <Image
@@ -161,8 +169,75 @@ export default function EditPersonal({ tutor, updateData }) {
                 }}
               />
             </div>
-          </div>
+          </div> */}
         </div>
+        <FormGroup horizontal>
+          <Input required label="Full Name" name={"name"} formik={formik} />
+          <Input required label="CNIC" name={"cnic"} formik={formik} />
+        </FormGroup>
+
+        <FormGroup horizontal>
+          <Input
+            required
+            type={"date"}
+            label="Date of Birth"
+            name={"birth"}
+            formik={formik}
+          />
+          <Select required label="Gender" name="gender" formik={formik}>
+            <option value="">Select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </Select>
+        </FormGroup>
+
+        <FormGroup horizontal>
+          <Input
+            required
+            label="Mobile No."
+            type="tel"
+            name={"mobile"}
+            formik={formik}
+          />
+          <Input
+            required
+            label="Watsapp No."
+            type="tel"
+            name={"watsapp"}
+            formik={formik}
+          />
+        </FormGroup>
+
+        <FormGroup horizontal>
+          <Select required label="City" name={"city"} formik={formik}>
+            <option value="">Select</option>
+            {cities?.map((city) => {
+              return (
+                <option key={city._id} value={city.name}>
+                  {city.name}
+                </option>
+              );
+            })}
+          </Select>
+          <Select
+            required
+            disabled={!formik.values.city ? true : false}
+            label="Area"
+            name={"area"}
+            formik={formik}
+          >
+            <option value="">Select</option>
+            {areas
+              ?.filter((area) => area.city_id.name === formik.values.city)
+              .map((area) => {
+                return (
+                  <option key={area._id} value={area.name}>
+                    {area.name}
+                  </option>
+                );
+              })}
+          </Select>
+        </FormGroup>
 
         <div className="mt-5">
           <h3 className="mb-2 text-gray-600 font-medium">

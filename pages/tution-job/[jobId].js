@@ -11,6 +11,7 @@ import InputGroup from "../../components/UI/InputGroup";
 import FormGroup from "../../components/UI/FormGroup";
 import Button from "../../components/UI/Button";
 import { useAuth } from "../../contexts/AuthContext";
+import { getCookie, getCookies } from "cookies-next";
 
 export async function getStaticPaths() {
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
@@ -41,8 +42,10 @@ export async function getStaticProps({ params }) {
 }
 
 export default function JobDescription({ job, applications }) {
+  const token = getCookie("token");
+  /*   console.log(token);
   console.log(applications);
-  console.log(job);
+  console.log(job); */
   const router = useRouter();
   const { currentUser } = useAuth();
   const [coverLetter, setCoverLetter] = useState("");
@@ -55,17 +58,29 @@ export default function JobDescription({ job, applications }) {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    /* console.log({
+      job_id: job._id,
+      applicant_id: currentUser.userId,
+      coverLetter: coverLetter,
+      quialification: currentUser.qualification,
+      expectedBudget: expectedBudget,
+    }); */
 
-    if (currentUser.userType === "tutor") {
+    if (currentUser.userType === "tutor" && token) {
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/add-application`,
           {
             job_id: job._id,
-            applicant_id: currentUser.userId,
+            applicant_id: currentUser._id,
             coverLetter: coverLetter,
             quialification: currentUser.qualification,
             expectedBudget: expectedBudget,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         console.log(response.data);
@@ -73,7 +88,7 @@ export default function JobDescription({ job, applications }) {
         console.log(error);
       }
     } else {
-      console.log("You are not a tutor");
+      console.log("You are not eligible to apply");
     }
   };
 
@@ -287,7 +302,7 @@ export default function JobDescription({ job, applications }) {
                         setExpectedBudget(e.target.value);
                       }}
                     />
-                    <Input label={"Distance"} placeholder={"12km"} />
+                    {/* <Input label={"Distance"} placeholder={"12km"} /> */}
                   </div>
                 </div>
                 <div className="mt-8 flex justify-end">

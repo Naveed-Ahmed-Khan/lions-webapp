@@ -12,6 +12,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import * as yup from "yup";
 import Input from "../UI/Input";
 import FormGroup from "../UI/FormGroup";
+import { getCookie } from "cookies-next";
 
 export default function EditExperience({ tutor, updateData }) {
   const [editMode, setEditMode] = useState(false);
@@ -19,7 +20,8 @@ export default function EditExperience({ tutor, updateData }) {
   const updateTutor = async (data) => {
     await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
-      data
+      data,
+      { headers: { Authorization: `Bearer ${getCookie("token")}` } }
     );
     updateData();
     setEditMode(false);

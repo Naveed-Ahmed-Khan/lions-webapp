@@ -1,40 +1,33 @@
 import React, { useEffect, useState } from "react";
 
-import ChevronDots from "../components/UI/ChevronDots";
-import FormGroup from "../components/UI/FormGroup";
-import Button from "../components/UI/Button";
-import Container from "../components/UI/Container";
+import ChevronDots from "../../../../components/UI/ChevronDots";
+import FormGroup from "../../../../components/UI/FormGroup";
+import Button from "../../../../components/UI/Button";
+import Container from "../../../../components/UI/Container";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
-import Input from "../components/UI/Input";
-import Select from "../components/UI/Select";
-import TextArea from "../components/UI/TextArea";
-import { useAuth } from "../contexts/AuthContext";
-import AccessDenied from "../components/UI/AccessDenied";
+import Input from "../../../../components/UI/Input";
+import Select from "../../../../components/UI/Select";
+import TextArea from "../../../../components/UI/TextArea";
+import { useAuth } from "../../../../contexts/AuthContext";
+import AccessDenied from "../../../../components/UI/AccessDenied";
 import axios from "axios";
-import CheckBox from "../components/UI/CheckBox";
+import CheckBox from "../../../../components/UI/CheckBox";
+import useFetch from "../../../../hooks/useFetch";
+import Spinner from "../../../../components/UI/loader/Spinner";
+import { getCookie } from "cookies-next";
 
-export async function getStaticProps() {
-  const cities = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-cities`);
-  const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
-  const subjects = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-subjects`
-  );
-  const classes = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-classes`);
-
-  return {
-    props: {
-      cities: cities.data,
-      areas: areas.data,
-      subjects: subjects.data,
-      classes: classes.data,
-    },
-    revalidate: 30,
-  };
-}
-
-export default function JobPosting({ cities, areas, subjects, classes }) {
+export default function AddJob() {
   const router = useRouter();
+  const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-cities`;
+  const SUBJECTS_API = `${process.env.NEXT_PUBLIC_API}/get-subjects`;
+
+  const { data: cities, isLoading } = useFetch(CITY_API, false);
+  const { data: subjects } = useFetch(SUBJECTS_API, false);
+
+  console.log(cities);
+  console.log(subjects);
+
   const [currentStep, setCurrentStep] = useState(null);
   const { currentUser } = useAuth();
   console.log(currentStep);
@@ -52,9 +45,7 @@ export default function JobPosting({ cities, areas, subjects, classes }) {
 
   return (
     <>
-      {currentUser?.userType !== "student" && <AccessDenied />}
-
-      <Container color={"gray-50"}>
+      <Container color={"white"}>
         <div className="bg-white w-full mx-auto">
           <h1 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
             Job Posting
@@ -65,17 +56,24 @@ export default function JobPosting({ cities, areas, subjects, classes }) {
               currentStep={currentStep}
             />
           </div>
-          <div className="px-5">
-            {currentStep === 1 && (
-              <Student allSubjects={subjects} setCurrentStep={setCurrentStep} />
-            )}
-            {currentStep === 2 && (
-              <Tutor cities={cities} setCurrentStep={setCurrentStep} />
-            )}
-            {currentStep === 3 && (
-              <Description setCurrentStep={setCurrentStep} />
-            )}
-          </div>
+          {isLoading ? (
+            <Spinner md />
+          ) : (
+            <div className="px-5">
+              {currentStep === 1 && (
+                <Student
+                  allSubjects={subjects}
+                  setCurrentStep={setCurrentStep}
+                />
+              )}
+              {currentStep === 2 && (
+                <Tutor cities={cities} setCurrentStep={setCurrentStep} />
+              )}
+              {currentStep === 3 && (
+                <Description setCurrentStep={setCurrentStep} />
+              )}
+            </div>
+          )}
         </div>
       </Container>
     </>
@@ -288,6 +286,7 @@ function Tutor({ cities, setCurrentStep }) {
 }
 function Description({ setCurrentStep }) {
   const { currentUser } = useAuth();
+  console.log(currentUser);
   const router = useRouter();
   const [error, setError] = useState("");
 
@@ -310,20 +309,22 @@ function Description({ setCurrentStep }) {
           ...student,
           ...tutor,
           ...description,
-          user_id: currentUser.userId,
-          isFeatured: false,
+          admin_id: currentUser._id,
         };
         console.log(data);
         try {
           const response = await axios.post(
             `${process.env.NEXT_PUBLIC_API}/add-job`,
-            data
+            data,
+            {
+              headers: { Authorization: `Bearer ${getCookie("token")}` },
+            }
           );
           console.log(response.data);
           if (response.error) {
             setError(response.error);
           } else {
-            router.push("/");
+            router.push("/dashboard/admin/jobs");
           }
         } catch (error) {
           console.log(error);
@@ -331,7 +332,7 @@ function Description({ setCurrentStep }) {
         }
       }
 
-      router.push("/dashboard/admin/jobs");
+      router.push("/");
     },
   });
 

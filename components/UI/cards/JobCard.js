@@ -152,7 +152,7 @@ const JobCard = ({ job }) => {
             <span>Duration | {job.duration}</span>
           </li>
         </ul>
-        <Anchor button href={`/job-description/${job._id}`}>
+        <Anchor button href={`/tution-job/${job._id}`}>
           Apply Now
         </Anchor>
       </div>

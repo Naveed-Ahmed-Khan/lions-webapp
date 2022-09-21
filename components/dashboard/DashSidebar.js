@@ -7,19 +7,23 @@ import Backdrop from "../UI/Backdrop";
 const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
   const { currentUser, logout } = useAuth();
 
+  console.log(currentUser);
+  const user = currentUser?.admin;
   // console.log(currentUser);
   // const location = useLocation();
   /*const { logout } = useAuth(); */
   const router = useRouter();
 
   const navigation = [
-    { name: "Home", path: "/admin/dashboard/" },
-    { name: "Achievements", path: "/admin/dashboard/achievements" },
-    { name: "Tutors", path: "/admin/dashboard/tutors" },
-    { name: "Students", path: "/admin/dashboard/students" },
-    { name: "Areas", path: "/admin/dashboard/areas" },
-    { name: "Subjects", path: "/admin/dashboard/subjects" },
-    { name: "Classes", path: "/admin/dashboard/classes" },
+    { name: "Home", path: "/dashboard/admin/" },
+    { name: "Jobs", path: "/dashboard/admin/jobs" },
+    { name: "Applications", path: "/dashboard/admin/applications" },
+    { name: "Tutors", path: "/dashboard/admin/tutors" },
+    { name: "Students", path: "/dashboard/admin/students" },
+    { name: "Achievements", path: "/dashboard/admin/achievements" },
+    { name: "Areas", path: "/dashboard/admin/areas" },
+    { name: "Subjects", path: "/dashboard/admin/subjects" },
+    { name: "Classes", path: "/dashboard/admin/classes" },
   ];
 
   return (
@@ -66,10 +70,10 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                   height={70}
                   layout="fixed"
                   className="rounded-full object-cover"
-                  src={currentUser.profilePic}
+                  src={currentUser?.admin?.profilePic}
                   alt="Profile"
                 />
-                <p className=" text-white">{currentUser.name}</p>
+                <p className=" text-white">{currentUser?.admin?.name}</p>
               </div>
             )}
 
@@ -124,21 +128,19 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
           <div className="w-full max-w-[280px]">
             <nav className="w-[17rem] p-5 h-screen justify-between flex flex-col">
               <div className="mt-6 mb-10 flex flex-col">
-                {/* {!currentUser && (
+                {currentUser && (
                   <div className="my-2 flex flex-col items-center gap-4">
                     <Image
                       width={70}
                       height={70}
                       layout="fixed"
                       className="rounded-full object-cover"
-                      src={currentUser?.profilePic || ""}
+                      src={currentUser?.profilePic}
                       alt="Profile"
                     />
-                    <p className=" text-gray-700">
-                      {currentUser?.name || "ADMIN"}
-                    </p>
+                    <p className=" text-gray-700">{currentUser?.name}</p>
                   </div>
-                )} */}
+                )}
 
                 <div className="mt-4">
                   <p className="mb-4 p-3 text-gray-800 text-xs tracking-widest border-b border-b-gray-300">

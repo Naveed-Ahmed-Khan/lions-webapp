@@ -17,6 +17,7 @@ import TextArea from "../../components/UI/TextArea";
 import CheckBox from "../../components/UI/CheckBox";
 import { filetobase64 } from "../../utility/filetobase64";
 import ProfileCarousel from "../UI/ProfileCarousel";
+import { getCookie } from "cookies-next";
 
 export default function EditSections({ tutor, updateData }) {
   const [editMode, setEditMode] = useState(false);
@@ -28,7 +29,8 @@ export default function EditSections({ tutor, updateData }) {
   const updateTutor = async (data) => {
     await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
-      data
+      data,
+      { headers: { Authorization: `Bearer ${getCookie("token")}` } }
     );
     updateData();
     setEditMode(false);

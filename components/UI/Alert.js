@@ -9,7 +9,7 @@ export default function Alert() {
       {currentUser?.userType === "tutor" &&
         currentUser?.profileStatus === "incomplete" && (
           <section className="pt-4">
-            <div className="items-center w-full mx-auto px-5 md:px-8 max-w-screen-xl">
+            <div className="items-center w-full mx-auto px-5 max-w-screen-xl">
               <div className="p-4 border-l-4 border-yellow-600 bg-yellow-50">
                 <div className="flex">
                   <div className="flex-shrink-0">

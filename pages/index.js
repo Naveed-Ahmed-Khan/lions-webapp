@@ -38,8 +38,8 @@ export default function Home({ tutors, jobs, achievements }) {
   return (
     <>
       <Container color={"white"}>
-        <section className="min-h-[calc(100vh-65px)] flex flex-col bg-white p-4 md:px-8">
-          <Alert />
+        <Alert />
+        <section className="min-h-[calc(100vh-65px)] flex flex-col bg-white pt-5 px-5">
           <div className="grid grid-cols-1 lg:grid-cols-2">
             <div className="sm:p-4 flex flex-col items-center justify-center">
               <div className="flex flex-col gap-4 text-center w-full sm:mb-6">
@@ -135,7 +135,7 @@ export default function Home({ tutors, jobs, achievements }) {
 
       <Container color={"gray-100"}>
         <section className=" py-6 dark:bg-gray-800 dark:text-gray-800">
-          <div className="container p-4 mx-auto space-y-16 sm:p-10">
+          <div className="container p-5 mx-auto space-y-16">
             <div className="space-y-4">
               <h1 className="text-primary text-2xl leading-none font-bold sm:text-4xl">
                 Find the best tutor
@@ -160,7 +160,7 @@ export default function Home({ tutors, jobs, achievements }) {
 
       <Container color={"white"}>
         <section className=" py-6 dark:bg-gray-800 dark:text-gray-800">
-          <div className="container p-4 mx-auto space-y-16 sm:p-10">
+          <div className="container p-5 mx-auto space-y-16 ">
             <div className="space-y-4">
               <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Best Tution Jobs

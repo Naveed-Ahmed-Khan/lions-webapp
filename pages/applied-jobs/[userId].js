@@ -51,7 +51,14 @@ export default function MyJobs({ myJobs }) {
           <div className="space-y-8 sm:p-8 w-full flex flex-col items-center justify-center">
             {myJobs?.map((job) => {
               const myJob = job.job_id;
-              return <JobCard2 key={myJob._id} job={myJob} />;
+              return (
+                <JobCard2
+                  key={myJob._id}
+                  job={myJob}
+                  isSelected={job.isSelected}
+                  isShortlisted={job.isShortlisted}
+                />
+              );
             })}
           </div>
         </div>

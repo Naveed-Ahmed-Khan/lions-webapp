@@ -18,7 +18,7 @@ export default function Login() {
   const { signin, currentUser, checkAuth, setUser } = useAuth();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(error);
   const loginSchema = yup.object({
     email: yup.string("").email("Enter a valid email"),
     password: yup
@@ -34,33 +34,15 @@ export default function Login() {
     validationSchema: loginSchema,
     onSubmit: async (values) => {
       setIsLoading(true);
-      setError("");
-      try {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API}/signin`,
-          values,
-          { withCredentials: true }
-        );
-        console.log(response);
-        if (response.error) {
-          setError(response.error);
-        } else {
-          setUser(response.data.preUser);
-          const cookieOptions = {
-            httpOnly: true,
-            secure: true,
-          };
-          setCookie("token", response.data.token, cookieOptions);
-          setCookie("user_id", response.data.preUser._id, cookieOptions);
-          router.push("/");
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.log(error);
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
+      const data = await signin(values);
+      if (data.error) {
+        setError(data.error);
+      } else if (data.userType === "admin") {
+        router.push("/dashboard/admin");
+      } else {
+        router.push("/");
       }
+      setIsLoading(false);
     },
   });
 

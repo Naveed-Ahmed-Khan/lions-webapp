@@ -64,9 +64,15 @@ export default function Dropdown({ children, options }) {
                     </p>
                    
                   </button> */}
-                  <Anchor href={`${option.href}/${currentUser?._id}`}>
-                    <span className="text-center">{option.title}</span>
-                  </Anchor>
+                  {option.title === "Admin Panel" ? (
+                    <Anchor href={`${option.href}`}>
+                      <span className="text-center">{option.title}</span>
+                    </Anchor>
+                  ) : (
+                    <Anchor href={`${option.href}/${currentUser?._id}`}>
+                      <span className="text-center">{option.title}</span>
+                    </Anchor>
+                  )}
                 </div>
               );
             })}

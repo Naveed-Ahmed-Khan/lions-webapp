@@ -11,6 +11,7 @@ import Select from "../../components/UI/Select";
 
 import CheckBox from "../../components/UI/CheckBox";
 import axios from "axios";
+import { getCookie } from "cookies-next";
 
 export default function EditSubjects({ tutor, updateData }) {
   const [editMode, setEditMode] = useState(false);
@@ -18,7 +19,8 @@ export default function EditSubjects({ tutor, updateData }) {
   const updateTutor = async (data) => {
     await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
-      data
+      data,
+      { headers: { Authorization: `Bearer ${getCookie("token")}` } }
     );
     updateData();
     setEditMode(false);

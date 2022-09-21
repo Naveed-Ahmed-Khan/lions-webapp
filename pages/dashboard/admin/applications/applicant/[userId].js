@@ -1,37 +1,36 @@
 import axios from "axios";
 import React, { useEffect, useMemo, useState } from "react";
-import Collapse from "../../components/UI/Collapse";
-import Container from "../../components/UI/Container";
-import ProfileSidebar from "../../components/UI/ProfileSidebar";
-import Button from "../../components/UI/Button";
-import Tabs from "../../components/UI/Tabs";
+import Collapse from "../../../../../components/UI/Collapse";
+import Container from "../../../../../components/UI/Container";
+import ProfileSidebar from "../../../../../components/UI/ProfileSidebar";
+import Button from "../../../../../components/UI/Button";
+import Tabs from "../../../../../components/UI/Tabs";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { useFormik } from "formik";
-import { useAuth } from "../../contexts/AuthContext";
+import { useAuth } from "../../../../../contexts/AuthContext";
 import * as yup from "yup";
-import Input from "../../components/UI/Input";
-import FormGroup from "../../components/UI/FormGroup";
-import Select from "../../components/UI/Select";
-import TextArea from "../../components/UI/TextArea";
-import EditSections from "../../components/EditProfile/EditSections";
-import EditSubjects from "../../components/EditProfile/EditSubjects";
-import EditPersonal from "../../components/EditProfile/EditPersonal";
-import EditLocations from "../../components/EditProfile/EditLocations";
-import EditQualification from "../../components/EditProfile/EditQualification";
-import EditExperience from "../../components/EditProfile/EditExperience";
-import useFetch from "../../hooks/useFetch";
-import AccessDenied from "../../components/UI/AccessDenied";
-import Progress from "../../components/UI/progress/Progress";
-import Spinner from "../../components/UI/loader/Spinner";
-import { getCookie } from "cookies-next";
+import Input from "../../../../../components/UI/Input";
+import FormGroup from "../../../../../components/UI/FormGroup";
+import Select from "../../../../../components/UI/Select";
+import TextArea from "../../../../../components/UI/TextArea";
+import EditSections from "../../../../../components/EditProfile/EditSections";
+import EditSubjects from "../../../../../components/EditProfile/EditSubjects";
+import EditPersonal from "../../../../../components/EditProfile/EditPersonal";
+import EditLocations from "../../../../../components/EditProfile/EditLocations";
+import EditQualification from "../../../../../components/EditProfile/EditQualification";
+import EditExperience from "../../../../../components/EditProfile/EditExperience";
+import useFetch from "../../../../../hooks/useFetch";
+import AccessDenied from "../../../../../components/UI/AccessDenied";
+import Progress from "../../../../../components/UI/progress/Progress";
+import Spinner from "../../../../../components/UI/loader/Spinner";
 
 export default function EditProfile() {
   const { currentUser, checkAuth } = useAuth();
 
   const router = useRouter();
   const { userId } = router.query;
-  const API = `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`;
+  const API = `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`;
   const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-cities`;
   const AREA_API = `${process.env.NEXT_PUBLIC_API}/get-areas`;
 
@@ -56,10 +55,14 @@ export default function EditProfile() {
           console.log("complete");
           await axios.patch(
             `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor?._id}`,
-            { profileStatus: "complete" },
-            { headers: { Authorization: `Bearer ${getCookie("token")}` } }
+            { profileStatus: "complete" }
           );
-
+          /* const user = JSON.parse(localStorage.getItem("user"));
+          console.log({ ...user, profileStatus: "complete" });
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ ...user, profileStatus: "complete" })
+          ); */
           checkAuth();
         }
       }
@@ -68,15 +71,20 @@ export default function EditProfile() {
           console.log("incomplete");
           await axios.patch(
             `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor?._id}`,
-            { profileStatus: "incomplete" },
-            { headers: { Authorization: `Bearer ${getCookie("token")}` } }
+            { profileStatus: "incomplete" }
           );
+          /* const user = JSON.parse(localStorage.getItem("user"));
+          console.log({ ...user, profileStatus: "incomplete" });
 
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ ...user, profileStatus: "incomplete" })
+          ); */
           checkAuth();
         }
       }
     };
-  }, [profile]);
+  });
 
   const tabs = [
     "Personal",
@@ -89,10 +97,12 @@ export default function EditProfile() {
   ];
 
   return (
-    <Container color={"gray-50"}>
+    <Container color={"white"}>
       <div className="sm:p-5 bg-white max-w-4xl mx-auto">
         <div className="p-5 sm:p-0 my-4">
-          <h1 className="text-3xl text-primary font-semibold">Edit Profile</h1>
+          <h1 className="text-3xl text-primary font-semibold">
+            Detailed Profile
+          </h1>
         </div>
         {!isError && isLoading ? (
           <div className="h-[calc(100vh-100px)]">
@@ -118,7 +128,12 @@ export default function EditProfile() {
                 <EditSections tutor={tutor} updateData={updateData} />
               )}
               {currentTab === "Personal" && (
-                <EditPersonal tutor={tutor} updateData={updateData} />
+                <EditPersonal
+                  tutor={tutor}
+                  updateData={updateData}
+                  cities={cities}
+                  areas={areas}
+                />
               )}
               {currentTab === "Locations" && (
                 <EditLocations

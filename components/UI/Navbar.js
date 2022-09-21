@@ -10,7 +10,7 @@ import { getCookie } from "cookies-next";
 const Navbar = ({ open, setOpen, setShowBackdrop }) => {
   const { currentUser, logout, checkAuth } = useAuth();
   const router = useRouter();
-  const user = getCookie("user_id");
+  const user = getCookie("user");
   // console.log(currentUser);
   // const [state, setState] = useState(false);
   // console.log(open);
@@ -73,17 +73,20 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
               </Link>
             ))}
           </li>
+          {/* {console.log(currentUser)} */}
 
           {currentUser ? (
             <li className="flex items-center gap-2">
               <Dropdown
                 options={
-                  currentUser?.userType === "tutor"
+                  user === "tutor"
                     ? [
                         { title: "My Profile", href: "/profile" },
                         { title: "Edit Profile", href: "/edit-profile" },
                         { title: "Jobs Applied", href: "/applied-jobs" },
                       ]
+                    : user === "admin"
+                    ? [{ title: "Admin Panel", href: "/dashboard/admin" }]
                     : [{ title: "My Jobs", href: "/my-jobs" }]
                 }
               >
