@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useRouter } from "next/router";
 import React from "react";
 import Anchor from "../../../../components/UI/Anchor";
 import Button from "../../../../components/UI/Button";
@@ -7,9 +8,14 @@ import Table from "../../../../components/UI/tables/Table";
 import useFetch from "../../../../hooks/useFetch";
 
 export default function Jobs() {
+  const router = useRouter();
   const API = `${process.env.NEXT_PUBLIC_API}/get-jobs`;
   const { data, isLoading, isError, updateData } = useFetch(API, true);
   console.log(data);
+
+  const viewJobDetails = (data) => {
+    router.push(`/dashboard/admin/jobs/${data._id}`);
+  };
 
   const changeStatus = async (data) => {
     const STATUS_API = `${process.env.NEXT_PUBLIC_API}/change-jobstatus/${data._id}`;
@@ -42,6 +48,12 @@ export default function Jobs() {
       name: "Action",
       value: "Status",
       onClick: changeStatus,
+    },
+    {
+      id: 2,
+      name: "Details",
+      value: "Job",
+      onClick: viewJobDetails,
     },
   ];
 
