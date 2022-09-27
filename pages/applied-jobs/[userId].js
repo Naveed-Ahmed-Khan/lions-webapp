@@ -34,7 +34,7 @@ export async function getStaticProps({ params }) {
 }
 
 export default function MyJobs({ myJobs }) {
-  console.log(myJobs);
+  // console.log(myJobs);
   // console.log(userId);
   return (
     <Container color={"white"}>
