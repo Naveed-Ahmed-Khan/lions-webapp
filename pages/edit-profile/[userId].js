@@ -25,6 +25,7 @@ import AccessDenied from "../../components/UI/AccessDenied";
 import Progress from "../../components/UI/progress/Progress";
 import Spinner from "../../components/UI/loader/Spinner";
 import { getCookie } from "cookies-next";
+import EditAvailability from "../../components/EditProfile/EditAvailability";
 
 export default function EditProfile() {
   const { currentUser, checkAuth } = useAuth();
@@ -32,15 +33,19 @@ export default function EditProfile() {
   const router = useRouter();
   const { userId } = router.query;
   const API = `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`;
-  const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-cities`;
+  const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-allcities`;
   const AREA_API = `${process.env.NEXT_PUBLIC_API}/get-areas`;
 
-  const { data: tutor, isLoading, isError, updateData } = useFetch(API, true);
-  const { data: cities } = useFetch(CITY_API, false);
-  const { data: areas } = useFetch(AREA_API, false);
+  const {
+    data: tutor,
+    isLoading: tutorLoading,
+    updateData,
+  } = useFetch(API, false);
+  const { data: cities, isLoading: citiesLoading } = useFetch(CITY_API, false);
+  const { data: areas, isLoading: areasLoading } = useFetch(AREA_API, false);
 
-  console.log(tutor);
-  console.log(isError);
+  console.log(cities);
+  // console.log(isError);
   console.log(tutor?.profileStatus);
 
   const [currentTab, setCurrentTab] = useState("Personal");
@@ -83,18 +88,18 @@ export default function EditProfile() {
     "Qualification",
     "Experience",
     "Subjects",
+    "Availability",
     "Locations",
     "Sections",
-    // "Gallery",
   ];
 
   return (
     <Container color={"gray-50"}>
-      <div className="sm:p-5 bg-white max-w-4xl mx-auto">
+      <div className="sm:p-5 bg-white max-w-5xl mx-auto">
         <div className="p-5 sm:p-0 my-4">
           <h1 className="text-3xl text-primary font-semibold">Edit Profile</h1>
         </div>
-        {!isError && isLoading ? (
+        {tutorLoading ? (
           <div className="h-[calc(100vh-100px)]">
             <Spinner md />
           </div>
@@ -118,7 +123,15 @@ export default function EditProfile() {
                 <EditSections tutor={tutor} updateData={updateData} />
               )}
               {currentTab === "Personal" && (
-                <EditPersonal tutor={tutor} updateData={updateData} />
+                <EditPersonal
+                  cities={cities}
+                  areas={areas}
+                  tutor={tutor}
+                  updateData={updateData}
+                />
+              )}
+              {currentTab === "Availability" && (
+                <EditAvailability tutor={tutor} updateData={updateData} />
               )}
               {currentTab === "Locations" && (
                 <EditLocations

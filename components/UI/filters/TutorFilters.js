@@ -19,10 +19,12 @@ export default function TutorFilters({
 }) {
   // console.log(allAreas);
   const router = useRouter();
-  const [classes, setClasses] = useState("");
-  const [qualification, setQualification] = useState("");
-  const [subjects, setSubjects] = useState("");
-  const [areas, setAreas] = useState("");
+
+  console.log(router.query);
+  const [classes, setClasses] = useState([]);
+  const [qualification, setQualification] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [areas, setAreas] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
   // const [queryParams, setQueryParams] = useState(null);
   // const [clear, setClear] = useState(false);
@@ -31,6 +33,32 @@ export default function TutorFilters({
   // console.log(subjects);
   // console.log(classes);
   // console.log(qualification);
+
+  /*   useEffect(() => {
+    const {
+      class: clas,
+      subject,
+      qualification: qual,
+      city,
+      area,
+    } = router.query;
+
+    if (clas) {
+      setClasses([clas]);
+    }
+    if (subject) {
+      setSubjects([subject]);
+    }
+    if (qual) {
+      setQualification([qual]);
+    }
+    if (city) {
+      setSelectedCity(city);
+    }
+    if (area) {
+      setAreas([area]);
+    }
+  }, [router.query]); */
 
   const allClasses = [
     { value: "Pre-School", id: "1" },
@@ -188,9 +216,12 @@ export default function TutorFilters({
 
               <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
                 {allQualifications.map((item) => {
+                  const checked = qualification?.includes(item.value);
+                  console.log("is Checked");
                   return (
                     <li key={item.value}>
                       <CheckBox
+                        defaultChecked={checked}
                         label={item.label}
                         name={item.value}
                         onChange={qualificationHandler}
@@ -210,9 +241,13 @@ export default function TutorFilters({
 
               <ul className="px-2  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto ">
                 {allClasses.map((item) => {
+                  console.log(item);
+                  const checked = classes?.includes(item.value);
+
                   return (
                     <li key={item.id}>
                       <CheckBox
+                        defaultChecked={checked}
                         label={item.value}
                         name={item.value}
                         onChange={classesHandler}
@@ -232,9 +267,12 @@ export default function TutorFilters({
 
               <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
                 {allSubjects.map((item) => {
+                  const checked = subjects?.includes(item.value);
+
                   return (
                     <li key={item.value}>
                       <CheckBox
+                        defaultChecked={checked}
                         label={item.label}
                         name={item.value}
                         onChange={subjectHandler}
@@ -272,15 +310,22 @@ export default function TutorFilters({
                 </Select>
               </FormGroup>
 
-              <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
+              <ul
+                className={`px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 overflow-auto ${
+                  selectedCity && "h-60 "
+                }`}
+              >
                 {allAreas.map((area) => {
                   const { city_id } = area;
+                  const checked = areas?.includes(area.name);
+
                   if (city_id?.name !== selectedCity) {
                     return;
                   } else {
                     return (
                       <li key={area._id}>
                         <CheckBox
+                          defaultChecked={checked}
                           label={area.name}
                           name={area.name}
                           onChange={areasHandler}
@@ -300,13 +345,17 @@ export default function TutorFilters({
           className="text-sm font-medium text-gray-600 underline"
           type="button"
           onClick={() => {
-            setClear(true);
+            setSelectedCity("");
+            setAreas("");
+            setClasses("");
+            setSubjects("");
+            setQualification("");
           }}
         >
-          Clear all
+          Clear Filters
         </button> */}
-        <div className="w-full">
-          <Button type={"submit"}>
+        <div className="w-full sm:w-fit lg:w-full">
+          <Button fullwidth type={"submit"}>
             <p>Show results</p>
           </Button>
         </div>

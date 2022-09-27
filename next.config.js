@@ -9,6 +9,7 @@ module.exports = {
       "lions.edu.pk",
       "encrypted-tbn0.gstatic.com",
       "images.unsplash.com",
+      "images.pexels.com",
     ],
   },
 };

@@ -1,12 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import React from "react";
-import Button from "./Button";
-/* import profileImg from "../../Assets/Images/profile.png";
-import pin from "../../Assets/Icons/pin.svg";
-import female from "../../Assets/Icons/female.svg";
-import search from "../../Assets/Icons/search.svg";
-import arrow from "../../Assets/Icons/arrow.svg";
-import Button from "./Button"; */
+import { convertTime } from "../../util/convertTime";
 
 const ProfileSidebar = ({ tutor }) => {
   return (
@@ -118,7 +111,7 @@ const ProfileSidebar = ({ tutor }) => {
             />
           </svg>
           <p className="font-archivo text-gray-700 text-base font-medium">
-            Students Taught: 3
+            Students Taught: {tutor.selectedJobs.length || 0}
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -137,10 +130,11 @@ const ProfileSidebar = ({ tutor }) => {
             />
           </svg>
           <p className="font-archivo text-gray-700 text-base font-medium">
-            Trial Lessons: 10
+            Trial Lessons: {tutor.shortlistedDemos.length || 0}
           </p>
         </div>
       </section>
+
       <section className="flex flex-col gap-5">
         <div className="space-y-6 ">
           <h3 className="text-xl sm:text-2xl text-primary font-medium mb-1">
@@ -178,6 +172,49 @@ const ProfileSidebar = ({ tutor }) => {
           )}
         </div>
       </section>
+
+      <section className="flex flex-col gap-5">
+        <div className="space-y-6 ">
+          <h3 className="text-xl sm:text-2xl text-primary font-medium mb-1">
+            Avialability
+          </h3>
+          {tutor.slots?.length > 0 ? (
+            tutor.slots?.map((slot) => {
+              const { title, from, to, isBooked } = slot;
+              return (
+                <div
+                  key={slot._id}
+                  className="p-6 w-full sm:w-[320px] border-[1.75px] border-gray-300 rounded-lg"
+                >
+                  <div className="mb-4 flex items-center justify-between">
+                    <h3 className="text-lg text-primary font-medium">
+                      {title}
+                    </h3>
+                    <div
+                      className={`ml-2 py-0.5 px-2 border-2 font-medium text-sm rounded-full
+                          ${
+                            isBooked
+                              ? "border-neutral-600 text-neutral-600"
+                              : "border-primary text-primary"
+                          }`}
+                    >
+                      {isBooked ? "Booked" : "Open"}
+                    </div>
+                  </div>
+                  <div className="flex justify-between">
+                    <p className="text-gray-600">
+                      {convertTime(from)} - {convertTime(to)}
+                    </p>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            <>No Slots</>
+          )}
+        </div>
+      </section>
+
       <section className="flex flex-col gap-5">
         <div className="space-y-6 ">
           <h3 className="text-xl sm:text-2xl text-primary font-medium mb-1">

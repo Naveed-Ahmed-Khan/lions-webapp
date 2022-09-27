@@ -84,7 +84,7 @@ export default function EditLocations({ areas, cities, tutor, updateData }) {
             <FormGroup>
               <Select required label="City" name={"city"} formik={formik}>
                 <option value="">Select</option>
-                {cities.map((city) => {
+                {cities?.map((city) => {
                   return (
                     <option key={city._id} value={city.name}>
                       {city.name}
@@ -95,7 +95,7 @@ export default function EditLocations({ areas, cities, tutor, updateData }) {
             </FormGroup>
 
             <ul className="px-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-4 max-h-[calc(100vh-500px)] overflow-auto">
-              {areas.map((area) => {
+              {areas?.map((area) => {
                 const { city_id } = area;
                 if (city_id?.name !== formik.values.city) {
                   return;

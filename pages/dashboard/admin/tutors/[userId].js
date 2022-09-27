@@ -25,6 +25,7 @@ import AccessDenied from "../../../../components/UI/AccessDenied";
 import Progress from "../../../../components/UI/progress/Progress";
 import Spinner from "../../../../components/UI/loader/Spinner";
 import { getCookie } from "cookies-next";
+import EditAvailability from "../../../../components/EditProfile/EditAvailability";
 
 export default function EditProfile() {
   const { currentUser, checkAuth } = useAuth();
@@ -82,15 +83,15 @@ export default function EditProfile() {
     "Personal",
     "Qualification",
     "Experience",
+    "Availability",
     "Subjects",
     "Locations",
     "Sections",
-    // "Gallery",
   ];
 
   return (
     <Container color={"gray-50"}>
-      <div className="sm:p-5 bg-white max-w-4xl mx-auto">
+      <div className="sm:p-5 bg-white max-w-5xl mx-auto">
         <div className="p-5 sm:p-0 my-4">
           <h1 className="text-3xl text-primary font-semibold">Edit Profile</h1>
         </div>
@@ -119,6 +120,9 @@ export default function EditProfile() {
               )}
               {currentTab === "Personal" && (
                 <EditPersonal tutor={tutor} updateData={updateData} />
+              )}
+              {currentTab === "Availability" && (
+                <EditAvailability tutor={tutor} updateData={updateData} />
               )}
               {currentTab === "Locations" && (
                 <EditLocations

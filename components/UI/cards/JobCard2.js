@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { jobTimeStamp } from "../../../utility/jobTimeStamp";
+import { jobTimeStamp } from "../../../util/jobTimeStamp";
 import Anchor from "../Anchor";
 import Button from "../Button";
 

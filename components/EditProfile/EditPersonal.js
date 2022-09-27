@@ -15,11 +15,13 @@ import { useFormik } from "formik";
 import { useAuth } from "../../contexts/AuthContext";
 import * as yup from "yup";
 import axios from "axios";
-import { filetobase64 } from "../../utility/filetobase64";
+import { filetobase64 } from "../../util/filetobase64";
 import CheckBox from "../UI/CheckBox";
 import { getCookie } from "cookies-next";
 
 export default function EditPersonal({ tutor, updateData, cities, areas }) {
+  console.log(cities);
+  console.log(areas);
   const { signup } = useAuth();
   const [imagePath, setImagePath] = useState(null);
   const [bannerPath, setBannerPath] = useState(null);
@@ -54,17 +56,15 @@ export default function EditPersonal({ tutor, updateData, cities, areas }) {
       gender: tutor?.gender || "",
       city: tutor?.city || "",
       area: tutor?.area || "",
-      availableFrom: tutor?.availableFrom || "",
-      availableTo: tutor?.availableTo || "",
       teachingModes: tutor?.teachingModes || [],
       profilePic: "",
       bannerImage: "",
       mobile: tutor?.mobile || "",
       watsapp: tutor?.watsapp || "",
-      city: tutor?.city || "",
       address: tutor?.address || "",
     },
     onSubmit: async (values) => {
+      console.log(values.teachingModes);
       console.log(values);
       try {
         if (imagePath) {
@@ -75,11 +75,10 @@ export default function EditPersonal({ tutor, updateData, cities, areas }) {
         }
 
         await updateTutor({
-          availableFrom: values.availableFrom,
-          availableTo: values.availableTo,
           teachingModes: values.teachingModes,
           mobile: values.mobile,
           watsapp: values.watsapp,
+          area: values.area,
           city: values.city,
           address: values.address,
           profilePic: values.profilePic || tutor?.profilePic,
@@ -171,42 +170,46 @@ export default function EditPersonal({ tutor, updateData, cities, areas }) {
             </div>
           </div> */}
         </div>
-        <FormGroup horizontal>
-          <Input required label="Full Name" name={"name"} formik={formik} />
-          <Input required label="CNIC" name={"cnic"} formik={formik} />
-        </FormGroup>
+        {router.pathname.includes("admin") && (
+          <>
+            <FormGroup horizontal>
+              <Input required label="Full Name" name={"name"} formik={formik} />
+              <Input required label="CNIC" name={"cnic"} formik={formik} />
+            </FormGroup>
 
-        <FormGroup horizontal>
-          <Input
-            required
-            type={"date"}
-            label="Date of Birth"
-            name={"birth"}
-            formik={formik}
-          />
-          <Select required label="Gender" name="gender" formik={formik}>
-            <option value="">Select</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </Select>
-        </FormGroup>
+            <FormGroup horizontal>
+              <Input
+                required
+                type={"date"}
+                label="Date of Birth"
+                name={"birth"}
+                formik={formik}
+              />
+              <Select required label="Gender" name="gender" formik={formik}>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </Select>
+            </FormGroup>
 
-        <FormGroup horizontal>
-          <Input
-            required
-            label="Mobile No."
-            type="tel"
-            name={"mobile"}
-            formik={formik}
-          />
-          <Input
-            required
-            label="Watsapp No."
-            type="tel"
-            name={"watsapp"}
-            formik={formik}
-          />
-        </FormGroup>
+            <FormGroup horizontal>
+              <Input
+                required
+                label="Mobile No."
+                type="tel"
+                name={"mobile"}
+                formik={formik}
+              />
+              <Input
+                required
+                label="Watsapp No."
+                type="tel"
+                name={"watsapp"}
+                formik={formik}
+              />
+            </FormGroup>
+          </>
+        )}
 
         <FormGroup horizontal>
           <Select required label="City" name={"city"} formik={formik}>
@@ -239,7 +242,7 @@ export default function EditPersonal({ tutor, updateData, cities, areas }) {
           </Select>
         </FormGroup>
 
-        <div className="mt-5">
+        {/* <div className="mt-5">
           <h3 className="mb-2 text-gray-600 font-medium">
             Availablity (from - to)
           </h3>
@@ -253,14 +256,14 @@ export default function EditPersonal({ tutor, updateData, cities, areas }) {
 
             <Input required type="time" name={"availableTo"} formik={formik} />
           </div>
-        </div>
+        </div> */}
 
         <FormGroup>
           <div>
             <h3 className="text-gray-600 font-medium">Modes of Teaching</h3>
             <ul className="px-2 grid grid-cols-1 sm:grid-cols-3 gap-8 mt-2">
-              {modes.map((item) => {
-                const checked = formik.values.teachingModes.includes(item);
+              {modes?.map((item) => {
+                const checked = formik.values.teachingModes?.includes(item);
                 // console.log(checked);
                 return (
                   <li key={item}>
@@ -294,9 +297,9 @@ export default function EditPersonal({ tutor, updateData, cities, areas }) {
           />
         </FormGroup>
 
-        <FormGroup>
+        {/* <FormGroup>
           <Input required label="City" name={"city"} formik={formik} />
-        </FormGroup>
+        </FormGroup> */}
 
         <FormGroup>
           <TextArea required label="Address" name={"address"} formik={formik} />

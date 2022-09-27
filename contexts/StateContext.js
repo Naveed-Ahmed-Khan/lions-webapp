@@ -6,7 +6,7 @@ const StateContext = createContext();
 export function useStateContext() {
   return useContext(StateContext);
 }
-
+ 
 export const StateProvider = ({ children }) => {
   // const { data: quizData } = useFetch("quizes", check);
   const [check, setCheck] = useState(false);

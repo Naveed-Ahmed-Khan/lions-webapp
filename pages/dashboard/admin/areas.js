@@ -17,7 +17,7 @@ export default function Areas() {
   const [area, setArea] = useState("");
 
   const AREAS_API = `${process.env.NEXT_PUBLIC_API}/get-areas?city=${selectedCity}`;
-  const CITIES_API = `${process.env.NEXT_PUBLIC_API}/get-cities`;
+  const CITIES_API = `${process.env.NEXT_PUBLIC_API}/get-allcities`;
   const { data, isLoading, updateData } = useFetch(AREAS_API, true);
   const { data: cities, isLoading: isCitiesLoading } = useFetch(
     CITIES_API,

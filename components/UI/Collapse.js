@@ -18,7 +18,9 @@ const Collapse = ({ label, children }) => {
         }}
       >
         <div className="flex items-center justify-between cursor-pointer">
-          <h4 className="text-lg font-medium text-white">{label}</h4>
+          <h4 className="text-base sm:text-lg sm:font-medium text-white">
+            {label}
+          </h4>
           <div className="bg-transparent py-1 px-3 rounded">
             <svg
               xmlns="http://www.w3.org/2000/svg"

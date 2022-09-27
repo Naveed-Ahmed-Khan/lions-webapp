@@ -10,6 +10,8 @@ import axios from "axios";
 import Alert from "../components/UI/Alert";
 import Image from "next/image";
 import Anchor from "../components/UI/Anchor";
+import Link from "next/link";
+import { useAuth } from "../contexts/AuthContext";
 
 export async function getStaticProps() {
   const tutors = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`);
@@ -29,6 +31,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ tutors, jobs, achievements }) {
+  const { currentUser } = useAuth();
   const features = [
     { id: "1", name: "Affordable Fee" },
     { id: "2", name: "Free Consultation" },
@@ -38,7 +41,6 @@ export default function Home({ tutors, jobs, achievements }) {
   return (
     <>
       <Container color={"white"}>
-        <Alert />
         <section className="min-h-[calc(100vh-65px)] flex flex-col bg-white pt-5 px-5">
           <div className="grid grid-cols-1 lg:grid-cols-2">
             <div className="sm:p-4 flex flex-col items-center justify-center">

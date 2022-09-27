@@ -13,7 +13,7 @@ import {
   Simple,
 } from "../../components/EditProfile/EditSections";
 import Rating from "../../components/UI/Rating";
-import { idToDate } from "../../utility/idToDate";
+import { idToDate } from "../../util/idToDate";
 
 export async function getStaticPaths() {
   const users = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`);
@@ -54,7 +54,7 @@ export default function Profile({ tutor, applications }) {
           <Image
             layout="fill"
             objectFit="cover"
-            src={tutor.bannerImage}
+            src={tutor.bannerImage || "/images/flag.png"}
             alt=""
           />
         </header>
@@ -74,8 +74,10 @@ export default function Profile({ tutor, applications }) {
           </h2>
         </div>
       </div>
+
       {/* Mobile Collapse */}
-      <div className="block md:hidden pt-8 bg-white md:bg-neutral-100 rounded px-5 sm:p-8">
+
+      {/* <div className="block md:hidden pt-8 bg-white md:bg-neutral-100 rounded px-5 sm:p-8">
         <h3 className="mb-6 text-xl sm:text-2xl text-primary font-medium">
           My Profile
         </h3>
@@ -83,18 +85,18 @@ export default function Profile({ tutor, applications }) {
           <Collapse label="About me">{tutor.aboutMe}</Collapse>
           <Collapse label="Achievements">{tutor.achievements}</Collapse>
         </div>
-      </div>
+      </div> */}
 
       <main className="p-6 md:flex gap-6 bg-white ">
         <div className="w-full md:w-[420px]">
           <ProfileSidebar tutor={tutor} />
-          <div className="hidden sm:block my-6">
+          {/* <div className="hidden sm:block my-6">
             <Button fullwidth>Apply Now</Button>
-          </div>
+          </div> */}
         </div>
         <section className="w-full flex flex-col gap-10">
-          <div className="hidden md:block bg-white md:bg-neutral-100 rounded sm:p-6">
-            {/* Desktop Collapse */}
+          {/* Desktop Collapse */}
+          {/* <div className="hidden md:block bg-white md:bg-neutral-100 rounded sm:p-6">
             <div className="hidden md:flex flex-col gap-6 md:gap-8">
               <h3 className="text-xl sm:text-2xl text-primary font-medium">
                 My Profile
@@ -104,7 +106,7 @@ export default function Profile({ tutor, applications }) {
                 <Collapse label="Achievements">{tutor.achievements}</Collapse>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="mt-6 sm:mt-0 flex flex-col gap-6 md:gap-8">
             {tutor.sections.map((section) => {
               return (
@@ -118,9 +120,9 @@ export default function Profile({ tutor, applications }) {
               );
             })}
           </div>
-          <div className="block sm:hidden">
+          {/*  <div className="block sm:hidden">
             <Button fullwidth>Apply Now</Button>
-          </div>
+          </div> */}
 
           <section className="bg-white md:bg-neutral-100 rounded md:p-8">
             <div className="mb-8 md:flex items-center justify-between">

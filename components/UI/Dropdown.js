@@ -20,7 +20,7 @@ export default function Dropdown({ children, options }) {
     >
       <div className="relative">
         {/* <!-- Dropdown toggle button --> */}
-        <div>{children}</div>
+        <div className="flex items-center">{children}</div>
 
         {/* <!-- Dropdown menu --> */}
         {open && (

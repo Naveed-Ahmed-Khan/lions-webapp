@@ -14,13 +14,15 @@ import Alert from "../components/UI/Alert";
 import Spinner from "../components/UI/loader/Spinner";
 
 export async function getStaticProps({ query }) {
-  console.log({ query });
+  console.log(query);
 
   const tutors = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`, {
     params: query,
   });
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
-  const cities = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-cities`);
+  const cities = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-allcities`
+  );
 
   return {
     props: {
@@ -40,8 +42,6 @@ export default function Tutors({ tutors, areas, cities }) {
   return (
     <>
       <Container color={"gray-100"}>
-        {/* <Spinner md /> */}
-        <Alert />
         <section className="lg:flex p-5">
           <div
             className="block lg:hidden fixed z-40 top-20 right-2 bg-white p-2 rounded-full shadow-lg"
@@ -108,11 +108,11 @@ export default function Tutors({ tutors, areas, cities }) {
               <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Find the best tutor
               </h1>
-              <p className="">
+              {/* <p className="">
                 At a assumenda quas cum earum ut itaque commodi saepe rem
                 aspernatur quam natus quis nihil quod, hic explicabo doloribus
                 magnam neque, exercitationem eius sunt!
-              </p>
+              </p> */}
             </div>
             <div className="space-y-8 lg:pr-3 w-full">
               {filteredTutors?.length > 0 ? (

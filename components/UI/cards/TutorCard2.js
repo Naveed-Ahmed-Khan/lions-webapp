@@ -1,15 +1,19 @@
-/* eslint-disable @next/next/no-img-element */
-
 import React from "react";
 import Link from "next/dist/client/link";
 import Image from "next/image";
 import Button from "../Button";
 import { useRouter } from "next/router";
-import { findHighestQualification } from "../../../utility/findHighestQualification";
+import { findHighestQualification } from "../../../util/findHighestQualification";
 import Anchor from "../Anchor";
 
 const TutorCard2 = ({ tutor }) => {
   const router = useRouter();
+
+  const profile = tutor.sections?.filter(
+    (section) => section.title === "Profile"
+  );
+  // console.log(profile);
+
   return (
     <div className="sm:flex mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
       <div className="flex flex-col">
@@ -22,25 +26,46 @@ const TutorCard2 = ({ tutor }) => {
           />
         </div>
 
-        <div className="flex items-center justify-center px-6 py-3 bg-primary">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-white "
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-            />
-          </svg>
+        <div
+          className={`flex items-center justify-center px-6 py-3 ${
+            tutor.isVerified ? "bg-primary" : "bg-gray-500"
+          } `}
+        >
+          {tutor.isVerified ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              />
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-6 h-6 text-white"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z"
+              />
+            </svg>
+          )}
 
-          <h3 className="mx-3 text-lg font-semibold text-white">
-            {tutor.userStatus}
-          </h3>
+          <h2 className="mx-3 text-lg tracking-wide font-medium text-white">
+            {tutor.isVerified ? "Verified" : "Unverified"}
+          </h2>
         </div>
       </div>
 
@@ -84,12 +109,12 @@ const TutorCard2 = ({ tutor }) => {
             >
               <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
             </svg>
-            <p className="ml-1 -mt-0.5 text-gray-600">(25)</p>
+            <p className="ml-1 -mt-0.5 text-gray-600">(5)</p>
           </div>
         </div>
 
         <p className="hidden sm:block py-1 text-gray-700 dark:text-gray-400 h-20 overflow-auto">
-          {tutor.aboutMe}
+          {profile[0]?.subSections[0]?.content || tutor.aboutMe}
         </p>
 
         {/* {Details} */}
@@ -113,8 +138,7 @@ const TutorCard2 = ({ tutor }) => {
             </svg>
 
             <h3 className="px-2 text-sm font-medium">
-              {tutor.qualifications &&
-                findHighestQualification(tutor.qualifications)}
+              {findHighestQualification(tutor.qualifications)}
             </h3>
           </div>
 
@@ -157,29 +181,10 @@ const TutorCard2 = ({ tutor }) => {
             </svg>
 
             <h3 className="px-2 text-sm font-medium">
-              {tutor.students} | Students taught
+              {tutor.selectedJobs.length || 0} | Students taught
             </h3>
           </div>
-          <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-6 h-6 text-primary"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-              />
-            </svg>
 
-            <h3 className="px-2 text-sm font-medium">
-              {tutor.trials} | Trial lessons
-            </h3>
-          </div>
           <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -197,7 +202,8 @@ const TutorCard2 = ({ tutor }) => {
             </svg>
 
             <h3 className="px-2 text-sm font-medium">
-              {tutor.subjectsTaught[0]?.name}, {tutor.subjectsTaught[1]?.name}
+              {tutor.subjectsTaught[0]?.name}{" "}
+              {tutor.subjectsTaught[1] && `,${tutor.subjectsTaught[1]?.name}`}
             </h3>
           </div>
 
@@ -217,8 +223,30 @@ const TutorCard2 = ({ tutor }) => {
               />
             </svg>
             <h3 className="px-2 text-sm font-medium">
-              {tutor.subjectsTaught[0]?.classes[0]?.title},{" "}
-              {tutor.subjectsTaught[1]?.classes[1]?.title}
+              {tutor.subjectsTaught[0]?.classes[0]?.title}{" "}
+              {tutor.subjectsTaught[1]?.classes[1] &&
+                `,${tutor.subjectsTaught[1]?.classes[1]?.title}`}
+            </h3>
+          </div>
+
+          <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-6 h-6 text-primary"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              />
+            </svg>
+
+            <h3 className="px-2 text-sm font-medium">
+              {tutor.shortlistedDemos.length || 0} | Trial lessons
             </h3>
           </div>
         </div>

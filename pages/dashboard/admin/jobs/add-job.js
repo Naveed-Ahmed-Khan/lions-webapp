@@ -309,7 +309,8 @@ function Description({ setCurrentStep }) {
           ...student,
           ...tutor,
           ...description,
-          admin_id: currentUser._id,
+          user_id: currentUser._id,
+          userModel: "Admin",
         };
         console.log(data);
         try {

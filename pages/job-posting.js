@@ -311,7 +311,7 @@ function Description({ setCurrentStep }) {
           ...tutor,
           ...description,
           user_id: currentUser.userId,
-          isFeatured: false,
+          userModel: "Student",
         };
         console.log(data);
         try {

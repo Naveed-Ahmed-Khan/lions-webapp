@@ -9,7 +9,7 @@ import InputFile from "../components/UI/InputFile";
 import TextArea from "../components/UI/TextArea";
 import Select from "../components/UI/Select";
 import DatePicker from "../components/UI/DatePicker";
-import { filetobase64 } from "../utility/filetobase64";
+import { filetobase64 } from "../util/filetobase64";
 import Image from "next/image";
 import Router, { useRouter } from "next/router";
 import { useFormik } from "formik";
@@ -20,8 +20,10 @@ import CheckBox from "../components/UI/CheckBox";
 
 export async function getStaticProps() {
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
-  const cities = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-cities`);
-
+  const cities = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-allcities`
+  );
+  console.log(cities.data);
   return {
     props: {
       areas: areas.data,
@@ -32,7 +34,7 @@ export async function getStaticProps() {
 }
 
 export default function TutorSignup({ areas, cities }) {
-  console.log(areas);
+  console.log(cities);
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(null);
   // console.log(currentStep);
@@ -42,6 +44,7 @@ export default function TutorSignup({ areas, cities }) {
     return () => {
       localStorage.removeItem("Account");
       localStorage.removeItem("Personal");
+      localStorage.removeItem("Profile");
       localStorage.removeItem("step");
     };
   }, [router.pathname !== "/tutorsignup"]);
@@ -55,7 +58,7 @@ export default function TutorSignup({ areas, cities }) {
         <div className="hidden sm:block pt-6 pb-12 px-8">
           <ChevronDots
             // steps={["Account", "Personal", "Qualification", "Profile"]}
-            steps={["Personal", "Account"]}
+            steps={["Personal", "Profile", "Account"]}
             currentStep={currentStep}
           />
         </div>
@@ -68,11 +71,11 @@ export default function TutorSignup({ areas, cities }) {
               setCurrentStep={setCurrentStep}
             />
           )}
-          {currentStep === 2 && <Account setCurrentStep={setCurrentStep} />}
+          {currentStep === 2 && <Profile setCurrentStep={setCurrentStep} />}
+          {currentStep === 3 && <Account setCurrentStep={setCurrentStep} />}
           {/* {currentStep === 3 && (
             <Qualification setCurrentStep={setCurrentStep} />
-          )}
-          {currentStep === 4 && <Profile setCurrentStep={setCurrentStep} />} */}
+          )}*/}
         </div>
       </div>
     </Container>
@@ -94,11 +97,9 @@ function Personal({ cities, areas, setCurrentStep }) {
       gender: "",
       mobile: "",
       watsapp: "",
-      availableFrom: "",
-      avaiableTo: "",
       city: "",
       area: "",
-      modes: [],
+      teachingModes: [],
       address: "",
     },
     onSubmit: async (values) => {
@@ -106,6 +107,7 @@ function Personal({ cities, areas, setCurrentStep }) {
       localStorage.setItem("Personal", JSON.stringify(values));
 
       setCurrentStep((prev) => ++prev);
+      localStorage.setItem("step", 2);
     },
   });
   const modes = [
@@ -116,14 +118,20 @@ function Personal({ cities, areas, setCurrentStep }) {
 
   const modesHandler = (e) => {
     if (e.target.checked) {
-      formik.setFieldValue("modes", [...formik.values.modes, e.target.name]);
+      formik.setFieldValue("teachingModes", [
+        ...formik.values.teachingModes,
+        e.target.name,
+      ]);
     } else {
       formik.setFieldValue(
-        "modes",
-        formik.values.modes.filter((item) => item.name !== e.target.name)
+        "teachingModes",
+        formik.values.teachingModes.filter(
+          (item) => item.name !== e.target.name
+        )
       );
     }
   };
+
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
       <h1 className="text-xl sm:text-2xl font-semibold text-primary">
@@ -132,7 +140,13 @@ function Personal({ cities, areas, setCurrentStep }) {
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup horizontal>
           <Input required label="Full Name" name={"name"} formik={formik} />
-          <Input required label="CNIC" name={"cnic"} formik={formik} />
+          <Input
+            required
+            type="number"
+            label="CNIC"
+            name={"cnic"}
+            formik={formik}
+          />
         </FormGroup>
 
         <FormGroup horizontal>
@@ -154,14 +168,14 @@ function Personal({ cities, areas, setCurrentStep }) {
           <Input
             required
             label="Mobile No."
-            type="tel"
+            type="number"
             name={"mobile"}
             formik={formik}
           />
           <Input
             required
             label="Watsapp No."
-            type="tel"
+            type="number"
             name={"watsapp"}
             formik={formik}
           />
@@ -198,7 +212,7 @@ function Personal({ cities, areas, setCurrentStep }) {
           </Select>
         </FormGroup>
 
-        <div className="mt-5">
+        {/* <div className="mt-5">
           <h3 className="mb-2 text-gray-600 font-medium">
             Availablity (from - to)
           </h3>
@@ -212,7 +226,8 @@ function Personal({ cities, areas, setCurrentStep }) {
 
             <Input required type="time" name={"availableTo"} formik={formik} />
           </div>
-        </div>
+        </div> */}
+
         <div className="my-5">
           <p className="text-gray-600 font-medium ">Modes of Teaching</p>
           <div className="px-2 mt-2 grid grid-cols-1 sm:grid-cols-3 gap-8 ">
@@ -241,6 +256,124 @@ function Personal({ cities, areas, setCurrentStep }) {
             type="button"
           >
             Back
+          </Button> */}
+          <Button type="submit">Next</Button>
+        </div>
+      </form>
+    </div>
+  );
+}
+
+function Profile({ setCurrentStep }) {
+  const { signup } = useAuth();
+  const [imagePath, setImagePath] = useState(null);
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
+  // console.log(imagePath);
+
+  const path = useMemo(
+    () => imagePath && URL.createObjectURL(imagePath),
+    [imagePath]
+  );
+
+  const formik = useFormik({
+    initialValues: {
+      profilePic: "",
+      aboutMe: "",
+      achievements: "",
+    },
+    onSubmit: async (values) => {
+      try {
+        values.profilePic = await filetobase64(imagePath);
+        // console.log(values.profilePic);
+        localStorage.setItem("Profile", JSON.stringify(values));
+        setCurrentStep((prev) => ++prev);
+        localStorage.setItem("step", 3);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
+  return (
+    <div className=" pb-12 w-full max-w-screen-md mx-auto">
+      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+        Profile Details
+      </h1>
+      <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
+        <div className="relative sm:flex gap-6">
+          {path ? (
+            <Image
+              height={160}
+              width={160}
+              layout="fixed"
+              className="object-cover rounded-lg"
+              src={path}
+              alt=""
+            />
+          ) : (
+            <div className=" mb-6 sm:mb-0 bg-gray-300 h-40 w-40 rounded-lg" />
+          )}
+
+          <div className="flex-auto self-end">
+            <Input
+              required
+              type="file"
+              label="Profile Picture"
+              name={"profilePic"}
+              onChange={(e) => {
+                setImagePath(e.target.files[0]);
+              }}
+            />
+          </div>
+        </div>
+
+        {/* <FormGroup>
+          <Input required label="Subjects" name={"subjects"} formik={formik} />
+        </FormGroup>
+        <FormGroup>
+          <Input required label="Classes" name={"classes"} formik={formik} />
+        </FormGroup> */}
+        {/* <FormGroup>
+          <Select
+            required
+            label="Mode of Teaching"
+            name="teachingMode"
+            formik={formik}
+          >
+            <option value={""}>Select</option>
+            <option value={"One to One"}>One to One</option>
+            <option value={"Online"}>Online</option>
+          </Select>
+        </FormGroup> */}
+
+        <FormGroup>
+          <TextArea
+            required
+            label="About Me"
+            name={"aboutMe"}
+            formik={formik}
+          />
+        </FormGroup>
+
+        <FormGroup>
+          <TextArea
+            required
+            label="Achievements"
+            name={"achievements"}
+            formik={formik}
+          />
+        </FormGroup>
+        <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
+          {/* <Button
+            type="button"
+            onClick={() => {
+              setCurrentStep((prev) => ++prev);
+            }}
+          >
+            Next
           </Button> */}
           <Button type="submit">Next</Button>
         </div>
@@ -280,15 +413,33 @@ function Account({ setCurrentStep }) {
 
       const account = JSON.parse(localStorage.getItem("Account"));
       const personal = JSON.parse(localStorage.getItem("Personal"));
+      const profile = JSON.parse(localStorage.getItem("Profile"));
 
-      if (account && personal) {
+      if (account && personal && profile) {
         // setError("");
         const data = {
           ...account,
-          ...personal,
-          userType: "tutor",
-          userStatus: "unverified",
-          tag: "none",
+          tutor: {
+            ...personal,
+            email: account.email,
+            profilePic: profile.profilePic,
+            sections: [
+              {
+                type: "Collapsable",
+                title: "Profile",
+                subSections: [
+                  {
+                    heading: "About Me",
+                    content: profile.aboutMe,
+                  },
+                  {
+                    heading: "Achievements",
+                    content: profile.achievements,
+                  },
+                ],
+              },
+            ],
+          },
         };
         console.log(data);
         try {
@@ -433,155 +584,6 @@ function Qualification({ setCurrentStep }) {
             Back
           </Button>
           <Button type="submit">Next</Button>
-        </div>
-      </form>
-    </div>
-  );
-}
-
-function Profile({ setCurrentStep }) {
-  const { signup } = useAuth();
-  const [imagePath, setImagePath] = useState(null);
-  const [error, setError] = useState("");
-
-  const router = useRouter();
-
-  // console.log(imagePath);
-
-  const path = useMemo(
-    () => imagePath && URL.createObjectURL(imagePath),
-    [imagePath]
-  );
-
-  const formik = useFormik({
-    initialValues: {
-      profilePic: "",
-      subjects: "",
-      classes: "",
-      teachingMode: "",
-      aboutMe: "",
-      achievements: "",
-    },
-    onSubmit: async (values) => {
-      try {
-        values.profilePic = await filetobase64(imagePath);
-        // console.log(values.profilePic);
-        localStorage.setItem("Profile", JSON.stringify(values));
-      } catch (error) {
-        console.log(error);
-      }
-
-      const account = JSON.parse(localStorage.getItem("Account"));
-      const profile = JSON.parse(localStorage.getItem("Profile"));
-      const personal = JSON.parse(localStorage.getItem("Personal"));
-      const qualification = JSON.parse(localStorage.getItem("Qualification"));
-
-      if (account && profile && personal && qualification) {
-        setError("");
-        const data = {
-          ...account,
-          ...profile,
-          ...personal,
-          ...qualification,
-          userType: "tutor",
-          userStatus: "unverified",
-          tag: "none",
-        };
-        console.log(data);
-        try {
-          const response = await signup(data);
-          console.log(response);
-          if (response.error) {
-            setError(response.error);
-          } else {
-            router.push("/");
-          }
-        } catch (error) {
-          console.log(error);
-          setError(error.message);
-        }
-      }
-    },
-  });
-
-  return (
-    <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
-        Profile Details
-      </h1>
-      <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
-        <div className="relative sm:flex gap-6">
-          {path ? (
-            <Image
-              height={160}
-              width={160}
-              layout="fixed"
-              className="object-cover rounded-lg"
-              src={path}
-              alt=""
-            />
-          ) : (
-            <div className=" mb-6 sm:mb-0 bg-gray-300 h-40 w-40 rounded-lg" />
-          )}
-
-          <div className="flex-auto self-end">
-            <Input
-              type="file"
-              label="Profile Picture"
-              name={"profilePic"}
-              onChange={(e) => {
-                setImagePath(e.target.files[0]);
-              }}
-            />
-          </div>
-        </div>
-
-        <FormGroup>
-          <Input required label="Subjects" name={"subjects"} formik={formik} />
-        </FormGroup>
-        <FormGroup>
-          <Input required label="Classes" name={"classes"} formik={formik} />
-        </FormGroup>
-        <FormGroup>
-          <Select
-            required
-            label="Mode of Teaching"
-            name="teachingMode"
-            formik={formik}
-          >
-            <option value={""}>Select</option>
-            <option value={"One to One"}>One to One</option>
-            <option value={"Online"}>Online</option>
-          </Select>
-        </FormGroup>
-
-        <FormGroup>
-          <TextArea
-            required
-            label="About Me"
-            name={"aboutMe"}
-            formik={formik}
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <TextArea
-            required
-            label="Achievements"
-            name={"achievements"}
-            formik={formik}
-          />
-        </FormGroup>
-        <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
-          <Button
-            type="button"
-            onClick={() => {
-              setCurrentStep((prev) => --prev);
-            }}
-          >
-            Back
-          </Button>
-          <Button type="submit">Create and Account</Button>
         </div>
       </form>
     </div>

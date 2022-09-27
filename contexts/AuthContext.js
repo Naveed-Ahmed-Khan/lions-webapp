@@ -148,32 +148,30 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const setLoggedInUser = async () => {
       const userId = getCookie("user_id");
-      console.log(userId);
+      // console.log(userId);
 
       const token = getCookie("token");
 
-      console.log(token);
+      // console.log(token);
       if (userId) {
-        if (!currentUser) {
-          try {
-            const user = await axios.get(
-              `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
+        try {
+          const user = await axios.get(
+            `${process.env.NEXT_PUBLIC_API}/get-user/${userId}`
+          );
+          if (user.data) {
+            setCurrentUser(
+              user.data.tutor ||
+                user.data.student ||
+                user.data.institute ||
+                user.data.admin
             );
-            if (user.data) {
-              setCurrentUser(
-                user.data.tutor ||
-                  user.data.student ||
-                  user.data.institute ||
-                  user.data.admin
-              );
-            } else {
-              setCurrentUser(null);
-            }
-          } catch (error) {
-            console.log(error);
-          } finally {
-            setLoading(false);
+          } else {
+            setCurrentUser(null);
           }
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setLoading(false);
         }
       } else {
         setCurrentUser(null);

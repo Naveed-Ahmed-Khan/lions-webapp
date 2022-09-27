@@ -10,7 +10,7 @@ export default function Tabs({ tabs, currentTab, setCurrentTab }) {
         return (
           <button
             key={index}
-            className={`flex items-center flex-shrink-0 px-5 py-3 space-x-2 
+            className={`flex items-center flex-shrink-0 px-4 py-3 space-x-2 
             ${
               currentTab === tab
                 ? "border border-b-0 rounded-t-lg dark:border-gray-400 dark:text-gray-50"

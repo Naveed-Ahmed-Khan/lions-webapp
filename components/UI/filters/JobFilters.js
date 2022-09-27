@@ -268,7 +268,11 @@ export default function JobFilters({
                 </Select>
               </FormGroup>
 
-              <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
+              <ul
+                className={`px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 overflow-auto ${
+                  selectedCity && "h-60 "
+                }`}
+              >
                 {allAreas.map((area) => {
                   const { city_id } = area;
                   if (city_id?.name !== selectedCity) {

@@ -40,6 +40,7 @@ const Carousel = ({ achievements }) => {
       </button>
       <div className="relative flex items-center justify-center w-[900px] h-[300px] sm:h-[500px] bg-neutral-50 overflow-hidden">
         <Image
+          priority
           layout="fill"
           className="w-full h-full object-contain scale-100 group-hover:scale-110 transition-all duration-300 ease-out"
           src={images[currentImage]?.image}

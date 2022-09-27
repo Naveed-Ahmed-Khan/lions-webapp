@@ -4,28 +4,42 @@ export default function Progress({ setProfile, tutor }) {
   const [isQual, setIsQual] = useState(false);
   const [isSub, setIsSub] = useState(false);
   const [isLoc, setIsLoc] = useState(false);
+  const [isSec, setIsSec] = useState(false);
+  const [isSlot, setIsSlot] = useState(false);
 
-  console.log(tutor);
+  // console.log(tutor);
 
   useEffect(() => {
     const check = () => {
       if (tutor?.qualifications?.length > 0) {
         setIsQual(true);
-        console.log("qual");
+        // console.log("qual");
       } else {
         setIsQual(false);
       }
       if (tutor?.subjectsTaught?.length > 0) {
         setIsSub(true);
-        console.log("sub");
+        // console.log("sub");
       } else {
         setIsSub(false);
       }
       if (tutor?.locations?.length > 0) {
         setIsLoc(true);
-        console.log("loc");
+        // console.log("loc");
       } else {
         setIsLoc(false);
+      }
+      if (tutor?.sections?.length > 0) {
+        setIsSec(true);
+        // console.log("sec");
+      } else {
+        setIsSec(false);
+      }
+      if (tutor?.slots?.length > 0) {
+        setIsSlot(true);
+        // console.log("sec");
+      } else {
+        setIsSlot(false);
       }
     };
 
@@ -42,16 +56,19 @@ export default function Progress({ setProfile, tutor }) {
     isQual && total++;
     isSub && total++;
     isLoc && total++;
+    isSec && total++;
+    isSlot && total++;
 
-    const perc = ((total + 1) / 4) * 100;
+    const perc = ((total + 1) / 6) * 100;
+    const roundedPerc = Math.round(perc * 10) / 10;
 
     if (perc < 100) {
       setProfile("incomplete");
     } else {
       setProfile("complete");
     }
-    console.log(`${perc}%`);
-    return `${perc}%`;
+    // console.log(`${roundedPerc}%`);
+    return `${roundedPerc}%`;
   };
 
   /* const containerWidth = container.current.offsetWidth;

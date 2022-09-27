@@ -1,10 +1,13 @@
 import Head from "next/head";
 import React, { useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import Alert from "../UI/Alert";
 import Footer from "../UI/Footer";
 import Navbar from "../UI/Navbar";
 import Sidebar from "../UI/Sidebar";
 
 export default function WebLayout({ children }) {
+  const { currentUser } = useAuth();
   const [open, setOpen] = useState(false);
   const [showBackdrop, setShowBackdrop] = useState(false);
   return (

@@ -15,7 +15,7 @@ import FormGroup from "../../components/UI/FormGroup";
 import Select from "../../components/UI/Select";
 import TextArea from "../../components/UI/TextArea";
 import CheckBox from "../../components/UI/CheckBox";
-import { filetobase64 } from "../../utility/filetobase64";
+import { filetobase64 } from "../../util/filetobase64";
 import ProfileCarousel from "../UI/ProfileCarousel";
 import { getCookie } from "cookies-next";
 
@@ -371,7 +371,7 @@ export function Collapsable({ section, tutor, updateTutor }) {
         <h2 className="text-xl sm:text-2xl text-primary font-semibold">
           {title}
         </h2>
-        {tutor && updateTutor && (
+        {title !== "Profile" && tutor && updateTutor && (
           <button
             onClick={async () => {
               const filtered = tutor.sections.filter(
@@ -404,7 +404,7 @@ export function Collapsable({ section, tutor, updateTutor }) {
           </button>
         )}
       </div>
-      <div className="space-y-5 bg-white rounded p-4 sm:p-6">
+      <div className="space-y-5 rounded">
         {subSections.map((subSection) => {
           const { heading, content } = subSection;
           return (

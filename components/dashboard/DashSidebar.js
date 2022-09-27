@@ -63,7 +63,7 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
               </svg>
             </button>
 
-            {currentUser && (
+            {/* {currentUser && (
               <div className="my-2 flex flex-col items-center gap-4">
                 <Image
                   width={70}
@@ -75,7 +75,7 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                 />
                 <p className=" text-white">{currentUser?.admin?.name}</p>
               </div>
-            )}
+            )} */}
 
             <div className="mt-4">
               <p className="p-3 text-gray-200 text-xs tracking-widest border-b border-b-gray-300">

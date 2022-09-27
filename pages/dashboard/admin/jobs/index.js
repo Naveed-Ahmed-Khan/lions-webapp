@@ -16,6 +16,14 @@ export default function Jobs() {
   const viewJobDetails = (data) => {
     router.push(`/dashboard/admin/jobs/${data._id}`);
   };
+  const viewApplicants = (data) => {
+    router.push({
+      pathname: `/dashboard/admin/applications`,
+      query: {
+        jobid: data._id,
+      },
+    });
+  };
 
   const changeStatus = async (data) => {
     const STATUS_API = `${process.env.NEXT_PUBLIC_API}/change-jobstatus/${data._id}`;
@@ -34,12 +42,12 @@ export default function Jobs() {
     { id: 9, name: "Title", value: "title" },
     { id: 1, name: "Class", value: "class" },
     { id: 2, name: "Subjects", value: "subjects" },
-    { id: 3, name: "City", value: "user_id", nestedValue: "city" },
     { id: 4, name: "Budget", value: "budget" },
     { id: 5, name: "Name", value: "user_id", nestedValue: "name" },
     { id: 6, name: "Address", value: "user_id", nestedValue: "address" },
     // { id: 7, name: "Phone", value: "user_id", nestedValue: "mobile" },
     // { id: 8, name: "WatsApp", value: "user_id", nestedValue: "watsapp" },
+    // { id: 3, name: "City", value: "user_id", nestedValue: "city" },
   ];
 
   const actions = [
@@ -54,6 +62,12 @@ export default function Jobs() {
       name: "Details",
       value: "Job",
       onClick: viewJobDetails,
+    },
+    {
+      id: 3,
+      name: "View",
+      value: "Applicants",
+      onClick: viewApplicants,
     },
   ];
 
