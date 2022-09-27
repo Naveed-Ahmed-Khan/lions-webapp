@@ -16,9 +16,12 @@ import Spinner from "../components/UI/loader/Spinner";
 export async function getStaticProps({ query }) {
   console.log(query);
 
-  const tutors = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`, {
-    params: query,
-  });
+  const tutors = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`,
+    {
+      params: query,
+    }
+  );
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
   const cities = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-allcities`
