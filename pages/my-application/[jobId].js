@@ -12,23 +12,6 @@ import FormGroup from "../../components/UI/FormGroup";
 import Button from "../../components/UI/Button";
 import { useAuth } from "../../contexts/AuthContext";
 
-/* export async function getServerSideProps(context) {
-  const { jobId } = context.params;
-
-  const jobs = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-job/${jobId}`
-  );
-  const applications = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-jobapplications/${jobId}`
-  );
-
-  return {
-    props: {
-      job: jobs.data,
-      applications: applications.data,
-    },
-  };
-} */
 export async function getStaticPaths() {
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
 
@@ -39,6 +22,7 @@ export async function getStaticPaths() {
     fallback: false,
   };
 }
+
 export async function getStaticProps({ params }) {
   const { jobId } = params;
 
@@ -204,7 +188,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Location | {job.location.city}</span>
+                <span>Location | {job.city || job.location.city}</span>
               </li>
               <li className="flex gap-2">
                 <svg
