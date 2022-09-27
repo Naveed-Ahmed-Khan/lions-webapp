@@ -94,6 +94,7 @@ export default function Profile({ tutor, applications }) {
             <Button fullwidth>Apply Now</Button>
           </div> */}
         </div>
+
         <section className="w-full flex flex-col gap-10">
           {/* Desktop Collapse */}
           {/* <div className="hidden md:block bg-white md:bg-neutral-100 rounded sm:p-6">
