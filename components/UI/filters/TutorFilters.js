@@ -170,7 +170,7 @@ export default function TutorFilters({
 
   const getTutors = async (query) => {
     const tutors = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/get-tutors`,
+      `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`,
       { params: query }
     );
     console.log(tutors.data);
