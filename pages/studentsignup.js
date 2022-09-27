@@ -7,7 +7,7 @@ import Container from "../components/UI/Container";
 import Input from "../components/UI/Input";
 
 import TextArea from "../components/UI/TextArea";
-import { filetobase64 } from "../utility/filetobase64";
+import { filetobase64 } from "../util/filetobase64";
 import Image from "next/image";
 
 import { useFormik } from "formik";
