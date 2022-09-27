@@ -6,7 +6,7 @@ import JobCard2 from "../components/UI/cards/JobCard2";
 import Container from "../components/UI/Container";
 import JobFilters from "../components/UI/filters/JobFilters";
 
-export async function getStaticProps({ query }) {
+export async function getServerSideProps({ query }) {
   console.log(query);
 
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`, {
@@ -23,7 +23,6 @@ export async function getStaticProps({ query }) {
       areas: areas.data,
       cities: cities.data,
     },
-    revalidate: 30,
   };
 }
 

@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import Alert from "../components/UI/Alert";
 import Spinner from "../components/UI/loader/Spinner";
 
-export async function getStaticProps({ query }) {
+export async function getServerSideProps({ query }) {
   console.log(query);
 
   const tutors = await axios.get(
@@ -33,7 +33,6 @@ export async function getStaticProps({ query }) {
       areas: areas.data,
       cities: cities.data,
     },
-    revalidate: 30,
   };
 }
 
