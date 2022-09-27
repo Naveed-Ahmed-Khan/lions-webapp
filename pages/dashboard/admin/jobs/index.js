@@ -16,6 +16,7 @@ export default function Jobs() {
   const viewJobDetails = (data) => {
     router.push(`/dashboard/admin/jobs/${data._id}`);
   };
+
   const viewApplicants = (data) => {
     router.push({
       pathname: `/dashboard/admin/applications`,

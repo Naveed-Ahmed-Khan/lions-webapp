@@ -19,7 +19,7 @@ import { getCookie } from "cookies-next";
 
 export default function AddJob() {
   const router = useRouter();
-  const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-cities`;
+  const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-allcities`;
   const SUBJECTS_API = `${process.env.NEXT_PUBLIC_API}/get-subjects`;
 
   const { data: cities, isLoading } = useFetch(CITY_API, false);
@@ -131,7 +131,7 @@ function Student({ allSubjects, setCurrentStep }) {
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <p className="text-gray-600 font-medium ">Subjects</p>
         <div className="px-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-6 max-h-[calc(100vh-500px)] overflow-auto">
-          {allSubjects.map((subject) => {
+          {allSubjects?.map((subject) => {
             return (
               <div key={subject._id}>
                 <CheckBox
@@ -147,7 +147,7 @@ function Student({ allSubjects, setCurrentStep }) {
         <FormGroup horizontal>
           <Select required label="Class" name="class" formik={formik}>
             <option value="">Select</option>
-            {allClasses.map((item) => (
+            {allClasses?.map((item) => (
               <option key={item.value} value={item.value}>
                 {item.label}
               </option>
@@ -260,7 +260,7 @@ function Tutor({ cities, setCurrentStep }) {
           <FormGroup>
             <Select required label="City" name="city" formik={formik}>
               <option value="">Select</option>
-              {cities.map((item) => (
+              {cities?.map((item) => (
                 <option key={item._id} value={item.name}>
                   {item.name}
                 </option>

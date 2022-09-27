@@ -15,7 +15,9 @@ import axios from "axios";
 import CheckBox from "../components/UI/CheckBox";
 
 export async function getStaticProps() {
-  const cities = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-cities`);
+  const cities = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-allcities`
+  );
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
   const subjects = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-subjects`
