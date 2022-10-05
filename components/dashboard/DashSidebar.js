@@ -18,6 +18,8 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
     { name: "Home", path: "/dashboard/admin/" },
     { name: "Jobs", path: "/dashboard/admin/jobs" },
     { name: "Applications", path: "/dashboard/admin/applications" },
+    { name: "Pending", path: "/dashboard/admin/pending" },
+    { name: "Payments", path: "/dashboard/admin/payments" },
     { name: "Tutors", path: "/dashboard/admin/tutors" },
     { name: "Students", path: "/dashboard/admin/students" },
     { name: "Achievements", path: "/dashboard/admin/achievements" },

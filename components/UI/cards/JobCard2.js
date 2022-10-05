@@ -9,13 +9,13 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
   const router = useRouter();
   const { currentUser } = useAuth();
   return (
-    <div className="relative flex flex-col w-full overflow-hidden rounded-md shadow-xl">
-      <div className="flex flex-col p-4 sm:p-8 space-y-4 bg-gray-200 ">
+    <div className="relative flex flex-col w-full overflow-hidden rounded-2xl shadow-xl">
+      <div className="flex flex-col p-4 sm:p-8 space-y-4 bg-white border-b border-b-gray-300">
         {/* <h3 className="text-xl font-semibold text-gray-700">Tutor Required</h3> */}
         <div className="sm:flex justify-between items-center">
-          <div className="flex items-center justify-between gap-4">
+          <div className="w-full flex items-center justify-between gap-4">
             <p className="text-gray-700 text-lg sm:text-xl font-semibold">
-              Tutor Required
+              {job.title}
             </p>
             {job.isFeatured && (
               <p className="bg-primary-light py-1 px-2 w-fit rounded-full text-sm text-center text-white font-medium">

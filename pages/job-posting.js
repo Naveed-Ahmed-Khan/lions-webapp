@@ -356,7 +356,7 @@ function Description({ setCurrentStep }) {
           <Input
             required
             label="Expected budget"
-            type="text"
+            type="number"
             name="budget"
             formik={formik}
           />

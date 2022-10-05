@@ -1,27 +1,28 @@
 import axios from "axios";
-import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import BackdropModal from "../../../../components/UI/BackdropModal";
 import FormGroup from "../../../../components/UI/FormGroup";
 import Input from "../../../../components/UI/Input";
 import Spinner from "../../../../components/UI/loader/Spinner";
 import Select from "../../../../components/UI/Select";
 import Table from "../../../../components/UI/tables/Table";
-import TextArea from "../../../../components/UI/TextArea";
 import useFetch from "../../../../hooks/useFetch";
 
-export default function Applications() {
+export default function Pending() {
   const router = useRouter();
   const API = `${process.env.NEXT_PUBLIC_API}/get-applications`;
-  const { data, isLoading, isError, updateData } = useFetch(API, true);
-  console.log(data);
+  const GET_API = `${process.env.NEXT_PUBLIC_API}/get-payments`;
+  const { data, isLoading, updateData } = useFetch(API, true);
+  const {
+    data: payments,
+    isLoading: payLoading,
+    isError,
+  } = useFetch(GET_API, true);
+  console.log(payments);
+
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
   const [applications, setApplications] = useState(data);
-  const [earned, setEarned] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [selected, setSelected] = useState(null);
 
   const viewTutorDetails = (data) => {
     router.push(
@@ -36,7 +37,6 @@ export default function Applications() {
   const selectApplication = async (data) => {
     const SELECT_API = `${process.env.NEXT_PUBLIC_API}/select-application/${data._id}`;
     const ADD_API = `${process.env.NEXT_PUBLIC_API}/add-notification`;
-    const PAY_API = `${process.env.NEXT_PUBLIC_API}/add-payment`;
     try {
       const res = await axios.get(SELECT_API);
       if (!data.isSelected) {
@@ -47,16 +47,8 @@ export default function Applications() {
           title: "Selected For Job",
           msg: "You have been selected for the job",
         });
-        await axios.post(
-          PAY_API,
-          {
-            app_id: data._id,
-            earned: earned,
-            isFinalized: true,
-          },
-          { headers: { Authorization: `Bearer ${getCookie("token")}` } }
-        );
       }
+
       console.log(res);
       if (res.status === 200) {
         updateData();
@@ -107,16 +99,38 @@ export default function Applications() {
   };
 
   const header = [
-    { id: 1, name: "JobID", value: "job_id", nestedValue: "_id" },
-    { id: 2, name: "Applicant", value: "applicant_id", nestedValue: "name" },
-    { id: 5, name: "Job Title", value: "job_id", nestedValue: "title" },
+    {
+      id: 1,
+      name: "JobID",
+      value: "app_id",
+      nestedValue: "job_id",
+      deepNested: "_id",
+    },
+    {
+      id: 2,
+      name: "Applicant",
+      value: "app_id",
+      nestedValue: "applicant_id",
+      deepNested: "_id",
+    },
+    {
+      id: 3,
+      name: "Applicant",
+      value: "app_id",
+      nestedValue: "applicant_id",
+      deepNested: "name",
+    },
+    { id: 4, name: "Amount", value: "earned" },
+    { id: 5, name: "Charges", value: "charges" },
+    // { id: 2, name: "Amount", value: "earned" },
+    // { id: 5, name: "Job Title", value: "job_id", nestedValue: "title" },
     // { id: 2, name: "City", value: "applicant_id", nestedValue: "city" },
     // { id: 3, name: "Phone", value: "applicant_id", nestedValue: "mobile" },
-    { id: 4, name: "WatsApp", value: "applicant_id", nestedValue: "watsapp" },
+    // { id: 4, name: "WatsApp", value: "applicant_id", nestedValue: "watsapp" },
     /* { id: 6, name: "Class", value: "job_id", nestedValue: "class" },
     { id: 7, name: "Subjects", value: "job_id", nestedValue: "subjects" }, */
     // { id: 8, name: "Location", value: "job_id", nestedValue: "location" },
-    { id: 9, name: "Budget", value: "expectedBudget" },
+    // { id: 9, name: "Budget", value: "expectedBudget" },
   ];
 
   const actions = [
@@ -124,15 +138,7 @@ export default function Applications() {
       id: 1,
       name: "Action",
       value: "Select",
-      onClick: (data) => {
-        setSelected(data);
-        if (data.isSelected) {
-          console.log(data);
-          selectApplication(data);
-        } else {
-          setShowModal(true);
-        }
-      },
+      onClick: selectApplication,
     },
     {
       id: 2,
@@ -162,23 +168,16 @@ export default function Applications() {
 
   const status = [
     {
-      id: 1,
-      name: "selected",
-      value: "isSelected",
-      colorTrue: "bg-emerald-500",
-      colorFalse: "bg-neutral-500",
-    },
-    {
-      id: 2,
-      name: "shortlisted",
-      value: "isShortlisted",
-      colorTrue: "bg-emerald-500",
-      colorFalse: "bg-neutral-500",
-    },
-    {
       id: 3,
-      name: "rejected",
-      value: "isRejected",
+      name: "selected",
+      value: "earned",
+      colorTrue: "bg-emerald-500",
+      colorFalse: "bg-neutral-500",
+    },
+    {
+      id: 1,
+      name: "pending",
+      value: "!isFinalized",
       colorTrue: "bg-rose-500",
       colorFalse: "bg-emerald-500",
     },
@@ -213,10 +212,7 @@ export default function Applications() {
         applications.filter(
           (app) =>
             app.job_id._id.includes(search) ||
-            app.applicant_id.name
-              .toLowerCase()
-              .includes(search.toLowerCase()) ||
-            app.applicant_id.watsapp.toString().includes(search)
+            app.applicant_id.name.toLowerCase().includes(search.toLowerCase())
         )
       );
     }
@@ -248,7 +244,7 @@ export default function Applications() {
           <Spinner md />
         ) : (
           <>
-            <FormGroup horizontal>
+            {/* <FormGroup horizontal>
               <div className="relative">
                 <Input
                   required
@@ -294,37 +290,18 @@ export default function Applications() {
                 <option value="Shortlisted">Shortlisted</option>
                 <option value="Rejected">Rejected</option>
               </Select>
-            </FormGroup>
+            </FormGroup> */}
             <div className="mt-6">
               <Table
                 header={header}
-                body={applications}
+                body={payments}
                 status={status}
-                actions={actions}
+                // actions={actions}
               />
             </div>
           </>
         )}
       </section>
-      <BackdropModal
-        title="Amount Decided"
-        show={showModal}
-        setShow={setShowModal}
-        onSave={() => selectApplication(selected)}
-      >
-        <FormGroup>
-          <Input
-            required
-            label="Amount"
-            type={"Number"}
-            name={"earned"}
-            value={earned}
-            onChange={(e) => {
-              setEarned(e.target.value);
-            }}
-          />
-        </FormGroup>
-      </BackdropModal>
     </div>
   );
 }

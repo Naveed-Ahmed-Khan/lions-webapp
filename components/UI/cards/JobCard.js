@@ -9,7 +9,7 @@ const JobCard = ({ job }) => {
         {/* <h3 className="text-xl font-semibold text-gray-700">Tutor Required</h3> */}
         <div className="flex justify-between">
           <p className="flex items-baseline text-gray-800">
-            <span className="text-xl font-semibold">Tutor Required for</span>
+            <span className="text-xl font-semibold">{job.title}</span>
           </p>
           {job.isFeatured && (
             <p className="bg-primary-light py-1 px-2 w-fit h-fit rounded-full text-sm text-center text-white font-medium">

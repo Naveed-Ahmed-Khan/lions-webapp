@@ -91,13 +91,12 @@ export default function Table({ header, body, status, actions }) {
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   {header.map((item) => {
-                    const { id, value, nestedValue, image } = item;
+                    const { id, value, nestedValue, deepNested, image } = item;
                     return (
                       <td
                         key={id}
                         className="py-4 px-6 font-archivo tracking-wide font-medium text-sm whitespace-nowrap"
                       >
-                        {nestedValue && data[value][nestedValue]}
                         {image && (
                           <div className="relative h-24 w-24 rounded-lg overflow-clip">
                             <Image
@@ -108,7 +107,12 @@ export default function Table({ header, body, status, actions }) {
                             />
                           </div>
                         )}
-                        {!nestedValue && !image && data[value]}
+                        {!deepNested &&
+                          !nestedValue &&
+                          !image &&
+                          (data[value] || "-")}
+                        {!deepNested && nestedValue && data[value][nestedValue]}
+                        {deepNested && data[value][nestedValue][deepNested]}
                         {/* {data[value][nestedValue]} */}
                       </td>
                     );
