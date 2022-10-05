@@ -388,7 +388,7 @@ export default function JobDescription() {
                                       Your are required to select an option and
                                       submit your response after the demo. Your
                                       response will be cross checked with the
-                                      parent's response.
+                                      parent&apos;s response.
                                     </p>
                                     <FormGroup horizontal>
                                       <Radio
