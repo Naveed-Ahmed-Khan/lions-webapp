@@ -16,35 +16,6 @@ import Radio from "../../components/UI/Radio";
 import useFetch from "../../hooks/useFetch";
 import { getCookie } from "cookies-next";
 
-/* export async function getStaticPaths() {
-  const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
-
-  return {
-    paths: jobs.data.map((job) => ({
-      params: { jobId: job?._id },
-    })),
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
-  const { jobId } = params;
-
-  const jobs = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-job/${jobId}`
-  );
-  const applications = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-jobapplications/${jobId}`
-  );
-  return {
-    props: {
-      job: jobs.data,
-      applications: applications?.data,
-    },
-    revalidate: 30,
-  };
-} */
-
 export default function JobDescription() {
   const router = useRouter();
   const jobId = router.query.jobId;
