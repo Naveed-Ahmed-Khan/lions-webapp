@@ -141,12 +141,6 @@ export default function Pending() {
       onClick: selectApplication,
     },
     {
-      id: 2,
-      name: "Action",
-      value: "Shortlist",
-      onClick: shortlistApplication,
-    },
-    {
       id: 3,
       name: "Action",
       value: "Reject",
@@ -296,7 +290,7 @@ export default function Pending() {
                 header={header}
                 body={payments}
                 status={status}
-                // actions={actions}
+                actions={actions}
               />
             </div>
           </>

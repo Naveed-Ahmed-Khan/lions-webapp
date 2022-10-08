@@ -12,11 +12,12 @@ export default function Payments() {
   const router = useRouter();
   const API = `${process.env.NEXT_PUBLIC_API}/get-applications`;
   const GET_API = `${process.env.NEXT_PUBLIC_API}/get-payments`;
-  const { data, isLoading, updateData } = useFetch(API, true);
+  const { data, isLoading } = useFetch(API, true);
   const {
     data: payments,
     isLoading: payLoading,
     isError,
+    updateData: updatePay,
   } = useFetch(GET_API, true);
   console.log(payments);
 
@@ -34,64 +35,24 @@ export default function Payments() {
     router.push(`/dashboard/admin/applications/job/${data.job_id._id}`);
   };
 
-  const selectApplication = async (data) => {
-    const SELECT_API = `${process.env.NEXT_PUBLIC_API}/select-application/${data._id}`;
-    const ADD_API = `${process.env.NEXT_PUBLIC_API}/add-notification`;
-    try {
-      const res = await axios.get(SELECT_API);
-      if (!data.isSelected) {
-        await axios.post(ADD_API, {
-          job_id: data.job_id._id,
-          tutor_id: data.applicant_id._id,
-          type: "success",
-          title: "Selected For Job",
-          msg: "You have been selected for the job",
-        });
-      }
-
-      console.log(res);
-      if (res.status === 200) {
-        updateData();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const shortlistApplication = async (data) => {
-    const SHORTLIST_API = `${process.env.NEXT_PUBLIC_API}/shortlist-application/${data._id}`;
-    const ADD_API = `${process.env.NEXT_PUBLIC_API}/add-notification`;
+  const updatePayment = async (data) => {
     console.log(data);
+    const UPDATE_API = `${process.env.NEXT_PUBLIC_API}/update-payment/${data._id}`;
     try {
-      const res = await axios.get(SHORTLIST_API);
-
-      if (!data.isShortlisted) {
-        const added = await axios.post(ADD_API, {
-          job_id: data.job_id._id,
-          tutor_id: data.applicant_id._id,
-          type: "success",
-          title: "Shortlisted For Demo",
-          msg: "You have been selected for a demo",
+      let res;
+      if (data.isPaid) {
+        res = await axios.patch(UPDATE_API, {
+          isPaid: false,
         });
-        console.log(added);
+      } else {
+        res = await axios.patch(UPDATE_API, {
+          isPaid: true,
+        });
       }
 
       console.log(res);
       if (res.status === 200) {
-        updateData();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const rejectApplication = async (data) => {
-    const REJECT_API = `${process.env.NEXT_PUBLIC_API}/reject-application/${data._id}`;
-    try {
-      const res = await axios.get(REJECT_API);
-      console.log(res);
-      if (res.status === 200) {
-        updateData();
+        updatePay();
       }
     } catch (error) {
       console.log(error);
@@ -137,32 +98,8 @@ export default function Payments() {
     {
       id: 1,
       name: "Action",
-      value: "Select",
-      onClick: selectApplication,
-    },
-    {
-      id: 2,
-      name: "Action",
-      value: "Shortlist",
-      onClick: shortlistApplication,
-    },
-    {
-      id: 3,
-      name: "Action",
-      value: "Reject",
-      onClick: rejectApplication,
-    },
-    /* {
-      id: 3,
-      name: "Details",
-      value: "Tutor",
-      onClick: viewTutorDetails,
-    }, */
-    {
-      id: 4,
-      name: "Details",
-      value: "Job",
-      onClick: viewJobDetails,
+      value: "Pay",
+      onClick: updatePayment,
     },
   ];
 
@@ -289,7 +226,7 @@ export default function Payments() {
                 header={header}
                 body={payments}
                 status={status}
-                // actions={actions}
+                actions={actions}
               />
             </div>
           </>
