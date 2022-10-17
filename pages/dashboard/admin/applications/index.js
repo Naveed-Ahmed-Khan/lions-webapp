@@ -260,7 +260,7 @@ export default function Applications() {
                   }}
                 />
                 <button
-                  className="group absolute py-[.95rem]  px-1 sm:px-2 right-0 top-7 sm:top-8 bg-white"
+                  className="group absolute py-[.90rem]  px-1 sm:px-2 right-0 top-7 sm:top-8 bg-white"
                   onClick={() => {
                     setSearch("");
                   }}

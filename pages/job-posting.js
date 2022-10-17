@@ -256,7 +256,7 @@ function Tutor({ cities, setCurrentStep }) {
             <option value="">Select</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
-            <option value="None">None</option>
+            <option value="Any">Any</option>
           </Select>
         </FormGroup>
 
