@@ -128,7 +128,7 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
       <div className="hidden md:block md:z-40 fixed top-0 bg-white border-r border-r-gray-300">
         <div className="hidden sm:flex sm:flex-col sm:gap-12 sm:text-3xl sm:min-h-full sm:max-w-72">
           <div className="w-full max-w-[280px]">
-            <nav className="w-[17rem] p-5 h-screen justify-between flex flex-col">
+            <nav className="w-[17rem] p-5 h-screen overflow-auto justify-between flex flex-col">
               <div className="mt-6 mb-10 flex flex-col">
                 {currentUser && (
                   <div className="my-2 flex flex-col items-center gap-4">
