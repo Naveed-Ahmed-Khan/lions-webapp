@@ -50,6 +50,7 @@ export default function JobDescription({ job, applications }) {
   const { currentUser } = useAuth();
   const [coverLetter, setCoverLetter] = useState("");
   const [expectedBudget, setExpectedBudget] = useState("");
+  const [distance, setDistance] = useState("");
   const [hasApplied, setHasApplied] = useState(false);
 
   const timestamp = job._id.toString().substring(0, 8);
@@ -72,10 +73,11 @@ export default function JobDescription({ job, applications }) {
           `${process.env.NEXT_PUBLIC_API}/add-application`,
           {
             job_id: job._id,
-            applicant_id: currentUser._id,
+            applicant_id: currentUser?._id,
             coverLetter: coverLetter,
-            quialification: currentUser.qualification,
+            quialification: currentUser?.qualification,
             expectedBudget: expectedBudget,
+            distance: distance,
           },
           {
             headers: {
@@ -280,9 +282,24 @@ export default function JobDescription({ job, applications }) {
                 onSubmit={submitHandler}
                 className="bg-white md:bg-neutral-100 rounded sm:p-8"
               >
-                <h2 className=" mb-8 text-primary text-2xl font-semibold">
+                <h2 className="mb-8 text-primary text-2xl font-semibold">
                   Application
                 </h2>
+                <h4 className="text-primary text-lg font-medium">
+                  Guide:
+                </h4>
+                  <p className="whitespace-pre-line -mt-4 mb-8 text-gray-600">
+                {`
+                1) Mention the following in your Cover Letter:
+                I can teach classes ( ), 
+                I can teach subjects to ( ), 
+                I am available for home tutoring in the following areas ( ), 
+                I have experience of ( ), 
+                I have completed my ( ), 
+                Achievements if any,
+                2) Mention your expected fee
+                3) Mention Approx distance from your location (using google maps)`} 
+                </p>
                 <div className="space-y-4">
                   <TextArea
                     required
@@ -296,13 +313,20 @@ export default function JobDescription({ job, applications }) {
                     <Input
                       required
                       type={"number"}
-                      label={"Budget"}
+                      label={"Expected Fee"}
                       value={expectedBudget}
                       onChange={(e) => {
                         setExpectedBudget(e.target.value);
                       }}
                     />
-                    {/* <Input label={"Distance"} placeholder={"12km"} /> */}
+                    <Input 
+                      required
+                      label={"Distance"}
+                      type={"text"}
+                      value={distance}
+                      onChange={(e) => {
+                        setDistance(e.target.value);
+                      }} />
                   </div>
                 </div>
                 <div className="mt-8 flex justify-end">
