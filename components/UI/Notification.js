@@ -90,8 +90,8 @@ export default function Notification({ children }) {
         {/* <!-- Dropdown menu --> */}
         {open && (
           <div
-            className="absolute space-y-3 right-0 top-12 p-3 bg-gray-50 text-gray-700
-             rounded-md shadow-lg drop-shadow-2xl min-w-[320px]"
+            className="absolute space-y-3 right-0 top-8 sm:right-0 sm:top-12 p-3 bg-gray-50 text-gray-700
+             rounded-md shadow-lg drop-shadow-2xl min-w-[240px] sm:min-w-[320px]"
           >
             {data.length > 0 ? (
               <>

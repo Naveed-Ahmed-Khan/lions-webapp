@@ -23,42 +23,17 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
   ];
   return (
     <header className="sticky top-0 z-30 bg-gradient-to-br from-green-700 via-green-600 to-green-700 drop-shadow-md">
-      <nav className="container mx-auto max-w-screen-xl items-center px-3 py-3 sm:px-3 sm:py-2 md:flex md:space-x-6">
-        <div className="flex justify-between">
-          <Link href="/">
-            <a>
-              <img
-                className="object-contain h-10 sm:h-12"
-                src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
-                alt="Float UI logo"
-              />
-            </a>
-          </Link>
-          <button
-            className="text-white outline-none md:hidden"
-            onClick={() => {
-              setOpen(true);
-              setShowBackdrop(true);
-            }}
-          >
-            {!open && (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            )}
-          </button>
-        </div>
+      <nav className="hidden md:flex mx-auto max-w-screen-xl items-center px-3 py-3 sm:px-3 sm:py-2 md:space-x-6">
+        <Link href="/">
+          <a>
+            {/*  <img
+              className="object-contain h-10 sm:h-12"
+              src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
+              alt="Float UI logo"
+            /> */}
+            <h1 className="text-white text-2xl font-semibold">Educationists</h1>
+          </a>
+        </Link>
         <ul
           className={`flex-1 hidden md:flex items-center justify-between mt-12 md:mt-0`}
         >
@@ -110,27 +85,40 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
                     : [{ title: "My Jobs", href: "/my-jobs" }]
                 }
               >
-                {currentUser.profilePic ? (
-                  <Image
-                    width={44}
-                    height={44}
-                    layout="fixed"
-                    className="rounded-full object-cover"
-                    src={currentUser?.profilePic}
-                    alt="Profile"
-                  />
-                ) : (
-                  <Image
-                    width={44}
-                    height={44}
-                    layout="fixed"
-                    className="rounded-full object-cover object-bottom"
-                    src={"/images/profile.webp"}
-                    alt="Profile"
-                  />
-                )}
+                <div className="flex items-center">
+                  {currentUser.profilePic ? (
+                    <Image
+                      width={44}
+                      height={44}
+                      layout="fixed"
+                      className="rounded-full object-cover"
+                      src={currentUser?.profilePic}
+                      alt="Profile"
+                    />
+                  ) : (
+                    <Image
+                      width={44}
+                      height={44}
+                      layout="fixed"
+                      className="rounded-full object-cover object-bottom"
+                      src={"/images/profile.webp"}
+                      alt="Profile"
+                    />
+                  )}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="w-4 h-4 text-white"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
               </Dropdown>
-              {/* <p className="font-medium text-white">{currentUser?.name}</p> */}
             </li>
           ) : (
             <li className="pb-5 md:pb-0 space-x-4">
@@ -151,6 +139,118 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
             </li>
           )}
         </ul>
+      </nav>
+
+      {/* Mobile Navbar */}
+      <nav className="flex md:hidden justify-between px-3 py-3">
+        <div className="flex items-center gap-2">
+          <button
+            className="text-white outline-none md:hidden"
+            onClick={() => {
+              setOpen(true);
+              setShowBackdrop(true);
+            }}
+          >
+            {!open && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-7 w-7"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            )}
+          </button>
+        </div>
+        {currentUser && user !== "admin" ? (
+          <div className="flex items-center gap-3">
+            <Notification notifications={currentUser?.notifications}>
+              <button className="">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-7 h-7 text-white"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </Notification>
+            <div className="flex items-center gap-2">
+              <Dropdown
+                options={
+                  user === "tutor"
+                    ? [
+                        { title: "My Profile", href: "/profile" },
+                        { title: "Edit Profile", href: "/edit-profile" },
+                        { title: "Jobs Applied", href: "/applied-jobs" },
+                      ]
+                    : user === "admin"
+                    ? [{ title: "Admin Panel", href: "/dashboard/admin" }]
+                    : [{ title: "My Jobs", href: "/my-jobs" }]
+                }
+              >
+                <div className="flex items-center">
+                  {currentUser.profilePic ? (
+                    <Image
+                      width={40}
+                      height={40}
+                      layout="fixed"
+                      className="rounded-full object-cover"
+                      src={currentUser?.profilePic}
+                      alt="Profile"
+                    />
+                  ) : (
+                    <Image
+                      width={44}
+                      height={44}
+                      layout="fixed"
+                      className="rounded-full object-cover object-bottom"
+                      src={"/images/profile.webp"}
+                      alt="Profile"
+                    />
+                  )}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className="w-4 h-4 text-white"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </Dropdown>
+            </div>
+          </div>
+        ) : (
+          <Link href="/">
+            <a>
+              {/* <img
+                className="object-contain h-10 sm:h-12"
+                src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
+                alt="Float UI logo"
+              /> */}
+              <h1 className="text-white text-xl font-semibold">
+                Educationists
+              </h1>
+            </a>
+          </Link>
+        )}
       </nav>
     </header>
   );

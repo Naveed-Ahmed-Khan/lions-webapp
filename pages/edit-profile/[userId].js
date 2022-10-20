@@ -96,7 +96,7 @@ export default function EditProfile() {
   return (
     <Container color={"gray-50"}>
       <div className="sm:p-5 bg-white max-w-5xl mx-auto">
-        <div className="p-5 sm:p-0 my-4">
+        <div className="p-5 sm:p-0 sm:my-4">
           <h1 className="text-3xl text-primary font-semibold">Edit Profile</h1>
         </div>
         {tutorLoading ? (
@@ -105,11 +105,11 @@ export default function EditProfile() {
           </div>
         ) : (
           <>
-            <div className="my-6">
+            <div className="px-5 sm:px-0 mb-4 sm:my-6">
               <Progress setProfile={setProfile} tutor={tutor} />
             </div>
 
-            <div className="relative flex flex-col">
+            <div className="px-5 sm:px-0 relative flex flex-col">
               <div className="my-4">
                 <Tabs
                   tabs={tabs}

@@ -48,12 +48,12 @@ export default function Home({ tutors, jobs, achievements }) {
             <div className="sm:p-4 flex flex-col items-center justify-center">
               <div className="flex flex-col gap-4 text-center w-full sm:mb-6">
                 <div className="space-y-4">
-                  <h1 className=" text-primary text-2xl sm:text-3xl lg:text-5xl font-semibold  ">
-                    Welcome To The Lion Tutors
+                  <h1 className=" text-primary text-3xl lg:text-5xl font-bold">
+                    The Educationists
                   </h1>
                 </div>
                 <p className="sm:px-5 mx-auto text-sm sm:text-base text-gray-600">
-                  LIONS home Tutors is an educational consultancy which provides
+                  Educationists is an educational consultancy which provides
                   Cambridge and Oxford experts professionals for one-to-one
                   tuition, online or in person.
                 </p>

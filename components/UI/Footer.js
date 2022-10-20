@@ -55,13 +55,16 @@ const Footer = () => {
               title="Company"
               className="inline-flex items-center"
             >
-              <img
+              {/* <img
                 className="object-contain"
                 height={50}
                 width={140}
                 src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
                 alt="Float UI logo"
-              />
+              /> */}
+              <h1 className="text-white text-2xl font-semibold">
+                Educationists
+              </h1>
             </a>
             <div className="mt-4 lg:max-w-sm">
               <p className="text-sm text-gray-100">

@@ -52,6 +52,7 @@ export default function JobDescription({ job, applications }) {
   const [expectedBudget, setExpectedBudget] = useState("");
   const [distance, setDistance] = useState("");
   const [hasApplied, setHasApplied] = useState(false);
+  const [error, setError] = useState("");
 
   const timestamp = job._id.toString().substring(0, 8);
   const date = new Date(parseInt(timestamp, 16) * 1000);
@@ -66,8 +67,7 @@ export default function JobDescription({ job, applications }) {
       quialification: currentUser.qualification,
       expectedBudget: expectedBudget,
     }); */
-
-    if (currentUser.userType === "tutor" && token) {
+    if (currentUser.isVerified && currentUser.userType === "tutor" && token) {
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/add-application`,
@@ -90,7 +90,8 @@ export default function JobDescription({ job, applications }) {
         console.log(error);
       }
     } else {
-      console.log("You are not eligible to apply");
+      // console.log("You are not eligible to apply");
+      setError("Unverified Tutors are not eligible to apply");
     }
   };
 
@@ -177,8 +178,8 @@ export default function JobDescription({ job, applications }) {
             </ul>
           </div>
 
-          <div className="p-4 sm:p-8 flex flex-col bg-white md:bg-neutral-100">
-            <h2 className=" mb-8 text-primary text-2xl font-semibold">
+          <div className="p-0 sm:p-8 flex flex-col bg-white md:bg-neutral-100">
+            <h2 className="mb-8 text-primary text-2xl font-semibold">
               Tutor Requirements
             </h2>
             <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -285,11 +286,9 @@ export default function JobDescription({ job, applications }) {
                 <h2 className="mb-8 text-primary text-2xl font-semibold">
                   Application
                 </h2>
-                <h4 className="text-primary text-lg font-medium">
-                  Guide:
-                </h4>
-                  <p className="whitespace-pre-line -mt-4 mb-8 text-gray-600">
-                {`
+                <h4 className="text-primary text-lg font-medium">Guide:</h4>
+                <p className="whitespace-pre-line -mt-4 mb-8 text-gray-600">
+                  {`
                 1) Mention the following in your Cover Letter:
                 I can teach classes ( ), 
                 I can teach subjects to ( ), 
@@ -298,7 +297,7 @@ export default function JobDescription({ job, applications }) {
                 I have completed my ( ), 
                 Achievements if any,
                 2) Mention your expected fee
-                3) Mention Approx distance from your location (using google maps)`} 
+                3) Mention Approx distance from your location (using google maps)`}
                 </p>
                 <div className="space-y-4">
                   <TextArea
@@ -319,16 +318,27 @@ export default function JobDescription({ job, applications }) {
                         setExpectedBudget(e.target.value);
                       }}
                     />
-                    <Input 
+                    <Input
                       required
                       label={"Distance"}
                       type={"text"}
                       value={distance}
                       onChange={(e) => {
                         setDistance(e.target.value);
-                      }} />
+                      }}
+                    />
                   </div>
                 </div>
+                {error && (
+                  <p
+                    onClick={() => {
+                      setError("");
+                    }}
+                    className="cursor-pointer mt-4 text-center font-archivo text-red-500 px-6 py-3 border border-red-500 rounded-lg"
+                  >
+                    {error}, please try again.
+                  </p>
+                )}
                 <div className="mt-8 flex justify-end">
                   <div>
                     <Button type={"submit"}>

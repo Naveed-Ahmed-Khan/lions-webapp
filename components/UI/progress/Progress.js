@@ -76,14 +76,26 @@ export default function Progress({ setProfile, tutor }) {
   //   console.log(container.current.offsetWidth);
 
   return (
-    <div ref={container} className="outline outline-1 outline-primary">
-      <div
-        ref={progress}
-        style={{ width: changeWidth() }}
-        className={`bg-primary transition-all duration-500`}
-      >
-        <p className="px-6 text-sm text-white">{changeWidth()} completed</p>
+    <>
+      <div>
+        <p className="block sm:hidden mb-2 text-sm text-gray-700 whitespace-nowrap">
+          Progress: {changeWidth()} completed
+        </p>
       </div>
-    </div>
+      <div
+        ref={container}
+        className="outline outline-2 rounded-sm outline-primary"
+      >
+        <div
+          ref={progress}
+          style={{ width: changeWidth() }}
+          className={`bg-gradient-to-b from-green-700 via-green-600 to-green-700 rounded-l-[1px] transition-all duration-500 h-4 sm:h-5`}
+        >
+          <p className="hidden sm:block px-6 text-sm text-white whitespace-nowrap">
+            {changeWidth()} completed
+          </p>
+        </div>
+      </div>
+    </>
   );
 }
