@@ -109,7 +109,7 @@ const Footer = () => {
         </div>
         <div className="flex flex-col justify-between pt-5 pb-10 border-t border-deep-purple-200 sm:flex-row">
           <p className="text-sm text-white">
-            © Copyright {new Date().getFullYear()} The Lion Tutors. All rights
+            © Copyright {new Date().getFullYear()} The Educationists. All rights
             reserved.
           </p>
           <div className="flex items-center mt-4 space-x-4 sm:mt-0">
