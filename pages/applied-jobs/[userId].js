@@ -9,7 +9,9 @@ import ProfileSidebar from "../../components/UI/ProfileSidebar";
 import JobCard2 from "../../components/UI/cards/JobCard2";
 
 export async function getStaticPaths() {
-  const users = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`);
+  const users = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-pics`
+  );
 
   return {
     paths: users.data.map((user) => ({
