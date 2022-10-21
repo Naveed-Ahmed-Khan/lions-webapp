@@ -17,7 +17,7 @@ import { idToDate } from "../../util/idToDate";
 
 export async function getStaticPaths() {
   const users = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`
+    `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-pics`
   );
 
   return {
