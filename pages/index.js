@@ -15,7 +15,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 export async function getStaticProps() {
   const tutors = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`
+    `${process.env.NEXT_PUBLIC_API}/get-featured-tutors`
   );
   const jobs = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-featured-jobs`
