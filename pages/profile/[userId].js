@@ -16,7 +16,9 @@ import Rating from "../../components/UI/Rating";
 import { idToDate } from "../../util/idToDate";
 
 export async function getStaticPaths() {
-  const users = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-tutors`);
+  const users = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`
+  );
 
   return {
     paths: users.data.map((user) => ({
