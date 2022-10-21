@@ -17,7 +17,9 @@ export async function getStaticProps() {
   const tutors = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`
   );
-  const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
+  const jobs = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-featured-jobs`
+  );
   const achievements = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-achievements`
   );
