@@ -21,9 +21,11 @@ export default function AddJob() {
   const router = useRouter();
   const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-allcities`;
   const SUBJECTS_API = `${process.env.NEXT_PUBLIC_API}/get-subjects`;
+  const CLASSES_API = `${process.env.NEXT_PUBLIC_API}/get-student-classes`;
 
   const { data: cities, isLoading } = useFetch(CITY_API, false);
   const { data: subjects } = useFetch(SUBJECTS_API, false);
+  const { data: allClasses } = useFetch(CLASSES_API, false);
 
   console.log(cities);
   console.log(subjects);
@@ -63,6 +65,7 @@ export default function AddJob() {
               {currentStep === 1 && (
                 <Student
                   allSubjects={subjects}
+                  allClasses={allClasses}
                   setCurrentStep={setCurrentStep}
                 />
               )}
@@ -79,7 +82,7 @@ export default function AddJob() {
     </>
   );
 }
-function Student({ allSubjects, setCurrentStep }) {
+function Student({ allSubjects, allClasses, setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
       subjects: "",
@@ -93,21 +96,6 @@ function Student({ allSubjects, setCurrentStep }) {
       setCurrentStep((prev) => ++prev);
     },
   });
-
-  const allClasses = [
-    { label: "Class 1", value: "Class 1" },
-    { label: "Class 2", value: "Class 2" },
-    { label: "Class 3", value: "Class 3" },
-    { label: "Class 4", value: "Class 4" },
-    { label: "Class 5", value: "Class 5" },
-    { label: "Class 6", value: "Class 6" },
-    { label: "Class 7", value: "Class 7" },
-    { label: "Class 8", value: "Class 8" },
-    { label: "Class 9", value: "Class 9" },
-    { label: "Class 10", value: "Class 10" },
-    { label: "Class 11", value: "Class 11" },
-    { label: "Class 12", value: "Class 12" },
-  ];
 
   const subjectsHandler = (e) => {
     if (e.target.checked) {
@@ -148,8 +136,8 @@ function Student({ allSubjects, setCurrentStep }) {
           <Select required label="Class" name="class" formik={formik}>
             <option value="">Select</option>
             {allClasses?.map((item) => (
-              <option key={item.value} value={item.value}>
-                {item.label}
+              <option key={item.name} value={item.name}>
+                {item.name}
               </option>
             ))}
           </Select>

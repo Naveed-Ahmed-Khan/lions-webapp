@@ -33,7 +33,7 @@ export default function EditProfile() {
   const router = useRouter();
   const { userId } = router.query;
   const API = `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`;
-  const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-cities`;
+  const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-allcities`;
   const AREA_API = `${process.env.NEXT_PUBLIC_API}/get-areas`;
 
   const { data: tutor, isLoading, isError, updateData } = useFetch(API, true);

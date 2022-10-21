@@ -16,17 +16,21 @@ export async function getServerSideProps({ query }) {
   const cities = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-allcities`
   );
+  const classes = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-student-classes`
+  );
 
   return {
     props: {
       jobs: response.data,
       areas: areas.data,
       cities: cities.data,
+      classes: classes.data,
     },
   };
 }
 
-export default function Jobs({ jobs, areas, cities }) {
+export default function Jobs({ jobs, areas, classes, cities }) {
   const [filteredJobs, setFilteredJobs] = useState(jobs || []);
   const [openFilter, setOpenFilter] = useState(false);
   console.log(filteredJobs);

@@ -25,7 +25,8 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
     { name: "Achievements", path: "/dashboard/admin/achievements" },
     { name: "Areas", path: "/dashboard/admin/areas" },
     { name: "Subjects", path: "/dashboard/admin/subjects" },
-    { name: "Classes", path: "/dashboard/admin/classes" },
+    { name: "Tutor Classes", path: "/dashboard/admin/tutor-classes" },
+    { name: "Student Classes", path: "/dashboard/admin/student-classes" },
   ];
 
   return (

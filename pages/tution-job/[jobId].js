@@ -91,7 +91,9 @@ export default function JobDescription({ job, applications }) {
       }
     } else {
       // console.log("You are not eligible to apply");
-      setError("Unverified Tutors are not eligible to apply");
+      setError(
+        "Unverified Tutors are not eligible to apply. Pay your verification fee of Rs 1500 to 03328200082 Jazz cash"
+      );
     }
   };
 

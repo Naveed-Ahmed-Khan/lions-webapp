@@ -10,7 +10,7 @@ import useFetch from "../../../../hooks/useFetch";
 
 export default function Tutors() {
   const router = useRouter();
-  const API = `${process.env.NEXT_PUBLIC_API}/get-tutors`;
+  const API = `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-pics`;
   const { data, isLoading, isError, updateData } = useFetch(API, true);
   console.log(data);
   const [filter, setFilter] = useState("All");
@@ -50,10 +50,17 @@ export default function Tutors() {
 
   const verifyTutor = async (data) => {
     const VERIFY_API = `${process.env.NEXT_PUBLIC_API}/verify-tutor/${data._id}`;
+    const NOTIFY_API = `${process.env.NEXT_PUBLIC_API}/add-notification`;
     try {
       const res = await axios.get(VERIFY_API);
+      const resMsg = await axios.post(NOTIFY_API, {
+        tutor_id: data._id,
+        type: "Success",
+        title: "Profile Verified!",
+        msg: "You can now start applying on Jobs. GoodLuck!",
+      });
       console.log(res);
-      if (res.status === 200) {
+      if (res.status === 200 && resMsg.status === 200) {
         updateData();
       }
     } catch (error) {

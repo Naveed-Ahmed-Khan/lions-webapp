@@ -91,19 +91,19 @@ const TutorCard = ({ tutor }) => {
             </svg>
 
             <svg
-              className="w-5 h-5 text-gray-400 fill-current"
+              className="w-5 h-5 text-yellow-400 fill-current"
               viewBox="0 0 24 24"
             >
               <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
             </svg>
 
             <svg
-              className="w-5 h-5 text-gray-400 fill-current"
+              className="w-5 h-5 text-yellow-400 fill-current"
               viewBox="0 0 24 24"
             >
               <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
             </svg>
-            <p className="ml-1 -mt-0.5 text-gray-600">(5)</p>
+            <p className="ml-1 -mt-0.5 text-gray-600">(0)</p>
           </div>
 
           {/* <p className="py-1 text-sm sm:text-base text-gray-700 dark:text-gray-400">

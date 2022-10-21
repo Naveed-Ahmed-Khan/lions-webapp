@@ -22,7 +22,9 @@ export async function getStaticProps() {
   const subjects = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-subjects`
   );
-  const classes = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-classes`);
+  const classes = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-student-classes`
+  );
 
   return {
     props: {
@@ -69,7 +71,11 @@ export default function JobPosting({ cities, areas, subjects, classes }) {
           </div>
           <div className="px-5">
             {currentStep === 1 && (
-              <Student allSubjects={subjects} setCurrentStep={setCurrentStep} />
+              <Student
+                allSubjects={subjects}
+                allClasses={classes}
+                setCurrentStep={setCurrentStep}
+              />
             )}
             {currentStep === 2 && (
               <Tutor cities={cities} setCurrentStep={setCurrentStep} />
@@ -83,7 +89,7 @@ export default function JobPosting({ cities, areas, subjects, classes }) {
     </>
   );
 }
-function Student({ allSubjects, setCurrentStep }) {
+function Student({ allSubjects, allClasses, setCurrentStep }) {
   const formik = useFormik({
     initialValues: {
       subjects: "",
@@ -97,21 +103,6 @@ function Student({ allSubjects, setCurrentStep }) {
       setCurrentStep((prev) => ++prev);
     },
   });
-
-  const allClasses = [
-    { label: "Class 1", value: "Class 1" },
-    { label: "Class 2", value: "Class 2" },
-    { label: "Class 3", value: "Class 3" },
-    { label: "Class 4", value: "Class 4" },
-    { label: "Class 5", value: "Class 5" },
-    { label: "Class 6", value: "Class 6" },
-    { label: "Class 7", value: "Class 7" },
-    { label: "Class 8", value: "Class 8" },
-    { label: "Class 9", value: "Class 9" },
-    { label: "Class 10", value: "Class 10" },
-    { label: "Class 11", value: "Class 11" },
-    { label: "Class 12", value: "Class 12" },
-  ];
 
   const subjectsHandler = (e) => {
     if (e.target.checked) {
@@ -152,8 +143,8 @@ function Student({ allSubjects, setCurrentStep }) {
           <Select required label="Class" name="class" formik={formik}>
             <option value="">Select</option>
             {allClasses.map((item) => (
-              <option key={item.value} value={item.value}>
-                {item.label}
+              <option key={item.name} value={item.name}>
+                {item.name}
               </option>
             ))}
           </Select>
