@@ -28,7 +28,21 @@ const TutorCard2 = ({ tutor, profilePic }) => {
             />
           </div>
         ) : (
-          <div className="bg-neutral-400 animate-pulse w-full lg:w-64 h-64 sm:h-full" />
+          <>
+            {/* <div className="bg-neutral-400 animate-pulse w-full lg:w-64 h-64 sm:h-full" /> */}
+            <div className="relative w-full lg:w-64 h-64 sm:h-full">
+              <Image
+                layout="fill"
+                className="object-contain object-center"
+                src={
+                  tutor.gender === "Male"
+                    ? "/images/male.jfif"
+                    : "/images/female.jfif"
+                }
+                alt={""}
+              />
+            </div>
+          </>
         )}
 
         <div
