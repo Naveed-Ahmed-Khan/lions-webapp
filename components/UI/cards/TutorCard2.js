@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { findHighestQualification } from "../../../util/findHighestQualification";
 import Anchor from "../Anchor";
 
-const TutorCard2 = ({ tutor }) => {
+const TutorCard2 = ({ tutor, profilePic }) => {
   const router = useRouter();
   console.log(tutor);
   const profile = tutor.sections?.filter(
@@ -18,14 +18,18 @@ const TutorCard2 = ({ tutor }) => {
   return (
     <div className="sm:flex mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
       <div className="flex flex-col">
-        <div className="relative w-full lg:w-64 h-64 sm:h-full">
-          <Image
-            layout="fill"
-            className="object-cover object-center"
-            src={tutor.profilePic}
-            alt={""}
-          />
-        </div>
+        {profilePic?.profilePic ? (
+          <div className="relative w-full lg:w-64 h-64 sm:h-full">
+            <Image
+              layout="fill"
+              className="object-cover object-center"
+              src={profilePic.profilePic}
+              alt={""}
+            />
+          </div>
+        ) : (
+          <div className="bg-neutral-400 animate-pulse w-full lg:w-64 h-64 sm:h-full" />
+        )}
 
         <div
           className={`flex items-center justify-center px-6 py-3 ${

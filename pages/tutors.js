@@ -12,12 +12,13 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Alert from "../components/UI/Alert";
 import Spinner from "../components/UI/loader/Spinner";
+import useFetch from "../hooks/useFetch";
 
 export async function getServerSideProps({ query }) {
   console.log(query);
 
   const tutors = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`,
+    `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-profilePics`,
     {
       params: query,
     }
@@ -38,6 +39,12 @@ export async function getServerSideProps({ query }) {
 
 export default function Tutors({ tutors, areas, cities }) {
   const router = useRouter();
+  const PICS_API = `${process.env.NEXT_PUBLIC_API}/get-tutors-pics`;
+  const { data: profilePics, isLoading: picsLoading } = useFetch(
+    PICS_API,
+    false
+  );
+
   const [filteredTutors, setFilteredTutors] = useState(tutors || []);
   const [openFilter, setOpenFilter] = useState(false);
 
@@ -120,7 +127,16 @@ export default function Tutors({ tutors, areas, cities }) {
               {filteredTutors?.length > 0 ? (
                 <>
                   {filteredTutors?.map((tutor) => {
-                    return <TutorCard2 key={tutor._id} tutor={tutor} />;
+                    const tutorPic = profilePics?.filter(
+                      (pic) => pic._id === tutor._id
+                    )[0];
+                    return (
+                      <TutorCard2
+                        key={tutor._id}
+                        tutor={tutor}
+                        profilePic={tutorPic}
+                      />
+                    );
                   })}
                 </>
               ) : (
