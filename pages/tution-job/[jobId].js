@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 
   return {
     paths: jobs.data.map((job) => ({
-      params: { jobId: job._id },
+      params: { jobId: job?._id },
     })),
     fallback: false,
   };
@@ -54,14 +54,14 @@ export default function JobDescription({ job, applications }) {
   const [hasApplied, setHasApplied] = useState(false);
   const [error, setError] = useState("");
 
-  const timestamp = job._id.toString().substring(0, 8);
+  const timestamp = job?._id.toString().substring(0, 8);
   const date = new Date(parseInt(timestamp, 16) * 1000);
   const uploadedAt = date.toDateString();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     /* console.log({
-      job_id: job._id,
+      job_id: job?._id,
       applicant_id: currentUser.userId,
       coverLetter: coverLetter,
       quialification: currentUser.qualification,
@@ -72,7 +72,7 @@ export default function JobDescription({ job, applications }) {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/add-application`,
           {
-            job_id: job._id,
+            job_id: job?._id,
             applicant_id: currentUser?._id,
             coverLetter: coverLetter,
             quialification: currentUser?.qualification,
@@ -100,7 +100,7 @@ export default function JobDescription({ job, applications }) {
   useEffect(() => {
     if (currentUser && applications.length > 0) {
       const apl = applications.filter(
-        (appliction) => appliction.applicant_id._id
+        (appliction) => appliction.applicant_id?._id
       );
       apl ? setHasApplied(true) : setHasApplied(false);
     }
@@ -369,7 +369,7 @@ export default function JobDescription({ job, applications }) {
                   const applicant = application.applicant_id;
                   return (
                     <div
-                      key={application._id}
+                      key={application?._id}
                       className=" flex flex-col gap-2 md:bg-white bg-neutral-100 rounded py-4 px-4 md:px-8"
                     >
                       <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
@@ -383,7 +383,7 @@ export default function JobDescription({ job, applications }) {
                         onClick={() => {
                           router.push({
                             pathname: "/profile/[userId]",
-                            query: { userId: applicant._id },
+                            query: { userId: applicant?._id },
                           });
                         }}
                       >
