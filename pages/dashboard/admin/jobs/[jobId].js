@@ -52,29 +52,29 @@ export default function Job({ job, applications }) {
   const [expectedBudget, setExpectedBudget] = useState("");
   const [hasApplied, setHasApplied] = useState(false);
 
-  const timestamp = job._id.toString().substring(0, 8);
-  const date = new Date(parseInt(timestamp, 16) * 1000);
-  const uploadedAt = date.toDateString();
+  // const timestamp = job._id.toString().substring(0, 8);
+  // const date = new Date(parseInt(timestamp, 16) * 1000);
+  // const uploadedAt = date.toDateString();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     /* console.log({
       job_id: job._id,
-      applicant_id: currentUser.userId,
+      applicant_id: currentUser?.userId,
       coverLetter: coverLetter,
-      quialification: currentUser.qualification,
+      quialification: currentUser?.qualification,
       expectedBudget: expectedBudget,
     }); */
 
-    if (currentUser.userType === "tutor" && token) {
+    if (currentUser?.userType === "tutor" && token) {
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/add-application`,
           {
             job_id: job._id,
-            applicant_id: currentUser._id,
+            applicant_id: currentUser?._id,
             coverLetter: coverLetter,
-            quialification: currentUser.qualification,
+            quialification: currentUser?.qualification,
             expectedBudget: expectedBudget,
           },
           {
@@ -95,7 +95,7 @@ export default function Job({ job, applications }) {
   useEffect(() => {
     if (currentUser && applications.length > 0) {
       const apl = applications.filter(
-        (appliction) => appliction.applicant_id._id
+        (appliction) => appliction.applicant_id?._id
       );
       apl ? setHasApplied(true) : setHasApplied(false);
     }
@@ -115,9 +115,9 @@ export default function Job({ job, applications }) {
               <h2 className="mb-2 text-primary text-2xl font-semibold">
                 Job details
               </h2>
-              <p className="text-sm text-gray-700">
+              {/* <p className="text-sm text-gray-700">
                 Posted on {uploadedAt} by {job.user_id?.name}
-              </p>
+              </p> */}
             </div>
             <p>{job.description}</p>
             <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 ">
