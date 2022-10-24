@@ -307,12 +307,7 @@ export default function JobDescription({ job, applications }) {
                 <p className="whitespace-pre-line -mt-4 mb-8 text-gray-600">
                   {`
                 1) Mention the following in your Cover Letter:
-                I can teach classes ( ), 
-                I can teach subjects to ( ), 
-                I am available for home tutoring in the following areas ( ), 
-                I have experience of ( ), 
-                I have completed my ( ), 
-                Achievements if any,
+                  Expertise, Experience, Qualification, achievements, strategy to produce A* and how this area is suitable.
                 2) Mention your expected fee
                 3) Mention Approx distance from your location (using google maps)`}
                 </p>
