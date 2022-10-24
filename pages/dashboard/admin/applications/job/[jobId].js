@@ -13,7 +13,7 @@ import Button from "../../../../../components/UI/Button";
 import { useAuth } from "../../../../../contexts/AuthContext";
 import { getCookie, getCookies } from "cookies-next";
 
-export async function getStaticPaths() {
+/* export async function getStaticPaths() {
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
 
   return {
@@ -38,6 +38,23 @@ export async function getStaticProps({ params }) {
       applications: applications.data,
     },
     revalidate: 30,
+  };
+} */
+
+export async function getServerSideProps({ params }) {
+  const { jobId } = params;
+
+  const jobs = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-job/${jobId}`
+  );
+  const applications = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-jobapplications/${jobId}`
+  );
+  return {
+    props: {
+      job: jobs.data,
+      applications: applications.data,
+    },
   };
 }
 
@@ -115,9 +132,9 @@ export default function Job({ job, applications }) {
               <h2 className="mb-2 text-primary text-2xl font-semibold">
                 Job details
               </h2>
-              {/* <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700">
                 Posted on {uploadedAt} by {job?.user_id?.name}
-              </p> */}
+              </p>
             </div>
             <p>{job.description}</p>
             <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 ">
