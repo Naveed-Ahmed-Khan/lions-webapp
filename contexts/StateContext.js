@@ -35,7 +35,7 @@ export const StateProvider = ({ children }) => {
     fetchTutors();
   }, [check]); */
 
-  useEffect(() => {
+/*   useEffect(() => {
     const fetchJobs = async () => {
       setLoading(true);
       try {
@@ -51,7 +51,7 @@ export const StateProvider = ({ children }) => {
     };
 
     fetchJobs();
-  }, [check]);
+  }, [check]); */
 
   const updateCheck = () => {
     setCheck(!check);

@@ -13,7 +13,7 @@ import Button from "../../components/UI/Button";
 import { useAuth } from "../../contexts/AuthContext";
 import { getCookie, getCookies } from "cookies-next";
 
-export async function getStaticPaths() {
+/* export async function getStaticPaths() {
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
 
   return {
@@ -35,9 +35,26 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       job: jobs.data,
-      applications: applications.data,
+      applications: applications?.data,
     },
     revalidate: 30,
+  };
+} */
+
+export async function getServerSideProps({ params }) {
+  const { jobId } = params;
+
+  const jobs = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-job/${jobId}`
+  );
+  const applications = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-jobapplications/${jobId}`
+  );
+  return {
+    props: {
+      job: jobs.data,
+      applications: applications?.data,
+    },
   };
 }
 
@@ -91,16 +108,14 @@ export default function JobDescription({ job, applications }) {
       }
     } else {
       // console.log("You are not eligible to apply");
-      setError(
-        "Unverified Tutors are not eligible to apply. Pay your verification fee of Rs 1500 to 03328200082 Jazz cash"
-      );
+      setError("Unverified Tutors are not eligible to apply");
     }
   };
 
   useEffect(() => {
-    if (currentUser && applications.length > 0) {
-      const apl = applications.filter(
-        (appliction) => appliction.applicant_id?._id
+    if (currentUser && applications?.length > 0) {
+      const apl = applications?.filter(
+        (appliction) => appliction.applicant_id._id
       );
       apl ? setHasApplied(true) : setHasApplied(false);
     }
@@ -120,11 +135,11 @@ export default function JobDescription({ job, applications }) {
               <h2 className="mb-2 text-primary text-2xl font-semibold">
                 Job details
               </h2>
-              {/* <p className="text-sm text-gray-700">
-                Posted on {uploadedAt} by {job.user_id?.name}
-              </p> */}
+              <p className="text-sm text-gray-700">
+                Posted on {uploadedAt} by {job?.user_id?.name}
+              </p>
             </div>
-            <p>{job.description}</p>
+            <p>{job?.description}</p>
             <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 ">
               <li className="flex gap-2">
                 <svg
@@ -141,7 +156,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Class | {job.class}</span>
+                <span>Class | {job?.class}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -158,7 +173,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Subject | {job.subjects}</span>
+                <span>Subject | {job?.subjects}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -175,12 +190,12 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Budget | Rs. {job.budget}</span>
+                <span>Budget | Rs. {job?.budget}</span>
               </li>
             </ul>
           </div>
 
-          <div className="p-0 sm:p-8 flex flex-col bg-white md:bg-neutral-100">
+          <div className="p- sm:p-8 flex flex-col bg-white md:bg-neutral-100">
             <h2 className="mb-8 text-primary text-2xl font-semibold">
               Tutor Requirements
             </h2>
@@ -200,7 +215,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Experience | {job.experience} Year</span>
+                <span>Experience | {job?.experience} Year</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -217,7 +232,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Qualification | {job.qualification}</span>
+                <span>Qualification | {job?.qualification}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -234,7 +249,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Location | {job.city}</span>
+                <span>Location | {job?.city}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -251,7 +266,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Gender Preferance | {job.gender}</span>
+                <span>Gender Preferance | {job?.gender}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -268,7 +283,7 @@ export default function JobDescription({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Duration | {job.duration}</span>
+                <span>Duration | {job?.duration}</span>
               </li>
             </ul>
           </div>
@@ -359,17 +374,17 @@ export default function JobDescription({ job, applications }) {
               </h2>
               <div className="flex mt-2 item-center">
                 <p className="ml-1 -mt-0.5 text-gray-600">
-                  {applications.length > 0 && `(${applications.length})`}
+                  {applications?.length > 0 && `(${applications?.length})`}
                 </p>
               </div>
             </div>
             <div className="flex flex-col gap-8">
-              {applications.length > 0 ? (
-                applications.map((application) => {
+              {applications?.length > 0 ? (
+                applications?.map((application) => {
                   const applicant = application.applicant_id;
                   return (
                     <div
-                      key={application?._id}
+                      key={application._id}
                       className=" flex flex-col gap-2 md:bg-white bg-neutral-100 rounded py-4 px-4 md:px-8"
                     >
                       <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
@@ -383,7 +398,7 @@ export default function JobDescription({ job, applications }) {
                         onClick={() => {
                           router.push({
                             pathname: "/profile/[userId]",
-                            query: { userId: applicant?._id },
+                            query: { userId: applicant._id },
                           });
                         }}
                       >
