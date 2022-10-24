@@ -35,13 +35,15 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       job: jobs.data,
-      applications: applications?.data,
+      applications: applications.data,
     },
     revalidate: 30,
   };
 }
 
-export default function Job({ job, applications }) {
+export default function AdminJob({ job, applications }) {
+  console.log(job);
+  console.log(applications);
   const token = getCookie("token");
   /*   console.log(token);
   console.log(applications);
