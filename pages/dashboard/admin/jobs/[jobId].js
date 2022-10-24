@@ -115,9 +115,9 @@ export default function Job({ job, applications }) {
               <h2 className="mb-2 text-primary text-2xl font-semibold">
                 Job details
               </h2>
-              <p className="text-sm text-gray-700">
+              {/* <p className="text-sm text-gray-700">
                 Posted on {uploadedAt} by {job.user_id?.name}
-              </p>
+              </p> */}
             </div>
             <p>{job.description}</p>
             <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 ">
@@ -274,7 +274,9 @@ export default function Job({ job, applications }) {
                 Applicants
               </h2>
               <div className="flex mt-2 item-center">
-                <p className="ml-1 -mt-0.5 text-gray-600">({applications.length})</p>
+                <p className="ml-1 -mt-0.5 text-gray-600">
+                  ({applications.length})
+                </p>
               </div>
             </div>
             <div className="flex flex-col gap-8">
