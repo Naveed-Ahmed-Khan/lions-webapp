@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 
   return {
     paths: jobs.data.map((job) => ({
-      params: { jobId: job._id },
+      params: { jobId: job?._id },
     })),
     fallback: false,
   };
@@ -52,14 +52,14 @@ export default function Job({ job, applications }) {
   const [expectedBudget, setExpectedBudget] = useState("");
   const [hasApplied, setHasApplied] = useState(false);
 
-  // const timestamp = job._id.toString().substring(0, 8);
+  // const timestamp = job?._id.toString().substring(0, 8);
   // const date = new Date(parseInt(timestamp, 16) * 1000);
   // const uploadedAt = date.toDateString();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     /* console.log({
-      job_id: job._id,
+      job_id: job?._id,
       applicant_id: currentUser?.userId,
       coverLetter: coverLetter,
       quialification: currentUser?.qualification,
@@ -71,7 +71,7 @@ export default function Job({ job, applications }) {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/add-application`,
           {
-            job_id: job._id,
+            job_id: job?._id,
             applicant_id: currentUser?._id,
             coverLetter: coverLetter,
             quialification: currentUser?.qualification,
@@ -116,10 +116,10 @@ export default function Job({ job, applications }) {
                 Job details
               </h2>
               {/* <p className="text-sm text-gray-700">
-                Posted on {uploadedAt} by {job.user_id?.name}
+                Posted on {uploadedAt} by {job?.user_id?.name}
               </p> */}
             </div>
-            <p>{job.description}</p>
+            <p>{job?.description}</p>
             <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 ">
               <li className="flex gap-2">
                 <svg
@@ -136,7 +136,7 @@ export default function Job({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Class | {job.class}</span>
+                <span>Class | {job?.class}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -153,7 +153,7 @@ export default function Job({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Subject | {job.subjects}</span>
+                <span>Subject | {job?.subjects}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -170,7 +170,7 @@ export default function Job({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Budget | Rs. {job.budget}</span>
+                <span>Budget | Rs. {job?.budget}</span>
               </li>
             </ul>
           </div>
@@ -195,7 +195,7 @@ export default function Job({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Experience | {job.experience} Year</span>
+                <span>Experience | {job?.experience} Year</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -212,7 +212,7 @@ export default function Job({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Qualification | {job.qualification}</span>
+                <span>Qualification | {job?.qualification}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -229,7 +229,7 @@ export default function Job({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Location | {job.city || job.location.city}</span>
+                <span>Location | {job?.city || job?.location.city}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -246,7 +246,7 @@ export default function Job({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Gender Preferance | {job.gender}</span>
+                <span>Gender Preferance | {job?.gender}</span>
               </li>
               <li className="flex gap-2">
                 <svg
@@ -263,7 +263,7 @@ export default function Job({ job, applications }) {
                     d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                   />
                 </svg>
-                <span>Duration | {job.duration}</span>
+                <span>Duration | {job?.duration}</span>
               </li>
             </ul>
           </div>
