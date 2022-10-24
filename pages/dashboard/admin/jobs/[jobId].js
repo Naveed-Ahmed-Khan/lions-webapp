@@ -35,7 +35,7 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       job: jobs.data,
-      applications: applications.data,
+      applications: applications?.data,
     },
     revalidate: 30,
   };
@@ -93,8 +93,8 @@ export default function Job({ job, applications }) {
   };
 
   useEffect(() => {
-    if (currentUser && applications.length > 0) {
-      const apl = applications.filter(
+    if (currentUser && applications?.length > 0) {
+      const apl = applications?.filter(
         (appliction) => appliction.applicant_id?._id
       );
       apl ? setHasApplied(true) : setHasApplied(false);
@@ -274,12 +274,12 @@ export default function Job({ job, applications }) {
                 Applicants
               </h2>
               <div className="flex mt-2 item-center">
-                <p className="ml-1 -mt-0.5 text-gray-600">({applications.length})</p>
+                <p className="ml-1 -mt-0.5 text-gray-600">({applications?.length})</p>
               </div>
             </div>
             <div className="flex flex-col gap-8">
-              {applications.length > 0 ? (
-                applications.map((application) => {
+              {applications?.length > 0 ? (
+                applications?.map((application) => {
                   const applicant = application.applicant_id;
                   return (
                     <div
