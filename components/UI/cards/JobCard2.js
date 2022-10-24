@@ -33,9 +33,9 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
         {router.pathname !== "/my-jobs" && (
           <div className="flex justify-between">
             <div>
-              {/* <p className="text-gray-800 text-sm font-medium">
+              <p className="text-gray-800 text-sm font-medium">
                 Job posted by | {job.user_id?.name}
-              </p> */}
+              </p>
             </div>
             <div>
               <p className="text-gray-800 text-sm font-medium">
