@@ -6,7 +6,7 @@ const StateContext = createContext();
 export function useStateContext() {
   return useContext(StateContext);
 }
- 
+
 export const StateProvider = ({ children }) => {
   // const { data: quizData } = useFetch("quizes", check);
   const [check, setCheck] = useState(false);
@@ -17,7 +17,7 @@ export const StateProvider = ({ children }) => {
 
   // console.log(tutors);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const fetchTutors = async () => {
       setLoading(true);
       try {
@@ -33,7 +33,7 @@ export const StateProvider = ({ children }) => {
     };
 
     fetchTutors();
-  }, [check]);
+  }, [check]); */
 
   useEffect(() => {
     const fetchJobs = async () => {
