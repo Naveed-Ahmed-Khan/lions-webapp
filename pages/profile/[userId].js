@@ -9,6 +9,7 @@ import {
   Simple,
 } from "../../components/EditProfile/EditSections";
 import Rating from "../../components/UI/Rating";
+import { useRouter } from "next/router";
 
 export async function getStaticPaths() {
   const users = await axios.get(
@@ -38,13 +39,20 @@ export async function getStaticProps({ params }) {
       tutor: tutor?.data,
       applications: application.data,
     },
-    revalidate: 60,
+    revalidate: 30,
   };
 }
 
 export default function Profile({ tutor, applications }) {
+  const router = useRouter();
   // console.log(applications);
   // console.log(userId);
+  if (router.isFallback) {
+    <div className=" text-3xl text-primary font-medium">
+      Page will be available after 30 seconds!
+    </div>;
+  }
+
   return (
     <Container color={"gray-50"}>
       <div className="relative flex flex-col bg-white">
