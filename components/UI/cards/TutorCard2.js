@@ -223,8 +223,8 @@ const TutorCard2 = ({ tutor, profilePic }) => {
             </svg>
 
             <h3 className="px-2 text-sm font-medium">
-              {tutor.subjectsTaught[0]?.name}{" "}
-              {tutor.subjectsTaught[1] && `,${tutor.subjectsTaught[1]?.name}`}
+              {tutor.subjectsTaught[0]?.name}
+              {tutor.subjectsTaught[1] && `, ${tutor.subjectsTaught[1]?.name}`}
             </h3>
           </div>
 
@@ -244,9 +244,9 @@ const TutorCard2 = ({ tutor, profilePic }) => {
               />
             </svg>
             <h3 className="px-2 text-sm font-medium">
-              {tutor.subjectsTaught[0]?.classes[0]?.title}{" "}
+              {tutor.subjectsTaught[0]?.classes[0]?.title}
               {tutor.subjectsTaught[1]?.classes[1] &&
-                `,${tutor.subjectsTaught[1]?.classes[1]?.title}`}
+                `, ${tutor.subjectsTaught[1]?.classes[1]?.title}`}
             </h3>
           </div>
 

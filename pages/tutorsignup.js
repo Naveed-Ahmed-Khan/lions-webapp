@@ -17,6 +17,7 @@ import { useAuth } from "../contexts/AuthContext";
 import * as yup from "yup";
 import axios from "axios";
 import CheckBox from "../components/UI/CheckBox";
+import Spinner from "../components/UI/loader/Spinner";
 
 export async function getStaticProps() {
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
@@ -386,6 +387,7 @@ function Account({ setCurrentStep }) {
   const router = useRouter();
   const { signup } = useAuth();
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const signupSchema = yup.object({
     email: yup.string("Enter your email").email("Enter a valid email"),
@@ -405,6 +407,7 @@ function Account({ setCurrentStep }) {
     },
     validationSchema: signupSchema,
     onSubmit: async (values) => {
+      setIsLoading(true);
       // console.log(values);
       localStorage.setItem(
         "Account",
@@ -453,6 +456,8 @@ function Account({ setCurrentStep }) {
         } catch (error) {
           console.log(error);
           setError(error.message);
+        } finally {
+          setIsLoading(false);
         }
       }
     },
@@ -491,7 +496,15 @@ function Account({ setCurrentStep }) {
           </p>
         )}
         <div className="sm:pt-4">
-          <Button type="submit">Submit</Button>
+          <Button disabled={isLoading} type="submit">
+            {isLoading ? (
+              <>
+                <Spinner sm text={"text-white"} stroke={"stroke-white"} />
+              </>
+            ) : (
+              <>Submit</>
+            )}
+          </Button>
         </div>
       </form>
     </div>

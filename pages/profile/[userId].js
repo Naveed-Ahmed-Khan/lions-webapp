@@ -25,7 +25,7 @@ export async function getStaticPaths() {
     paths: users.data.map((user) => ({
       params: { userId: user._id },
     })),
-    fallback: false,
+    fallback: true,
   };
 }
 
@@ -48,28 +48,10 @@ export async function getStaticProps({ params }) {
       tutor: tutor.data,
       applications: application.data,
     },
-    revalidate: 60,
+    revalidate: 30,
   };
 }
 
-/* export async function getServerSideProps({ params }) {
-  const { userId } = params;
-
-  const tutor = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`
-  );
-  const application = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
-  );
-
-  return {
-    props: {
-      tutor: tutor.data,
-      applications: application.data,
-    },
-  };
-}
- */
 export default function Profile({ tutor, applications }) {
   // console.log(applications);
   // console.log(userId);

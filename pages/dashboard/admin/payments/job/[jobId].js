@@ -20,7 +20,7 @@ export async function getStaticPaths() {
     paths: jobs.data.map((job) => ({
       params: { jobId: job._id },
     })),
-    fallback: false,
+    fallback: true,
   };
 }
 export async function getStaticProps({ params }) {
