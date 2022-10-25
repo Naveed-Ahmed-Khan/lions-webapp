@@ -16,9 +16,14 @@ import Rating from "../../components/UI/Rating";
 import { idToDate } from "../../util/idToDate";
 
 export async function getStaticPaths() {
-  const users = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-pics`
-  );
+  let users = []
+  try {
+    users = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-pics`
+    );
+  } catch (error) {
+    console.log(error)
+  }
 
   return {
     paths: users.data.map((user) => ({
@@ -29,14 +34,18 @@ export async function getStaticPaths() {
 }
 export async function getStaticProps({ params }) {
   const { userId } = params;
-
-  const tutor = await axios.get(
+  let tutor=[]
+  let application=[]
+try {
+  tutor = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`
   );
-  const application = await axios.get(
+  application = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
   );
-
+} catch (error) {
+  console.log(error)
+}
   return {
     props: {
       tutor: tutor.data,
