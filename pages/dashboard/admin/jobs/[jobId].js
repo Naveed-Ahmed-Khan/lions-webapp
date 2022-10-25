@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
@@ -293,7 +292,9 @@ export default function JobInAdmin({ job, applications }) {
                 Applicants
               </h2>
               <div className="flex mt-2 item-center">
-                <p className="ml-1 -mt-0.5 text-gray-600">({applications?.length})</p>
+                <p className="ml-1 -mt-0.5 text-gray-600">
+                  ({applications?.length})
+                </p>
               </div>
             </div>
             <div className="flex flex-col gap-8">

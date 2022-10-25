@@ -1,12 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 import axios from "axios";
-import { useRouter } from "next/router";
 import React from "react";
 import Image from "next/image";
-import Collapse from "../../components/UI/Collapse";
 import Container from "../../components/UI/Container";
 import ProfileSidebar from "../../components/UI/ProfileSidebar";
-import Button from "../../components/UI/Button";
 import {
   Collapsable,
   Gallery,
@@ -16,13 +12,13 @@ import Rating from "../../components/UI/Rating";
 import { idToDate } from "../../util/idToDate";
 
 export async function getStaticPaths() {
-  let users = []
+  let users = [];
   try {
     users = await axios.get(
       `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-pics`
     );
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 
   return {
@@ -32,29 +28,48 @@ export async function getStaticPaths() {
     fallback: false,
   };
 }
+
 export async function getStaticProps({ params }) {
   const { userId } = params;
-  let tutor=[]
-  let application=[]
-try {
-  tutor = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`
-  );
-  application = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
-  );
-} catch (error) {
-  console.log(error)
-}
+  let tutor = [];
+  let application = [];
+  try {
+    tutor = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`
+    );
+    application = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
+    );
+  } catch (error) {
+    console.log(error);
+  }
   return {
     props: {
       tutor: tutor.data,
       applications: application.data,
     },
-    revalidate: 30,
+    revalidate: 60,
   };
 }
 
+/* export async function getServerSideProps({ params }) {
+  const { userId } = params;
+
+  const tutor = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`
+  );
+  const application = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
+  );
+
+  return {
+    props: {
+      tutor: tutor.data,
+      applications: application.data,
+    },
+  };
+}
+ */
 export default function Profile({ tutor, applications }) {
   // console.log(applications);
   // console.log(userId);
