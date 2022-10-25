@@ -101,6 +101,14 @@ export default function Job({ job, applications }) {
     }
   }, [currentUser, applications]);
 
+  if (router.isFallback) {
+    return (
+      <div className=" text-3xl text-primary font-medium">
+        Page will be available after 30 seconds!
+      </div>
+    );
+  }
+
   return (
     <Container color={"white"}>
       <div className="p-4 sm:p-8 flex flex-col bg-white">
