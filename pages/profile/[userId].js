@@ -52,7 +52,7 @@ export default function Profile({ tutor, applications }) {
           <Image
             layout="fill"
             objectFit="cover"
-            src={tutor.bannerImage || "/images/flag.png"}
+            src={tutor?.bannerImage || "/images/flag.png"}
             alt=""
           />
         </header>
