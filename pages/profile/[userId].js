@@ -9,17 +9,11 @@ import {
   Simple,
 } from "../../components/EditProfile/EditSections";
 import Rating from "../../components/UI/Rating";
-import { idToDate } from "../../util/idToDate";
 
 export async function getStaticPaths() {
-  let users = [];
-  try {
-    users = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-pics`
-    );
-  } catch (error) {
-    console.log(error);
-  }
+  const users = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-pics`
+  );
 
   return {
     paths: users.data.map((user) => ({
@@ -31,24 +25,20 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const { userId } = params;
-  let tutor = [];
-  let application = [];
-  try {
-    tutor = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`
-    );
-    application = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
-    );
-  } catch (error) {
-    console.log(error);
-  }
+
+  const tutor = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`
+  );
+  const application = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
+  );
+
   return {
     props: {
       tutor: tutor.data,
       applications: application.data,
     },
-    revalidate: 30,
+    revalidate: 60,
   };
 }
 
