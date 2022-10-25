@@ -36,7 +36,7 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      tutor: tutor?.data,
+      tutor: tutor.data,
       applications: application.data,
     },
     revalidate: 30,
@@ -48,9 +48,11 @@ export default function Profile({ tutor, applications }) {
   // console.log(applications);
   // console.log(userId);
   if (router.isFallback) {
-    <div className=" text-3xl text-primary font-medium">
-      Page will be available after 30 seconds!
-    </div>;
+    return (
+      <div className=" text-3xl text-primary font-medium">
+        Page will be available after 30 seconds!
+      </div>
+    );
   }
 
   return (
@@ -60,7 +62,7 @@ export default function Profile({ tutor, applications }) {
           <Image
             layout="fill"
             objectFit="cover"
-            src={tutor?.bannerImage || "/images/flag.png"}
+            src={tutor.bannerImage || "/images/flag.png"}
             alt=""
           />
         </header>
@@ -70,13 +72,13 @@ export default function Profile({ tutor, applications }) {
             <Image
               layout="fill"
               objectFit="cover"
-              src={tutor?.profilePic}
+              src={tutor.profilePic}
               alt=""
             />
           </div>
 
           <h2 className="mt-4 text-gray-700 text-2xl sm:text-3xl font-medium">
-            {tutor?.name}
+            {tutor.name}
           </h2>
         </div>
       </div>
@@ -88,8 +90,8 @@ export default function Profile({ tutor, applications }) {
           My Profile
         </h3>
         <div className="flex flex-col gap-6 md:gap-8">
-          <Collapse label="About me">{tutor?.aboutMe}</Collapse>
-          <Collapse label="Achievements">{tutor?.achievements}</Collapse>
+          <Collapse label="About me">{tutor.aboutMe}</Collapse>
+          <Collapse label="Achievements">{tutor.achievements}</Collapse>
         </div>
       </div> */}
 
@@ -109,13 +111,13 @@ export default function Profile({ tutor, applications }) {
                 My Profile
               </h3>
               <div className="flex flex-col gap-6 md:gap-8">
-                <Collapse label="About me">{tutor?.aboutMe}</Collapse>
-                <Collapse label="Achievements">{tutor?.achievements}</Collapse>
+                <Collapse label="About me">{tutor.aboutMe}</Collapse>
+                <Collapse label="Achievements">{tutor.achievements}</Collapse>
               </div>
             </div>
           </div> */}
           <div className="mt-6 sm:mt-0 flex flex-col gap-6 md:gap-8">
-            {tutor?.sections?.map((section) => {
+            {tutor.sections?.map((section) => {
               return (
                 <div key={section._id}>
                   {section.type === "Simple" && <Simple section={section} />}
