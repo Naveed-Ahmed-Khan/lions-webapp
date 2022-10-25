@@ -32,7 +32,7 @@ export async function getStaticPaths() {
     paths: students.data.map((user) => ({
       params: { userId: user._id },
     })),
-    fallback: false,
+    fallback: true,
   };
 }
 export async function getStaticProps({ params }) {
