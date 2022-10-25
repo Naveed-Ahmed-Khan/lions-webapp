@@ -35,7 +35,7 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
-      tutor: tutor.data,
+      tutor: tutor?.data,
       applications: application.data,
     },
     revalidate: 60,
@@ -62,13 +62,13 @@ export default function Profile({ tutor, applications }) {
             <Image
               layout="fill"
               objectFit="cover"
-              src={tutor.profilePic}
+              src={tutor?.profilePic}
               alt=""
             />
           </div>
 
           <h2 className="mt-4 text-gray-700 text-2xl sm:text-3xl font-medium">
-            {tutor.name}
+            {tutor?.name}
           </h2>
         </div>
       </div>
@@ -80,8 +80,8 @@ export default function Profile({ tutor, applications }) {
           My Profile
         </h3>
         <div className="flex flex-col gap-6 md:gap-8">
-          <Collapse label="About me">{tutor.aboutMe}</Collapse>
-          <Collapse label="Achievements">{tutor.achievements}</Collapse>
+          <Collapse label="About me">{tutor?.aboutMe}</Collapse>
+          <Collapse label="Achievements">{tutor?.achievements}</Collapse>
         </div>
       </div> */}
 
@@ -101,13 +101,13 @@ export default function Profile({ tutor, applications }) {
                 My Profile
               </h3>
               <div className="flex flex-col gap-6 md:gap-8">
-                <Collapse label="About me">{tutor.aboutMe}</Collapse>
-                <Collapse label="Achievements">{tutor.achievements}</Collapse>
+                <Collapse label="About me">{tutor?.aboutMe}</Collapse>
+                <Collapse label="Achievements">{tutor?.achievements}</Collapse>
               </div>
             </div>
           </div> */}
           <div className="mt-6 sm:mt-0 flex flex-col gap-6 md:gap-8">
-            {tutor.sections.map((section) => {
+            {tutor?.sections?.map((section) => {
               return (
                 <div key={section._id}>
                   {section.type === "Simple" && <Simple section={section} />}
@@ -130,7 +130,7 @@ export default function Profile({ tutor, applications }) {
               </h2>
             </div>
             <div className="space-y-6">
-              {applications.map((application) => {
+              {applications?.map((application) => {
                 const {
                   feedback: { rating, comment },
                   job_id: {
