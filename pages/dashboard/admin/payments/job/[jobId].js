@@ -42,11 +42,18 @@ export async function getStaticProps({ params }) {
 }
 
 export default function Job({ job, applications }) {
+  const router = useRouter();
+  if (router.isFallback) {
+    return (
+      <div className=" text-3xl text-primary font-medium">
+        Page will be available after 30 seconds!
+      </div>
+    );
+  }
   const token = getCookie("token");
   /*   console.log(token);
   console.log(applications);
   console.log(job); */
-  const router = useRouter();
   const { currentUser } = useAuth();
   const [coverLetter, setCoverLetter] = useState("");
   const [expectedBudget, setExpectedBudget] = useState("");
