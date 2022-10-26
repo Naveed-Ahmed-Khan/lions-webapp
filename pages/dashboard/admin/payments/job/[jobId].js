@@ -43,61 +43,11 @@ export async function getStaticProps({ params }) {
 
 export default function Job({ job, applications }) {
   const router = useRouter();
-  if (router.isFallback) {
-    return (
-      <div className=" text-3xl text-primary font-medium">
-        Page will be available after 30 seconds!
-      </div>
-    );
-  }
   const token = getCookie("token");
-  /*   console.log(token);
-  console.log(applications);
-  console.log(job); */
   const { currentUser } = useAuth();
   const [coverLetter, setCoverLetter] = useState("");
   const [expectedBudget, setExpectedBudget] = useState("");
   const [hasApplied, setHasApplied] = useState(false);
-
-  const timestamp = job._id.toString().substring(0, 8);
-  const date = new Date(parseInt(timestamp, 16) * 1000);
-  const uploadedAt = date.toDateString();
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    /* console.log({
-      job_id: job._id,
-      applicant_id: currentUser.userId,
-      coverLetter: coverLetter,
-      quialification: currentUser.qualification,
-      expectedBudget: expectedBudget,
-    }); */
-
-    if (currentUser.userType === "tutor" && token) {
-      try {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API}/add-application`,
-          {
-            job_id: job._id,
-            applicant_id: currentUser._id,
-            coverLetter: coverLetter,
-            quialification: currentUser.qualification,
-            expectedBudget: expectedBudget,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      console.log("You are not eligible to apply");
-    }
-  };
 
   useEffect(() => {
     if (currentUser && applications.length > 0) {
@@ -115,6 +65,10 @@ export default function Job({ job, applications }) {
       </div>
     );
   }
+  
+  const timestamp = job._id.toString().substring(0, 8);
+  const date = new Date(parseInt(timestamp, 16) * 1000);
+  const uploadedAt = date.toDateString();
 
   return (
     <Container color={"white"}>

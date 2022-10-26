@@ -69,42 +69,6 @@ export default function Job({ job, applications }) {
   const date = new Date(parseInt(timestamp, 16) * 1000);
   const uploadedAt = date.toDateString();
 
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    /* console.log({
-      job_id: job._id,
-      applicant_id: currentUser.userId,
-      coverLetter: coverLetter,
-      quialification: currentUser.qualification,
-      expectedBudget: expectedBudget,
-    }); */
-
-    if (currentUser.userType === "tutor" && token) {
-      try {
-        const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_API}/add-application`,
-          {
-            job_id: job._id,
-            applicant_id: currentUser._id,
-            coverLetter: coverLetter,
-            quialification: currentUser.qualification,
-            expectedBudget: expectedBudget,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    } else {
-      console.log("You are not eligible to apply");
-    }
-  };
-
   return (
     <Container color={"white"}>
       <div className="p-4 sm:p-8 flex flex-col bg-white">
