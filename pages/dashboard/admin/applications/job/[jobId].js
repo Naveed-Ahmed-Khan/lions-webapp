@@ -43,6 +43,20 @@ export async function getStaticProps({ params }) {
 
 export default function Job({ job, applications }) {
   const router = useRouter();
+  const token = getCookie("token");
+  const { currentUser } = useAuth();
+  const [coverLetter, setCoverLetter] = useState("");
+  const [expectedBudget, setExpectedBudget] = useState("");
+  const [hasApplied, setHasApplied] = useState(false);
+  useEffect(() => {
+    if (currentUser && applications.length > 0) {
+      const apl = applications.filter(
+        (appliction) => appliction.applicant_id._id
+      );
+      apl ? setHasApplied(true) : setHasApplied(false);
+    }
+  }, [currentUser, applications]);
+
   if (router.isFallback) {
     return (
       <div className=" text-3xl text-primary font-medium">
@@ -50,14 +64,6 @@ export default function Job({ job, applications }) {
       </div>
     );
   }
-  const token = getCookie("token");
-  /*   console.log(token);
-  console.log(applications);
-  console.log(job); */
-  const { currentUser } = useAuth();
-  const [coverLetter, setCoverLetter] = useState("");
-  const [expectedBudget, setExpectedBudget] = useState("");
-  const [hasApplied, setHasApplied] = useState(false);
 
   const timestamp = job._id.toString().substring(0, 8);
   const date = new Date(parseInt(timestamp, 16) * 1000);
@@ -98,15 +104,6 @@ export default function Job({ job, applications }) {
       console.log("You are not eligible to apply");
     }
   };
-
-  useEffect(() => {
-    if (currentUser && applications.length > 0) {
-      const apl = applications.filter(
-        (appliction) => appliction.applicant_id._id
-      );
-      apl ? setHasApplied(true) : setHasApplied(false);
-    }
-  }, [currentUser, applications]);
 
   return (
     <Container color={"white"}>
