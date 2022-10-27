@@ -19,6 +19,9 @@ export async function getServerSideProps({ query }) {
   const classes = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-student-classes`
   );
+  const tutorclasses = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-student-classes`
+  );
 
   return {
     props: {

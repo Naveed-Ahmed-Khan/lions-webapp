@@ -47,6 +47,7 @@ export default function Tutors({ tutors, areas, cities }) {
 
   const [filteredTutors, setFilteredTutors] = useState(tutors || []);
   const [openFilter, setOpenFilter] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <>
@@ -100,6 +101,7 @@ export default function Tutors({ tutors, areas, cities }) {
               <TutorFilters
                 allCities={cities}
                 allAreas={areas}
+                setIsLoading={setIsLoading}
                 setFilteredTutors={setFilteredTutors}
                 setOpenFilter={setOpenFilter}
               />
@@ -109,6 +111,7 @@ export default function Tutors({ tutors, areas, cities }) {
             <TutorFilters
               allCities={cities}
               allAreas={areas}
+              setIsLoading={setIsLoading}
               setFilteredTutors={setFilteredTutors}
             />
           </div>
@@ -123,33 +126,39 @@ export default function Tutors({ tutors, areas, cities }) {
                 magnam neque, exercitationem eius sunt!
               </p> */}
             </div>
-            <div className="space-y-8 lg:pr-3 w-full">
-              {filteredTutors?.length > 0 ? (
-                <>
-                  {filteredTutors?.map((tutor) => {
-                    const tutorPic = profilePics?.filter(
-                      (pic) => pic._id === tutor._id
-                    )[0];
-                    return (
-                      <TutorCard2
-                        key={tutor._id}
-                        tutor={tutor}
-                        profilePic={tutorPic}
-                      />
-                    );
-                  })}
-                </>
-              ) : (
-                <div className="relative h-[calc(100vh-360px)] w-60">
-                  <Image
-                    layout={"fill"}
-                    className="object-contain"
-                    src={"/images/not-found.png"}
-                    alt={""}
-                  />
-                </div>
-              )}
-            </div>
+            {isLoading ? (
+              <div>
+                <Spinner md />
+              </div>
+            ) : (
+              <div className="space-y-8 lg:pr-3 w-full">
+                {filteredTutors?.length > 0 ? (
+                  <>
+                    {filteredTutors?.map((tutor) => {
+                      const tutorPic = profilePics?.filter(
+                        (pic) => pic._id === tutor._id
+                      )[0];
+                      return (
+                        <TutorCard2
+                          key={tutor._id}
+                          tutor={tutor}
+                          profilePic={tutorPic}
+                        />
+                      );
+                    })}
+                  </>
+                ) : (
+                  <div className="relative h-[calc(100vh-360px)] w-60">
+                    <Image
+                      layout={"fill"}
+                      className="object-contain"
+                      src={"/images/not-found.png"}
+                      alt={""}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </section>
       </Container>

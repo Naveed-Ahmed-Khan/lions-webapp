@@ -13,9 +13,11 @@ import Select from "../Select";
 
 export default function TutorFilters({
   setFilteredTutors,
+  filteredTutors,
   setOpenFilter,
   allAreas,
   allCities,
+  setIsLoading,
 }) {
   // console.log(allAreas);
   const router = useRouter();
@@ -26,39 +28,7 @@ export default function TutorFilters({
   const [subjects, setSubjects] = useState([]);
   const [areas, setAreas] = useState([]);
   const [selectedCity, setSelectedCity] = useState("");
-  // const [queryParams, setQueryParams] = useState(null);
-  // const [clear, setClear] = useState(false);
-  // const [gender, setGender] = useState([]);
-
-  // console.log(subjects);
-  // console.log(classes);
-  // console.log(qualification);
-
-  /*   useEffect(() => {
-    const {
-      class: clas,
-      subject,
-      qualification: qual,
-      city,
-      area,
-    } = router.query;
-
-    if (clas) {
-      setClasses([clas]);
-    }
-    if (subject) {
-      setSubjects([subject]);
-    }
-    if (qual) {
-      setQualification([qual]);
-    }
-    if (city) {
-      setSelectedCity(city);
-    }
-    if (area) {
-      setAreas([area]);
-    }
-  }, [router.query]); */
+  const [search, setSearch] = useState("");
 
   const allClasses = [
     { value: "Pre-School", id: "1" },
@@ -158,6 +128,10 @@ export default function TutorFilters({
       query["city"] = selectedCity;
     }
 
+    if (search) {
+      query["name"] = search;
+    }
+
     if (areas.length > 0) {
       query["area"] = areas.map((area) => {
         return area.name;
@@ -189,9 +163,11 @@ export default function TutorFilters({
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const queryParams = createQueryString();
     queryParams && getTutors(queryParams);
     setOpenFilter && setOpenFilter(false);
+    setIsLoading(false);
   };
 
   return (
@@ -207,7 +183,46 @@ export default function TutorFilters({
       </header>
 
       <main className="flow-root p-6 overflow-y-auto">
-        <div className="-my-8 divide-y divide-gray-100">
+        <div className="divide-y divide-gray-100">
+          <div className="">
+            <fieldset>
+              <legend className="mb-3 text-xl text-primary font-medium">
+                Search
+              </legend>
+
+              <div className="relative h-fit">
+                <Input
+                  label=""
+                  name="search"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
+                />
+                <button
+                  className="group absolute py-[.95rem]  px-1 sm:px-2 right-0 top-7 sm:top-0 bg-white"
+                  onClick={() => {
+                    setSearch("");
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5 text-red-500"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </fieldset>
+          </div>
           <div className="py-8">
             <fieldset>
               <legend className="text-xl text-primary font-medium">
@@ -354,8 +369,22 @@ export default function TutorFilters({
         >
           Clear Filters
         </button> */}
-        <div className="w-full sm:w-fit lg:w-full">
-          <Button fullwidth type={"submit"}>
+        <div className="flex justify-between gap-3">
+          <Button
+            type={"submit"}
+            onClick={() => {
+              setIsLoading(true);
+              setAreas([]);
+              setClasses([]);
+              setQualification([]);
+              setSubjects([]);
+              setSelectedCity("");
+              setSearch("");
+            }}
+          >
+            <p>Reset</p>
+          </Button>
+          <Button type={"submit"} onClick={() => setIsLoading(true)}>
             <p>Show results</p>
           </Button>
         </div>

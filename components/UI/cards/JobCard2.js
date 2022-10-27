@@ -14,7 +14,7 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
         {/* <h3 className="text-xl font-semibold text-gray-700">Tutor Required</h3> */}
         <div className="sm:flex justify-between items-center">
           <div className="w-full flex items-center justify-between gap-4">
-            <p className="text-gray-700 text-lg sm:text-xl font-semibold">
+            <p className="text-primary text-lg sm:text-xl font-medium">
               {job.title}
             </p>
             {job.isFeatured && (
@@ -50,7 +50,9 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
       </div>
       <div className="p-4 sm:p-8 flex flex-col bg-white ">
         <p className="flex text-gray-800">
-          <span className="mb-4 text-xl font-semibold">Requirements</span>
+          <span className="mb-4 text-primary text-xl font-medium">
+            Requirements
+          </span>
         </p>
         <ul className="grid grid-cols-1 md:grid-cols-2 mb-8 space-y-2">
           <li className="flex items-end space-x-2">
@@ -176,8 +178,11 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
         </ul>
 
         {router.pathname === "/jobs" && (
-          <div className="w-full sm:w-fit self-end">
+          <div className="flex justify-between">
             <Anchor button href={`/tution-job/${job._id}`}>
+              View Details
+            </Anchor>
+            <Anchor button href={`/tution-job/apply/${job._id}`}>
               Apply Now
             </Anchor>
           </div>

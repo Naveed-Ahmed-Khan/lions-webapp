@@ -49,6 +49,7 @@ export default function JobFilters({
     { label: "Intermediate", value: "Intermediate" },
     { label: "Bachelors", value: "Bachelors" },
     { label: "Masters", value: "Masters" },
+    { label: "MPhil", value: "MPhil" },
     { label: "PhD", value: "PhD" },
   ];
 

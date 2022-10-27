@@ -19,7 +19,9 @@ import { useRouter } from "next/router";
 
 export async function getStaticProps() {
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
-  const cities = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-cities`);
+  const cities = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-allcities`
+  );
 
   return {
     props: {
