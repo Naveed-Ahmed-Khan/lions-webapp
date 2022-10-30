@@ -22,10 +22,9 @@ export default function WebLayout({ children }) {
           name="google-site-verification"
           content="m2crJftQGoia9eW_5Een5RcngdFgCbNGLbcqYrHnuJw"
         />
-        <meta name="verify-v1" content="7ee341b0f1c20b0a" />
+        <meta name="yandex-verification" content="7ee341b0f1c20b0a" />
         <meta name="msvalidate.01" content="AD8D54215A8500E21F93B4B0EF1D39CA" />
         <link rel="icon" href="/e.png" />
-        {/* <body className="hidden">Verification: 7ee341b0f1c20b0a</body> */}
       </Head>
       <Sidebar
         open={open}
