@@ -13,17 +13,24 @@ import CheckBox from "../../components/UI/CheckBox";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 
-export default function EditSubjects({ tutor, updateData }) {
+export default function EditSubjects({ setSubjectFilled, tutor, updateData }) {
   const [editMode, setEditMode] = useState(false);
 
   const updateTutor = async (data) => {
-    await axios.patch(
+    const updated = await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
       data,
       { headers: { Authorization: `Bearer ${getCookie("token")}` } }
     );
-    updateData();
-    setEditMode(false);
+    if (updated.status === 200) {
+      updateData();
+      if (data.subjectsTaught.length > 0) {
+        setSubjectFilled(true);
+      } else {
+        setSubjectFilled(false);
+      }
+      setEditMode(false);
+    }
   };
 
   const formik = useFormik({
@@ -111,6 +118,7 @@ export default function EditSubjects({ tutor, updateData }) {
     <div className="space-y-8 w-full">
       <h1 className="text-xl sm:text-2xl font-semibold text-primary">
         Subjects Taught
+        <span className="text-primary text-lg font-normal">{` (Required)`}</span>
       </h1>
 
       <div className="sm:p-6 sm:border border-gray-200 rounded-lg">

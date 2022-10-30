@@ -15,18 +15,32 @@ import FormGroup from "../UI/FormGroup";
 import { getCookie } from "cookies-next";
 import { convertTime } from "../../util/convertTime";
 
-export default function EditAvailability({ tutor, updateData }) {
+export default function EditAvailability({
+  setAvailableFilled,
+  tutor,
+  updateData,
+}) {
   const [editMode, setEditMode] = useState(false);
 
   const updateTutor = async (data) => {
-    await axios.patch(
+    console.log(data);
+    const updated = await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
       data,
       { headers: { Authorization: `Bearer ${getCookie("token")}` } }
     );
-    updateData();
-    setEditMode(false);
+    console.log(updated);
+    if (updated.status === 200) {
+      updateData();
+      if (data.slots.length > 0) {
+        setAvailableFilled(true);
+      } else {
+        setAvailableFilled(false);
+      }
+      setEditMode(false);
+    }
   };
+
   /*   const changeStatus = async (data) => {
     await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
@@ -49,6 +63,10 @@ export default function EditAvailability({ tutor, updateData }) {
         await updateTutor({
           slots: [...tutor?.slots, { ...values }],
         });
+        /* if (updated.status === 200) {
+          setAvailableFilled(true);
+        } */
+        // setAvailableFilled(true);
       } catch (error) {
         console.log(error);
       }
@@ -58,6 +76,7 @@ export default function EditAvailability({ tutor, updateData }) {
     <div className=" pb-12 w-full">
       <h1 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
         Availability Details
+        <span className="text-primary text-lg font-normal">{` (Required)`}</span>
       </h1>
       <div className="py-10 sm:px-6 sm:border border-gray-200 rounded-lg">
         <div className="sm:flex justify-between">

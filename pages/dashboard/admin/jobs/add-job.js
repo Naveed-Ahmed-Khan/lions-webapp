@@ -89,6 +89,8 @@ function Student({ allSubjects, allClasses, setCurrentStep }) {
       class: "",
       institute: "",
       duration: "",
+      watsapp: "",
+      address: "",
     },
     onSubmit: (values) => {
       localStorage.setItem("Student", JSON.stringify(values));
@@ -149,12 +151,28 @@ function Student({ allSubjects, allClasses, setCurrentStep }) {
             <option value="More Than 3 Months">More Than 3 Months</option>
           </Select>
         </FormGroup>
-        <FormGroup>
+        <FormGroup horizontal>
           <Input
             required
             label="Institute"
             type="text"
             name="institute"
+            formik={formik}
+          />
+          <Input
+            required
+            label="Watsapp No."
+            type="number"
+            name="watsppp"
+            formik={formik}
+          />
+        </FormGroup>
+        <FormGroup>
+          <TextArea
+            required
+            label="Address"
+            type="text"
+            name="address"
             formik={formik}
           />
         </FormGroup>

@@ -341,10 +341,20 @@ export default function JobDescription() {
                                   selected or not. Good Luck!
                                 </p>
                                 <h3 className="mt-4 text-gray-800 font-medium ">
+                                  Watsapp No.
+                                </h3>
+                                <p className="text-gray-700">
+                                  {job?.user_id?.watsapp ||
+                                    job?.watsapp ||
+                                    "Watsapp Not Available"}
+                                </p>
+                                <h3 className="mt-4 text-gray-800 font-medium ">
                                   Address
                                 </h3>
                                 <p className="text-gray-700">
-                                  {job?.user_id.address}
+                                  {job?.user_id?.address ||
+                                    job?.address ||
+                                    "Address Not Available"}
                                 </p>
                                 {payment.length > 0 ? (
                                   <h3 className="mt-4 text-lg text-gray-800 font-medium ">
@@ -471,10 +481,20 @@ export default function JobDescription() {
                                   first day at this job?.
                                 </p>
                                 <h3 className="mt-4 text-gray-800 font-medium ">
-                                  Address:
+                                  Watsapp No.
                                 </h3>
                                 <p className="text-gray-700">
-                                  {job?.user_id.address}
+                                  {job?.user_id?.watsapp ||
+                                    job?.watsapp ||
+                                    "Watsapp Not Available"}
+                                </p>
+                                <h3 className="mt-4 text-gray-800 font-medium ">
+                                  Address
+                                </h3>
+                                <p className="text-gray-700">
+                                  {job?.user_id?.address ||
+                                    job?.address ||
+                                    "Address Not Available"}
                                 </p>
                               </div>
                             </div>

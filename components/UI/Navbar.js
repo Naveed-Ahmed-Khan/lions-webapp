@@ -117,6 +117,9 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
                       clipRule="evenodd"
                     />
                   </svg>
+                  <p className="text-white text-sm font-medium">
+                    {currentUser?.name.split(" ")[0]}
+                  </p>
                 </div>
               </Dropdown>
             </li>
@@ -233,6 +236,9 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
                       clipRule="evenodd"
                     />
                   </svg>
+                  <p className="text-white text-sm font-medium">
+                    {currentUser?.name.split(" ")[0]}
+                  </p>
                 </div>
               </Dropdown>
             </div>

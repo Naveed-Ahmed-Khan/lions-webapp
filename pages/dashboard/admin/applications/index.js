@@ -25,24 +25,24 @@ export default function Applications() {
 
   const viewTutorDetails = (data) => {
     router.push(
-      `/dashboard/admin/applications/applicant/${data.applicant_id._id}`
+      `/dashboard/admin/applications/applicant/${data?.applicant_id._id}`
     );
   };
 
   const viewJobDetails = (data) => {
-    router.push(`/dashboard/admin/applications/job/${data.job_id._id}`);
+    router.push(`/dashboard/admin/applications/job/${data?.job_id._id}`);
   };
 
   const selectApplication = async (data) => {
-    const SELECT_API = `${process.env.NEXT_PUBLIC_API}/select-application/${data._id}`;
+    const SELECT_API = `${process.env.NEXT_PUBLIC_API}/select-application/${data?._id}`;
     const ADD_API = `${process.env.NEXT_PUBLIC_API}/add-notification`;
     const PAY_API = `${process.env.NEXT_PUBLIC_API}/add-payment`;
     try {
       const res = await axios.get(SELECT_API);
-      if (!data.isSelected) {
+      if (!data?.isSelected) {
         await axios.post(ADD_API, {
-          job_id: data.job_id._id,
-          tutor_id: data.applicant_id._id,
+          job_id: data?.job_id._id,
+          tutor_id: data?.applicant_id._id,
           type: "success",
           title: "Selected For Job",
           msg: "You have been selected for the job",
@@ -50,7 +50,7 @@ export default function Applications() {
         await axios.post(
           PAY_API,
           {
-            app_id: data._id,
+            app_id: data?._id,
             earned: earned,
             isFinalized: true,
           },
@@ -67,16 +67,16 @@ export default function Applications() {
   };
 
   const shortlistApplication = async (data) => {
-    const SHORTLIST_API = `${process.env.NEXT_PUBLIC_API}/shortlist-application/${data._id}`;
+    const SHORTLIST_API = `${process.env.NEXT_PUBLIC_API}/shortlist-application/${data?._id}`;
     const ADD_API = `${process.env.NEXT_PUBLIC_API}/add-notification`;
     console.log(data);
     try {
       const res = await axios.get(SHORTLIST_API);
 
-      if (!data.isShortlisted) {
+      if (!data?.isShortlisted) {
         const added = await axios.post(ADD_API, {
-          job_id: data.job_id._id,
-          tutor_id: data.applicant_id._id,
+          job_id: data?.job_id._id,
+          tutor_id: data?.applicant_id._id,
           type: "success",
           title: "Shortlisted For Demo",
           msg: "You have been selected for a demo",
@@ -94,7 +94,7 @@ export default function Applications() {
   };
 
   const rejectApplication = async (data) => {
-    const REJECT_API = `${process.env.NEXT_PUBLIC_API}/reject-application/${data._id}`;
+    const REJECT_API = `${process.env.NEXT_PUBLIC_API}/reject-application/${data?._id}`;
     try {
       const res = await axios.get(REJECT_API);
       console.log(res);
@@ -126,7 +126,7 @@ export default function Applications() {
       value: "Select",
       onClick: (data) => {
         setSelected(data);
-        if (data.isSelected) {
+        if (data?.isSelected) {
           console.log(data);
           selectApplication(data);
         } else {
@@ -186,13 +186,13 @@ export default function Applications() {
 
   useEffect(() => {
     if (filter === "Assigned") {
-      setApplications(data.filter((app) => app.isSelected === true));
+      setApplications(data?.filter((app) => app.isSelected === true));
     }
     if (filter === "Shortlisted") {
-      setApplications(data.filter((app) => app.isShortlisted === true));
+      setApplications(data?.filter((app) => app.isShortlisted === true));
     }
     if (filter === "Rejected") {
-      setApplications(data.filter((app) => app.isRejected === true));
+      setApplications(data?.filter((app) => app.isRejected === true));
     }
     if (filter === "All") {
       setApplications(data);
@@ -223,13 +223,13 @@ export default function Applications() {
 
     if (filter !== "All" && !search) {
       if (filter === "Assigned") {
-        setApplications(data.filter((app) => app.isSelected === true));
+        setApplications(data?.filter((app) => app.isSelected === true));
       }
       if (filter === "Shortlisted") {
-        setApplications(data.filter((app) => app.isShortlisted === true));
+        setApplications(data?.filter((app) => app.isShortlisted === true));
       }
       if (filter === "Rejected") {
-        setApplications(data.filter((app) => app.isRejected === true));
+        setApplications(data?.filter((app) => app.isRejected === true));
       }
     }
 

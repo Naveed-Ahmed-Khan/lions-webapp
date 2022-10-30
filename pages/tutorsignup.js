@@ -290,10 +290,11 @@ function Profile({ setCurrentStep }) {
         values.profilePic = await filetobase64(imagePath);
         // console.log(values.profilePic);
         localStorage.setItem("Profile", JSON.stringify(values));
-        setCurrentStep((prev) => ++prev);
         localStorage.setItem("step", 3);
+        setCurrentStep((prev) => ++prev);
       } catch (error) {
         console.log(error);
+        alert(error);
       }
     },
   });

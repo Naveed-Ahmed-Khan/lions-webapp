@@ -133,8 +133,8 @@ export default function Tutors() {
       setTutors(
         tutors.filter(
           (tutor) =>
-            tutor._id.includes(search) ||
-            tutor.name.toLowerCase().includes(search.toLowerCase())
+            tutor.name.toLowerCase().includes(search.toLowerCase()) ||
+            String(tutor.watsapp).includes(search)
         )
       );
     }
@@ -192,7 +192,7 @@ export default function Tutors() {
                   }}
                 />
                 <button
-                  className="group absolute py-[.95rem]  px-1 sm:px-2 right-0 top-7 sm:top-8 bg-white"
+                  className="group absolute py-[.90rem]  px-1 sm:px-2 right-0 top-7 sm:top-8 bg-white"
                   onClick={() => {
                     setSearch("");
                   }}

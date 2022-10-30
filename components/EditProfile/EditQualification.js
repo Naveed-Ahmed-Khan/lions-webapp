@@ -17,19 +17,30 @@ import TextArea from "../UI/TextArea";
 import CheckBox from "../UI/CheckBox";
 import { getCookie } from "cookies-next";
 
-export default function EditQualification({ tutor, updateData }) {
+export default function EditQualification({
+  setQualFilled,
+  tutor,
+  updateData,
+}) {
   const [editMode, setEditMode] = useState(false);
 
   const updateTutor = async (data) => {
-    await axios.patch(
+    const updated = await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
       data,
       {
         headers: { Authorization: `Bearer ${getCookie("token")}` },
       }
     );
-    updateData();
-    setEditMode(false);
+    if (updated.status === 200) {
+      updateData();
+      if (data.qualifications.length > 0) {
+        setQualFilled(true);
+      } else {
+        setQualFilled(false);
+      }
+      setEditMode(false);
+    }
   };
 
   const formik = useFormik({
@@ -54,6 +65,7 @@ export default function EditQualification({ tutor, updateData }) {
     <div className=" pb-12 w-full ">
       <h1 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
         Education Details
+        <span className="text-primary text-lg font-normal">{` (Required)`}</span>
       </h1>
       <div className="py-10 sm:px-6 sm:border border-gray-200 rounded-lg">
         <div className="sm:flex justify-between">

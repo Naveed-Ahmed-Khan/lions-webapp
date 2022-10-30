@@ -44,53 +44,90 @@ export default function EditProfile() {
   const { data: cities, isLoading: citiesLoading } = useFetch(CITY_API, false);
   const { data: areas, isLoading: areasLoading } = useFetch(AREA_API, false);
 
-  console.log(cities);
-  // console.log(isError);
-  console.log(tutor?.profileStatus);
-
   const [currentTab, setCurrentTab] = useState("Personal");
   const [profile, setProfile] = useState(tutor?.profileStatus);
 
-  console.log(profile);
+  const [qualFilled, setQualFilled] = useState(false);
+  const [availableFilled, setAvailableFilled] = useState(false);
+  const [subjectFilled, setSubjectFilled] = useState(false);
+  const [locationFilled, setLocationFilled] = useState(false);
+  const [experienceFilled, setExperienceFilled] = useState(false);
+  const [sectionFilled, setSectionFilled] = useState(false);
 
   useEffect(() => {
-    return async () => {
-      console.log("unmounting");
+    if (tutor?.qualifications?.length > 0) {
+      setQualFilled(true);
+    } else {
+      setQualFilled(false);
+    }
+    if (tutor?.subjectsTaught?.length > 0) {
+      setSubjectFilled(true);
+    } else {
+      setSubjectFilled(false);
+    }
+    if (tutor?.locations?.length > 0) {
+      setLocationFilled(true);
+    } else {
+      setLocationFilled(false);
+    }
+    if (tutor?.slots?.length > 0) {
+      setAvailableFilled(true);
+    } else {
+      setAvailableFilled(false);
+    }
+    if (tutor?.experience?.length > 0) {
+      setExperienceFilled(true);
+    } else {
+      setExperienceFilled(false);
+    }
+    if (tutor?.sections?.length > 0) {
+      setSectionFilled(true);
+    } else {
+      setSectionFilled(false);
+    }
+  }, [tutor]);
+
+  useEffect(() => {
+    const setProfileStatus = async () => {
       if (tutor?.profileStatus === "incomplete") {
         if (profile === "complete") {
-          console.log("complete");
+          console.log("Updating to complete status");
           await axios.patch(
             `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor?._id}`,
             { profileStatus: "complete" },
             { headers: { Authorization: `Bearer ${getCookie("token")}` } }
           );
 
+          updateData();
           checkAuth();
         }
       }
       if (tutor?.profileStatus === "complete") {
         if (profile === "incomplete") {
-          console.log("incomplete");
+          console.log("Updating to incomplete status");
           await axios.patch(
             `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor?._id}`,
             { profileStatus: "incomplete" },
             { headers: { Authorization: `Bearer ${getCookie("token")}` } }
           );
-
+          updateData();
           checkAuth();
         }
       }
     };
-  }, [profile]);
+    console.log("Current " + tutor?.profileStatus);
+    console.log("New " + profile);
+    setProfileStatus();
+  }, [tutor, profile]);
 
   const tabs = [
-    "Personal",
-    "Qualification",
-    "Experience",
-    "Subjects",
-    "Availability",
-    "Locations",
-    "Sections",
+    { id: 1, name: "Personal", value: "" },
+    { id: 2, name: "Qualification", value: "qualifications" },
+    { id: 3, name: "Subjects", value: "subjectsTaught" },
+    { id: 4, name: "Availability", value: "slots" },
+    { id: 5, name: "Locations", value: "locations" },
+    { id: 6, name: "Experience", value: "experience" },
+    { id: 7, name: "Sections", value: "sections" },
   ];
 
   return (
@@ -106,35 +143,45 @@ export default function EditProfile() {
         ) : (
           <>
             <div className="px-5 sm:px-0 mb-4 sm:my-6">
-              <Progress setProfile={setProfile} tutor={tutor} />
+              {!tutorLoading && (
+                <Progress
+                  qualFilled={qualFilled}
+                  subjectFilled={subjectFilled}
+                  locationFilled={locationFilled}
+                  availableFilled={availableFilled}
+                  setProfile={setProfile}
+                  // tutor={tutor}
+                  // profileStatus={tutor.profileStatus}
+                  // tutorId={tutor._id}
+                />
+              )}
             </div>
 
             <div className="px-5 sm:px-0 relative flex flex-col">
               <div className="my-4">
                 <Tabs
                   tabs={tabs}
+                  tutor={tutor}
                   currentTab={currentTab}
                   setCurrentTab={setCurrentTab}
                 />
               </div>
             </div>
             <div className="p-5 sm:p-0 ">
-              {currentTab === "Sections" && (
-                <EditSections tutor={tutor} updateData={updateData} />
-              )}
               {currentTab === "Personal" && (
-                <EditPersonal
-                  cities={cities}
-                  areas={areas}
+                <EditPersonal tutor={tutor} updateData={updateData} />
+              )}
+              {currentTab === "Availability" && (
+                <EditAvailability
+                  setAvailableFilled={setAvailableFilled}
                   tutor={tutor}
                   updateData={updateData}
                 />
               )}
-              {currentTab === "Availability" && (
-                <EditAvailability tutor={tutor} updateData={updateData} />
-              )}
+
               {currentTab === "Locations" && (
                 <EditLocations
+                  setLocationFilled={setLocationFilled}
                   cities={cities}
                   areas={areas}
                   tutor={tutor}
@@ -142,13 +189,24 @@ export default function EditProfile() {
                 />
               )}
               {currentTab === "Subjects" && (
-                <EditSubjects tutor={tutor} updateData={updateData} />
+                <EditSubjects
+                  setSubjectFilled={setSubjectFilled}
+                  tutor={tutor}
+                  updateData={updateData}
+                />
+              )}
+              {currentTab === "Qualification" && (
+                <EditQualification
+                  setQualFilled={setQualFilled}
+                  tutor={tutor}
+                  updateData={updateData}
+                />
               )}
               {currentTab === "Experience" && (
                 <EditExperience tutor={tutor} updateData={updateData} />
               )}
-              {currentTab === "Qualification" && (
-                <EditQualification tutor={tutor} updateData={updateData} />
+              {currentTab === "Sections" && (
+                <EditSections tutor={tutor} updateData={updateData} />
               )}
             </div>
           </>

@@ -1,7 +1,8 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 export default function Table({ header, body, status, actions }) {
+  const [clickledRow, setClickledRow] = useState("");
   return (
     <div className="">
       {/* <div className="pb-4 bg-white dark:bg-gray-900">
@@ -87,8 +88,17 @@ export default function Table({ header, body, status, actions }) {
             {body?.map((data) => {
               return (
                 <tr
+                  onClick={() =>
+                    clickledRow === data._id
+                      ? setClickledRow("")
+                      : setClickledRow(data._id)
+                  }
                   key={data._id}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  className={`border-b ${
+                    clickledRow === data._id
+                      ? "bg-gray-200 hover:bg-gray-200"
+                      : "bg-white hover:bg-gray-50"
+                  }`}
                 >
                   {header.map((item) => {
                     const { id, value, nestedValue, deepNested, image } = item;

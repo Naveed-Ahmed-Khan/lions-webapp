@@ -18,11 +18,15 @@ import axios from "axios";
 import { filetobase64 } from "../../util/filetobase64";
 import CheckBox from "../UI/CheckBox";
 import { getCookie } from "cookies-next";
+import useFetch from "../../hooks/useFetch";
 
-export default function EditPersonal({ tutor, updateData, cities, areas }) {
-  console.log(cities);
-  console.log(areas);
+export default function EditPersonal({ tutor, updateData }) {
+  const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-allcities`;
+  const AREA_API = `${process.env.NEXT_PUBLIC_API}/get-areas`;
+
   const { signup } = useAuth();
+  const { data: cities, isLoading: citiesLoading } = useFetch(CITY_API, false);
+  const { data: areas, isLoading: areasLoading } = useFetch(AREA_API, false);
   const [imagePath, setImagePath] = useState(null);
   const [bannerPath, setBannerPath] = useState(null);
   const [error, setError] = useState("");
@@ -116,6 +120,7 @@ export default function EditPersonal({ tutor, updateData, cities, areas }) {
     <div className="pb-12 w-full">
       <h1 className="text-xl sm:text-2xl font-semibold text-primary">
         Profile Details
+        <span className="text-primary text-lg font-normal">{` (Required)`}</span>
       </h1>
       <form onSubmit={formik.handleSubmit} className="mt-8 w-full">
         <div className="space-y-8">

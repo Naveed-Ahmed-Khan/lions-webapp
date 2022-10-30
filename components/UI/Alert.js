@@ -71,18 +71,20 @@ export default function Alert({ type = "success", title = "title", children }) {
     <section className="">
       <div className="items-center w-full mx-auto max-w-screen-xl">
         <div
-          className={`p-2 border-l-4 ${finalClass[type].border} ${finalClass[type].bg}`}
+          className={`p-2 border-l-4 ${finalClass[type]?.border} ${finalClass[type]?.bg}`}
         >
           <div className="space-y-1">
             <div className="flex justify-between">
               <h3
-                className={`text-sm font-semibold tracking-wide ${finalClass[type].text}`}
+                className={`text-sm font-semibold tracking-wide ${finalClass[type]?.text}`}
               >
                 {title}
               </h3>
               <div className=""></div>
             </div>
-            <div className={`text-sm ${finalClass[type].text}`}>{children}</div>
+            <div className={`text-sm ${finalClass[type]?.text}`}>
+              {children}
+            </div>
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ export async function getServerSideProps({ query }) {
   console.log(query);
 
   const tutors = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-profilePics`,
+    `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`,
     {
       params: query,
     }

@@ -7,6 +7,7 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import useFetch from "../../hooks/useFetch";
 import Link from "next/link";
+import Spinner from "./loader/Spinner";
 
 export default function Notification({ children }) {
   const { checkAuth, currentUser, logout } = useAuth();
@@ -93,53 +94,63 @@ export default function Notification({ children }) {
             className="absolute space-y-3 right-0 top-8 sm:right-0 sm:top-12 p-3 bg-gray-50 text-gray-700
              rounded-md shadow-lg drop-shadow-2xl min-w-[240px] sm:min-w-[320px]"
           >
-            {data.length > 0 ? (
-              <>
-                {data.map((item) => {
-                  let link = "";
-                  if (item.msg.includes("incomplete profile")) {
-                    link = `/edit-profile/${item.tutor_id}`;
-                  } else {
-                    link = `/my-application/${item.job_id}`;
-                  }
-
-                  return (
-                    <div key={item._id} className="relative">
-                      <Alert type={item.type} title={item.title}>
-                        {item.msg} For more details{" "}
-                        <Link href={link}>
-                          <a
-                            onClick={() => {
-                              setOpen(false);
-                            }}
-                            className="underline"
-                          >
-                            click here
-                          </a>
-                        </Link>
-                        .
-                      </Alert>
-                      <button
-                        className="absolute top-1 right-1"
-                        onClick={() => deleteNotification(item._id)}
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          className="w-5 h-5 opacity-60 hover:opacity-100"
-                        >
-                          <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-                        </svg>
-                      </button>
-                    </div>
-                  );
-                })}
-              </>
+            {isLoading && !data ? (
+              <Spinner sm />
             ) : (
-              <p className=" text-gray-700 font-medium text-center">
-                No Notifications
-              </p>
+              <>
+                {data.length > 0 ? (
+                  <>
+                    {data.map((item) => {
+                      let link = "";
+                      if (item.msg.includes("incomplete profile")) {
+                        link = `/edit-profile/${item.tutor_id}`;
+                      } else if (item.msg.includes("unverified tutor")) {
+                        link = `/my-application/${item.job_id}`;
+                      } else {
+                        link = "";
+                      }
+
+                      return (
+                        <div key={item._id} className="relative">
+                          <Alert type={item.type} title={item.title}>
+                            {item.msg} For more details{" "}
+                            {link && (
+                              <Link href={link}>
+                                <a
+                                  onClick={() => {
+                                    setOpen(false);
+                                  }}
+                                  className="underline"
+                                >
+                                  click here
+                                </a>
+                              </Link>
+                            )}
+                            .
+                          </Alert>
+                          <button
+                            className="absolute top-1 right-1"
+                            onClick={() => deleteNotification(item._id)}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              className="w-5 h-5 opacity-60 hover:opacity-100"
+                            >
+                              <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+                            </svg>
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </>
+                ) : (
+                  <p className=" text-gray-700 font-medium text-center">
+                    No Notifications
+                  </p>
+                )}
+              </>
             )}
           </div>
         )}

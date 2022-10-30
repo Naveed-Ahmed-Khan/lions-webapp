@@ -90,9 +90,13 @@ export default function JobApplication() {
     }); */
     if (!currentUser) {
       setIsLoading(false);
-      router.push("/login");
+      // router.push("/login");
+      setError(
+        "Login as a turor to submit a job application. Register as a tutor if you donot have an account to proceed."
+      );
       return;
     }
+
     console.log(currentUser);
     if (currentUser?.isVerified && userType === "tutor") {
       try {
@@ -121,8 +125,9 @@ export default function JobApplication() {
         setIsLoading(false);
       }
     } else {
-      // console.log("You are not eligible to apply");
-      setError("Unverified Tutors are not eligible to apply");
+      setError(
+        "Unverified Tutors are not eligible to apply, pay your verification fee of Rs 1500 to 03328200082 Jazz cash to get verified."
+      );
       setIsLoading(false);
     }
   };
@@ -211,7 +216,7 @@ export default function JobApplication() {
                           }}
                           className="cursor-pointer mt-4 text-center font-archivo text-red-500 px-6 py-3 border border-red-500 rounded-lg"
                         >
-                          {error}, please try again.
+                          {error}
                         </p>
                       )}
                       <div className="mt-8 flex justify-end">

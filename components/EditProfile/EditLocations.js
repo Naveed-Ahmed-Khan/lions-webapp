@@ -17,17 +17,30 @@ import TextArea from "../UI/TextArea";
 import CheckBox from "../UI/CheckBox";
 import { getCookie } from "cookies-next";
 
-export default function EditLocations({ areas, cities, tutor, updateData }) {
+export default function EditLocations({
+  setLocationFilled,
+  areas,
+  cities,
+  tutor,
+  updateData,
+}) {
   const [editMode, setEditMode] = useState(false);
 
   const updateTutor = async (data) => {
-    await axios.patch(
+    const updated = await axios.patch(
       `${process.env.NEXT_PUBLIC_API}/update-tutor/${tutor._id}`,
       data,
       { headers: { Authorization: `Bearer ${getCookie("token")}` } }
     );
-    updateData();
-    setEditMode(false);
+    if (updated.status === 200) {
+      updateData();
+      if (data.locations.length > 0) {
+        setLocationFilled(true);
+      } else {
+        setLocationFilled(false);
+      }
+      setEditMode(false);
+    }
   };
 
   const formik = useFormik({
@@ -64,6 +77,7 @@ export default function EditLocations({ areas, cities, tutor, updateData }) {
     <div className=" pb-12 w-full">
       <h1 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
         Locations
+        <span className="text-primary text-lg font-normal">{` (Required)`}</span>
       </h1>
       <div className="sm:p-6 sm:border border-gray-200 rounded-lg">
         <div className="sm:flex justify-between">

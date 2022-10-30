@@ -18,7 +18,14 @@ export default function WebLayout({ children }) {
           name="description"
           content="Striving to provide quality education"
         />
+        <meta
+          name="google-site-verification"
+          content="m2crJftQGoia9eW_5Een5RcngdFgCbNGLbcqYrHnuJw"
+        />
+        <meta name="verify-v1" content="7ee341b0f1c20b0a" />
+        <meta name="msvalidate.01" content="AD8D54215A8500E21F93B4B0EF1D39CA" />
         <link rel="icon" href="/e.png" />
+        {/* <body className="hidden">Verification: 7ee341b0f1c20b0a</body> */}
       </Head>
       <Sidebar
         open={open}
@@ -30,14 +37,9 @@ export default function WebLayout({ children }) {
 
       {currentUser?.profileStatus && !currentUser?.isVerified && (
         <div className="px-5 xl:px-0">
-          <p
-            // onClick={() => {
-            //   setError("");
-            // }}
-            className="max-w-screen-xl mx-auto cursor-pointer mt-2 text-center font-archivo text-red-500 px-6 py-3 border border-red-500 rounded-lg"
-          >
-            An unverified tutor cannot apply on Jobs. Pay your verification fee
-            of Rs 1500 to 03328200082 Jazz cash to get verified.
+          <p className="max-w-screen-xl mx-auto cursor-pointer mt-2 text-center font-archivo text-red-500 px-6 py-3 border border-red-500 rounded-lg">
+            {`An unverified tutor cannot apply on Jobs. Pay your verification fee
+            of Rs 1500 to 03328200082 Jazz cash to get verified.`}
           </p>
         </div>
       )}

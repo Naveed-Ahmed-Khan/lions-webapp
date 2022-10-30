@@ -40,7 +40,11 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
             <div>
               <p className="text-gray-800 text-sm font-medium">
                 Job Status:
-                <span className="ml-2 px-1 py-0.5 border-2 border-primary rounded-full">
+                <span
+                  className={`ml-2 py-1 px-1.5 rounded-full text-white ${
+                    job.isOpen ? "bg-emerald-500" : "bg-rose-500"
+                  }`}
+                >
                   {job.isOpen ? "Open" : "Closed"}
                 </span>
               </p>

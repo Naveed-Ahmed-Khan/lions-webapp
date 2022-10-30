@@ -179,7 +179,7 @@ export default function TutorFilters({
       aria-label="Filters"
     >
       <header className="p-4 text-center">
-        <h2 className="text-xl text-gray-700 font-semibold">Job Filters</h2>
+        <h2 className="text-xl text-gray-700 font-semibold">Tutor Filters</h2>
       </header>
 
       <main className="flow-root p-6 overflow-y-auto">

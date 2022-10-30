@@ -5,8 +5,8 @@ import useSWR, { useSWRConfig } from "swr";
 import { useAuth } from "../contexts/AuthContext";
 
 const useFetch = (url, checkLoggedIn) => {
-  console.log(url);
-  console.log(checkLoggedIn);
+  // console.log(url);
+  // console.log(checkLoggedIn);
   const router = useRouter();
   // const { mutate } = useSWRConfig();
   const token = getCookie("token");
@@ -24,6 +24,7 @@ const useFetch = (url, checkLoggedIn) => {
       )
       .then((res) => res.data)
       .catch((err) => {
+        console.log(err);
         // router.push("/")
       })
   );
