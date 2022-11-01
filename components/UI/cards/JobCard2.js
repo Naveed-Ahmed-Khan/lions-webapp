@@ -186,9 +186,9 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
             <Anchor button href={`/tution-job/${job._id}`}>
               View Details
             </Anchor>
-            <Anchor button href={`/tution-job/apply/${job._id}`}>
+            {/* <Anchor button href={`/tution-job/apply/${job._id}`}>
               Apply Now
-            </Anchor>
+            </Anchor> */}
           </div>
         )}
 
