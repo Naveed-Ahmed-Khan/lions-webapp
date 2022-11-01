@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }) {
           name="description"
           content="Striving to provide quality education"
         />
-        <meta http-equiv="content-type" content="en-us" />
+        <meta httpEquiv="content-type" content="en-us" />
         <meta name="author" content="Naveed Ahmed Khan" />
         <meta
           name="google-site-verification"
