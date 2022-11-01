@@ -75,9 +75,9 @@ export default function Areas() {
   return (
     <div className="p-6 bg-white border border-gray-300 shadow-lg">
       <div className="flex justify-between">
-        <h1 className="text-primary-light text-4xl font-medium tracking-wide">
+        <h2 className="text-primary-light text-4xl font-medium tracking-wide">
           Areas
-        </h1>
+        </h2>
         <Button
           onClick={() => {
             setShowModal(true);

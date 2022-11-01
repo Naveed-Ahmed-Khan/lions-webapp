@@ -9,11 +9,13 @@ export default function DashboardLayout({ children }) {
   return (
     <div>
       <Head>
-        <title>Educationists</title>
+        <title>The Educationists</title>
         <meta
           name="description"
           content="Striving to provide quality education"
         />
+        <meta http-equiv="content-type" content="en-us" />
+        <meta name="author" content="Naveed Ahmed Khan" />
         <meta
           name="google-site-verification"
           content="m2crJftQGoia9eW_5Een5RcngdFgCbNGLbcqYrHnuJw"

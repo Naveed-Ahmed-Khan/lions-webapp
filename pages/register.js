@@ -28,9 +28,9 @@ export default function Register() {
             translate-y-full group-hover:translate-y-0 
             opacity-0 group-hover:opacity-100 transition-all duration-300 "
           >
-            <h1 className="text-5xl font-bold text-center text-green-900">
+            <h2 className="text-5xl font-bold text-center text-green-900">
               Sign up as a Student/Parent
-            </h1>
+            </h2>
           </div>
 
           {/* mobile */}
@@ -38,9 +38,9 @@ export default function Register() {
             className="lg:hidden p-6 bg-white bg-opacity-40 absolute w-full h-full flex items-center justify-center 
             transition-all duration-300"
           >
-            <h1 className="px-6 text-3xl font-bold text-center text-green-900">
+            <h2 className="px-6 text-3xl font-bold text-center text-green-900">
               Sign up as a Student/Parent
-            </h1>
+            </h2>
           </div>
         </div>
         <div className="lg:hidden w-full flex items-center gap-4 -my-4 z-30">
@@ -68,9 +68,9 @@ export default function Register() {
             -translate-y-full group-hover:translate-y-0 
             opacity-0 group-hover:opacity-100 transition-all duration-300 "
           >
-            <h1 className="text-5xl font-bold text-center text-green-900">
+            <h2 className="text-5xl font-bold text-center text-green-900">
               Sign up as a Tutor
-            </h1>
+            </h2>
           </div>
 
           {/* mobile */}
@@ -78,9 +78,9 @@ export default function Register() {
             className="lg:hidden p-6 bg-white bg-opacity-40 absolute w-full h-full flex items-center justify-center 
             transition-all duration-300"
           >
-            <h1 className="px-6 text-3xl font-bold text-center text-green-900">
+            <h2 className="px-6 text-3xl font-bold text-center text-green-900">
               Sign up as a Tutor
-            </h1>
+            </h2>
           </div>
         </div>
       </section>

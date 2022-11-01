@@ -240,9 +240,9 @@ export default function Applications() {
 
   return (
     <div className="p-6 bg-white border border-gray-300 shadow-lg">
-      <h1 className="text-primary-light text-4xl font-medium tracking-wide">
+      <h2 className="text-primary-light text-4xl font-medium tracking-wide">
         Applications
-      </h1>
+      </h2>
       <section className="mt-8">
         {isLoading ? (
           <Spinner md />

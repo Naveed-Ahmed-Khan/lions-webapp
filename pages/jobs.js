@@ -103,9 +103,9 @@ export default function Jobs({ jobs, areas, classes, cities }) {
           </div>
           <div className="w-full lg:h-[calc(100vh-110px)] lg:overflow-auto mx-auto space-y-8">
             <div className="space-y-4">
-              <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+              <h2 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Best Jobs for You
-              </h1>
+              </h2>
               {/* <p className="">
                 At a assumenda quas cum earum ut itaque commodi saepe rem
                 aspernatur quam natus quis nihil quod, hic explicabo doloribus

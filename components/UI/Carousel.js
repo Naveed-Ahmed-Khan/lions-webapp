@@ -51,9 +51,9 @@ const Carousel = ({ achievements }) => {
         sm:translate-y-full sm:group-hover:translate-y-0 transition-all duration-200
         translate-y-0  bg-gradient-to-t from-white"
         >
-          <h1 className="text-2xl sm:text-3xl font-semibold text-primary">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-primary">
             {images[currentImage]?.title}
-          </h1>
+          </h2>
           <p className="mt-2 text-gray-600 font-medium">
             {images[currentImage]?.desc}
           </p>

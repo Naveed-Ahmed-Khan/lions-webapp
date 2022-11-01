@@ -50,9 +50,9 @@ export default function StudentSignup({ areas, cities }) {
   return (
     <Container color={"gray-50"}>
       <div className="bg-white w-full mx-auto">
-        <h1 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
+        <h2 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
           Student Signup
-        </h1>
+        </h2>
         <div className="hidden sm:block pt-6 pb-12 px-8">
           <ChevronDots
             steps={["Student", "Account"]}
@@ -109,9 +109,9 @@ function Student({ cities, areas, setCurrentStep }) {
 
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="text-xl sm:text-2xl font-semibold text-primary">
         Student Details
-      </h1>
+      </h2>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <div className="relative sm:flex gap-6">
           {path ? (
@@ -265,9 +265,9 @@ function Account({ setCurrentStep }) {
 
   return (
     <div className="pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="text-xl sm:text-2xl font-semibold text-primary">
         Account Details
-      </h1>
+      </h2>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup>
           <Input required label="Email" name={"email"} formik={formik} />

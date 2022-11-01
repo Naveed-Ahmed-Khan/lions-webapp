@@ -85,9 +85,9 @@ export default function Jobs() {
   return (
     <div className="p-6 bg-white border border-gray-300 shadow-lg">
       <div className="flex justify-between">
-        <h1 className="text-primary-light text-4xl font-medium tracking-wide">
+        <h2 className="text-primary-light text-4xl font-medium tracking-wide">
           Jobs
-        </h1>
+        </h2>
         <Anchor button href={"/dashboard/admin/jobs/add-job"}>
           Add Job
         </Anchor>

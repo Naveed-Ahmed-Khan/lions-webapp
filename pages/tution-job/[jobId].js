@@ -2,7 +2,6 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-
 import Container from "../../components/UI/Container";
 import TextArea from "../../components/UI/TextArea";
 import Input from "../../components/UI/Input";
@@ -73,6 +72,7 @@ export default function JobDescription() {
   const [hasApplied, setHasApplied] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [applyMode, setApplyMode] = useState(false);
 
   const timestamp = job?._id.toString().substring(0, 8);
   const date = new Date(parseInt(timestamp, 16) * 1000);
@@ -138,7 +138,7 @@ export default function JobDescription() {
 
   return (
     <Container color={"white"}>
-      <div className="p-4 sm:px-8 sm:pt-6 sm:pb-0 flex flex-col bg-white">
+      <div className="p-4 sm:p-8 flex flex-col bg-white">
         <h2 className=" text-primary text-3xl font-semibold">
           Job Description
         </h2>
@@ -151,17 +151,14 @@ export default function JobDescription() {
             <>
               <div className="bg-white md:bg-neutral-100 rounded sm:p-8">
                 <div className="mb-6">
-                  <h2 className="mb-1 text-primary text-2xl font-semibold">
-                    {job?.title}
-                  </h2>
-                  <p className="mb-6 text-sm text-gray-700">
-                    Posted on {uploadedAt} by {job?.user_id?.name}
-                  </p>
-                  <h2 className="mb-3 text-primary text-xl font-medium">
+                  <h2 className="mb-2 text-primary text-2xl font-semibold">
                     Job details
                   </h2>
-                  <p className="">{job?.description}</p>
+                  <p className="text-sm text-gray-700">
+                    Posted on {uploadedAt} by {job?.user_id?.name}
+                  </p>
                 </div>
+                <p>{job?.description}</p>
                 <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 ">
                   <li className="flex gap-2">
                     <svg
@@ -215,99 +212,202 @@ export default function JobDescription() {
                     <span>Budget | Rs. {job?.budget}</span>
                   </li>
                 </ul>
-                <div className="mt-8 flex flex-col bg-white md:bg-neutral-100">
-                  <h2 className="mb-4 text-primary text-xl font-medium">
-                    Tutor Requirements
-                  </h2>
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <li className="flex gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                        />
-                      </svg>
-                      <span>Experience | {job?.experience} Year</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                        />
-                      </svg>
-                      <span>Qualification | {job?.qualification}</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                        />
-                      </svg>
-                      <span>Location | {job?.city}</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                        />
-                      </svg>
-                      <span>Gender Preferance | {job?.gender}</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-6 w-6 text-primary"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-                        />
-                      </svg>
-                      <span>Duration | {job?.duration}</span>
-                    </li>
-                  </ul>
-                </div>
               </div>
+
+              <div className="p- sm:p-8 flex flex-col bg-white md:bg-neutral-100">
+                <h2 className="mb-8 text-primary text-2xl font-semibold">
+                  Tutor Requirements
+                </h2>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <li className="flex gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                      />
+                    </svg>
+                    <span>Experience | {job?.experience} Year</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                      />
+                    </svg>
+                    <span>Qualification | {job?.qualification}</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                      />
+                    </svg>
+                    <span>Location | {job?.city}</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                      />
+                    </svg>
+                    <span>Gender Preferance | {job?.gender}</span>
+                  </li>
+                  <li className="flex gap-2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6 text-primary"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                      />
+                    </svg>
+                    <span>Duration | {job?.duration}</span>
+                  </li>
+                </ul>
+              </div>
+            </>
+          )}
+          {!applyMode ? (
+            <div className="my-5 flex justify-end">
+              <Button type={"buttpn"} onClick={() => setApplyMode(true)}>
+                Apply Now
+              </Button>
+            </div>
+          ) : (
+            <>
+              {currentUser?.userType !== "student" ? (
+                hasApplied ? (
+                  <div className=" bg-white md:bg-neutral-100 rounded sm:p-8">
+                    <p className="h-40 flex items-center justify-center text-xl text-gray-700 font-medium">
+                      You have already applied for this job!
+                    </p>
+                  </div>
+                ) : (
+                  <form
+                    onSubmit={submitHandler}
+                    className="bg-white md:bg-neutral-100 rounded sm:p-8"
+                  >
+                    <h2 className="mb-8 text-primary text-2xl font-semibold">
+                      Application
+                    </h2>
+                    <h4 className="text-primary text-lg font-medium">Guide:</h4>
+                    <p className="whitespace-pre-line -mt-4 mb-8 text-gray-600">
+                      {`
+                1) Mention the following in your Cover Letter:
+                  Expertise, Experience, Qualification, achievements, strategy to produce A* and how this area is suitable.
+                2) Mention your expected fee
+                3) Mention Approx distance from your location (using google maps)`}
+                    </p>
+                    <div className="space-y-4">
+                      <TextArea
+                        required
+                        label={"Cover Letter"}
+                        value={coverLetter}
+                        onChange={(e) => {
+                          setCoverLetter(e.target.value);
+                        }}
+                      />
+                      <div className="grid grid-cols-2 gap-4 -mb-2">
+                        <Input
+                          required
+                          type={"number"}
+                          label={"Expected Fee"}
+                          value={expectedBudget}
+                          onChange={(e) => {
+                            setExpectedBudget(e.target.value);
+                          }}
+                        />
+                        <Input
+                          required
+                          label={"Distance"}
+                          type={"text"}
+                          value={distance}
+                          onChange={(e) => {
+                            setDistance(e.target.value);
+                          }}
+                        />
+                      </div>
+                    </div>
+                    {error && (
+                      <p
+                        onClick={() => {
+                          setError("");
+                        }}
+                        className="cursor-pointer mt-4 text-center font-archivo text-red-500 px-6 py-3 border border-red-500 rounded-lg"
+                      >
+                        {error}, please try again.
+                      </p>
+                    )}
+                    <div className="space-y-4 sm:space-y-0 mt-8 sm:flex justify-end gap-4">
+                      <div className="w-full sm:w-fit">
+                        <Button fullwidth disabled={isLoading} type={"submit"}>
+                          {isLoading ? (
+                            <>
+                              <Spinner
+                                sm
+                                text={"text-white"}
+                                stroke={"stroke-white"}
+                              />
+                            </>
+                          ) : (
+                            <>Submit Application</>
+                          )}
+                        </Button>
+                      </div>
+                      <div className="w-full sm:w-fit">
+                        <Button
+                          fullwidth
+                          type={"buttpn"}
+                          onClick={() => setApplyMode(false)}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </div>
+                  </form>
+                )
+              ) : null}
             </>
           )}
 

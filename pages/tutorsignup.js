@@ -53,9 +53,9 @@ export default function TutorSignup({ areas, cities }) {
   return (
     <Container color={"gray-50"}>
       <div className="bg-white w-full mx-auto">
-        <h1 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
+        <h2 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
           Tutor Signup
-        </h1>
+        </h2>
         <div className="hidden sm:block pt-6 pb-12 px-8">
           <ChevronDots
             // steps={["Account", "Personal", "Qualification", "Profile"]}
@@ -135,9 +135,9 @@ function Personal({ cities, areas, setCurrentStep }) {
 
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="text-xl sm:text-2xl font-semibold text-primary">
         Personal Details
-      </h1>
+      </h2>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup horizontal>
           <Input required label="Full Name" name={"name"} formik={formik} />
@@ -268,6 +268,7 @@ function Personal({ cities, areas, setCurrentStep }) {
 function Profile({ setCurrentStep }) {
   const { signup } = useAuth();
   const [imagePath, setImagePath] = useState(null);
+  const [fileSize, setFileSize] = useState(null);
   const [error, setError] = useState("");
 
   const router = useRouter();
@@ -286,24 +287,29 @@ function Profile({ setCurrentStep }) {
       achievements: "",
     },
     onSubmit: async (values) => {
-      try {
-        values.profilePic = await filetobase64(imagePath);
-        // console.log(values.profilePic);
-        localStorage.setItem("Profile", JSON.stringify(values));
-        localStorage.setItem("step", 3);
-        setCurrentStep((prev) => ++prev);
-      } catch (error) {
-        console.log(error);
-        alert(error);
+      setError("");
+      if (fileSize < 1.1) {
+        try {
+          values.profilePic = await filetobase64(imagePath);
+          // console.log(values.profilePic);
+          localStorage.setItem("Profile", JSON.stringify(values));
+          localStorage.setItem("step", 3);
+          setCurrentStep((prev) => ++prev);
+        } catch (error) {
+          console.log(error);
+          alert(error);
+        }
+      } else {
+        setError("Image Size must be less than 1 MB.");
       }
     },
   });
 
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="text-xl sm:text-2xl font-semibold text-primary">
         Profile Details
-      </h1>
+      </h2>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <div className="relative sm:flex gap-6">
           {path ? (
@@ -320,13 +326,24 @@ function Profile({ setCurrentStep }) {
           )}
 
           <div className="flex-auto self-end">
+            {error && (
+              <p
+                onClick={() => setError("")}
+                className="cursor-pointer my-2 text-center font-archivo text-red-500 px-6 py-3 border border-red-500 rounded"
+              >
+                {error}
+              </p>
+            )}
+
             <Input
               required
               type="file"
               label="Profile Picture"
               name={"profilePic"}
               onChange={(e) => {
+                const fileSizeInMb = e.target.files[0]?.size / (1000 * 1000);
                 setImagePath(e.target.files[0]);
+                setFileSize(fileSizeInMb);
               }}
             />
           </div>
@@ -466,9 +483,9 @@ function Account({ setCurrentStep }) {
 
   return (
     <div className="pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="text-xl sm:text-2xl font-semibold text-primary">
         Account Details
-      </h1>
+      </h2>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup>
           <Input required label="Email" name={"email"} formik={formik} />
@@ -531,9 +548,9 @@ function Qualification({ setCurrentStep }) {
 
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="text-xl sm:text-2xl font-semibold text-primary">
         Qualification Details
-      </h1>
+      </h2>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup horizontal>
           <Select

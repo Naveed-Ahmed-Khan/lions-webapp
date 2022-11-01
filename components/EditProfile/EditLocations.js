@@ -75,10 +75,10 @@ export default function EditLocations({
 
   return (
     <div className=" pb-12 w-full">
-      <h1 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
         Locations
         <span className="text-primary text-lg font-normal">{` (Required)`}</span>
-      </h1>
+      </h2>
       <div className="sm:p-6 sm:border border-gray-200 rounded-lg">
         <div className="sm:flex justify-between">
           <h3 className="text-lg font-medium text-gray-700">

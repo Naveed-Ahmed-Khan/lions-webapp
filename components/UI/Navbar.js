@@ -31,7 +31,7 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
               src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
               alt="Float UI logo"
             /> */}
-            <h1 className="text-white text-2xl font-semibold">Educationists</h1>
+            <h2 className="text-white text-2xl font-semibold">Educationists</h2>
           </a>
         </Link>
         <ul
@@ -251,9 +251,9 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
                 src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
                 alt="Float UI logo"
               /> */}
-              <h1 className="text-white text-xl font-semibold">
+              <h2 className="text-white text-xl font-semibold">
                 Educationists
-              </h1>
+              </h2>
             </a>
           </Link>
         )}

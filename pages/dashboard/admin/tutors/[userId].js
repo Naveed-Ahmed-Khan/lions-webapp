@@ -121,20 +121,20 @@ export default function EditTutorProfile() {
   }, [tutor, profile]);
 
   const tabs = [
-    { id: 1, name: "Personal", value: "" },
+    { id: 1, name: "Sections", value: "sections" },
     { id: 2, name: "Qualification", value: "qualifications" },
     { id: 3, name: "Subjects", value: "subjectsTaught" },
     { id: 4, name: "Availability", value: "slots" },
     { id: 5, name: "Locations", value: "locations" },
     { id: 6, name: "Experience", value: "experience" },
-    { id: 7, name: "Sections", value: "sections" },
+    { id: 7, name: "Personal", value: "" },
   ];
 
   return (
     <Container color={"gray-50"}>
       <div className="sm:p-5 bg-white max-w-5xl mx-auto">
         <div className="p-5 sm:p-0 sm:my-4">
-          <h1 className="text-3xl text-primary font-semibold">Edit Profile</h1>
+          <h2 className="text-3xl text-primary font-semibold">Edit Profile</h2>
         </div>
         {tutorLoading ? (
           <div className="h-[calc(100vh-100px)]">

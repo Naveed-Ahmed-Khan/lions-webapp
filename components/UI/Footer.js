@@ -62,9 +62,9 @@ const Footer = () => {
                 src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
                 alt="Float UI logo"
               /> */}
-              <h1 className="text-white text-2xl font-semibold">
+              <h2 className="text-white text-2xl font-semibold">
                 Educationists
-              </h1>
+              </h2>
             </a>
             <div className="mt-4 lg:max-w-sm">
               <p className="text-sm text-gray-100">

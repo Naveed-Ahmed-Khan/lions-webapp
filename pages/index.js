@@ -143,9 +143,9 @@ export default function Home({ tutors, jobs, achievements }) {
         <section className=" py-6 dark:bg-gray-800 dark:text-gray-800">
           <div className="container p-5 mx-auto space-y-16">
             <div className="space-y-4">
-              <h1 className="text-primary text-2xl leading-none font-bold sm:text-4xl">
+              <h2 className="text-primary text-2xl leading-none font-bold sm:text-4xl">
                 Find the best tutor
-              </h1>
+              </h2>
               <p className=" text-gray-700">
                 Our alumni are excelling in multiple fields ,holding key
                 positions in different departments and organizations. We also
@@ -168,9 +168,9 @@ export default function Home({ tutors, jobs, achievements }) {
         <section className=" py-6 dark:bg-gray-800 dark:text-gray-800">
           <div className="container p-5 mx-auto space-y-16 ">
             <div className="space-y-4">
-              <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+              <h2 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Best Tution Jobs
-              </h1>
+              </h2>
               <p className="text-gray-700">
                 Find jobs that best suit you, with respect to your avilability
                 and ease of travel or teach at the comfort of your home.
@@ -190,9 +190,9 @@ export default function Home({ tutors, jobs, achievements }) {
           <section className="text-gray-800 bg-gray-100 body-font relative">
             <div className="container p-4 mx-auto space-y-16 sm:p-10">
               <div className="space-y-4">
-                <h1 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+                < h2 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                   Post Your Requirements
-                </h1>
+                </h2>
                 <p className="max-w-2xl dark:text-gray-800">
                   At a assumenda quas cum earum ut itaque commodi saepe rem
                   aspernatur quam natus quis nihil quod, hic explicabo doloribus

@@ -116,10 +116,10 @@ export default function EditSubjects({ setSubjectFilled, tutor, updateData }) {
 
   return (
     <div className="space-y-8 w-full">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="text-xl sm:text-2xl font-semibold text-primary">
         Subjects Taught
         <span className="text-primary text-lg font-normal">{` (Required)`}</span>
-      </h1>
+      </h2>
 
       <div className="sm:p-6 sm:border border-gray-200 rounded-lg">
         <div className="sm:flex justify-between">

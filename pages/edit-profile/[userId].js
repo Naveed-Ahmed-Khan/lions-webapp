@@ -134,7 +134,7 @@ export default function EditProfile() {
     <Container color={"gray-50"}>
       <div className="sm:p-5 bg-white max-w-5xl mx-auto">
         <div className="p-5 sm:p-0 sm:my-4">
-          <h1 className="text-3xl text-primary font-semibold">Edit Profile</h1>
+          <h2 className="text-3xl text-primary font-semibold">Edit Profile</h2>
         </div>
         {tutorLoading ? (
           <div className="h-[calc(100vh-100px)]">

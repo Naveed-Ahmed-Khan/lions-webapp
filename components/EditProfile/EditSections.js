@@ -81,10 +81,10 @@ export default function EditSections({ tutor, updateData }) {
 
   return (
     <div className=" pb-12 w-full">
-      <h1 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="mb-8 text-xl sm:text-2xl font-semibold text-primary">
         Sections
         <span className="text-primary text-lg font-normal">{` (Optional)`}</span>
-      </h1>
+      </h2>
       <div className="sm:p-6 sm:border border-gray-300 rounded-lg">
         <div className="sm:flex justify-between">
           <h3 className="text-lg font-medium text-gray-700">

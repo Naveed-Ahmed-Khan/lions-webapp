@@ -60,9 +60,9 @@ export default function JobPosting({ cities, areas, subjects, classes }) {
 
       <Container color={"gray-50"}>
         <div className="bg-white w-full mx-auto">
-          <h1 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
+          <h2 className="py-6 text-gray-600 text-3xl sm:text-4xl text-center font-bold">
             Job Posting
-          </h1>
+          </h2>
           <div className="hidden sm:block pt-6 pb-12 px-8">
             <ChevronDots
               steps={["Student", "Tutor", "Description"]}
@@ -120,9 +120,9 @@ function Student({ allSubjects, allClasses, setCurrentStep }) {
 
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="mb-5 text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="mb-5 text-xl sm:text-2xl font-semibold text-primary">
         Student Details
-      </h1>
+      </h2>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <p className="text-gray-600 font-medium ">Subjects</p>
         <div className="px-2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 mt-6 max-h-[calc(100vh-500px)] overflow-auto">
@@ -190,9 +190,9 @@ function Tutor({ cities, setCurrentStep }) {
   });
   return (
     <div className="pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="mb-5 text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="mb-5 text-xl sm:text-2xl font-semibold text-primary">
         Tutor Requirements
-      </h1>
+      </h2>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup>
           <Select
@@ -330,9 +330,9 @@ function Description({ setCurrentStep }) {
 
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
-      <h1 className="mb-5 text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="mb-5 text-xl sm:text-2xl font-semibold text-primary">
         Job Description
-      </h1>
+      </h2>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
         <FormGroup>
           <Input

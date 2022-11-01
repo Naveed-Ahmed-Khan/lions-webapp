@@ -118,10 +118,10 @@ export default function EditPersonal({ tutor, updateData }) {
 
   return (
     <div className="pb-12 w-full">
-      <h1 className="text-xl sm:text-2xl font-semibold text-primary">
+      <h2 className="text-xl sm:text-2xl font-semibold text-primary">
         Profile Details
         <span className="text-primary text-lg font-normal">{` (Required)`}</span>
-      </h1>
+      </h2>
       <form onSubmit={formik.handleSubmit} className="mt-8 w-full">
         <div className="space-y-8">
           <div className="sm:flex gap-6">
