@@ -78,9 +78,10 @@ export default function JobDescription() {
   const date = new Date(parseInt(timestamp, 16) * 1000);
   const uploadedAt = date.toDateString();
 
+  console.log(isLoading)
   const submitHandler = async (e) => {
+    setIsLoading(true)
     e.preventDefault();
-    setIsLoading(true);
     /* console.log({
       job_id: job?._id,
       applicant_id: currentUser?.userId,
@@ -88,12 +89,7 @@ export default function JobDescription() {
       quialification: currentUser?.qualification,
       expectedBudget: expectedBudget,
     }); */
-    if (!currentUser) {
-      setIsLoading(false);
-      router.push("/login");
-      return;
-    }
-    console.log(currentUser);
+
     if (currentUser?.isVerified && userType === "tutor") {
       try {
         const response = await axios.post(
@@ -112,19 +108,20 @@ export default function JobDescription() {
             },
           }
         );
-        console.log(response.data);
-        updateJob();
-        updateApplications();
+        console.log(response);
+        
+        if (response.status === 201) {
+          updateJob();
+          updateApplications();
+          setApplyMode(false)
+          setIsLoading(false)
+        }
+
       } catch (error) {
         console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
-      // console.log("You are not eligible to apply");
-      setError("Unverified Tutors are not eligible to apply");
-      setIsLoading(false);
-    }
+        setIsLoading(false)
+      } 
+    } 
   };
 
   useEffect(() => {
@@ -310,7 +307,17 @@ export default function JobDescription() {
           )}
           {!applyMode ? (
             <div className="my-5 flex justify-end">
-              <Button type={"buttpn"} onClick={() => setApplyMode(true)}>
+              <Button type={"buttpn"} onClick={() => {
+                 if (!currentUser) {
+                  setIsLoading(false);
+                  router.push("/login");
+                  return;
+                }else if(userType !== "tutor" || !currentUser?.isVerified ) {
+                  setError("Unverified Tutors are not eligible to apply");
+                }else{
+                  setApplyMode(true)
+                }
+                }}>
                 Apply Now
               </Button>
             </div>
@@ -325,7 +332,7 @@ export default function JobDescription() {
                   </div>
                 ) : (
                   <form
-                    onSubmit={submitHandler}
+                    // onSubmit={submitHandler}
                     className="bg-white md:bg-neutral-100 rounded sm:p-8"
                   >
                     <h2 className="mb-8 text-primary text-2xl font-semibold">
@@ -381,7 +388,7 @@ export default function JobDescription() {
                     )}
                     <div className="space-y-4 sm:space-y-0 mt-8 sm:flex justify-end gap-4">
                       <div className="w-full sm:w-fit">
-                        <Button fullwidth disabled={isLoading} type={"submit"}>
+                        <Button fullwidth disabled={isLoading} type={"button"} onClick={submitHandler}>
                           {isLoading ? (
                             <>
                               <Spinner
@@ -398,7 +405,7 @@ export default function JobDescription() {
                       <div className="w-full sm:w-fit">
                         <Button
                           fullwidth
-                          type={"buttpn"}
+                          type={"button"}
                           onClick={() => setApplyMode(false)}
                         >
                           Cancel

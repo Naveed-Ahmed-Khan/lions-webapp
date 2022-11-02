@@ -47,6 +47,18 @@ export default function Tutors() {
       console.log(error);
     }
   };
+  const deleteTutor = async (data) => {
+    const DELETE_API = `${process.env.NEXT_PUBLIC_API}/delete-tutor/${data._id}`;
+    try {
+      const res = await axios.get(DELETE_API);
+      console.log(res);
+      if (res.status === 200) {
+        updateData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const verifyTutor = async (data) => {
     const VERIFY_API = `${process.env.NEXT_PUBLIC_API}/verify-tutor/${data._id}`;
@@ -60,8 +72,9 @@ export default function Tutors() {
         msg: "You can now start applying on Jobs. GoodLuck!",
       });
       console.log(res);
-      if (res.status === 200 && resMsg.status === 200) {
-        updateData();
+      // if (res.status === 200 && resMsg.status === 200) {
+      if (res.status === 200) {
+        updateData()
       }
     } catch (error) {
       console.log(error);
@@ -102,6 +115,12 @@ export default function Tutors() {
       value: "Details",
       onClick: viewDetails,
     },
+    {
+      id: 4,
+      name: "Action",
+      value: "Delete",
+      onClick: deleteTutor,
+    },
   ];
 
   const status = [
@@ -127,6 +146,11 @@ export default function Tutors() {
       colorFalse: "bg-emerald-500",
     },
   ];
+  
+  useEffect(() => {
+    setTutors(data)
+  }, [data])
+  
 
   useEffect(() => {
     if (search) {
@@ -138,6 +162,7 @@ export default function Tutors() {
         )
       );
     }
+
     if (filter !== "All" && !search) {
       if (filter === "Featured") {
         setTutors(data.filter((tutor) => tutor.isFeatured === true));
@@ -153,7 +178,8 @@ export default function Tutors() {
     if (filter === "All" && !search) {
       setTutors(data);
     }
-  }, [search]);
+    
+  }, [search, data]);
 
   useEffect(() => {
     if (filter === "All") {
