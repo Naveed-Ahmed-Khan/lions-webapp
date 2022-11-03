@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
-const Collapse = ({ label, children }) => {
+const Collapse = ({ label, children, open }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const parentRef = useRef();
@@ -9,6 +9,10 @@ const Collapse = ({ label, children }) => {
     collapseHeight = parentRef.current.scrollHeight;
   }
   // console.log(collapseHeight);
+  useEffect(() => {
+    setIsOpen(open)
+  }, [open])
+  
   return (
     <div>
       <div

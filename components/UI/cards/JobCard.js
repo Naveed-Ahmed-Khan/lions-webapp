@@ -4,18 +4,19 @@ import Button from "../Button";
 
 const JobCard = ({ job }) => {
   return (
-    <div className="flex flex-col max-w-[340] overflow-hidden rounded-md shadow-lg dark:border-violet-400">
+    <div className="relative flex flex-col max-w-[340] overflow-hidden rounded-md shadow-lg dark:border-violet-400">
       <div className="flex flex-col p-8 space-y-4 bg-gray-200 dark:bg-gray-800">
         {/* <h3 className="text-xl font-semibold text-gray-700">Tutor Required</h3> */}
-        <div className="flex justify-between">
-          <p className="flex items-baseline text-gray-800">
-            <span className="text-xl font-semibold">{job.title}</span>
-          </p>
-          {job.isFeatured && (
-            <p className="bg-primary-light py-1 px-2 w-fit h-fit rounded-full text-sm text-center text-white font-medium">
+        {/* {job.isFeatured && (
+            <p className="absolute right-4 top-4 bg-primary-light py-1 px-2 w-fit h-fit rounded-full text-sm text-center text-white font-medium">
               Featured
             </p>
-          )}
+          )} */}
+        <div className="flex flex-col-reverse justify-between">
+          <p className="flex items-baseline text-primary">
+            <span className="text-lg font-medium">{job.title}</span>
+          </p>
+          
         </div>
         {/* <p className="mt-6 text-gray-700 text-solitud">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
@@ -77,6 +78,11 @@ const JobCard = ({ job }) => {
             </li> */}
           </ul>
         </div>
+        {job.isFeatured && (
+            <p className=" bg-primary-light py-1 px-2 w-fit rounded-full text-sm text-center text-white font-medium">
+              Featured
+            </p>
+          )}
       </div>
       <div className=" p-6 flex flex-col bg-white dark:bg-gray-900">
         <p className="flex text-gray-800">

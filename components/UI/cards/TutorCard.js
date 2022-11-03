@@ -12,10 +12,10 @@ const TutorCard = ({ tutor }) => {
     <div className="flex flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
       <div>
         <Image
-          height={62}
+          height={"100%"}
           width={"100%"}
           layout="responsive"
-          className="object-cover object-center"
+          className="object-cover object-top"
           src={tutor.profilePic}
           alt={""}
         />
@@ -32,7 +32,7 @@ const TutorCard = ({ tutor }) => {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth={2}
+              strokeWidth={2.5}
             >
               <path
                 strokeLinecap="round"
@@ -57,7 +57,7 @@ const TutorCard = ({ tutor }) => {
             </svg>
           )}
 
-          <h2 className="mx-3 text-lg tracking-wide font-medium text-white">
+          <h2 className="mx-3 text-lg tracking-wide font-semibold text-white">
             {tutor.isVerified ? "Verified" : "Unverified"}
           </h2>
         </div>
@@ -127,7 +127,7 @@ const TutorCard = ({ tutor }) => {
                   />
                 </svg>
 
-                <h6 className="px-2 text-sm font-semibold">
+                <h6 className="px-2 text-xs font-semibold">
                   {findHighestQualification(tutor.qualifications)}
                 </h6>
               </div>
@@ -151,7 +151,7 @@ const TutorCard = ({ tutor }) => {
                   />
                 </svg>
 
-                <h6 className="px-2 text-sm font-semibold">{tutor.city}</h6>
+                <h6 className="px-2 text-xs font-semibold">{tutor.city}</h6>
               </div>
             </div>
 
@@ -171,7 +171,7 @@ const TutorCard = ({ tutor }) => {
                     d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
                   />
                 </svg>
-                <h6 className="px-2 text-sm font-semibold">
+                <h6 className="px-2 text-xs font-semibold">
                   {tutor.selectedJobs.length || 0} | Students taught
                 </h6>
               </div>
@@ -191,17 +191,19 @@ const TutorCard = ({ tutor }) => {
                     d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"
                   />
                 </svg>
-                <h6 className="px-2 text-sm font-semibold">
+                <h6 className="px-2 text-xs font-semibold">
                   {tutor.shortlistedDemos.length || 0} | Trial lessons
                 </h6>
               </div>
             </div>
           </div>
 
-          <div className="flex items-center justify-between mt-4 mb-2">
-            <Anchor link href={`/profile/${tutor._id}`}>
+          <div className="flex w-full items-center justify-between mt-4 mb-2">
+            <div className="w-full">
+              <Anchor button  href={`/profile/${tutor._id}`}>
               View Profile
             </Anchor>
+            </div>
           </div>
         </div>
       </div>

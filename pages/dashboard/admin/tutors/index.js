@@ -50,7 +50,7 @@ export default function Tutors() {
   const deleteTutor = async (data) => {
     const DELETE_API = `${process.env.NEXT_PUBLIC_API}/delete-tutor/${data._id}`;
     try {
-      const res = await axios.get(DELETE_API);
+      const res = await axios.delete(DELETE_API);
       console.log(res);
       if (res.status === 200) {
         updateData();
@@ -116,7 +116,7 @@ export default function Tutors() {
       onClick: viewDetails,
     },
     {
-      id: 4,
+      id: 5,
       name: "Action",
       value: "Delete",
       onClick: deleteTutor,

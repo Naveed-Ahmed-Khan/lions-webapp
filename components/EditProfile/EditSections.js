@@ -409,7 +409,7 @@ export function Collapsable({ section, tutor, updateTutor }) {
         {subSections.map((subSection) => {
           const { heading, content } = subSection;
           return (
-            <Collapse key={subSection._id} label={heading}>
+            <Collapse key={subSection._id} label={heading} open={true}>
               {content}
             </Collapse>
           );
