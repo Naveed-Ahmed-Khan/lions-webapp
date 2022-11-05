@@ -8,12 +8,12 @@ import Anchor from "../Anchor";
 
 const TutorCard2 = ({ tutor, profilePic }) => {
   const router = useRouter();
-  console.log(tutor);
+  // console.log(tutor);
   const profile = tutor.sections?.filter(
     (section) => section.title === "Profile"
   );
 
-  console.log(profile);
+  // console.log(profile);
 
   return (
     <div className="sm:flex mx-auto overflow-hidden bg-white rounded-lg shadow-xl">

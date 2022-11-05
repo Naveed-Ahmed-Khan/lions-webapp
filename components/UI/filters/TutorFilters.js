@@ -12,6 +12,7 @@ import FormGroup from "../FormGroup";
 import Select from "../Select";
 
 export default function TutorFilters({
+  selectedPage,
   setFilteredTutors,
   filteredTutors,
   setOpenFilter,
@@ -22,7 +23,7 @@ export default function TutorFilters({
   // console.log(allAreas);
   const router = useRouter();
 
-  console.log(router.query);
+  // console.log(router.query);
   const [classes, setClasses] = useState([]);
   const [qualification, setQualification] = useState([]);
   const [subjects, setSubjects] = useState([]);
@@ -138,26 +139,22 @@ export default function TutorFilters({
       });
     }
 
-    console.log(query);
     return query;
   };
 
   const getTutors = async (query) => {
     const tutors = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`,
+      `${process.env.NEXT_PUBLIC_API}/get-paginatedtutors`,
       { params: query }
     );
-    console.log(tutors.data);
-    setFilteredTutors(tutors.data);
+    // console.log(tutors.data.tutors);
+    setFilteredTutors(tutors.data.tutors);
     router.push(
       {
         pathname: "/tutors",
         query: query,
       },
-      undefined,
-      {
-        shallow: true,
-      }
+      undefined
     );
   };
 
@@ -165,7 +162,7 @@ export default function TutorFilters({
     e.preventDefault();
     setIsLoading(true);
     const queryParams = createQueryString();
-    queryParams && getTutors(queryParams);
+    queryParams && getTutors({ ...queryParams, page: 1 });
     setOpenFilter && setOpenFilter(false);
     setIsLoading(false);
   };
@@ -232,7 +229,7 @@ export default function TutorFilters({
               <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
                 {allQualifications.map((item) => {
                   const checked = qualification?.includes(item.value);
-                  console.log("is Checked");
+                  // console.log("is Checked");
                   return (
                     <li key={item.value}>
                       <CheckBox
@@ -256,7 +253,7 @@ export default function TutorFilters({
 
               <ul className="px-2  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto ">
                 {allClasses.map((item) => {
-                  console.log(item);
+                  // console.log(item);
                   const checked = classes?.includes(item.value);
 
                   return (

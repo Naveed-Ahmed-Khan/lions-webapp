@@ -5,13 +5,17 @@ import Alert from "../components/UI/Alert";
 import JobCard2 from "../components/UI/cards/JobCard2";
 import Container from "../components/UI/Container";
 import JobFilters from "../components/UI/filters/JobFilters";
+import JobPagination from "../components/UI/pagination/JobPagination";
 
 export async function getServerSideProps({ query }) {
   console.log(query);
 
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`, {
-    params: query,
-  });
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-paginatedjobs`,
+    {
+      params: query,
+    }
+  );
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
   const cities = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-allcities`
@@ -25,7 +29,8 @@ export async function getServerSideProps({ query }) {
 
   return {
     props: {
-      jobs: response.data,
+      jobs: response.data.jobs,
+      pageData: response.data.pageData,
       areas: areas.data,
       cities: cities.data,
       classes: classes.data,
@@ -33,10 +38,11 @@ export async function getServerSideProps({ query }) {
   };
 }
 
-export default function Jobs({ jobs, areas, classes, cities }) {
+export default function Jobs({ pageData, jobs, areas, classes, cities }) {
   const [filteredJobs, setFilteredJobs] = useState(jobs || []);
   const [openFilter, setOpenFilter] = useState(false);
   console.log(filteredJobs);
+
   return (
     <>
       <Container color={"gray-100"}>
@@ -101,34 +107,42 @@ export default function Jobs({ jobs, areas, classes, cities }) {
               setFilteredJobs={setFilteredJobs}
             />
           </div>
-          <div className="w-full lg:h-[calc(100vh-110px)] lg:overflow-auto mx-auto space-y-8">
-            <div className="space-y-4">
-              <h2 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
-                Best Jobs for You
-              </h2>
-              {/* <p className="">
+          <div className="flex flex-col h-fit">
+            <div className="w-full lg:h-[calc(100vh-160px)] lg:overflow-auto mx-auto space-y-8">
+              <div className="space-y-4">
+                <h2 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+                  Best Jobs for You
+                </h2>
+                {/* <p className="">
                 At a assumenda quas cum earum ut itaque commodi saepe rem
                 aspernatur quam natus quis nihil quod, hic explicabo doloribus
                 magnam neque, exercitationem eius sunt!
               </p> */}
+              </div>
+              <div className="space-y-8 lg:pr-3 w-full flex flex-col items-center justify-center">
+                {filteredJobs?.length > 0 ? (
+                  <>
+                    {filteredJobs?.map((job) => {
+                      return <JobCard2 key={job._id} job={job} />;
+                    })}
+                  </>
+                ) : (
+                  <div className="relative h-[calc(100vh-360px)] w-60">
+                    <Image
+                      layout={"fill"}
+                      className="object-contain"
+                      src={"/images/not-found.png"}
+                      alt={""}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="space-y-8 lg:pr-3 w-full flex flex-col items-center justify-center">
-              {filteredJobs?.length > 0 ? (
-                <>
-                  {filteredJobs?.map((job) => {
-                    return <JobCard2 key={job._id} job={job} />;
-                  })}
-                </>
-              ) : (
-                <div className="relative h-[calc(100vh-360px)] w-60">
-                  <Image
-                    layout={"fill"}
-                    className="object-contain"
-                    src={"/images/not-found.png"}
-                    alt={""}
-                  />
-                </div>
-              )}
+            <div className="pt-2 text-center">
+              <JobPagination
+                pageData={pageData}
+                setFilteredJobs={setFilteredJobs}
+              />
             </div>
           </div>
         </section>
