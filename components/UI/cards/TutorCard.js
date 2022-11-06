@@ -16,16 +16,16 @@ const TutorCard = ({ tutor }) => {
           width={"100%"}
           layout="responsive"
           className="object-cover object-top"
-          src={tutor.profilePic}
+          src={tutor?.profilePic}
           alt={""}
         />
 
         <div
           className={`flex items-center justify-center px-6 py-3 ${
-            tutor.isVerified ? "bg-primary" : "bg-gray-500"
+            tutor?.isVerified ? "bg-primary" : "bg-gray-500"
           } `}
         >
-          {tutor.isVerified ? (
+          {tutor?.isVerified ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-white"
@@ -58,7 +58,7 @@ const TutorCard = ({ tutor }) => {
           )}
 
           <h2 className="mx-3 text-lg tracking-wide font-semibold text-white">
-            {tutor.isVerified ? "Verified" : "Unverified"}
+            {tutor?.isVerified ? "Verified" : "Unverified"}
           </h2>
         </div>
       </div>
@@ -66,7 +66,7 @@ const TutorCard = ({ tutor }) => {
       <div>
         <div className="p-4">
           <h3 className="text-xl font-medium text-gray-700 dark:text-white">
-            {tutor.name}
+            {tutor?.name}
           </h3>
           <div className="flex mt-2 item-center">
             <svg
@@ -128,7 +128,7 @@ const TutorCard = ({ tutor }) => {
                 </svg>
 
                 <h6 className="px-2 text-xs font-semibold">
-                  {findHighestQualification(tutor.qualifications)}
+                  {findHighestQualification(tutor?.qualifications)}
                 </h6>
               </div>
 
@@ -151,7 +151,7 @@ const TutorCard = ({ tutor }) => {
                   />
                 </svg>
 
-                <h6 className="px-2 text-xs font-semibold">{tutor.city}</h6>
+                <h6 className="px-2 text-xs font-semibold">{tutor?.city}</h6>
               </div>
             </div>
 
@@ -172,7 +172,7 @@ const TutorCard = ({ tutor }) => {
                   />
                 </svg>
                 <h6 className="px-2 text-xs font-semibold">
-                  {tutor.selectedJobs.length || 0} | Students taught
+                  {tutor?.selectedJobs?.length || 0} | Students taught
                 </h6>
               </div>
 
@@ -192,7 +192,7 @@ const TutorCard = ({ tutor }) => {
                   />
                 </svg>
                 <h6 className="px-2 text-xs font-semibold">
-                  {tutor.shortlistedDemos.length || 0} | Trial lessons
+                  {tutor?.shortlistedDemos?.length || 0} | Trial lessons
                 </h6>
               </div>
             </div>
@@ -200,9 +200,9 @@ const TutorCard = ({ tutor }) => {
 
           <div className="flex w-full items-center justify-between mt-4 mb-2">
             <div className="w-full">
-              <Anchor button  href={`/profile/${tutor._id}`}>
-              View Profile
-            </Anchor>
+              <Anchor button href={`/profile/${tutor?._id}`}>
+                View Profile
+              </Anchor>
             </div>
           </div>
         </div>

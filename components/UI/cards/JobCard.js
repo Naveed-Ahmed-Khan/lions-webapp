@@ -7,16 +7,15 @@ const JobCard = ({ job }) => {
     <div className="relative flex flex-col max-w-[340] overflow-hidden rounded-md shadow-lg dark:border-violet-400">
       <div className="flex flex-col p-8 space-y-4 bg-gray-200 dark:bg-gray-800">
         {/* <h3 className="text-xl font-semibold text-gray-700">Tutor Required</h3> */}
-        {/* {job.isFeatured && (
+        {/* {job?.isFeatured && (
             <p className="absolute right-4 top-4 bg-primary-light py-1 px-2 w-fit h-fit rounded-full text-sm text-center text-white font-medium">
               Featured
             </p>
           )} */}
         <div className="flex flex-col-reverse justify-between">
           <p className="flex items-baseline text-primary">
-            <span className="text-lg font-medium">{job.title}</span>
+            <span className="text-lg font-medium">{job?.title}</span>
           </p>
-          
         </div>
         {/* <p className="mt-6 text-gray-700 text-solitud">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
@@ -40,7 +39,7 @@ const JobCard = ({ job }) => {
                   d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
                 ></path>
               </svg>
-              <span>Class | {job.class}</span>
+              <span>Class | {job?.class}</span>
             </li>
             <li className="flex space-x-2">
               <svg
@@ -57,7 +56,7 @@ const JobCard = ({ job }) => {
                   d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
                 ></path>
               </svg>
-              <span>Subject | {job.subjects.join(", ")}</span>
+              <span>Subject | {job?.subjects?.join(", ")}</span>
             </li>
             {/* <li className="flex space-x-2">
               <svg
@@ -78,11 +77,11 @@ const JobCard = ({ job }) => {
             </li> */}
           </ul>
         </div>
-        {job.isFeatured && (
-            <p className=" bg-primary-light py-1 px-2 w-fit rounded-full text-sm text-center text-white font-medium">
-              Featured
-            </p>
-          )}
+        {job?.isFeatured && (
+          <p className=" bg-primary-light py-1 px-2 w-fit rounded-full text-sm text-center text-white font-medium">
+            Featured
+          </p>
+        )}
       </div>
       <div className=" p-6 flex flex-col bg-white dark:bg-gray-900">
         <p className="flex text-gray-800">
@@ -104,7 +103,7 @@ const JobCard = ({ job }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Qualification | {job.qualification}</span>
+            <span>Qualification | {job?.qualification}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -121,7 +120,7 @@ const JobCard = ({ job }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Location | {job.city || job.location.city}</span>
+            <span>Location | {job?.city || job?.location?.city}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -138,7 +137,7 @@ const JobCard = ({ job }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Gender Preferance | {job.gender}</span>
+            <span>Gender Preferance | {job?.gender}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -155,7 +154,7 @@ const JobCard = ({ job }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Duration | {job.duration}</span>
+            <span>Duration | {job?.duration}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -173,10 +172,10 @@ const JobCard = ({ job }) => {
               />
             </svg>
 
-            <span>Expected Budget | Rs. {job.budget}</span>
+            <span>Expected Budget | Rs. {job?.budget}</span>
           </li>
         </ul>
-        <Anchor button href={`/tution-job/${job._id}`}>
+        <Anchor button href={`/tution-job/${job?._id}`}>
           Apply Now
         </Anchor>
       </div>

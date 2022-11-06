@@ -9,7 +9,7 @@ import Anchor from "../Anchor";
 const TutorCard2 = ({ tutor, profilePic }) => {
   const router = useRouter();
   console.log(tutor);
-  const profile = tutor.sections?.filter(
+  const profile = tutor?.sections?.filter(
     (section) => section.title === "Profile"
   );
 
@@ -35,7 +35,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
                 layout="fill"
                 className="object-contain object-center"
                 src={
-                  tutor.gender === "Male"
+                  tutor?.gender === "Male"
                     ? "/images/male.jfif"
                     : "/images/female.jfif"
                 }
@@ -47,10 +47,10 @@ const TutorCard2 = ({ tutor, profilePic }) => {
 
         <div
           className={`flex items-center justify-center px-6 py-3 ${
-            tutor.isVerified ? "bg-primary" : "bg-gray-500"
+            tutor?.isVerified ? "bg-primary" : "bg-gray-500"
           } `}
         >
-          {tutor.isVerified ? (
+          {tutor?.isVerified ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 text-white"
@@ -83,7 +83,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
           )}
 
           <h2 className="mx-3 text-lg tracking-wide font-medium text-white">
-            {tutor.isVerified ? "Verified" : "Unverified"}
+            {tutor?.isVerified ? "Verified" : "Unverified"}
           </h2>
         </div>
       </div>
@@ -91,7 +91,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
       <div className="flex flex-col flex-auto justify-between p-4">
         <div className="sm:flex justify-between">
           <h3 className="text-xl font-semibold text-gray-700 dark:text-white">
-            {tutor.name}
+            {tutor?.name}
           </h3>
           <div className="flex mt-2 item-center">
             <svg
@@ -134,8 +134,8 @@ const TutorCard2 = ({ tutor, profilePic }) => {
 
         <p className="hidden sm:block py-1 text-gray-700 dark:text-gray-400 h-20 overflow-auto">
           {profile[0]?.subSections[0]?.content ||
-            tutor.sections[0]?.subSections[0]?.content ||
-            tutor.aboutMe}
+            tutor?.sections[0]?.subSections[0]?.content ||
+            tutor?.aboutMe}
         </p>
 
         {/* {Details} */}
@@ -159,7 +159,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
             </svg>
 
             <h3 className="px-2 text-sm font-medium">
-              {findHighestQualification(tutor.qualifications)}
+              {findHighestQualification(tutor?.qualifications)}
             </h3>
           </div>
 
@@ -182,7 +182,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
               />
             </svg>
 
-            <h3 className="px-2 text-sm font-medium">{tutor.city}</h3>
+            <h3 className="px-2 text-sm font-medium">{tutor?.city}</h3>
           </div>
 
           <div className="flex items-center mt-4 text-gray-700 dark:text-gray-200">
@@ -202,7 +202,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
             </svg>
 
             <h3 className="px-2 text-sm font-medium">
-              {tutor.selectedJobs.length || 0} | Students taught
+              {tutor?.selectedJobs.length || 0} | Students taught
             </h3>
           </div>
 
@@ -223,8 +223,9 @@ const TutorCard2 = ({ tutor, profilePic }) => {
             </svg>
 
             <h3 className="px-2 text-sm font-medium">
-              {tutor.subjectsTaught[0]?.name}
-              {tutor.subjectsTaught[1] && `, ${tutor.subjectsTaught[1]?.name}`}
+              {tutor?.subjectsTaught[0]?.name}
+              {tutor?.subjectsTaught[1] &&
+                `, ${tutor?.subjectsTaught[1]?.name}`}
             </h3>
           </div>
 
@@ -244,9 +245,9 @@ const TutorCard2 = ({ tutor, profilePic }) => {
               />
             </svg>
             <h3 className="px-2 text-sm font-medium">
-              {tutor.subjectsTaught[0]?.classes[0]?.title}
-              {tutor.subjectsTaught[1]?.classes[1] &&
-                `, ${tutor.subjectsTaught[1]?.classes[1]?.title}`}
+              {tutor?.subjectsTaught[0]?.classes[0]?.title}
+              {tutor?.subjectsTaught[1]?.classes[1] &&
+                `, ${tutor?.subjectsTaught[1]?.classes[1]?.title}`}
             </h3>
           </div>
 
@@ -267,7 +268,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
             </svg>
 
             <h3 className="px-2 text-sm font-medium">
-              {tutor.shortlistedDemos.length || 0} | Trial lessons
+              {tutor?.shortlistedDemos.length || 0} | Trial lessons
             </h3>
           </div>
         </div>
@@ -351,11 +352,11 @@ const TutorCard2 = ({ tutor, profilePic }) => {
 
             <div className="w-full mt-4 space-y-4 md:space-y-0 sm:flex items-center justify-start sm:space-x-4">
               <div className="w-full sm:flex justify-end">
-                <Anchor button href={`/profile/${tutor._id}`}>
+                <Anchor button href={`/profile/${tutor?._id}`}>
                   View Profile
                 </Anchor>
               </div>
-              {/* <Anchor link href={`/profile/${tutor._id}`}>
+              {/* <Anchor link href={`/profile/${tutor?._id}`}>
                 Contact
               </Anchor> */}
             </div>
