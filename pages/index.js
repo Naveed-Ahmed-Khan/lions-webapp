@@ -14,9 +14,9 @@ import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext";
 
 export async function getStaticProps() {
-  /* const tutors = await axios.get(
+  const tutors = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-featured-tutors`
-  ); */
+  );
   const jobs = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-featured-jobs`
   );
@@ -26,7 +26,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      // tutors: tutors.data,
+      tutors: tutors.data,
       jobs: jobs.data,
       achievements: achievements.data,
     },
@@ -139,7 +139,7 @@ export default function Home({ tutors, jobs, achievements }) {
         </section>
       </Container>
 
-      {/* <Container color={"gray-100"}>
+      <Container color={"gray-100"}>
         <section className=" py-6 dark:bg-gray-800 dark:text-gray-800">
           <div className="container p-5 mx-auto space-y-16">
             <div className="space-y-4">
@@ -162,7 +162,7 @@ export default function Home({ tutors, jobs, achievements }) {
             </div>
           </div>
         </section>
-      </Container> */}
+      </Container>
 
       <Container color={"white"}>
         <section className=" py-6 dark:bg-gray-800 dark:text-gray-800">
