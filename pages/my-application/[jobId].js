@@ -109,10 +109,10 @@ export default function JobDescription() {
                     Job Status:
                     <span
                       className={`ml-2 py-1 px-1.5 rounded-full text-white ${
-                        job.isOpen ? "bg-emerald-500" : "bg-rose-500"
+                        job?.isOpen ? "bg-emerald-500" : "bg-rose-500"
                       }`}
                     >
-                      {job.isOpen ? "Open" : "Closed"}
+                      {job?.isOpen ? "Open" : "Closed"}
                     </span>
                   </p>
                 </div>
