@@ -65,13 +65,13 @@ export default function Profile({ tutor, applications }) {
   const router = useRouter();
   // console.log(applications);
   // console.log(userId);
-  if (router.isFallback) {
+  /* if (router.isFallback) {
     return (
       <div className=" text-3xl text-primary font-medium">
         Page will be available after 30 seconds!
       </div>
     );
-  }
+  } */
 
   return (
     <Container color={"gray-50"}>
