@@ -17,7 +17,7 @@ import axios from "axios";
 import Select from "../components/UI/Select";
 import { useRouter } from "next/router";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
   const cities = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-allcities`
@@ -28,7 +28,6 @@ export async function getStaticProps() {
       areas: areas.data,
       cities: cities.data,
     },
-    revalidate: 30,
   };
 }
 

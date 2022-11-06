@@ -13,7 +13,7 @@ import Anchor from "../components/UI/Anchor";
 import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const tutors = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-featured-tutors`
   );
@@ -30,7 +30,6 @@ export async function getStaticProps() {
       jobs: jobs.data,
       achievements: achievements.data,
     },
-    revalidate: 30,
   };
 }
 
