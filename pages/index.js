@@ -158,7 +158,7 @@ export default function Home({ tutors, jobs, achievements }) {
                 Our alumni are excelling in multiple fields ,holding key
                 positions in different departments and organizations. We also
                 have the profiles of Army Officers, board toppers, doctors and
-                engineers as our alumni No.1 Home Tutor network.
+                engineers as our Alumni No.1 Home Tutor network.
               </p>
             </div>
             <div className="grid w-full grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
