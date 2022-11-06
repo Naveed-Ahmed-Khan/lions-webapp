@@ -5,7 +5,7 @@ import React from "react";
 import { findHighestQualification } from "../../../util/findHighestQualification";
 import Anchor from "../Anchor";
 
-const TutorCard = ({ tutor }) => {
+const TutorCard = ({ tutorPic, tutor }) => {
   const router = useRouter();
 
   return (

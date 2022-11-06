@@ -12,6 +12,7 @@ import Image from "next/image";
 import Anchor from "../components/UI/Anchor";
 import Link from "next/link";
 import { useAuth } from "../contexts/AuthContext";
+import useFetch from "../hooks/useFetch";
 
 export async function getStaticProps() {
   const tutors = await axios.get(
@@ -36,6 +37,13 @@ export async function getStaticProps() {
 
 export default function Home({ tutors, jobs, achievements }) {
   const { currentUser } = useAuth();
+  /* const PICS_API = `${process.env.NEXT_PUBLIC_API}/get-featured-tutors-pics`;
+  const {
+    data: profilePics,
+    isLoading: picsLoading,
+    updateData: updatePics,
+  } = useFetch(PICS_API, false);
+  console.log(profilePics); */
   const features = [
     { id: "1", name: "Affordable Fee" },
     { id: "2", name: "Free Consultation" },
@@ -155,6 +163,9 @@ export default function Home({ tutors, jobs, achievements }) {
             </div>
             <div className="grid w-full grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
               {tutors?.map((tutor) => {
+                const tutorPic = profilePics?.filter(
+                  (pic) => pic._id === tutor._id
+                )[0];
                 return (
                   tutor.isFeatured && <Card key={tutor._id} tutor={tutor} />
                 );
