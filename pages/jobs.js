@@ -106,11 +106,6 @@ export default function Jobs({ jobs, areas, classes, cities }) {
               <h2 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
                 Best Jobs for You
               </h2>
-              {/* <p className="">
-                At a assumenda quas cum earum ut itaque commodi saepe rem
-                aspernatur quam natus quis nihil quod, hic explicabo doloribus
-                magnam neque, exercitationem eius sunt!
-              </p> */}
             </div>
             <div className="space-y-8 lg:pr-3 w-full flex flex-col items-center justify-center">
               {filteredJobs?.length > 0 ? (
