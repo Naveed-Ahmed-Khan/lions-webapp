@@ -12,6 +12,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { getCookie, getCookies } from "cookies-next";
 import Spinner from "../../components/UI/loader/Spinner";
 import useFetch from "../../hooks/useFetch";
+import { findHighestQualification } from "../../util/findHighestQualification";
 
 /* export async function getStaticPaths() {
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
@@ -78,9 +79,9 @@ export default function JobDescription() {
   const date = new Date(parseInt(timestamp, 16) * 1000);
   const uploadedAt = date.toDateString();
 
-  console.log(isLoading)
+  console.log(isLoading);
   const submitHandler = async (e) => {
-    setIsLoading(true)
+    setIsLoading(true);
     e.preventDefault();
     /* console.log({
       job_id: job?._id,
@@ -98,7 +99,9 @@ export default function JobDescription() {
             job_id: job?._id,
             applicant_id: currentUser?._id,
             coverLetter: coverLetter,
-            quialification: currentUser?.qualification,
+            quialification: findHighestQualification(
+              currentUser?.qualifications
+            ),
             expectedBudget: expectedBudget,
             distance: distance,
           },
@@ -109,19 +112,18 @@ export default function JobDescription() {
           }
         );
         console.log(response);
-        
+
         if (response.status === 201) {
           updateJob();
           updateApplications();
-          setApplyMode(false)
-          setIsLoading(false)
+          setApplyMode(false);
+          setIsLoading(false);
         }
-
       } catch (error) {
         console.log(error);
-        setIsLoading(false)
-      } 
-    } 
+        setIsLoading(false);
+      }
+    }
   };
 
   useEffect(() => {
@@ -307,17 +309,20 @@ export default function JobDescription() {
           )}
           {!applyMode ? (
             <div className="my-5 flex justify-end">
-              <Button type={"buttpn"} onClick={() => {
-                 if (!currentUser) {
-                  setIsLoading(false);
-                  router.push("/login");
-                  return;
-                }else if(userType !== "tutor" || !currentUser?.isVerified ) {
-                  setError("Unverified Tutors are not eligible to apply");
-                }else{
-                  setApplyMode(true)
-                }
-                }}>
+              <Button
+                type={"buttpn"}
+                onClick={() => {
+                  if (!currentUser) {
+                    setIsLoading(false);
+                    router.push("/login");
+                    return;
+                  } else if (userType !== "tutor" || !currentUser?.isVerified) {
+                    setError("Unverified Tutors are not eligible to apply");
+                  } else {
+                    setApplyMode(true);
+                  }
+                }}
+              >
                 Apply Now
               </Button>
             </div>
@@ -388,7 +393,12 @@ export default function JobDescription() {
                     )}
                     <div className="space-y-4 sm:space-y-0 mt-8 sm:flex justify-end gap-4">
                       <div className="w-full sm:w-fit">
-                        <Button fullwidth disabled={isLoading} type={"button"} onClick={submitHandler}>
+                        <Button
+                          fullwidth
+                          disabled={isLoading}
+                          type={"button"}
+                          onClick={submitHandler}
+                        >
                           {isLoading ? (
                             <>
                               <Spinner
@@ -474,7 +484,7 @@ export default function JobDescription() {
                             />
                           </svg>
                         </button>
-                        <div className="text-gray-700 my-2">
+                        {/* <div className="text-gray-700 my-2">
                           <p className="mb-2 flex gap-2">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -491,7 +501,10 @@ export default function JobDescription() {
                               />
                             </svg>
                             <span>
-                              Qualification | {applicant.qualification}
+                              Qualification |{" "}
+                              {findHighestQualification(
+                                applicant.qualifications
+                              )}
                             </span>
                           </p>
                           <p className="flex gap-2">
@@ -511,7 +524,7 @@ export default function JobDescription() {
                             </svg>
                             <span>Budget | {application.expectedBudget}</span>
                           </p>
-                        </div>
+                        </div> */}
                       </div>
                     );
                   })

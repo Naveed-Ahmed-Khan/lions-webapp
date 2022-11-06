@@ -12,6 +12,7 @@ import FormGroup from "../../../../../components/UI/FormGroup";
 import Button from "../../../../../components/UI/Button";
 import { useAuth } from "../../../../../contexts/AuthContext";
 import { getCookie, getCookies } from "cookies-next";
+import { findHighestQualification } from "../../../../../util/findHighestQualification";
 
 export async function getStaticPaths() {
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
@@ -289,7 +290,7 @@ export default function Job({ job, applications }) {
                           />
                         </svg>
                       </button>
-                      <div className="text-gray-700 my-2">
+                      {/*  <div className="text-gray-700 my-2">
                         <p className="mb-2 flex gap-2">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -305,7 +306,10 @@ export default function Job({ job, applications }) {
                               d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                             />
                           </svg>
-                          <span>Qualification | {applicant.qualification}</span>
+                          <span>
+                            Qualification |{" "}
+                            {findHighestQualification(applicant.qualifications)}
+                          </span>
                         </p>
                         <p className="flex gap-2">
                           <svg
@@ -324,7 +328,7 @@ export default function Job({ job, applications }) {
                           </svg>
                           <span>Budget | {application.expectedBudget}</span>
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                   );
                 })

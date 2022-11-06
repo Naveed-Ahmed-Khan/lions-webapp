@@ -13,6 +13,7 @@ import Button from "../../components/UI/Button";
 import useFetch from "../../hooks/useFetch";
 import Rating from "../../components/UI/Rating";
 import { useAuth } from "../../contexts/AuthContext";
+import { findHighestQualification } from "../../util/findHighestQualification";
 
 /* export async function getServerSideProps(context) {
   const { jobId } = context.params;
@@ -291,7 +292,7 @@ export default function JobDescription() {
                           </svg>
                         </button>
                       </div>
-                      <div className="text-gray-700 space-y-2">
+                      {/*  <div className="text-gray-700 space-y-2">
                         <p className="mb-2 flex gap-2">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -307,7 +308,10 @@ export default function JobDescription() {
                               d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
                             />
                           </svg>
-                          <span>Qualification | {applicant.qualification}</span>
+                          <span>
+                            Qualification |{" "}
+                            {findHighestQualification(applicant.qualifications)}
+                          </span>
                         </p>
                         <p className="flex gap-2">
                           <svg
@@ -326,7 +330,7 @@ export default function JobDescription() {
                           </svg>
                           <span>Budget | {application.expectedBudget}</span>
                         </p>
-                      </div>
+                      </div> */}
 
                       {application.isSelected ? (
                         <div>

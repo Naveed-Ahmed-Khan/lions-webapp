@@ -12,6 +12,9 @@ import FormGroup from "../FormGroup";
 import Select from "../Select";
 
 export default function TutorFilters({
+  setQueryParams,
+  updatePics,
+  setSelectedPage,
   setFilteredTutors,
   filteredTutors,
   setOpenFilter,
@@ -137,8 +140,7 @@ export default function TutorFilters({
         return area.name;
       });
     }
-
-    console.log(query);
+    setQueryParams(query);
     return query;
   };
 
@@ -159,13 +161,17 @@ export default function TutorFilters({
         shallow: true,
       }
     );
+    setSelectedPage(1);
+    updatePics();
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     setIsLoading(true);
     const queryParams = createQueryString();
-    queryParams && getTutors(queryParams);
+    queryParams && getTutors({ ...queryParams, page: 1 });
+    setSelectedPage(1);
+    updatePics();
     setOpenFilter && setOpenFilter(false);
     setIsLoading(false);
   };
@@ -380,6 +386,8 @@ export default function TutorFilters({
               setSubjects([]);
               setSelectedCity("");
               setSearch("");
+              setSelectedPage(1);
+              updatePics();
             }}
           >
             <p>Reset</p>
