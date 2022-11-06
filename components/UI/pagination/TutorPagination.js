@@ -35,8 +35,8 @@ export default function TutorPagination({
   };
 
   return (
-    <div className="px-4 py-2 w-full flex items-center justify-between bg-white rounded-md">
-      <div className="flex items-center py-2 text-gray-700 hover:text-primary cursor-pointer">
+    <div className="px-4 py-2 w-full flex items-center justify-center bg-white rounded-md">
+      {/* <div className="flex items-center py-2 text-gray-700 hover:text-primary cursor-pointer">
         <svg
           width={14}
           height={8}
@@ -67,7 +67,7 @@ export default function TutorPagination({
           />
         </svg>
         <p className="text-sm ml-3 font-medium leading-none ">Previous</p>
-      </div>
+      </div> */}
       <div className="sm:flex space-x-2 hidden">
         {[...Array(totalPages)].map((btn, idx) => {
           const page = idx + 1;
@@ -94,7 +94,7 @@ export default function TutorPagination({
           );
         })}
       </div>
-      <div className="flex items-center py-2 text-gray-700 hover:text-primary cursor-pointer">
+      {/* <div className="flex items-center py-2 text-gray-700 hover:text-primary cursor-pointer">
         <p className="text-sm font-medium leading-none mr-3">Next</p>
         <svg
           width={14}
@@ -125,7 +125,7 @@ export default function TutorPagination({
             strokeLinejoin="round"
           />
         </svg>
-      </div>
+      </div> */}
     </div>
   );
 }
