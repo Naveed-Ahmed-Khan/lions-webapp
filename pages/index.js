@@ -163,9 +163,9 @@ export default function Home({ tutors, jobs, achievements }) {
             </div>
             <div className="grid w-full grid-cols-1 gap-x-12 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
               {tutors?.map((tutor) => {
-                const tutorPic = profilePics?.filter(
-                  (pic) => pic._id === tutor._id
-                )[0];
+                // const tutorPic = profilePics?.filter(
+                //   (pic) => pic._id === tutor._id
+                // )[0];
                 return (
                   tutor.isFeatured && <Card key={tutor._id} tutor={tutor} />
                 );
