@@ -11,7 +11,7 @@ import {
 import Rating from "../../components/UI/Rating";
 import { useRouter } from "next/router";
 
-export async function getStaticPaths() {
+/* export async function getStaticPaths() {
   const users = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-pics`
   );
@@ -40,6 +40,24 @@ export async function getStaticProps({ params }) {
       applications: application.data,
     },
     revalidate: 30,
+  };
+} */
+
+export async function getServerSideProps({ params }) {
+  const { userId } = params;
+
+  const tutor = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`
+  );
+  const application = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
+  );
+
+  return {
+    props: {
+      tutor: tutor?.data,
+      applications: application.data,
+    },
   };
 }
 
@@ -154,7 +172,7 @@ export default function Profile({ tutor, applications }) {
                 Feedbacks
               </h2>
             </div>
-            {/* <div className="space-y-6">
+            <div className="space-y-6">
               {applications?.map((application) => {
                 const {
                   feedback: { rating, comment },
@@ -191,7 +209,7 @@ export default function Profile({ tutor, applications }) {
                   </div>
                 );
               })}
-            </div> */}
+            </div>
           </section>
         </section>
       </main>
