@@ -7,7 +7,7 @@ import { useStateContext } from "../contexts/StateContext";
 import JobFilters from "../components/UI/filters/JobFilters";
 import TutorFilters from "../components/UI/filters/TutorFilters";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Alert from "../components/UI/Alert";
@@ -39,7 +39,7 @@ export async function getServerSideProps({ query }) {
   };
 }
 
-export default function Tutors({ tutors, areas, cities }) {
+export default function Tutors({ pageData, tutors, areas, cities }) {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useState(pageData.currentPage);
   const [queryParams, setQueryParams] = useState(router.query);
@@ -132,60 +132,62 @@ export default function Tutors({ tutors, areas, cities }) {
               setFilteredTutors={setFilteredTutors}
             />
           </div>
-          <div className="w-full lg:h-[calc(100vh-110px)] lg:overflow-auto mx-auto space-y-8 ">
-            <div className="space-y-4">
-              <h2 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
-                Find the best tutor
-              </h2>
-              {/* <p className="">
+          <div>
+            <div className="w-full lg:h-[calc(100vh-160px)] lg:overflow-auto mx-auto space-y-8 ">
+              <div className="space-y-4">
+                <h2 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+                  Find the best tutor
+                </h2>
+                {/* <p className="">
                 At a assumenda quas cum earum ut itaque commodi saepe rem
                 aspernatur quam natus quis nihil quod, hic explicabo doloribus
                 magnam neque, exercitationem eius sunt!
               </p> */}
+              </div>
+              {isLoading ? (
+                <div>
+                  <Spinner md />
+                </div>
+              ) : (
+                <div className="space-y-8 lg:pr-3 w-full">
+                  {filteredTutors?.length > 0 ? (
+                    <>
+                      {filteredTutors?.map((tutor) => {
+                        const tutorPic = tutorPics?.filter(
+                          (pic) => pic._id === tutor._id
+                        )[0];
+                        return (
+                          <TutorCard2
+                            key={tutor._id}
+                            tutor={tutor}
+                            profilePic={tutorPic}
+                          />
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <div className="relative h-[calc(100vh-360px)] w-60">
+                      <Image
+                        layout={"fill"}
+                        className="object-contain"
+                        src={"/images/not-found.png"}
+                        alt={""}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
-            {isLoading ? (
-              <div>
-                <Spinner md />
-              </div>
-            ) : (
-              <div className="space-y-8 lg:pr-3 w-full">
-                {filteredTutors?.length > 0 ? (
-                  <>
-                    {filteredTutors?.map((tutor) => {
-                      const tutorPic = tutorPics?.filter(
-                        (pic) => pic._id === tutor._id
-                      )[0];
-                      return (
-                        <TutorCard2
-                          key={tutor._id}
-                          tutor={tutor}
-                          profilePic={tutorPic}
-                        />
-                      );
-                    })}
-                  </>
-                ) : (
-                  <div className="relative h-[calc(100vh-360px)] w-60">
-                    <Image
-                      layout={"fill"}
-                      className="object-contain"
-                      src={"/images/not-found.png"}
-                      alt={""}
-                    />
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-          <div className="pt-2 text-center">
-            <TutorPagination
-              selectedPage={selectedPage}
-              setSelectedPage={setSelectedPage}
-              updatePics={updatePics}
-              pageData={pageData}
-              setFilteredTutors={setFilteredTutors}
-              setTutorPics={setTutorPics}
-            />
+            <div className="pt-2 text-center">
+              <TutorPagination
+                selectedPage={selectedPage}
+                setSelectedPage={setSelectedPage}
+                updatePics={updatePics}
+                pageData={pageData}
+                setFilteredTutors={setFilteredTutors}
+                setTutorPics={setTutorPics}
+              />
+            </div>
           </div>
         </section>
       </Container>
