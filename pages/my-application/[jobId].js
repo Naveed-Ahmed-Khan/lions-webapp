@@ -292,7 +292,7 @@ export default function JobDescription() {
                             <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
                               {application.coverLetter}
                             </p>
-                            <div className="text-gray-700 my-2">
+                            {/* <div className="text-gray-700 my-2">
                               <p className="mb-2 flex gap-2">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -334,7 +334,7 @@ export default function JobDescription() {
                                   Budget | {application.expectedBudget}
                                 </span>
                               </p>
-                            </div>
+                            </div> */}
                           </div>
 
                           {application.isShortlisted && (

@@ -292,7 +292,7 @@ export default function JobDescription() {
                           </svg>
                         </button>
                       </div>
-                      <div className="text-gray-700 space-y-2">
+                      {/*  <div className="text-gray-700 space-y-2">
                         <p className="mb-2 flex gap-2">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -330,7 +330,7 @@ export default function JobDescription() {
                           </svg>
                           <span>Budget | {application.expectedBudget}</span>
                         </p>
-                      </div>
+                      </div> */}
 
                       {application.isSelected ? (
                         <div>

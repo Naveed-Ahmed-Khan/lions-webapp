@@ -291,7 +291,7 @@ export default function Job({ job, applications }) {
                           />
                         </svg>
                       </button>
-                      <div className="text-gray-700 my-2">
+                      {/* <div className="text-gray-700 my-2">
                         <p className="mb-2 flex gap-2">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -329,7 +329,7 @@ export default function Job({ job, applications }) {
                           </svg>
                           <span>Budget | {application.expectedBudget}</span>
                         </p>
-                      </div>
+                      </div> */}
                     </div>
                   );
                 })
