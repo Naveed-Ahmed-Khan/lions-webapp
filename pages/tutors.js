@@ -175,7 +175,7 @@ export default function Tutors({ tutors, areas, cities }) {
               </div>
             )}
           </div>
-          <div className="pt-2 text-center">
+          {/* <div className="pt-2 text-center">
             <TutorPagination
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
@@ -184,7 +184,7 @@ export default function Tutors({ tutors, areas, cities }) {
               setFilteredTutors={setFilteredTutors}
               setTutorPics={setTutorPics}
             />
-          </div>
+          </div> */}
         </section>
       </Container>
     </>
