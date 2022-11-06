@@ -14,7 +14,7 @@ import { useAuth } from "../../../../../contexts/AuthContext";
 import { getCookie, getCookies } from "cookies-next";
 import { findHighestQualification } from "../../../../../util/findHighestQualification";
 
-export async function getStaticPaths() {
+/* export async function getStaticPaths() {
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
 
   return {
@@ -39,6 +39,22 @@ export async function getStaticProps({ params }) {
       applications: applications.data,
     },
     revalidate: 30,
+  };
+} */
+export async function getServerSideProps({ params }) {
+  const { jobId } = params;
+
+  const jobs = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-job/${jobId}`
+  );
+  const applications = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-jobapplications/${jobId}`
+  );
+  return {
+    props: {
+      job: jobs.data,
+      applications: applications.data,
+    },
   };
 }
 

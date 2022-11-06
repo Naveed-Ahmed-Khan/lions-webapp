@@ -8,7 +8,7 @@ import Container from "../../components/UI/Container";
 import ProfileSidebar from "../../components/UI/ProfileSidebar";
 import JobCard2 from "../../components/UI/cards/JobCard2";
 
-export async function getStaticPaths() {
+/* export async function getStaticPaths() {
   const users = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-tutorswithout-pics`
   );
@@ -32,6 +32,19 @@ export async function getStaticProps({ params }) {
       myJobs: applications.data,
     },
     revalidate: 30,
+  };
+} */
+export async function getServerSideProps({ params }) {
+  const { userId } = params;
+
+  const applications = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
+  );
+
+  return {
+    props: {
+      myJobs: applications.data,
+    },
   };
 }
 

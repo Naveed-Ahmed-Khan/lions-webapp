@@ -13,12 +13,13 @@ import { useRouter } from "next/router";
 import Alert from "../components/UI/Alert";
 import Spinner from "../components/UI/loader/Spinner";
 import useFetch from "../hooks/useFetch";
+import TutorPagination from "../components/UI/pagination/TutorPagination";
 
 export async function getServerSideProps({ query }) {
   console.log(query);
 
   const tutors = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`,
+    `${process.env.NEXT_PUBLIC_API}/get-paginatedtutors`,
     {
       params: query,
     }
@@ -30,7 +31,8 @@ export async function getServerSideProps({ query }) {
 
   return {
     props: {
-      tutors: tutors.data,
+      tutors: tutors.data.tutors,
+      pageData: tutors.data.pageData,
       areas: areas.data,
       cities: cities.data,
     },
@@ -175,7 +177,7 @@ export default function Tutors({ tutors, areas, cities }) {
               </div>
             )}
           </div>
-          {/* <div className="pt-2 text-center">
+          <div className="pt-2 text-center">
             <TutorPagination
               selectedPage={selectedPage}
               setSelectedPage={setSelectedPage}
@@ -184,7 +186,7 @@ export default function Tutors({ tutors, areas, cities }) {
               setFilteredTutors={setFilteredTutors}
               setTutorPics={setTutorPics}
             />
-          </div> */}
+          </div>
         </section>
       </Container>
     </>
