@@ -129,7 +129,7 @@ export default function Profile({ tutor, applications }) {
                 <Collapse label="About me">{tutor.aboutMe}</Collapse>
                 <Collapse label="Achievements">{tutor.achievements}</Collapse>
               </div>
-            </div>
+            </div>q
           </div> */}
           <div className="mt-6 sm:mt-0 flex flex-col gap-6 md:gap-8">
             {tutor.sections?.map((section) => {
@@ -154,7 +154,7 @@ export default function Profile({ tutor, applications }) {
                 Feedbacks
               </h2>
             </div>
-            <div className="space-y-6">
+            {/* <div className="space-y-6">
               {applications?.map((application) => {
                 const {
                   feedback: { rating, comment },
@@ -165,7 +165,7 @@ export default function Profile({ tutor, applications }) {
 
                 return (
                   <div key={application._id}>
-                    {comment && (
+                    {application?.feedback?.comment && (
                       <div className="flex flex-col gap-8">
                         <div className=" flex flex-col gap-4 md:bg-white bg-neutral-100 rounded py-4 px-4 md:px-8">
                           <div className="flex gap-4 items-center">
@@ -191,7 +191,7 @@ export default function Profile({ tutor, applications }) {
                   </div>
                 );
               })}
-            </div>
+            </div> */}
           </section>
         </section>
       </main>
