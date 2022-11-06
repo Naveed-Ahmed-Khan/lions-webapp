@@ -4,28 +4,24 @@ import { useRouter } from "next/router";
 import useSWR, { useSWRConfig } from "swr";
 import { useAuth } from "../contexts/AuthContext";
 
-const useFetch = (url, checkLoggedIn, params) => {
+const useFetch = (url, checkLoggedIn) => {
   // console.log(url);
   // console.log(checkLoggedIn);
   const router = useRouter();
   // const { mutate } = useSWRConfig();
   const token = getCookie("token");
-  let options = {};
-
-  if (checkLoggedIn) {
-    options["headers"] = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-  }
-
-  if (params) {
-    options["params"] = params;
-  }
 
   const { data, error, isValidating, mutate } = useSWR(url, () =>
     axios
-      .get(url, options)
+      .get(
+        url,
+        checkLoggedIn && {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((res) => res.data)
       .catch((err) => {
         console.log(err);
@@ -37,8 +33,8 @@ const useFetch = (url, checkLoggedIn, params) => {
     data: data,
     isLoading: !error && !data,
     isError: error,
-    updateData: (updatedUrl) => {
-      console.log(`mutating ${updatedUrl}`);
+    updateData: () => {
+      console.log(`mutating ${url}`);
       mutate();
     },
   };

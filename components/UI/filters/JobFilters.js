@@ -139,27 +139,27 @@ export default function JobFilters({
     return query;
   };
   const getJobs = async (query) => {
-    const res = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/get-paginatedjobs`,
-      {
-        params: query,
-      }
-    );
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`, {
+      params: query,
+    });
     console.log(res.data);
-    setFilteredJobs(res.data.jobs);
+    setFilteredJobs(res.data);
     router.push(
       {
         pathname: "/jobs",
         query: query,
       },
-      undefined
+      undefined,
+      {
+        shallow: true,
+      }
     );
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
     const queryParams = createQueryString();
-    queryParams && getJobs({ ...queryParams, page: 1 });
+    queryParams && getJobs(queryParams);
     setOpenFilter && setOpenFilter(false);
   };
 
@@ -303,45 +303,8 @@ export default function JobFilters({
         >
           Clear all
         </button> */}
-        {/*  <div className="w-full">
-        <Button
-            type={"submit"}
-            onClick={() => {
-              setIsLoading(true);
-              setAreas([]);
-              setClasses([]);
-              setQualification([]);
-              setSubjects([]);
-              setSelectedCity("");
-              setSearch("");
-            }}
-          >
-            <p>Reset</p>
-          </Button>
+        <div className="w-full">
           <Button type={"submit"}>
-            <p>Show results</p>
-          </Button>
-        </div> */}
-
-        <div className="flex justify-between gap-3">
-          <Button
-            type={"submit"}
-            onClick={() => {
-              // setIsLoading(true);
-              setAreas([]);
-              setClasses([]);
-              setQualification([]);
-              setSubjects([]);
-              setSelectedCity("");
-              // setSearch("");
-            }}
-          >
-            <p>Reset</p>
-          </Button>
-          <Button
-            type={"submit"}
-            // onClick={() => setIsLoading(true)}
-          >
             <p>Show results</p>
           </Button>
         </div>
