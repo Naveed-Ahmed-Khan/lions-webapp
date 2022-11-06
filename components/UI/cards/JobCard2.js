@@ -15,26 +15,26 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
         <div className="sm:flex justify-between items-center">
           <div className="w-full flex items-center justify-between gap-4">
             <p className="text-primary text-lg sm:text-xl font-medium">
-              {job.title}
+              {job?.title}
             </p>
-            {job.isFeatured && (
+            {job?.isFeatured && (
               <p className="bg-primary-light py-1 px-2 w-fit rounded-full text-sm text-center text-white font-medium">
                 Featured
               </p>
             )}
           </div>
           <p className="self-end text-gray-500 text-sm">
-            {/* {jobTimeStamp(job.user_id?._id)} */}
+            {/* {jobTimeStamp(job?.user_id?._id)} */}
           </p>
         </div>
         <p className="mt-6 text-gray-700 h-24 overflow-y-auto">
-          {job.description}
+          {job?.description}
         </p>
         {router.pathname !== "/my-jobs" && (
           <div className="flex justify-between">
             <div>
               <p className="text-gray-800 text-sm font-medium">
-                Job posted by | {job.user_id?.name}
+                Job posted by | {job?.user_id?.name}
               </p>
             </div>
             <div>
@@ -42,10 +42,10 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
                 Job Status:
                 <span
                   className={`ml-2 py-1 px-1.5 rounded-full text-white ${
-                    job.isOpen ? "bg-emerald-500" : "bg-rose-500"
+                    job?.isOpen ? "bg-emerald-500" : "bg-rose-500"
                   }`}
                 >
-                  {job.isOpen ? "Open" : "Closed"}
+                  {job?.isOpen ? "Open" : "Closed"}
                 </span>
               </p>
             </div>
@@ -74,7 +74,7 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Class | {job.class}</span>
+            <span>Class | {job?.class}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -91,7 +91,7 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>{" "}
-            <span>Subject | {job.subjects.join(", ")}</span>
+            <span>Subject | {job?.subjects.join(", ")}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -108,7 +108,7 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Qualification | {job.qualification}</span>
+            <span>Qualification | {job?.qualification}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -125,7 +125,7 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Location | {job.city || job.location?.city || ""}</span>
+            <span>Location | {job?.city || job?.location?.city || ""}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -142,7 +142,7 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Gender Preferance | {job.gender}</span>
+            <span>Gender Preferance | {job?.gender}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -159,7 +159,7 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
                 d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
               />
             </svg>
-            <span>Duration | {job.duration}</span>
+            <span>Duration | {job?.duration}</span>
           </li>
           <li className="flex space-x-2">
             <svg
@@ -177,16 +177,16 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
               />
             </svg>
 
-            <span>Expected Budget | Rs. {job.budget}</span>
+            <span>Expected Budget | Rs. {job?.budget}</span>
           </li>
         </ul>
 
         {router.pathname === "/jobs" && (
           <div className="flex justify-between">
-            <Anchor button href={`/tution-job/${job._id}`}>
+            <Anchor button href={`/tution-job/${job?._id}`}>
               View Details
             </Anchor>
-            {/* <Anchor button href={`/tution-job/apply/${job._id}`}>
+            {/* <Anchor button href={`/tution-job/apply/${job?._id}`}>
               Apply Now
             </Anchor> */}
           </div>
@@ -200,7 +200,7 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
                   router.push({
                     pathname: "/view-applicants/[jobId]",
                     query: {
-                      jobId: job._id,
+                      jobId: job?._id,
                     },
                   });
                 }}
@@ -219,7 +219,7 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
                   router.push({
                     pathname: "/my-application/[jobId]",
                     query: {
-                      jobId: job._id,
+                      jobId: job?._id,
                     },
                   });
                 }}
