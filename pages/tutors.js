@@ -42,17 +42,18 @@ export default function Tutors({ tutors, areas, cities, pageData }) {
   console.log(pageData);
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useState(pageData.currentPage);
+  const [queryParams, setQueryParams] = useState(router.query);
 
   const PICS_API = `${process.env.NEXT_PUBLIC_API}/get-tutors-pics/?page=${selectedPage}`;
   const {
     data: profilePics,
     isLoading: picsLoading,
     updateData: updatePics,
-  } = useFetch(PICS_API, false, { ...router.query, page: selectedPage });
-
-  /*   useEffect(() => {
+  } = useFetch(PICS_API, false, { ...queryParams, page: selectedPage });
+  console.log(profilePics);
+  useEffect(() => {
     setTutorPics(profilePics);
-  }, [profilePics]); */
+  }, [profilePics]);
 
   const [tutorPics, setTutorPics] = useState(profilePics || []);
   const [filteredTutors, setFilteredTutors] = useState(tutors || []);
@@ -109,6 +110,9 @@ export default function Tutors({ tutors, areas, cities, pageData }) {
           {openFilter && (
             <div className="block lg:hidden px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
               <TutorFilters
+                setQueryParams={setQueryParams}
+                updatePics={updatePics}
+                setSelectedPage={setSelectedPage}
                 allCities={cities}
                 allAreas={areas}
                 setIsLoading={setIsLoading}
@@ -119,6 +123,9 @@ export default function Tutors({ tutors, areas, cities, pageData }) {
           )}
           <div className="hidden lg:block px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
             <TutorFilters
+              setQueryParams={setQueryParams}
+              updatePics={updatePics}
+              setSelectedPage={setSelectedPage}
               allCities={cities}
               allAreas={areas}
               setIsLoading={setIsLoading}
@@ -146,7 +153,7 @@ export default function Tutors({ tutors, areas, cities, pageData }) {
                   {filteredTutors?.length > 0 ? (
                     <>
                       {filteredTutors?.map((tutor) => {
-                        const tutorPic = profilePics?.filter(
+                        const tutorPic = tutorPics?.filter(
                           (pic) => pic._id === tutor._id
                         )[0];
                         return (
