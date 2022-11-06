@@ -47,7 +47,7 @@ export default function MyJobs({ myJobs }) {
               My jobs
             </h2>
             <p className="">
-              All of the jobs posted by you are displayed here.
+              All of the jobs that you have applied on are displayed here.
             </p>
           </div>
           <div className="space-y-8 sm:p-8 w-full flex flex-col items-center justify-center">

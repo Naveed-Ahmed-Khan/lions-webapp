@@ -15,6 +15,7 @@ import { useFormik } from "formik";
 import Radio from "../../components/UI/Radio";
 import useFetch from "../../hooks/useFetch";
 import { getCookie } from "cookies-next";
+import { findHighestQualification } from "../../util/findHighestQualification";
 
 export default function JobDescription() {
   const router = useRouter();
@@ -103,12 +104,18 @@ export default function JobDescription() {
                 <h2 className="mb-2 text-primary text-2xl font-semibold">
                   Job details
                 </h2>
-                <p className="text-gray-800 text-sm font-medium">
-                  Job Status:
-                  <span className="ml-2 px-1 py-0.5 border-2 border-primary rounded-full">
-                    {job?.jobType}
-                  </span>
-                </p>
+                <div>
+                  <p className="text-gray-800 text-sm font-medium">
+                    Job Status:
+                    <span
+                      className={`ml-2 py-1 px-1.5 rounded-full text-white ${
+                        job?.isOpen ? "bg-emerald-500" : "bg-rose-500"
+                      }`}
+                    >
+                      {job?.isOpen ? "Open" : "Closed"}
+                    </span>
+                  </p>
+                </div>
               </div>
               <p className="text-sm text-gray-700">
                 Posted on {uploadedAt} by {job?.user_id.name}
@@ -285,7 +292,7 @@ export default function JobDescription() {
                             <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
                               {application.coverLetter}
                             </p>
-                            <div className="text-gray-700 my-2">
+                            {/* <div className="text-gray-700 my-2">
                               <p className="mb-2 flex gap-2">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -302,7 +309,10 @@ export default function JobDescription() {
                                   />
                                 </svg>
                                 <span>
-                                  Qualification | {applicant.qualification}
+                                  Qualification |{" "}
+                                  {findHighestQualification(
+                                    applicant.qualifications
+                                  )}
                                 </span>
                               </p>
                               <p className="flex gap-2">
@@ -324,7 +334,7 @@ export default function JobDescription() {
                                   Budget | {application.expectedBudget}
                                 </span>
                               </p>
-                            </div>
+                            </div> */}
                           </div>
 
                           {application.isShortlisted && (

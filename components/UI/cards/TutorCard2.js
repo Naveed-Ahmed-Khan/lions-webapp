@@ -8,12 +8,12 @@ import Anchor from "../Anchor";
 
 const TutorCard2 = ({ tutor, profilePic }) => {
   const router = useRouter();
-  // console.log(tutor);
+  console.log(tutor);
   const profile = tutor.sections?.filter(
     (section) => section.title === "Profile"
   );
 
-  // console.log(profile);
+  console.log(profile);
 
   return (
     <div className="sm:flex mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
@@ -29,8 +29,8 @@ const TutorCard2 = ({ tutor, profilePic }) => {
           </div>
         ) : (
           <>
-            {/* <div className="bg-neutral-400 animate-pulse w-full lg:w-64 h-64 sm:h-full" /> */}
-            <div className="relative w-full lg:w-64 h-64 sm:h-full">
+            <div className="bg-gray-500 animate-pulse w-full lg:w-64 h-64 sm:h-full" />
+            {/* <div className="relative w-full lg:w-64 h-64 sm:h-full">
               <Image
                 layout="fill"
                 className="object-contain object-center"
@@ -40,8 +40,8 @@ const TutorCard2 = ({ tutor, profilePic }) => {
                     : "/images/female.jfif"
                 }
                 alt={""}
-              />
-            </div>
+              /> 
+            </div>*/}
           </>
         )}
 

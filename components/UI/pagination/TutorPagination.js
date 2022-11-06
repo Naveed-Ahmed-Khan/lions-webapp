@@ -16,7 +16,7 @@ export default function TutorPagination({
   console.log(router.query);
   useEffect(() => {
     setSelectedPage(currentPage);
-  }, [pageData]);
+  }, [currentPage]);
 
   const getTutors = async (selectedPage) => {
     const tutors = await axios.get(

@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import Container from "../components/UI/Container";
 
 import TutorCard2 from "../components/UI/cards/TutorCard2";
@@ -5,20 +7,18 @@ import { useStateContext } from "../contexts/StateContext";
 import JobFilters from "../components/UI/filters/JobFilters";
 import TutorFilters from "../components/UI/filters/TutorFilters";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Alert from "../components/UI/Alert";
 import Spinner from "../components/UI/loader/Spinner";
 import useFetch from "../hooks/useFetch";
-import Pagination from "../components/UI/pagination/TutorPagination";
-import TutorPagination from "../components/UI/pagination/TutorPagination";
 
 export async function getServerSideProps({ query }) {
   console.log(query);
 
   const tutors = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-paginatedtutors`,
+    `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`,
     {
       params: query,
     }
@@ -30,29 +30,28 @@ export async function getServerSideProps({ query }) {
 
   return {
     props: {
-      tutors: tutors.data.tutors,
-      pageData: tutors.data.pageData,
+      tutors: tutors.data,
       areas: areas.data,
       cities: cities.data,
     },
   };
 }
 
-export default function Tutors({ tutors, areas, cities, pageData }) {
-  console.log(pageData);
+export default function Tutors({ tutors, areas, cities }) {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useState(pageData.currentPage);
+  const [queryParams, setQueryParams] = useState(router.query);
 
   const PICS_API = `${process.env.NEXT_PUBLIC_API}/get-tutors-pics/?page=${selectedPage}`;
   const {
     data: profilePics,
     isLoading: picsLoading,
     updateData: updatePics,
-  } = useFetch(PICS_API, false, { ...router.query, page: selectedPage });
-
-  /*   useEffect(() => {
+  } = useFetch(PICS_API, false, { ...queryParams, page: selectedPage });
+  console.log(profilePics);
+  useEffect(() => {
     setTutorPics(profilePics);
-  }, [profilePics]); */
+  }, [profilePics]);
 
   const [tutorPics, setTutorPics] = useState(profilePics || []);
   const [filteredTutors, setFilteredTutors] = useState(tutors || []);
@@ -109,6 +108,9 @@ export default function Tutors({ tutors, areas, cities, pageData }) {
           {openFilter && (
             <div className="block lg:hidden px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
               <TutorFilters
+                setQueryParams={setQueryParams}
+                updatePics={updatePics}
+                setSelectedPage={setSelectedPage}
                 allCities={cities}
                 allAreas={areas}
                 setIsLoading={setIsLoading}
@@ -119,68 +121,69 @@ export default function Tutors({ tutors, areas, cities, pageData }) {
           )}
           <div className="hidden lg:block px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
             <TutorFilters
+              setQueryParams={setQueryParams}
+              updatePics={updatePics}
+              setSelectedPage={setSelectedPage}
               allCities={cities}
               allAreas={areas}
               setIsLoading={setIsLoading}
               setFilteredTutors={setFilteredTutors}
             />
           </div>
-          <div className="flex flex-col h-fit">
-            <div className="w-full lg:h-[calc(100vh-160px)] lg:overflow-auto mx-auto space-y-8 ">
-              <div className="space-y-4">
-                <h2 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
-                  Find the best tutor
-                </h2>
-                {/* <p className="">
+          <div className="w-full lg:h-[calc(100vh-110px)] lg:overflow-auto mx-auto space-y-8 ">
+            <div className="space-y-4">
+              <h2 className="text-primary text-2xl font-bold leading-none sm:text-4xl">
+                Find the best tutor
+              </h2>
+              {/* <p className="">
                 At a assumenda quas cum earum ut itaque commodi saepe rem
                 aspernatur quam natus quis nihil quod, hic explicabo doloribus
                 magnam neque, exercitationem eius sunt!
               </p> */}
+            </div>
+            {isLoading ? (
+              <div>
+                <Spinner md />
               </div>
-              {isLoading ? (
-                <div>
-                  <Spinner md />
-                </div>
-              ) : (
-                <div className="space-y-8 lg:pr-3 w-full">
-                  {filteredTutors?.length > 0 ? (
-                    <>
-                      {filteredTutors?.map((tutor) => {
-                        const tutorPic = profilePics?.filter(
-                          (pic) => pic._id === tutor._id
-                        )[0];
-                        return (
-                          <TutorCard2
-                            key={tutor._id}
-                            tutor={tutor}
-                            profilePic={tutorPic}
-                          />
-                        );
-                      })}
-                    </>
-                  ) : (
-                    <div className="relative h-[calc(100vh-360px)] w-60">
-                      <Image
-                        layout={"fill"}
-                        className="object-contain"
-                        src={"/images/not-found.png"}
-                        alt={""}
-                      />
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-            <div className="pt-2 text-center">
-              <TutorPagination
-                selectedPage={selectedPage}
-                setSelectedPage={setSelectedPage}
-                updatePics={updatePics}
-                pageData={pageData}
-                setFilteredTutors={setFilteredTutors}
-                setTutorPics={setTutorPics}
-              />
-            </div>
+            ) : (
+              <div className="space-y-8 lg:pr-3 w-full">
+                {filteredTutors?.length > 0 ? (
+                  <>
+                    {filteredTutors?.map((tutor) => {
+                      const tutorPic = tutorPics?.filter(
+                        (pic) => pic._id === tutor._id
+                      )[0];
+                      return (
+                        <TutorCard2
+                          key={tutor._id}
+                          tutor={tutor}
+                          profilePic={tutorPic}
+                        />
+                      );
+                    })}
+                  </>
+                ) : (
+                  <div className="relative h-[calc(100vh-360px)] w-60">
+                    <Image
+                      layout={"fill"}
+                      className="object-contain"
+                      src={"/images/not-found.png"}
+                      alt={""}
+                    />
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="pt-2 text-center">
+            <TutorPagination
+              selectedPage={selectedPage}
+              setSelectedPage={setSelectedPage}
+              updatePics={updatePics}
+              pageData={pageData}
+              setFilteredTutors={setFilteredTutors}
+              setTutorPics={setTutorPics}
+            />
           </div>
         </section>
       </Container>
