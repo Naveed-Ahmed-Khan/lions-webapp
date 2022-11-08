@@ -47,6 +47,7 @@ export default function Tutors() {
       console.log(error);
     }
   };
+
   const deleteTutor = async (data) => {
     const DELETE_API = `${process.env.NEXT_PUBLIC_API}/delete-tutor/${data._id}`;
     try {
@@ -74,7 +75,7 @@ export default function Tutors() {
       console.log(res);
       // if (res.status === 200 && resMsg.status === 200) {
       if (res.status === 200) {
-        updateData()
+        updateData();
       }
     } catch (error) {
       console.log(error);
@@ -146,11 +147,10 @@ export default function Tutors() {
       colorFalse: "bg-emerald-500",
     },
   ];
-  
+
   useEffect(() => {
-    setTutors(data)
-  }, [data])
-  
+    setTutors(data);
+  }, [data]);
 
   useEffect(() => {
     if (search) {
@@ -178,7 +178,6 @@ export default function Tutors() {
     if (filter === "All" && !search) {
       setTutors(data);
     }
-    
   }, [search, data]);
 
   useEffect(() => {

@@ -17,7 +17,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
 
   return (
     <div className="sm:flex mx-auto overflow-hidden bg-white rounded-lg shadow-xl">
-      <div className="flex flex-col">
+      {/*  <div className="flex flex-col">
         {profilePic?.profilePic ? (
           <div className="relative w-full lg:w-64 h-64 sm:h-full">
             <Image
@@ -30,7 +30,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
         ) : (
           <>
             <div className="bg-gray-500 animate-pulse w-full lg:w-64 h-64 sm:h-full" />
-            {/* <div className="relative w-full lg:w-64 h-64 sm:h-full">
+            <div className="relative w-full lg:w-64 h-64 sm:h-full">
               <Image
                 layout="fill"
                 className="object-contain object-center"
@@ -41,7 +41,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
                 }
                 alt={""}
               /> 
-            </div>*/}
+            </div>
           </>
         )}
 
@@ -86,7 +86,7 @@ const TutorCard2 = ({ tutor, profilePic }) => {
             {tutor?.isVerified ? "Verified" : "Unverified"}
           </h2>
         </div>
-      </div>
+      </div> */}
 
       <div className="flex flex-col flex-auto justify-between p-4">
         <div className="sm:flex justify-between">
