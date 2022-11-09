@@ -153,7 +153,7 @@ export default function EditPersonal({ tutor, updateData }) {
           </div>
           <div className="flex items-end gap-2">
             <h2 className="text-gray-700 text-xl font-medium">{tutor?.name}</h2>
-            {!tutor?.isVerified ? (
+            {tutor?.isVerified ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

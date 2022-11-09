@@ -35,7 +35,7 @@ export async function getStaticProps() {
 }
 
 export default function TutorSignup({ areas, cities }) {
-  console.log(cities);
+  // console.log(cities);
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(null);
   // console.log(currentStep);
@@ -311,7 +311,7 @@ function Profile({ setCurrentStep }) {
         Profile Details
       </h2>
       <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
-        <div className="relative sm:flex gap-6">
+        {/* <div className="relative sm:flex gap-6">
           {path ? (
             <Image
               height={160}
@@ -347,7 +347,7 @@ function Profile({ setCurrentStep }) {
               }}
             />
           </div>
-        </div>
+        </div> */}
 
         {/* <FormGroup>
           <Input required label="Subjects" name={"subjects"} formik={formik} />
@@ -486,7 +486,7 @@ function Account({ setCurrentStep }) {
       <h2 className="text-xl sm:text-2xl font-semibold text-primary">
         Account Details
       </h2>
-      <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
+      <form className="mt-2 w-full">
         <FormGroup>
           <Input required label="Email" name={"email"} formik={formik} />
         </FormGroup>
@@ -514,7 +514,11 @@ function Account({ setCurrentStep }) {
           </p>
         )}
         <div className="sm:pt-4">
-          <Button disabled={isLoading} type="submit">
+          <Button
+            disabled={isLoading}
+            type="button"
+            onClick={formik.handleSubmit}
+          >
             {isLoading ? (
               <>
                 <Spinner sm text={"text-white"} stroke={"stroke-white"} />
