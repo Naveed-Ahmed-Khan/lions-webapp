@@ -138,8 +138,11 @@ export default function EditSubjects2({
                 <h3 className="mb-4 text-gray-600 font-medium">Classes</h3>
                 {formik.values.data.length > 0 ? (
                   <div className="grid grid-cols-3 gap-6">
-                    {formik.values.data.map((item) => (
-                      <div className="px-3 py-2 grid grid-cols-9 gap-4 border border-gray-200 rounded-lg">
+                    {formik.values.data.map((item, index) => (
+                      <div
+                        key={index}
+                        className="px-3 py-2 grid grid-cols-9 gap-4 border border-gray-200 rounded-lg"
+                      >
                         <h4 className="col-span-4 text-gray-500 font-medium">
                           {item.title}
                         </h4>
