@@ -12,6 +12,8 @@ import FormGroup from "../FormGroup";
 import Select from "../Select";
 
 export default function TutorFilters({
+  allClasses,
+  allSubjects,
   setQueryParams,
   updatePics,
   setSelectedPage,
@@ -33,7 +35,7 @@ export default function TutorFilters({
   const [selectedCity, setSelectedCity] = useState("");
   const [search, setSearch] = useState("");
 
-  const allClasses = [
+  /*   const allClasses = [
     { value: "Pre-School", id: "1" },
     { value: "Junior", id: "2" },
     { value: "Middle", id: "3" },
@@ -42,7 +44,7 @@ export default function TutorFilters({
     { value: "Bachelors", id: "6" },
     { value: "Masters", id: "7" },
     { value: "PhD", id: "8" },
-  ];
+  ]; */
 
   const allQualifications = [
     { label: "Matric", value: "Matric" },
@@ -52,7 +54,7 @@ export default function TutorFilters({
     { label: "PhD", value: "PhD" },
   ];
 
-  const allSubjects = [
+  /*   const allSubjects = [
     { label: "Chemistry", value: "Chemistry" },
     { label: "Biology", value: "Biology" },
     { label: "Physics", value: "Physics" },
@@ -62,7 +64,7 @@ export default function TutorFilters({
     { label: "Urdu", value: "Urdu" },
     { label: "Islamiat", value: "Islamiat" },
     { label: "Pak Studies", value: "Pak Studies" },
-  ];
+  ]; */
 
   const classesHandler = (e) => {
     if (e.target.checked) {
@@ -146,11 +148,11 @@ export default function TutorFilters({
 
   const getTutors = async (query) => {
     const tutors = await axios.get(
-      `${process.env.NEXT_PUBLIC_API}/get-complete-tutors`,
+      `${process.env.NEXT_PUBLIC_API}/get-paginatedtutors`,
       { params: query }
     );
-    console.log(tutors.data);
-    setFilteredTutors(tutors.data);
+    console.log(tutors.data.tutors);
+    setFilteredTutors(tutors.data.tutors);
     router.push(
       {
         pathname: "/tutors",
@@ -158,11 +160,11 @@ export default function TutorFilters({
       },
       undefined,
       {
-        shallow: true,
+        shallow: false,
       }
     );
-    setSelectedPage(1);
-    updatePics();
+    // setSelectedPage(1);
+    // updatePics();
   };
 
   const submitHandler = (e) => {
@@ -170,8 +172,8 @@ export default function TutorFilters({
     setIsLoading(true);
     const queryParams = createQueryString();
     queryParams && getTutors({ ...queryParams, page: 1 });
-    setSelectedPage(1);
-    updatePics();
+    // setSelectedPage(1);
+    // updatePics();
     setOpenFilter && setOpenFilter(false);
     setIsLoading(false);
   };
@@ -261,16 +263,15 @@ export default function TutorFilters({
               </legend>
 
               <ul className="px-2  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto ">
-                {allClasses.map((item) => {
+                {allClasses?.map((item) => {
                   console.log(item);
-                  const checked = classes?.includes(item.value);
-
+                  const checked = classes.includes(item.name);
                   return (
-                    <li key={item.id}>
+                    <li key={item._id}>
                       <CheckBox
                         defaultChecked={checked}
-                        label={item.value}
-                        name={item.value}
+                        label={item.name}
+                        name={item.name}
                         onChange={classesHandler}
                       />
                     </li>
@@ -288,14 +289,14 @@ export default function TutorFilters({
 
               <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
                 {allSubjects.map((item) => {
-                  const checked = subjects?.includes(item.value);
+                  const checked = subjects.includes(item.name);
 
                   return (
-                    <li key={item.value}>
+                    <li key={item._id}>
                       <CheckBox
                         defaultChecked={checked}
-                        label={item.label}
-                        name={item.value}
+                        label={item.name}
+                        name={item.name}
                         onChange={subjectHandler}
                       />
                     </li>
@@ -386,8 +387,8 @@ export default function TutorFilters({
               setSubjects([]);
               setSelectedCity("");
               setSearch("");
-              setSelectedPage(1);
-              updatePics();
+              // setSelectedPage(1);
+              // updatePics();
             }}
           >
             <p>Reset</p>

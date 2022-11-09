@@ -5,8 +5,6 @@ import React, { useEffect, useState } from "react";
 export default function TutorPagination({
   selectedPage,
   setSelectedPage,
-  updatePics,
-  setTutorPics,
   setFilteredTutors,
   pageData,
 }) {

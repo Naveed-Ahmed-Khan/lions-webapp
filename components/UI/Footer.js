@@ -2,7 +2,8 @@
 import React from "react";
 import Link from "next/link";
 
-const Footer = () => {
+const Footer = ({ classes }) => {
+  classes;
   const links = [
     {
       id: 1,
@@ -30,7 +31,7 @@ const Footer = () => {
         { title: "Queta", href: "tutors?city=Queta" },
       ],
     },
-    {
+    /* {
       id: 2,
       category: "Classes",
 
@@ -42,7 +43,7 @@ const Footer = () => {
         { title: "Bachelors", href: "tutors?class=Bachelors" },
         { title: "Masters", href: "tutors?class=Masters" },
       ],
-    },
+    }, */
   ];
 
   return (
@@ -107,6 +108,24 @@ const Footer = () => {
                 </div>
               );
             })}
+            <div className="">
+              <p className="font-medium tracking-wide text-white">Class</p>
+              <ul className="mt-2 space-y-2">
+                {classes?.map((item) => {
+                  return (
+                    <li key={item._id}>
+                      <Link
+                        href={`${process.env.NEXT_PUBLIC_URL}/tutors?class=${item.name}`}
+                      >
+                        <a className="font-roboto tracking-wider text-white hover:underline hover:underline-offset-2 ">
+                          {item.name}
+                        </a>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </div>
         </div>
         <div className="flex flex-col justify-between pt-5 pb-10 border-t border-deep-purple-200 sm:flex-row">

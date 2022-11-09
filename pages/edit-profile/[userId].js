@@ -26,6 +26,7 @@ import Progress from "../../components/UI/progress/Progress";
 import Spinner from "../../components/UI/loader/Spinner";
 import { getCookie } from "cookies-next";
 import EditAvailability from "../../components/EditProfile/EditAvailability";
+import EditSubjects2 from "../../components/EditProfile/EditSubjects2";
 
 export default function EditProfile() {
   const { currentUser, checkAuth } = useAuth();
@@ -35,6 +36,8 @@ export default function EditProfile() {
   const API = `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`;
   const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-allcities`;
   const AREA_API = `${process.env.NEXT_PUBLIC_API}/get-areas`;
+  const SUBJECTS_API = `${process.env.NEXT_PUBLIC_API}/get-subjects`;
+  const CLASSES_API = `${process.env.NEXT_PUBLIC_API}/get-tutor-classes`;
 
   const {
     data: tutor,
@@ -43,6 +46,14 @@ export default function EditProfile() {
   } = useFetch(API, false);
   const { data: cities, isLoading: citiesLoading } = useFetch(CITY_API, false);
   const { data: areas, isLoading: areasLoading } = useFetch(AREA_API, false);
+  const { data: classes, isLoading: classesLoading } = useFetch(
+    CLASSES_API,
+    false
+  );
+  const { data: subjects, isLoading: subjectsLoading } = useFetch(
+    SUBJECTS_API,
+    false
+  );
 
   const [currentTab, setCurrentTab] = useState("Personal");
   const [profile, setProfile] = useState(tutor?.profileStatus);
@@ -129,7 +140,7 @@ export default function EditProfile() {
     { id: 6, name: "Experience", value: "experience" },
     { id: 7, name: "Sections", value: "sections" },
   ];
-
+  console.log(subjects);
   return (
     <Container color={"gray-50"}>
       <div className="sm:p-5 bg-white max-w-5xl mx-auto">
@@ -178,7 +189,6 @@ export default function EditProfile() {
                   updateData={updateData}
                 />
               )}
-
               {currentTab === "Locations" && (
                 <EditLocations
                   setLocationFilled={setLocationFilled}
@@ -189,7 +199,9 @@ export default function EditProfile() {
                 />
               )}
               {currentTab === "Subjects" && (
-                <EditSubjects
+                <EditSubjects2
+                  classes={classes}
+                  subjects={subjects}
                   setSubjectFilled={setSubjectFilled}
                   tutor={tutor}
                   updateData={updateData}

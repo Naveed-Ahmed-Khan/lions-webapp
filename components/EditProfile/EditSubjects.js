@@ -13,7 +13,15 @@ import CheckBox from "../../components/UI/CheckBox";
 import axios from "axios";
 import { getCookie } from "cookies-next";
 
-export default function EditSubjects({ setSubjectFilled, tutor, updateData }) {
+export default function EditSubjects({
+  classes,
+  subjects,
+  setSubjectFilled,
+  tutor,
+  updateData,
+}) {
+  console.log(subjects);
+  const [allSubjects, setAllSubjects] = useState(subjects);
   const [editMode, setEditMode] = useState(false);
 
   const updateTutor = async (data) => {
@@ -29,7 +37,7 @@ export default function EditSubjects({ setSubjectFilled, tutor, updateData }) {
       } else {
         setSubjectFilled(false);
       }
-      setEditMode(false);
+      false;
     }
   };
 
@@ -114,6 +122,10 @@ export default function EditSubjects({ setSubjectFilled, tutor, updateData }) {
     },
   });
 
+  useEffect(() => {
+    setAllSubjects(subjects);
+  }, [subjects]);
+
   return (
     <div className="space-y-8 w-full">
       <h2 className="text-xl sm:text-2xl font-semibold text-primary">
@@ -136,19 +148,13 @@ export default function EditSubjects({ setSubjectFilled, tutor, updateData }) {
           <form onSubmit={formik.handleSubmit} className="mt-2 w-full">
             <Select required label="Subject" name={"name"} formik={formik}>
               <option value="">Select</option>
-              <option value="Arts">Arts</option>
-              <option value="Biology">Biology</option>
-              <option value="Chemistry">Chemistry</option>
-              <option value="Civis">Civis</option>
-              <option value="Computer">Computer</option>
-              <option value="Economics">Economics</option>
-              <option value="English">English</option>
-              <option value="Geography">Geography</option>
-              <option value="History">History</option>
-              <option value="Maths">Maths</option>
-              <option value="Physics">Physics</option>
-              <option value="Sociology">Sociology</option>
-              <option value="Urdu">Urdu</option>
+              {subjects?.map((subject) => {
+                return (
+                  <option key={subject._id} value={subject.name}>
+                    {subject.name}
+                  </option>
+                );
+              })}
             </Select>
 
             <FormGroup>

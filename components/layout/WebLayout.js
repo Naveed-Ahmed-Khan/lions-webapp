@@ -1,6 +1,7 @@
 import Head from "next/head";
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
+import useFetch from "../../hooks/useFetch";
 import Alert from "../UI/Alert";
 import Footer from "../UI/Footer";
 import Navbar from "../UI/Navbar";
@@ -10,6 +11,14 @@ export default function WebLayout({ children }) {
   const { currentUser } = useAuth();
   const [open, setOpen] = useState(false);
   const [showBackdrop, setShowBackdrop] = useState(false);
+  const CLASSES_API = `${process.env.NEXT_PUBLIC_API}/get-tutor-classes`;
+
+  const {
+    data: classes,
+    isLoading: classesLoading,
+    updateData,
+  } = useFetch(CLASSES_API, false);
+
   return (
     <div className="relative bg-white ">
       <Head>
@@ -46,7 +55,7 @@ export default function WebLayout({ children }) {
       )}
 
       <div className="z-0">{children}</div>
-      <Footer />
+      <Footer classes={classes} />
     </div>
   );
 }

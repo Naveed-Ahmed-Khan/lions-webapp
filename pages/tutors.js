@@ -25,8 +25,14 @@ export async function getServerSideProps({ query }) {
     }
   );
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
+  const subjects = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-subjects`
+  );
   const cities = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-allcities`
+  );
+  const classes = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-tutor-classes`
   );
 
   return {
@@ -35,17 +41,26 @@ export async function getServerSideProps({ query }) {
       pageData: tutors.data.pageData,
       areas: areas.data,
       cities: cities.data,
+      classes: classes.data,
+      subjects: subjects.data,
     },
   };
 }
 
-export default function Tutors({ pageData, tutors, areas, cities }) {
+export default function Tutors({
+  pageData,
+  tutors,
+  subjects,
+  classes,
+  areas,
+  cities,
+}) {
   const router = useRouter();
   const [selectedPage, setSelectedPage] = useState(pageData.currentPage);
   const [queryParams, setQueryParams] = useState(router.query);
 
-  const PICS_API = `${process.env.NEXT_PUBLIC_API}/get-tutors-pics/?page=${selectedPage}`;
-  const {
+  // const PICS_API = `${process.env.NEXT_PUBLIC_API}/get-tutors-pics/?page=${selectedPage}`;
+  /* const {
     data: profilePics,
     isLoading: picsLoading,
     updateData: updatePics,
@@ -53,12 +68,13 @@ export default function Tutors({ pageData, tutors, areas, cities }) {
   console.log(profilePics);
   useEffect(() => {
     setTutorPics(profilePics);
-  }, [profilePics]);
+  }, [profilePics]); */
 
-  const [tutorPics, setTutorPics] = useState(profilePics || []);
+  // const [tutorPics, setTutorPics] = useState(profilePics || []);
   const [filteredTutors, setFilteredTutors] = useState(tutors || []);
   const [openFilter, setOpenFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  console.log(classes);
 
   return (
     <>
@@ -110,8 +126,10 @@ export default function Tutors({ pageData, tutors, areas, cities }) {
           {openFilter && (
             <div className="block lg:hidden px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
               <TutorFilters
+                allClasses={classes}
+                allSubjects={subjects}
                 setQueryParams={setQueryParams}
-                updatePics={updatePics}
+                // updatePics={updatePics}
                 setSelectedPage={setSelectedPage}
                 allCities={cities}
                 allAreas={areas}
@@ -123,8 +141,10 @@ export default function Tutors({ pageData, tutors, areas, cities }) {
           )}
           <div className="hidden lg:block px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
             <TutorFilters
+              allClasses={classes}
+              allSubjects={subjects}
               setQueryParams={setQueryParams}
-              updatePics={updatePics}
+              // updatePics={updatePics}
               setSelectedPage={setSelectedPage}
               allCities={cities}
               allAreas={areas}
@@ -153,14 +173,14 @@ export default function Tutors({ pageData, tutors, areas, cities }) {
                   {filteredTutors?.length > 0 ? (
                     <>
                       {filteredTutors?.map((tutor) => {
-                        const tutorPic = tutorPics?.filter(
+                        /* const tutorPic = tutorPics?.filter(
                           (pic) => pic._id === tutor._id
-                        )[0];
+                        )[0]; */
                         return (
                           <TutorCard2
                             key={tutor._id}
                             tutor={tutor}
-                            profilePic={tutorPic}
+                            profilePic={""}
                           />
                         );
                       })}
@@ -182,10 +202,8 @@ export default function Tutors({ pageData, tutors, areas, cities }) {
               <TutorPagination
                 selectedPage={selectedPage}
                 setSelectedPage={setSelectedPage}
-                updatePics={updatePics}
                 pageData={pageData}
                 setFilteredTutors={setFilteredTutors}
-                setTutorPics={setTutorPics}
               />
             </div>
           </div>
