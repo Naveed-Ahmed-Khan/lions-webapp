@@ -287,8 +287,17 @@ function Profile({ setCurrentStep }) {
       achievements: "",
     },
     onSubmit: async (values) => {
-      setError("");
-      if (fileSize < 1.1) {
+      // setError("");
+      try {
+        // console.log(values.profilePic);
+        localStorage.setItem("Profile", JSON.stringify(values));
+        localStorage.setItem("step", 3);
+        setCurrentStep((prev) => ++prev);
+      } catch (error) {
+        console.log(error);
+        alert(error);
+      }
+      /* if (fileSize < 1.1) {
         try {
           values.profilePic = await filetobase64(imagePath);
           // console.log(values.profilePic);
@@ -301,7 +310,7 @@ function Profile({ setCurrentStep }) {
         }
       } else {
         setError("Image Size must be less than 1 MB.");
-      }
+      } */
     },
   });
 
