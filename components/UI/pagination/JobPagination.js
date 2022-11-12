@@ -6,9 +6,11 @@ export default function JobPagination({ setFilteredJobs, pageData }) {
   const { limit, totalDocs, totalPages, previousPage, currentPage, nextPage } =
     pageData;
   const router = useRouter();
-  console.log(router.query);
+  // console.log(router.query);
+  console.log(previousPage);
 
   const [selectedPage, setSelectedPage] = useState(currentPage);
+  console.log(selectedPage);
 
   useEffect(() => {
     setSelectedPage(currentPage);
@@ -30,8 +32,16 @@ export default function JobPagination({ setFilteredJobs, pageData }) {
   };
 
   return (
-    <div className="px-4 py-2 w-full flex items-center justify-center bg-white rounded-md">
-      {/*  <div className="flex items-center py-2 text-gray-700 hover:text-primary cursor-pointer">
+    <div className="px-2 md:px-4 py-2 w-full flex items-center justify-between md:justify-center bg-white rounded-md">
+      <button
+        className="flex md:hidden items-center py-2 px-2 md:px-0 text-gray-700 hover:text-primary bg-primary bg-opacity-20 rounded-md
+        disabled:opacity-70 disabled:hover:text-gray-700 disabled:bg-opacity-0"
+        disabled={previousPage ? false : true}
+        onClick={() => {
+          previousPage && setSelectedPage(previousPage);
+          previousPage && getJobs(previousPage);
+        }}
+      >
         <svg
           width={14}
           height={8}
@@ -62,8 +72,8 @@ export default function JobPagination({ setFilteredJobs, pageData }) {
           />
         </svg>
         <p className="text-sm ml-3 font-medium leading-none ">Previous</p>
-      </div> */}
-      <div className="sm:flex space-x-2 hidden">
+      </button>
+      <div className="md:flex space-x-2 hidden">
         {[...Array(totalPages)].map((btn, idx) => {
           const page = idx + 1;
           return (
@@ -89,7 +99,18 @@ export default function JobPagination({ setFilteredJobs, pageData }) {
           );
         })}
       </div>
-      {/* <div className="flex items-center py-2 text-gray-700 hover:text-primary cursor-pointer">
+      <div className="block md:hidden">
+        <p className="text-gray-600 text-sm">{`Page ${currentPage} of ${totalPages}`}</p>
+      </div>
+      <button
+        className="flex md:hidden items-center py-2 px-2 md:px-0 text-gray-700 hover:text-primary bg-primary bg-opacity-20 rounded-md
+        disabled:opacity-70 disabled:hover:text-gray-700 disabled:bg-opacity-0"
+        disabled={nextPage ? false : true}
+        onClick={() => {
+          nextPage && setSelectedPage(nextPage);
+          nextPage && getJobs(nextPage);
+        }}
+      >
         <p className="text-sm font-medium leading-none mr-3">Next</p>
         <svg
           width={14}
@@ -120,7 +141,7 @@ export default function JobPagination({ setFilteredJobs, pageData }) {
             strokeLinejoin="round"
           />
         </svg>
-      </div> */}
+      </button>
     </div>
   );
 }

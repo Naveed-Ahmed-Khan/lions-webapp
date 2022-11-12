@@ -57,10 +57,10 @@ const Footer = ({ classes }) => {
               className="inline-flex items-center"
             >
               {/* <img
-                className="object-contain"
+                className="object-contain text-white"
                 height={50}
-                width={140}
-                src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
+                width={90}
+                src={"e.png"}
                 alt="Float UI logo"
               /> */}
               <h2 className="text-white text-2xl font-semibold">

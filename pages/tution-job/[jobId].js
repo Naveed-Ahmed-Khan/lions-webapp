@@ -91,7 +91,7 @@ export default function JobDescription() {
       expectedBudget: expectedBudget,
     }); */
 
-    if (currentUser?.isVerified && userType === "tutor") {
+    if (currentUser && userType === "tutor") {
       try {
         const response = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/add-application`,
@@ -308,23 +308,36 @@ export default function JobDescription() {
             </>
           )}
           {!applyMode ? (
-            <div className="my-5 flex justify-end">
-              <Button
-                type={"buttpn"}
-                onClick={() => {
-                  if (!currentUser) {
-                    setIsLoading(false);
-                    router.push("/login");
-                    return;
-                  } else if (userType !== "tutor" || !currentUser?.isVerified) {
-                    setError("Unverified Tutors are not eligible to apply");
-                  } else {
-                    setApplyMode(true);
-                  }
-                }}
-              >
-                Apply Now
-              </Button>
+            <div>
+              <div className="my-5 flex w-full sm:w-fit">
+                <Button
+                  fullwidth
+                  type={"button"}
+                  onClick={() => {
+                    if (!currentUser) {
+                      setIsLoading(false);
+                      setError(
+                        "Signin to apply. Register as a tutor if you don't have an account."
+                      );
+                      return;
+                    } else {
+                      setApplyMode(true);
+                    }
+                  }}
+                >
+                  Apply Now
+                </Button>
+              </div>
+              {error && (
+                <p
+                  onClick={() => {
+                    setError("");
+                  }}
+                  className="cursor-pointer mt-4 text-center font-archivo text-red-500 px-3 sm:px-6 py-3 border border-red-500 rounded-lg"
+                >
+                  {error}
+                </p>
+              )}
             </div>
           ) : (
             <>
@@ -388,7 +401,7 @@ export default function JobDescription() {
                         }}
                         className="cursor-pointer mt-4 text-center font-archivo text-red-500 px-6 py-3 border border-red-500 rounded-lg"
                       >
-                        {error}, please try again.
+                        {error}
                       </p>
                     )}
                     <div className="space-y-4 sm:space-y-0 mt-8 sm:flex justify-end gap-4">

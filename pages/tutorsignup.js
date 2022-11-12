@@ -144,7 +144,7 @@ function Personal({ cities, areas, setCurrentStep }) {
           <Input
             required
             type="number"
-            label="CNIC"
+            label="CNIC (without dashes '-')"
             name={"cnic"}
             formik={formik}
           />

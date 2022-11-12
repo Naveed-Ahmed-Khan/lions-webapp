@@ -25,12 +25,14 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
     <header className="sticky top-0 z-30 bg-gradient-to-br from-green-700 via-green-600 to-green-700 drop-shadow-md">
       <nav className="hidden md:flex mx-auto max-w-screen-xl items-center px-3 py-3 sm:px-3 sm:py-2 md:space-x-6">
         <Link href="/">
-          <a>
-            {/*  <img
-              className="object-contain h-10 sm:h-12"
-              src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
-              alt="Float UI logo"
-            /> */}
+          <a className="flex items-center gap-3">
+            <div className="bg-white rounded-full h-14 w-14 sm:h-16 sm:w-16 flex items-center justify-center">
+              <img
+                className="object-contain h-12 sm:h-14"
+                src={"e.png"}
+                alt="Float UI logo"
+              />
+            </div>
             <h2 className="text-white text-2xl font-semibold">Educationists</h2>
           </a>
         </Link>
@@ -248,7 +250,7 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
             <a>
               {/* <img
                 className="object-contain h-10 sm:h-12"
-                src={"https://lions.edu.pk/front/assets/images/lion-logo.png"}
+                src={"e.png"}
                 alt="Float UI logo"
               /> */}
               <h2 className="text-white text-xl font-semibold">

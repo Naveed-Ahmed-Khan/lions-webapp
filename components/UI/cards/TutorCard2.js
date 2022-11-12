@@ -36,8 +36,8 @@ const TutorCard2 = ({ tutor, profilePic }) => {
                 className="object-contain object-center"
                 src={
                   tutor?.gender === "Male"
-                    ? "/images/male.jfif"
-                    : "/images/female.jfif"
+                    ? "/images/male.png"
+                    : "/images/female.png"
                 }
                 alt={""}
               /> 
