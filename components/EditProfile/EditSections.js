@@ -142,7 +142,7 @@ export default function EditSections({ tutor, updateData }) {
                 <option value="">Select</option>
                 <option value="Simple">Simple</option>
                 <option value="Collapsable">Collapsable</option>
-                <option value="Gallery">Gallery</option>
+                {/* <option value="Gallery">Gallery</option> */}
               </Select>
               <Input
                 required

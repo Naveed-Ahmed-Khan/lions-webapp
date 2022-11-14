@@ -51,6 +51,8 @@ export default function EditLocations({
     enableReinitialize: true,
     onSubmit: async (values) => {
       console.log(values);
+      if (values.places.length === 0) return;
+
       try {
         await updateTutor({
           locations: [...tutor.locations, { ...values }],
