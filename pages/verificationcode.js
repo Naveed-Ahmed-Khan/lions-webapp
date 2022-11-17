@@ -12,38 +12,37 @@ import Button from "../components/UI/Button";
 import Spinner from "../components/UI/loader/Spinner";
 import axios from "axios";
 import { getCookie, setCookie } from "cookies-next";
-import Link from "next/link";
 
-export default function Login() {
+export default function VerificationCode() {
   const router = useRouter();
-  const { signin, currentUser, checkAuth, setUser } = useAuth();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   console.log(error);
-  const loginSchema = yup.object({
-    email: yup.string("").email("Enter a valid email"),
-    password: yup
-      .string("")
-      .min(6, "Password should be of minimum 6 characters length"),
-  });
-
+  const email = localStorage.getItem("email");
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      otpCode: "",
     },
-    validationSchema: loginSchema,
-    onSubmit: async (values) => {
+    onSubmit: async ({ otpCode }) => {
       setIsLoading(true);
-      const data = await signin(values);
-      if (data.error) {
-        setError(data.error);
-      } else if (data.userType === "admin") {
-        router.push("/dashboard/admin");
-      } else {
-        router.push("/");
+      const email = localStorage.getItem("email");
+      try {
+        const { data } = await axios.post(
+          `${process.env.NEXT_PUBLIC_API}/verify-otp`,
+          { email, otpCode }
+        );
+        console.log(data);
+        if (data.error) {
+          setError(data.error);
+          setIsLoading(false);
+        } else if (data.message) {
+          router.push("/changepassword");
+        }
+      } catch (error) {
+        console.log(error);
+        setError(error.message);
+        setIsLoading(false);
       }
-      setIsLoading(false);
     },
   });
 
@@ -56,10 +55,10 @@ export default function Login() {
               <div className="w-full max-w-xl mx-auto lg:w-96 my-8">
                 <div className="flex flex-col gap-2 items-center">
                   <h2 className="mt-6 text-4xl font-bold text-gray-700">
-                    Sign In
+                    Verification
                   </h2>
-                  <p className="text-neutral-600">
-                    Welcome back! Sign in to continue.
+                  <p className="text-neutral-600 text-center">
+                    {`Please enter the 4 digit verification code sent to ${email}`}
                   </p>
                 </div>
                 {error && (
@@ -69,7 +68,7 @@ export default function Login() {
                     }}
                     className="cursor-pointer mt-4 text-center font-archivo text-red-500 px-6 py-3 border border-red-500 rounded-lg"
                   >
-                    {error}, please try again.
+                    {error}
                   </p>
                 )}
                 <div className="mt-8">
@@ -79,27 +78,15 @@ export default function Login() {
                         <div className="mt-1">
                           <Input
                             required
-                            label="Email address"
-                            placeholder="Your Email"
-                            name="email"
+                            label="Verification Code"
+                            placeholder="Enter a 4-digit verification code"
+                            name="otpCode"
                             formik={formik}
                           />
                         </div>
                       </div>
-                      <div className="space-y-1">
-                        <div className="mt-1">
-                          <Input
-                            required
-                            type="password"
-                            label="Password"
-                            placeholder="Your Password"
-                            name="password"
-                            formik={formik}
-                          />
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-end">
-                        {/* <div className="flex items-center">
+                      {/* <div className="flex items-center justify-between">
+                        <div className="flex items-center">
                           <input
                             id="remember-me"
                             name="remember-me"
@@ -113,19 +100,18 @@ export default function Login() {
                           >
                             Remember me
                           </label>
-                        </div> */}
+                        </div>
                         <div className="text-sm">
-                          <Link href="/forgetpassword">
                           <a
+                            href="#"
                             className="font-medium text-primary hover:text-primary-light"
                           >
                             Forgot your password?
                           </a>
-                          </Link>
                         </div>
-                      </div>
-                      <div className="">
-                        <Button fullwidth type={"submit"}>
+                      </div> */}
+                      <div className="pt-6">
+                        <Button disabled={isLoading} fullwidth type={"submit"}>
                           {isLoading ? (
                             <div className="flex justify-center">
                               <Spinner
@@ -135,7 +121,7 @@ export default function Login() {
                               />
                             </div>
                           ) : (
-                            <>Sign in</>
+                            <>Verify</>
                           )}
                         </Button>
                       </div>

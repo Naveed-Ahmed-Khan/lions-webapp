@@ -75,6 +75,38 @@ export function AuthProvider({ children }) {
     }
   }
 
+  async function forgotPassword(email) {
+    try {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/forget-password`,
+        email
+      );
+      if (data.error) {
+        return { error: data.error };
+      } else if (data.message) {
+        return { message: data.message };
+      }
+    } catch (error) {
+      return { error: error.message };
+    }
+  }
+
+  async function changePassword(newData) {
+    try {
+      const { data } = await axios.post(
+        `${process.env.NEXT_PUBLIC_API}/change-password`,
+        newData
+      );
+      if (data.error) {
+        return { error: data.error };
+      } else if (data.message) {
+        return { message: data.message };
+      }
+    } catch (error) {
+      return { error: error.message };
+    }
+  }
+
   /* async function signin(values) {
     // setError("");
     // setLoading(true);
@@ -129,9 +161,6 @@ export function AuthProvider({ children }) {
     return signInWithPopup(auth, provider);
   }
 
-  function resetPassword(email) {
-    return sendPasswordResetEmail(auth, email);
-  }
 
   function changeEmail(email) {
     return updateEmail(currentUser, email);
@@ -186,6 +215,8 @@ export function AuthProvider({ children }) {
     error,
     setUser,
     checkAuth,
+    forgotPassword,
+    changePassword,
     signup,
     signin,
     logout,
