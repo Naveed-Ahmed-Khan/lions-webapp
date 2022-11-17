@@ -17,15 +17,17 @@ export default function VerificationCode() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  console.log(error);
-  const email = localStorage.getItem("email");
+
+  let email = "";
+  if (typeof window !== "undefined") {
+    email = localStorage.setItem("email", values.email);
+  }
   const formik = useFormik({
     initialValues: {
       otpCode: "",
     },
     onSubmit: async ({ otpCode }) => {
       setIsLoading(true);
-      const email = localStorage.getItem("email");
       try {
         const { data } = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/verify-otp`,

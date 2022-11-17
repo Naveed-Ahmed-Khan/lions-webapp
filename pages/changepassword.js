@@ -17,7 +17,11 @@ export default function ChangePassword() {
   const router = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  console.log(error);
+
+  let email = "";
+  if (typeof window !== "undefined") {
+    email = localStorage.setItem("email", values.email);
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -25,7 +29,6 @@ export default function ChangePassword() {
     },
     onSubmit: async ({ password }) => {
       setIsLoading(true);
-      const email = localStorage.getItem("email");
       try {
         const { data } = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/change-password`,

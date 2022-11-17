@@ -15,10 +15,8 @@ import { getCookie, setCookie } from "cookies-next";
 
 export default function ForgetPasswordPage() {
   const router = useRouter();
-  // const { forgotPassword } = useAuth();
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  // console.log(error);
 
   const loginSchema = yup.object({
     email: yup.string("").email("Enter a valid email"),
@@ -31,7 +29,9 @@ export default function ForgetPasswordPage() {
     validationSchema: loginSchema,
     onSubmit: async (values) => {
       setIsLoading(true);
-      localStorage.setItem("email", values.email);
+      if (typeof window !== "undefined") {
+        localStorage.setItem("email", values.email);
+      }
       try {
         const { data } = await axios.post(
           `${process.env.NEXT_PUBLIC_API}/forgot-password`,
