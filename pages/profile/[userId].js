@@ -78,6 +78,7 @@ export default function Profile({ tutor, applications }) {
       <div className="relative flex flex-col bg-white">
         <header className="relative h-[35vh]">
           <Image
+            priority
             layout="fill"
             objectFit="cover"
             src={tutor?.bannerImage || "/images/flag.png"}
@@ -90,7 +91,7 @@ export default function Profile({ tutor, applications }) {
             <Image
               layout="fill"
               objectFit="cover"
-              src={tutor?.profilePic}
+              src={tutor?.profilePic || "/images/profile.webp"}
               alt=""
             />
           </div>

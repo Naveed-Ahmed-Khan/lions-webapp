@@ -56,13 +56,6 @@ const Footer = ({ classes }) => {
               title="Company"
               className="inline-flex items-center"
             >
-              {/* <img
-                className="object-contain text-white"
-                height={50}
-                width={90}
-                src={"e.png"}
-                alt="Float UI logo"
-              /> */}
               <h2 className="text-white text-2xl font-semibold">
                 Educationists
               </h2>

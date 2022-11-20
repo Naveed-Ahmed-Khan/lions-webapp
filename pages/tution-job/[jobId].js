@@ -129,9 +129,10 @@ export default function JobDescription() {
   useEffect(() => {
     if (currentUser && applications?.length > 0) {
       const apl = applications?.filter(
-        (appliction) => appliction.applicant_id._id
+        (app) => app.applicant_id._id === currentUser?._id
       );
-      apl ? setHasApplied(true) : setHasApplied(false);
+      console.log(apl, "applied job applicant")
+      apl.length > 0 ? setHasApplied(true) : setHasApplied(false);
     }
   }, [currentUser, applications]);
 
@@ -150,7 +151,7 @@ export default function JobDescription() {
             <>
               <div className="bg-white md:bg-neutral-100 rounded sm:p-8">
                 <div className="mb-6">
-                  <h2 className="mb-2 text-primary text-2xl font-semibold">
+                  <h2 className="text-primary text-2xl font-semibold">
                     Job details
                   </h2>
                   <p className="text-sm text-gray-700">
@@ -500,48 +501,8 @@ export default function JobDescription() {
                         <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
                           {application.coverLetter}
                         </p>
-                        <div>
-                          <Button
-                            type={"button"}
-                            onClick={() => {
-                              router.push({
-                                pathname: "/profile/[userId]",
-                                query: { userId: applicant._id },
-                              });
-                            }}
-                          >
-                            View Profile
-                          </Button>
-                        </div>
-                        {/* <button
-                          className="flex items-center"
-                          onClick={() => {
-                            router.push({
-                              pathname: "/profile/[userId]",
-                              query: { userId: applicant._id },
-                            });
-                          }}
-                        >
-                          <p className="flex items-center text-primary text-sm hover:pr-3 transition-all duration-300">
-                            View Profile
-                          </p>
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-4 w-4 mt-px text-primary translate-x-0 hover:translate-x-3 transition-transform duration-300"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M9 5l7 7-7 7"
-                            />
-                          </svg>
-                        </button> */}
-                        {/* <div className="text-gray-700 my-2">
-                          <p className="mb-2 flex gap-2">
+                        <div className="text-gray-700 my-2 grid grid-cols-2 gap-2">
+                          <p className="flex gap-2">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               className="h-6 w-6 text-primary"
@@ -563,6 +524,25 @@ export default function JobDescription() {
                               )}
                             </span>
                           </p>
+
+                          <p className="flex gap-2">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              className="h-6 w-6 text-primary"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+                              />
+                            </svg>
+                            <span>Approx Distance | {application.distance}</span>
+                          </p>
+
                           <p className="flex gap-2">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -580,7 +560,21 @@ export default function JobDescription() {
                             </svg>
                             <span>Budget | {application.expectedBudget}</span>
                           </p>
-                        </div> */}
+
+                        </div>
+                        <div>
+                          <Button
+                            type={"button"}
+                            onClick={() => {
+                              router.push({
+                                pathname: "/profile/[userId]",
+                                query: { userId: applicant._id },
+                              });
+                            }}
+                          >
+                            View Profile
+                          </Button>
+                        </div>
                       </div>
                     );
                   })

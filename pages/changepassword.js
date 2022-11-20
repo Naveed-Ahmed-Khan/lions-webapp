@@ -20,7 +20,7 @@ export default function ChangePassword() {
 
   let email = "";
   if (typeof window !== "undefined") {
-    email = localStorage.setItem("email", values.email);
+    email = localStorage.getItem("email");
   }
 
   const formik = useFormik({

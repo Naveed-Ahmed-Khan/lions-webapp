@@ -29,7 +29,7 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
             <div className="bg-white rounded-full h-14 w-14 sm:h-16 sm:w-16 flex items-center justify-center">
               <img
                 className="object-contain h-12 sm:h-14"
-                src={"e.png"}
+                src={"/e.png"}
                 alt="Float UI logo"
               />
             </div>
@@ -78,13 +78,13 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
                 options={
                   user === "tutor"
                     ? [
-                        { title: "My Profile", href: "/profile" },
-                        { title: "Edit Profile", href: "/edit-profile" },
-                        { title: "Jobs Applied", href: "/applied-jobs" },
-                      ]
+                      { title: "My Profile", href: "/profile" },
+                      { title: "Edit Profile", href: "/edit-profile" },
+                      { title: "Jobs Applied", href: "/applied-jobs" },
+                    ]
                     : user === "admin"
-                    ? [{ title: "Admin Panel", href: "/dashboard/admin" }]
-                    : [{ title: "My Jobs", href: "/my-jobs" }]
+                      ? [{ title: "Admin Panel", href: "/dashboard/admin" }]
+                      : [{ title: "My Jobs", href: "/my-jobs" }]
                 }
               >
                 <div className="flex items-center">
@@ -197,13 +197,13 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
                 options={
                   user === "tutor"
                     ? [
-                        { title: "My Profile", href: "/profile" },
-                        { title: "Edit Profile", href: "/edit-profile" },
-                        { title: "Jobs Applied", href: "/applied-jobs" },
-                      ]
+                      { title: "My Profile", href: "/profile" },
+                      { title: "Edit Profile", href: "/edit-profile" },
+                      { title: "Jobs Applied", href: "/applied-jobs" },
+                    ]
                     : user === "admin"
-                    ? [{ title: "Admin Panel", href: "/dashboard/admin" }]
-                    : [{ title: "My Jobs", href: "/my-jobs" }]
+                      ? [{ title: "Admin Panel", href: "/dashboard/admin" }]
+                      : [{ title: "My Jobs", href: "/my-jobs" }]
                 }
               >
                 <div className="flex items-center">
@@ -248,11 +248,6 @@ const Navbar = ({ open, setOpen, setShowBackdrop }) => {
         ) : (
           <Link href="/">
             <a>
-              {/* <img
-                className="object-contain h-10 sm:h-12"
-                src={"e.png"}
-                alt="Float UI logo"
-              /> */}
               <h2 className="text-white text-xl font-semibold">
                 Educationists
               </h2>
