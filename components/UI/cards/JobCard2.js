@@ -6,7 +6,7 @@ import Anchor from "../Anchor";
 import Button from "../Button";
 
 const JobCard2 = ({ applications, job, isSelected, isShortlisted }) => {
-  const applicants = applications.filter(app => app.job_id === job?._id).length
+  const applicants = applications?.filter(app => app.job_id === job?._id).length
   const router = useRouter();
   const { currentUser } = useAuth();
   return (
