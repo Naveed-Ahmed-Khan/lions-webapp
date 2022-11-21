@@ -22,7 +22,7 @@ import { getCookie } from "cookies-next";
 export default function EditSections({ tutor, updateData }) {
   const [editMode, setEditMode] = useState(false);
   const [sections, setSections] = useState(["section1"]);
-  const [type, setType] = useState("Simple");
+  const [type, setType] = useState("Collapsable");
   const [title, setTitle] = useState("");
   const [data, setData] = useState({});
 
