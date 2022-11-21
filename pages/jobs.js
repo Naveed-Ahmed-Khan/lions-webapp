@@ -31,6 +31,7 @@ export async function getServerSideProps({ query }) {
     props: {
       jobs: response.data.jobs,
       pageData: response.data.pageData,
+      applications: response.data.applications,
       areas: areas.data,
       cities: cities.data,
       classes: classes.data,
@@ -38,7 +39,7 @@ export async function getServerSideProps({ query }) {
   };
 }
 
-export default function Jobs({ pageData, jobs, areas, classes, cities }) {
+export default function Jobs({ pageData, jobs, applications, areas, classes, cities }) {
   const [filteredJobs, setFilteredJobs] = useState(jobs || []);
   const [openFilter, setOpenFilter] = useState(false);
   console.log(filteredJobs);
@@ -93,6 +94,7 @@ export default function Jobs({ pageData, jobs, areas, classes, cities }) {
           {openFilter && (
             <div className="block lg:hidden px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
               <JobFilters
+                applications={applications}
                 allAreas={areas}
                 allCities={cities}
                 setFilteredJobs={setFilteredJobs}
@@ -102,6 +104,7 @@ export default function Jobs({ pageData, jobs, areas, classes, cities }) {
           )}
           <div className="hidden lg:block px-0 sm:px-10 lg:px-0 lg:pr-6 mb-8">
             <JobFilters
+              applications={applications}
               allAreas={areas}
               allCities={cities}
               setFilteredJobs={setFilteredJobs}
@@ -123,7 +126,7 @@ export default function Jobs({ pageData, jobs, areas, classes, cities }) {
                 {filteredJobs?.length > 0 ? (
                   <>
                     {filteredJobs?.map((job) => {
-                      return <JobCard2 key={job._id} job={job} />;
+                      return <JobCard2 applications={applications} key={job._id} job={job} />;
                     })}
                   </>
                 ) : (

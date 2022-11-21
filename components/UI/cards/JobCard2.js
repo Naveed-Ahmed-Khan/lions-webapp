@@ -5,7 +5,8 @@ import { jobTimeStamp } from "../../../util/jobTimeStamp";
 import Anchor from "../Anchor";
 import Button from "../Button";
 
-const JobCard2 = ({ job, isSelected, isShortlisted }) => {
+const JobCard2 = ({ applications, job, isSelected, isShortlisted }) => {
+  const applicants = applications.filter(app => app.job_id === job?._id).length
   const router = useRouter();
   const { currentUser } = useAuth();
   return (
@@ -41,9 +42,8 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
               <p className="text-gray-800 text-sm font-medium">
                 Job Status:
                 <span
-                  className={`ml-2 py-1 px-1.5 rounded-full text-white ${
-                    job?.isOpen ? "bg-emerald-500" : "bg-rose-500"
-                  }`}
+                  className={`ml-2 py-1 px-1.5 rounded-full text-white ${job?.isOpen ? "bg-emerald-500" : "bg-rose-500"
+                    }`}
                 >
                   {job?.isOpen ? "Open" : "Closed"}
                 </span>
@@ -186,9 +186,11 @@ const JobCard2 = ({ job, isSelected, isShortlisted }) => {
             <Anchor button href={`/tution-job/${job?._id}`}>
               View Details
             </Anchor>
-            {/* <Anchor button href={`/tution-job/apply/${job?._id}`}>
-              Apply Now
-            </Anchor> */}
+            <div className="flex items-center px-2 py-1 border-2 border-primary rounded-md">
+              <p className="text-primary text-sm font-medium">
+                {`Applicants (${applicants})`}
+              </p>
+            </div>
           </div>
         )}
 
