@@ -214,6 +214,52 @@ export default function Profile({ tutor, applications }) {
           </section>
         </section>
       </main>
+
+      <script type="application/ld+json">
+        {{
+          "@context": "https://schema.org/",
+          "@type": "Product",
+          "name": `${tutor?.name}`,
+          "image": "https://www.educationist.org.pk/",
+          "description": "We are providing  the most professional, trusted, reliable and affordable tutors. |Dr. Babar  📞 +923328200082 | No1 Home tutoring network",
+          "brand": {
+            "@type": "Brand",
+            "name": "Educationist"
+          },
+          "sku": "251122",
+          "offers": {
+            "@type": "Offer",
+            "url": "https://www.educationist.org.pk/",
+            "priceCurrency": "PKR",
+            "price": "15000",
+            "priceValidUntil": "2022-12-16",
+            "availability": "https://schema.org/InStock",
+            "itemCondition": "https://schema.org/NewCondition"
+          },
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5",
+            "bestRating": "5",
+            "worstRating": "1",
+            "ratingCount": "1",
+            "reviewCount": "1"
+          },
+          "review": {
+            "@type": "Review",
+            "name": "Tutoring",
+            "reviewBody": "We are providing  the most professional, trusted, reliable and affordable tutors. |Dr. Babar  📞 +923328200082 | No1 Home tutoring Network",
+            "reviewRating": {
+              "@type": "Rating",
+              "ratingValue": "5",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "datePublished": "2022-11-16",
+            "author": { "@type": "Person", "name": "Admin" },
+            "publisher": { "@type": "Organization", "name": "Educationist" }
+          }
+        }}
+      </script>
     </Container>
   );
 }
