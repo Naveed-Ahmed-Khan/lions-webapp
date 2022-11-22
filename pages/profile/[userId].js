@@ -64,6 +64,38 @@ export async function getServerSideProps({ params }) {
 
 export default function Profile({ tutor, applications }) {
   const router = useRouter();
+  function addProfileJsonLd() {
+    return {
+      __html: `{
+        "@context": "https://schema.org/", 
+        "@type": "Product", 
+        "name": "${tutor?.name}",
+        "image": "http://lions-home-tutors.com/wp-content/uploads/2022/09/Dr.Yasir-Economics.png",
+        "description": "🌟🌟🌟🌟🌟  We are providing  the most professional, trusted, reliable and affordable tutors. |Dr. Babar  📞 +923328200082 | پاکستان کا سب سے بڑا ہوم ٹیوٹرز نیٹ ورک |",
+        "brand": {
+          "@type": "Brand",
+          "name": "Educationists"
+        },
+        "sku": "221122",
+        "offers": {
+          "@type": "Offer",
+          "url": "https://lions-home-tutors.com/highly-experienced-o-a-level-business-and-economics-and-result-oriented-tutor-dr-yasir-kareem/",
+          "priceCurrency": "PKR",
+          "price": "30000",
+          "availability": "https://schema.org/InStock",
+          "itemCondition": "https://schema.org/NewCondition"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5",
+          "bestRating": "5",
+          "worstRating": "1",
+          "ratingCount": "79512"
+        }
+      }
+  `,
+    };
+  }
   // console.log(applications);
   // console.log(userId);
   /* if (router.isFallback) {
@@ -77,51 +109,11 @@ export default function Profile({ tutor, applications }) {
   return (
     <Container color={"gray-50"}>
       <Head>
-        <script type="application/ld+json">
-          {{
-            "@context": "https://schema.org/",
-            "@type": "Product",
-            "name": `${tutor?.name}`,
-            "image": "https://www.educationist.org.pk/",
-            "description": "We are providing  the most professional, trusted, reliable and affordable tutors. |Dr. Babar  📞 +923328200082 | No1 Home tutoring network",
-            "brand": {
-              "@type": "Brand",
-              "name": "Educationist"
-            },
-            "sku": "251122",
-            "offers": {
-              "@type": "Offer",
-              "url": "https://www.educationist.org.pk/",
-              "priceCurrency": "PKR",
-              "price": "15000",
-              "priceValidUntil": "2022-12-16",
-              "availability": "https://schema.org/InStock",
-              "itemCondition": "https://schema.org/NewCondition"
-            },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "5",
-              "bestRating": "5",
-              "worstRating": "1",
-              "ratingCount": "1",
-              "reviewCount": "1"
-            },
-            "review": {
-              "@type": "Review",
-              "name": "Tutoring",
-              "reviewBody": "We are providing  the most professional, trusted, reliable and affordable tutors. |Dr. Babar  📞 +923328200082 | No1 Home tutoring Network",
-              "reviewRating": {
-                "@type": "Rating",
-                "ratingValue": "5",
-                "bestRating": "5",
-                "worstRating": "1"
-              },
-              "datePublished": "2022-11-16",
-              "author": { "@type": "Person", "name": "Admin" },
-              "publisher": { "@type": "Organization", "name": "Educationist" }
-            }
-          }}
-        </script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={addProfileJsonLd()}
+          key="profile-jsonld"
+        />
       </Head>
       <div className="relative flex flex-col bg-white">
         <header className="relative h-[35vh]">

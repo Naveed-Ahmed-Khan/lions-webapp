@@ -36,35 +36,6 @@ export default function WebLayout({ children }) {
         <meta name="yandex-verification" content="7ee341b0f1c20b0a" />
         <meta name="msvalidate.01" content="AD8D54215A8500E21F93B4B0EF1D39CA" />
         <link rel="icon" href="/e.png" />
-        <script type="application/ld+json">
-          {{
-            "@context": "https://schema.org/",
-            "@type": "Product",
-            "name": "Dr.Yasir Kareem",
-            "image": "http://lions-home-tutors.com/wp-content/uploads/2022/09/Dr.Yasir-Economics.png",
-            "description": "🌟🌟🌟🌟🌟  We are providing  the most professional, trusted, reliable and affordable tutors. |Dr. Babar  📞 +923328200082 | پاکستان کا سب سے بڑا ہوم ٹیوٹرز نیٹ ورک |",
-            "brand": {
-              "@type": "Brand",
-              "name": "LIONS Home Tutors"
-            },
-            "sku": "221122",
-            "offers": {
-              "@type": "Offer",
-              "url": "https://lions-home-tutors.com/highly-experienced-o-a-level-business-and-economics-and-result-oriented-tutor-dr-yasir-kareem/",
-              "priceCurrency": "PKR",
-              "price": "30000",
-              "availability": "https://schema.org/InStock",
-              "itemCondition": "https://schema.org/NewCondition"
-            },
-            "aggregateRating": {
-              "@type": "AggregateRating",
-              "ratingValue": "5",
-              "bestRating": "5",
-              "worstRating": "1",
-              "ratingCount": "79512"
-            }
-          }}
-        </script>
       </Head>
       <Sidebar
         open={open}

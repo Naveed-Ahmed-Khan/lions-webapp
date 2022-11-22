@@ -140,42 +140,6 @@ export default function JobDescription() {
   return (
     <Container color={"white"}>
       <Head>
-        <script type="application/ld+json">
-          {{
-            "@context": "https://schema.org/",
-            "@type": "JobPosting",
-            "title": `${job?.title}`,
-            "description": `<p>${job?.description}</p>`,
-            "identifier": {
-              "@type": "PropertyValue",
-              "name": "Google",
-              "value": "1234567"
-            },
-            "datePosted": "2017-01-18",
-            "validThrough": "2017-03-18T00:00",
-            "applicantLocationRequirements": {
-              "@type": "Country",
-              "name": "USA"
-            },
-            "jobLocationType": "TELECOMMUTE",
-            "employmentType": "FULL_TIME",
-            "hiringOrganization": {
-              "@type": "Organization",
-              "name": "Google",
-              "sameAs": "http://www.google.com",
-              "logo": "http://www.example.com/images/logo.png"
-            },
-            "baseSalary": {
-              "@type": "MonetaryAmount",
-              "currency": "USD",
-              "value": {
-                "@type": "QuantitativeValue",
-                "value": 40.00,
-                "unitText": "HOUR"
-              }
-            }
-          }}
-        </script>
       </Head>
       <div className="p-4 sm:p-8 flex flex-col bg-white">
         <h2 className=" text-primary text-3xl font-semibold">
