@@ -132,13 +132,14 @@ export default function EditProfile() {
   }, [tutor, profile]);
 
   const tabs = [
-    { id: 1, name: "Personal", value: "" },
+    { id: 1, name: "Sections", value: "sections" },
     { id: 2, name: "Qualification", value: "qualifications" },
     { id: 3, name: "Subjects", value: "subjectsTaught" },
     { id: 4, name: "Availability", value: "slots" },
     { id: 5, name: "Locations", value: "locations" },
     { id: 6, name: "Experience", value: "experience" },
-    { id: 7, name: "Sections", value: "sections" },
+    { id: 7, name: "Personal", value: "" },
+
   ];
   console.log(subjects);
   return (
@@ -161,9 +162,9 @@ export default function EditProfile() {
                   locationFilled={locationFilled}
                   availableFilled={availableFilled}
                   setProfile={setProfile}
-                  // tutor={tutor}
-                  // profileStatus={tutor.profileStatus}
-                  // tutorId={tutor._id}
+                // tutor={tutor}
+                // profileStatus={tutor.profileStatus}
+                // tutorId={tutor._id}
                 />
               )}
             </div>

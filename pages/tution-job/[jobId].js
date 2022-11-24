@@ -137,9 +137,62 @@ export default function JobDescription() {
     }
   }, [currentUser, applications]);
 
+  function addJobJsonLd() {
+    return {
+      __html: `{
+        "@context": "https://schema.org/",
+        "@type": "JobPosting",
+        "title": "${job?.title}",
+        "description": "${job?.description}",
+        "hiringOrganization" : {
+          "@type": "Organization",
+          "name": "Educationist",
+          "sameAs": "https://www.educationist.org.pk/",
+          "logo": "https://www.educationist.org.pk/logo"
+        },
+        "industry": "Education",
+        "employmentType": "PART_TIME",
+        "workHours": "04pm-09pm,evening",
+        "datePosted": "2022-11-22",
+        "validThrough": "2022-12-22",
+        "jobLocation": {
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "",
+            "addressLocality": "${job?.city}",
+            "postalCode": "",
+            "addressCountry": "PK"
+          }
+        },
+        "baseSalary": {
+          "@type": "MonetaryAmount",
+          "currency": "PKR",
+          "value": {
+            "@type": "QuantitativeValue",
+            "minValue": ${job?.budget},
+            "maxValue": ${job?.budget},
+            "unitText": "MONTH"
+          }
+        },
+        "responsibilities": "to produce A+ results",
+        "skills": "produced self confidence",
+        "qualifications": "${job?.qualification}",
+        "educationRequirements": "${job?.qualification}",
+        "experienceRequirements": "${job?.experience}"
+      }
+  `,
+    };
+  }
+
   return (
     <Container color={"white"}>
       <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={addJobJsonLd()}
+          key="job-jsonld"
+        />
       </Head>
       <div className="p-4 sm:p-8 flex flex-col bg-white">
         <h2 className=" text-primary text-3xl font-semibold">
