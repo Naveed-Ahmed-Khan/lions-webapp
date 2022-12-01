@@ -72,7 +72,7 @@ const FeatureCard = () => {
   ];
 
   return (
-    <section className="w-full text-gray-600 mt-4">
+    <section className="w-full text-gray-600 mt-4 md:mt-8">
       <div className="grid sm:grid-cols-3 justify-items-center gap-8 text-center overflow-auto">
         {features.map((feat) => {
           return (

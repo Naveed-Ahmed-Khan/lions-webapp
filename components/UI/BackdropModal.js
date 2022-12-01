@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import Button from "./Button";
 
-const BackdropModal = ({ show, setShow, onClick, onSave, title, children }) => {
+const BackdropModal = ({ show, setShow, onCancel, onSave, title, children }) => {
   const [isfadeoutDelay, setIsFadeoutDelay] = useState(false);
 
   const DURATION = 300; /* 75, 100, 150, 200, 300, 500, 700, 1000 */
@@ -33,15 +33,14 @@ const BackdropModal = ({ show, setShow, onClick, onSave, title, children }) => {
       />
       <main
         className={`flex flex-col gap-2 fixed p-8 bg-white shadow-lg drop-shadow-xl rounded-md
-        top-[30%] left-[10%] w-[80%] 
+        top-[20%] left-[10%] w-[80%] 
         sm:w-[35%] sm:left-[25%] 
         lg:w-[40%] lg:left-[30%]
         transition duration-${DURATION} ${TRANSITION}
-        ${
-          show === true
+        ${show === true
             ? "translate-y-0 opacity-100"
             : "-translate-y-20 opacity-0"
-        }
+          }
         ${isfadeoutDelay === true ? "-z-40" : "z-40"}
         `}
       >
@@ -66,6 +65,7 @@ const BackdropModal = ({ show, setShow, onClick, onSave, title, children }) => {
                 type={"button"}
                 onClick={() => {
                   setShow(false);
+                  onCancel && onCancel()
                 }}
               >
                 Cancel

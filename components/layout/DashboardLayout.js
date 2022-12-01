@@ -37,7 +37,6 @@ export default function DashboardLayout({ children }) {
             setOpen={setOpen}
             setShowBackdrop={setShowBackdrop}
           />
-
           <div className="min-h-[calc(100vh-80px)] bg-gray-100 p-5">
             {children}
           </div>

@@ -20,23 +20,22 @@ const Input = ({
     <div className="flex flex-col">
       {label && (
         <label
-          className={`${
-            formik && formik.touched[name] && formik.errors[name]
-              ? "text-red-400"
-              : "text-neutral-600"
-          } mb-2 self-start text-sm sm:text-base font-medium `}
+          className={`${formik && formik.touched[name] && formik.errors[name]
+            ? "text-red-400"
+            : "text-neutral-600"
+            } mb-2 self-start text-sm sm:text-base font-medium `}
         >
           {label}
         </label>
       )}
       <input
-        className={` w-full px-5 py-3 text-base placeholder-gray-300 transition duration-500 rounded-sm 
+        className={`w-full px-5 py-3 text-base placeholder-gray-300 transition duration-500 rounded-sm 
         border border-transparent focus:border-transparent text-neutral-600 bg-white focus:outline-none 
-        ${
-          formik && formik.touched[name] && formik.errors[name]
+        ${formik && formik.touched[name] && formik.errors[name]
             ? "ring-1 ring-red-400 focus:ring-offset-2 focus:ring-offset-red-400"
             : "ring-1 ring-gray-300 focus:ring-offset-2 focus:ring-offset-primary"
-        } focus:ring-2 focus:ring-white`}
+          } focus:ring-2 focus:ring-white 
+          ${disabled && "opacity-60"}`}
         required={required}
         placeholder={placeholder}
         type={type ? type : "text"}
