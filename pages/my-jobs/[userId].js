@@ -8,34 +8,21 @@ import Container from "../../components/UI/Container";
 import ProfileSidebar from "../../components/UI/ProfileSidebar";
 import JobCard2 from "../../components/UI/cards/JobCard2";
 
-/* export async function getServerSideProps(context) {
-  const { userId } = context.params;
 
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-myjobs/${userId}`
-  );
-  // console.log(response);
 
-  return {
-    props: {
-      myJobs: response.data,
-    },
-  };
-} */
+// export async function getStaticPaths() {
+//   const students = await axios.get(
+//     `${process.env.NEXT_PUBLIC_API}/get-students`
+//   );
 
-export async function getStaticPaths() {
-  const students = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-students`
-  );
-
-  return {
-    paths: students.data.map((user) => ({
-      params: { userId: user._id },
-    })),
-    fallback: true,
-  };
-}
-export async function getStaticProps({ params }) {
+//   return {
+//     paths: students.data.map((user) => ({
+//       params: { userId: user._id },
+//     })),
+//     fallback: true,
+//   };
+// }
+/* export async function getStaticProps({ params }) {
   const { userId } = params;
 
   const response = await axios.get(
@@ -48,6 +35,21 @@ export async function getStaticProps({ params }) {
       myJobs: response.data,
     },
     revalidate: 30,
+  };
+} */
+
+export async function getServerSideProps({ params }) {
+  const { userId } = params;
+
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-myjobs/${userId}`
+  );
+  // console.log(response);
+
+  return {
+    props: {
+      myJobs: response.data,
+    },
   };
 }
 
