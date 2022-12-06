@@ -352,11 +352,11 @@ const TutorCard2 = ({ tutor, profilePic }) => {
 
             <div className="w-full mt-4 space-y-4 md:space-y-0 sm:flex items-center justify-start sm:space-x-4">
               <div className="w-full sm:flex justify-end">
-                <Anchor button href={`/profile/${tutor?._id}`}>
+                <Anchor button href={`/profile/${tutor?.profileId}`}>
                   View Profile
                 </Anchor>
               </div>
-              {/* <Anchor link href={`/profile/${tutor?._id}`}>
+              {/* <Anchor link href={`/profile/${tutor?.profileId}`}>
                 Contact
               </Anchor> */}
             </div>

@@ -1,16 +1,17 @@
 import axios from "axios";
-import React from "react";
+import Head from "next/head";
 import Image from "next/image";
-import Container from "../../components/UI/Container";
-import ProfileSidebar from "../../components/UI/ProfileSidebar";
+import React from "react";
 import {
   Collapsable,
   Gallery,
-  Simple,
+  Simple
 } from "../../components/EditProfile/EditSections";
+import Container from "../../components/UI/Container";
+import Spinner from "../../components/UI/loader/Spinner";
+import ProfileSidebar from "../../components/UI/ProfileSidebar";
 import Rating from "../../components/UI/Rating";
-import { useRouter } from "next/router";
-import Head from "next/head";
+import useFetch from "../../hooks/useFetch";
 
 /* export async function getStaticPaths() {
   const users = await axios.get(
@@ -48,22 +49,25 @@ export async function getServerSideProps({ params }) {
   const { userId } = params;
 
   const tutor = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-tutor/${userId}`
+    `${process.env.NEXT_PUBLIC_API}/get-tutor-profile/${userId}`
   );
-  const application = await axios.get(
-    `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
-  );
+  // const application = await axios.get(
+  //   `${process.env.NEXT_PUBLIC_API}/get-myapplications/${userId}`
+  // );
 
   return {
     props: {
       tutor: tutor?.data,
-      applications: application.data,
+      // applications: application.data,
     },
   };
 }
 
-export default function Profile({ tutor, applications }) {
-  const router = useRouter();
+export default function Profile({ tutor }) {
+
+  const APP_API = `${process.env.NEXT_PUBLIC_API}/get-myapplications/${tutor?._id}`;
+  const { data: applications, isLoading: appLoading, error } = useFetch(APP_API, false);
+
   function addProfileJsonLd() {
     return {
       __html: `{
@@ -205,8 +209,7 @@ export default function Profile({ tutor, applications }) {
           {/*  <div className="block sm:hidden">
             <Button fullwidth>Apply Now</Button>
           </div> */}
-
-          <section className="bg-white md:bg-neutral-100 rounded md:p-8">
+          {appLoading ? <Spinner md /> : <section className="bg-white md:bg-neutral-100 rounded md:p-8">
             <div className="mb-8 md:flex items-center justify-between">
               <h2 className="text-xl sm:text-2xl text-primary font-medium">
                 Feedbacks
@@ -250,7 +253,8 @@ export default function Profile({ tutor, applications }) {
                 );
               })}
             </div>
-          </section>
+          </section>}
+
         </section>
       </main>
     </Container>

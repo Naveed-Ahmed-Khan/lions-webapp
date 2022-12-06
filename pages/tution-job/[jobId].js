@@ -624,7 +624,7 @@ export default function JobDescription() {
                             onClick={() => {
                               router.push({
                                 pathname: "/profile/[userId]",
-                                query: { userId: applicant._id },
+                                query: { userId: applicant.profileId },
                               });
                             }}
                           >

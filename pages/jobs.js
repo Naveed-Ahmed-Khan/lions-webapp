@@ -1,6 +1,8 @@
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
+import ReactPaginate from "react-paginate";
 import Alert from "../components/UI/Alert";
 import JobCard2 from "../components/UI/cards/JobCard2";
 import Container from "../components/UI/Container";
@@ -40,9 +42,24 @@ export async function getServerSideProps({ query }) {
 }
 
 export default function Jobs({ pageData, jobs, applications, areas, classes, cities }) {
+  const router = useRouter()
   const [filteredJobs, setFilteredJobs] = useState(jobs || []);
   const [openFilter, setOpenFilter] = useState(false);
   console.log(filteredJobs);
+  const getJobs = async (event) => {
+    const tutors = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/get-paginatedjobs`,
+      { params: { ...router.query, page: event.selected } }
+    );
+    setFilteredJobs(tutors.data.jobs);
+    router.push(
+      {
+        pathname: "/jobs",
+        query: { ...router.query, page: event.selected },
+      },
+      undefined
+    );
+  };
 
   return (
     <>
@@ -142,10 +159,25 @@ export default function Jobs({ pageData, jobs, applications, areas, classes, cit
               </div>
             </div>
             <div className="pt-2 text-center">
-              <JobPagination
+              <ReactPaginate
+                pageRangeDisplayed={4}
+                marginPagesDisplayed={2}
+                breakLabel="..."
+                previousLabel={"← Previous"}
+                nextLabel={"Next →"}
+                pageCount={pageData?.totalPages}
+                onPageChange={getJobs}
+                containerClassName={"px-2 md:px-4 py-2 w-full flex gap-4 items-center justify-between md:justify-center bg-white rounded-md text-gray-700"}
+                pageLinkClassName={" px-3 border-b-2 border-b-transparent hover:border-primary"}
+                previousLinkClassName={"whitespace-nowrap border-b-2 border-b-transparent hover:border-primary"}
+                nextLinkClassName={"whitespace-nowrap border-b-2 border-b-transparent hover:border-primary"}
+                disabledLinkClassName={"opacity-70 border-b-2 border-b-transparent"}
+                activeClassName={"border-b-2 border-primary"}
+              />
+              {/* <JobPagination
                 pageData={pageData}
                 setFilteredJobs={setFilteredJobs}
-              />
+              /> */}
             </div>
           </div>
         </section>

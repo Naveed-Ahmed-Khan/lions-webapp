@@ -1,19 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
-
 import Container from "../components/UI/Container";
-
-import TutorCard2 from "../components/UI/cards/TutorCard2";
-import { useStateContext } from "../contexts/StateContext";
-import JobFilters from "../components/UI/filters/JobFilters";
-import TutorFilters from "../components/UI/filters/TutorFilters";
-import Image from "next/image";
-import { useEffect, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 import { useRouter } from "next/router";
-import Alert from "../components/UI/Alert";
+import { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
+import TutorCard2 from "../components/UI/cards/TutorCard2";
+import TutorFilters from "../components/UI/filters/TutorFilters";
 import Spinner from "../components/UI/loader/Spinner";
-import useFetch from "../hooks/useFetch";
-import TutorPagination from "../components/UI/pagination/TutorPagination";
 
 export async function getServerSideProps({ query }) {
   console.log(query);
@@ -59,6 +52,10 @@ export default function Tutors({
   const [selectedPage, setSelectedPage] = useState(pageData.currentPage);
   const [queryParams, setQueryParams] = useState(router.query);
 
+  useEffect(() => {
+    pageData && setSelectedPage(pageData.currentPage);
+  }, [pageData]);
+
   // const PICS_API = `${process.env.NEXT_PUBLIC_API}/get-tutors-pics/?page=${selectedPage}`;
   /* const {
     data: profilePics,
@@ -75,6 +72,23 @@ export default function Tutors({
   const [openFilter, setOpenFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   console.log(classes);
+
+  const getTutors = async (event) => {
+    console.log(event)
+    const tutors = await axios.get(
+      `${process.env.NEXT_PUBLIC_API}/get-paginatedtutors`,
+      { params: { ...router.query, page: event.selected } }
+    );
+    console.log(tutors.data.tutors);
+    setFilteredTutors(tutors.data.tutors);
+    router.push(
+      {
+        pathname: "/tutors",
+        query: { ...router.query, page: event.selected },
+      },
+      undefined
+    );
+  };
 
   return (
     <>
@@ -198,13 +212,28 @@ export default function Tutors({
                 </div>
               )}
             </div>
-            <div className="pt-2 text-center">
-              <TutorPagination
+            <div className="pt-2  text-center">
+              <ReactPaginate
+                pageRangeDisplayed={4}
+                marginPagesDisplayed={2}
+                breakLabel="..."
+                previousLabel={"← Previous"}
+                nextLabel={"Next →"}
+                pageCount={pageData?.totalPages}
+                onPageChange={getTutors}
+                containerClassName={"px-2 md:px-4 py-2 w-full flex gap-4 items-center justify-between md:justify-center bg-white rounded-md text-gray-700"}
+                pageLinkClassName={" px-3 border-b-2 border-b-transparent hover:border-primary"}
+                previousLinkClassName={"whitespace-nowrap border-b-2 border-b-transparent hover:border-primary"}
+                nextLinkClassName={"whitespace-nowrap border-b-2 border-b-transparent hover:border-primary"}
+                disabledLinkClassName={"opacity-70 border-b-2 border-b-transparent"}
+                activeClassName={"border-b-2 border-primary"}
+              />
+              {/* <TutorPagination
                 selectedPage={selectedPage}
                 setSelectedPage={setSelectedPage}
                 pageData={pageData}
                 setFilteredTutors={setFilteredTutors}
-              />
+              /> */}
             </div>
           </div>
         </section>

@@ -21,9 +21,8 @@ const TutorCard = ({ tutorPic, tutor }) => {
         />
 
         <div
-          className={`flex items-center justify-center px-6 py-3 ${
-            tutor?.isVerified ? "bg-primary" : "bg-gray-500"
-          } `}
+          className={`flex items-center justify-center px-6 py-3 ${tutor?.isVerified ? "bg-primary" : "bg-gray-500"
+            } `}
         >
           {tutor?.isVerified ? (
             <svg
@@ -200,7 +199,7 @@ const TutorCard = ({ tutorPic, tutor }) => {
 
           <div className="flex w-full items-center justify-between mt-4 mb-2">
             <div className="w-full">
-              <Anchor button href={`/profile/${tutor?._id}`}>
+              <Anchor button href={`/profile/${tutor?.profileId}`}>
                 View Profile
               </Anchor>
             </div>
