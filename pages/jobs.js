@@ -7,6 +7,7 @@ import Alert from "../components/UI/Alert";
 import JobCard2 from "../components/UI/cards/JobCard2";
 import Container from "../components/UI/Container";
 import JobFilters from "../components/UI/filters/JobFilters";
+import Spinner from "../components/UI/loader/Spinner";
 import JobPagination from "../components/UI/pagination/JobPagination";
 
 export async function getServerSideProps({ query }) {
@@ -19,6 +20,9 @@ export async function getServerSideProps({ query }) {
     }
   );
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);
+  const subjects = await axios.get(
+    `${process.env.NEXT_PUBLIC_API}/get-subjects`
+  );
   const cities = await axios.get(
     `${process.env.NEXT_PUBLIC_API}/get-allcities`
   );
@@ -37,25 +41,29 @@ export async function getServerSideProps({ query }) {
       areas: areas.data,
       cities: cities.data,
       classes: classes.data,
+      subjects: subjects.data
     },
   };
 }
 
-export default function Jobs({ pageData, jobs, applications, areas, classes, cities }) {
+export default function Jobs({ pageData, jobs, applications, areas, subjects, classes, cities }) {
   const router = useRouter()
   const [filteredJobs, setFilteredJobs] = useState(jobs || []);
   const [openFilter, setOpenFilter] = useState(false);
-  console.log(filteredJobs);
+  const [isLoading, setIsLoading] = useState(false);
+
   const getJobs = async (event) => {
-    const tutors = await axios.get(
+    const currPage = event.selected + 1
+    // console.log(currPage)
+    const jobs = await axios.get(
       `${process.env.NEXT_PUBLIC_API}/get-paginatedjobs`,
-      { params: { ...router.query, page: event.selected } }
+      { params: { ...router.query, page: currPage } }
     );
-    setFilteredJobs(tutors.data.jobs);
+    setFilteredJobs(jobs.data.jobs);
     router.push(
       {
         pathname: "/jobs",
-        query: { ...router.query, page: event.selected },
+        query: { ...router.query, page: currPage },
       },
       undefined
     );
@@ -114,6 +122,9 @@ export default function Jobs({ pageData, jobs, applications, areas, classes, cit
                 applications={applications}
                 allAreas={areas}
                 allCities={cities}
+                allClasses={classes}
+                allSubjects={subjects}
+                setIsLoading={setIsLoading}
                 setFilteredJobs={setFilteredJobs}
                 setOpenFilter={setOpenFilter}
               />
@@ -124,6 +135,9 @@ export default function Jobs({ pageData, jobs, applications, areas, classes, cit
               applications={applications}
               allAreas={areas}
               allCities={cities}
+              allClasses={classes}
+              allSubjects={subjects}
+              setIsLoading={setIsLoading}
               setFilteredJobs={setFilteredJobs}
             />
           </div>
@@ -139,24 +153,30 @@ export default function Jobs({ pageData, jobs, applications, areas, classes, cit
                 magnam neque, exercitationem eius sunt!
               </p> */}
               </div>
-              <div className="space-y-8 lg:pr-3 w-full flex flex-col items-center justify-center">
-                {filteredJobs?.length > 0 ? (
-                  <>
-                    {filteredJobs?.map((job) => {
-                      return <JobCard2 applications={applications} key={job._id} job={job} />;
-                    })}
-                  </>
-                ) : (
-                  <div className="relative h-[calc(100vh-360px)] w-60">
-                    <Image
-                      layout={"fill"}
-                      className="object-contain"
-                      src={"/images/not-found.png"}
-                      alt={""}
-                    />
-                  </div>
-                )}
-              </div>
+              {isLoading ? (
+                <div>
+                  <Spinner md />
+                </div>
+              ) : (
+                <div className="space-y-8 lg:pr-3 w-full flex flex-col items-center justify-center">
+                  {filteredJobs?.length > 0 ? (
+                    <>
+                      {filteredJobs?.map((job) => {
+                        return <JobCard2 applications={applications} key={job._id} job={job} />;
+                      })}
+                    </>
+                  ) : (
+                    <div className="relative h-[calc(100vh-360px)] w-60">
+                      <Image
+                        layout={"fill"}
+                        className="object-contain"
+                        src={"/images/not-found.png"}
+                        alt={""}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
             <div className="pt-2 text-center">
               <ReactPaginate

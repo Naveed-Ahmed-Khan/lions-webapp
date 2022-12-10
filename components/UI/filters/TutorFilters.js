@@ -14,17 +14,13 @@ import Select from "../Select";
 export default function TutorFilters({
   allClasses,
   allSubjects,
-  setQueryParams,
   updatePics,
-  setSelectedPage,
   setFilteredTutors,
-  filteredTutors,
   setOpenFilter,
   allAreas,
   allCities,
   setIsLoading,
 }) {
-  // console.log(allAreas);
   const router = useRouter();
 
   console.log(router.query);
@@ -35,36 +31,14 @@ export default function TutorFilters({
   const [selectedCity, setSelectedCity] = useState("");
   const [search, setSearch] = useState("");
 
-  /*   const allClasses = [
-    { value: "Pre-School", id: "1" },
-    { value: "Junior", id: "2" },
-    { value: "Middle", id: "3" },
-    { value: "Secondary", id: "4" },
-    { value: "Intermediate", id: "5" },
-    { value: "Bachelors", id: "6" },
-    { value: "Masters", id: "7" },
-    { value: "PhD", id: "8" },
-  ]; */
-
   const allQualifications = [
     { label: "Matric", value: "Matric" },
     { label: "Intermediate", value: "Intermediate" },
     { label: "Bachelors", value: "Bachelors" },
     { label: "Masters", value: "Masters" },
+    { label: "MPhil", value: "MPhil" },
     { label: "PhD", value: "PhD" },
   ];
-
-  /*   const allSubjects = [
-    { label: "Chemistry", value: "Chemistry" },
-    { label: "Biology", value: "Biology" },
-    { label: "Physics", value: "Physics" },
-    { label: "Maths", value: "Maths" },
-    { label: "Computer", value: "Computer" },
-    { label: "English", value: "English" },
-    { label: "Urdu", value: "Urdu" },
-    { label: "Islamiat", value: "Islamiat" },
-    { label: "Pak Studies", value: "Pak Studies" },
-  ]; */
 
   const classesHandler = (e) => {
     if (e.target.checked) {
@@ -142,17 +116,16 @@ export default function TutorFilters({
         return area.name;
       });
     }
-    setQueryParams(query);
+
     return query;
   };
 
   const getTutors = async (query) => {
-    const tutors = await axios.get(
+    const res = await axios.get(
       `${process.env.NEXT_PUBLIC_API}/get-paginatedtutors`,
       { params: query }
     );
-    console.log(tutors.data.tutors);
-    setFilteredTutors(tutors.data.tutors);
+    setFilteredTutors(res.data.tutors);
     router.push(
       {
         pathname: "/tutors",
@@ -163,8 +136,7 @@ export default function TutorFilters({
         shallow: false,
       }
     );
-    // setSelectedPage(1);
-    // updatePics();
+
   };
 
   const submitHandler = (e) => {
@@ -172,8 +144,6 @@ export default function TutorFilters({
     setIsLoading(true);
     const queryParams = createQueryString();
     queryParams && getTutors({ ...queryParams, page: 1 });
-    // setSelectedPage(1);
-    // updatePics();
     setOpenFilter && setOpenFilter(false);
     setIsLoading(false);
   };
@@ -240,7 +210,7 @@ export default function TutorFilters({
               <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
                 {allQualifications.map((item) => {
                   const checked = qualification?.includes(item.value);
-                  console.log("is Checked");
+                  // console.log("is Checked");
                   return (
                     <li key={item.value}>
                       <CheckBox
@@ -290,7 +260,6 @@ export default function TutorFilters({
               <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
                 {allSubjects.map((item) => {
                   const checked = subjects.includes(item.name);
-
                   return (
                     <li key={item._id}>
                       <CheckBox
@@ -333,14 +302,12 @@ export default function TutorFilters({
               </FormGroup>
 
               <ul
-                className={`px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 overflow-auto ${
-                  selectedCity && "h-60 "
-                }`}
+                className={`px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 overflow-auto ${selectedCity && "h-60 "
+                  }`}
               >
                 {allAreas.map((area) => {
                   const { city_id } = area;
                   const checked = areas?.includes(area.name);
-
                   if (city_id?.name !== selectedCity) {
                     return;
                   } else {
@@ -363,22 +330,9 @@ export default function TutorFilters({
       </main>
 
       <footer className="flex items-center justify-between p-6">
-        {/* <button
-          className="text-sm font-medium text-gray-600 underline"
-          type="button"
-          onClick={() => {
-            setSelectedCity("");
-            setAreas("");
-            setClasses("");
-            setSubjects("");
-            setQualification("");
-          }}
-        >
-          Clear Filters
-        </button> */}
         <div className="flex justify-between gap-3">
           <Button
-            type={"submit"}
+            type={"button"}
             onClick={() => {
               setIsLoading(true);
               setAreas([]);
@@ -387,13 +341,13 @@ export default function TutorFilters({
               setSubjects([]);
               setSelectedCity("");
               setSearch("");
-              // setSelectedPage(1);
-              // updatePics();
             }}
           >
             <p>Reset</p>
           </Button>
-          <Button type={"submit"} onClick={() => setIsLoading(true)}>
+          <Button type={"submit"}
+          // onClick={() => setIsLoading(true)}
+          >
             <p>Show results</p>
           </Button>
         </div>

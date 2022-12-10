@@ -49,42 +49,22 @@ export default function Tutors({
   cities,
 }) {
   const router = useRouter();
-  const [selectedPage, setSelectedPage] = useState(pageData.currentPage);
-  const [queryParams, setQueryParams] = useState(router.query);
-
-  useEffect(() => {
-    pageData && setSelectedPage(pageData.currentPage);
-  }, [pageData]);
-
-  // const PICS_API = `${process.env.NEXT_PUBLIC_API}/get-tutors-pics/?page=${selectedPage}`;
-  /* const {
-    data: profilePics,
-    isLoading: picsLoading,
-    updateData: updatePics,
-  } = useFetch(PICS_API, false, { ...queryParams, page: selectedPage });
-  console.log(profilePics);
-  useEffect(() => {
-    setTutorPics(profilePics);
-  }, [profilePics]); */
-
-  // const [tutorPics, setTutorPics] = useState(profilePics || []);
   const [filteredTutors, setFilteredTutors] = useState(tutors || []);
   const [openFilter, setOpenFilter] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  console.log(classes);
 
   const getTutors = async (event) => {
-    console.log(event)
+    const currPage = event.selected + 1
+    // console.log(currPage)
     const tutors = await axios.get(
       `${process.env.NEXT_PUBLIC_API}/get-paginatedtutors`,
-      { params: { ...router.query, page: event.selected } }
+      { params: { ...router.query, page: currPage } }
     );
-    console.log(tutors.data.tutors);
     setFilteredTutors(tutors.data.tutors);
     router.push(
       {
         pathname: "/tutors",
-        query: { ...router.query, page: event.selected },
+        query: { ...router.query, page: currPage },
       },
       undefined
     );
@@ -142,9 +122,6 @@ export default function Tutors({
               <TutorFilters
                 allClasses={classes}
                 allSubjects={subjects}
-                setQueryParams={setQueryParams}
-                // updatePics={updatePics}
-                setSelectedPage={setSelectedPage}
                 allCities={cities}
                 allAreas={areas}
                 setIsLoading={setIsLoading}
@@ -157,9 +134,6 @@ export default function Tutors({
             <TutorFilters
               allClasses={classes}
               allSubjects={subjects}
-              setQueryParams={setQueryParams}
-              // updatePics={updatePics}
-              setSelectedPage={setSelectedPage}
               allCities={cities}
               allAreas={areas}
               setIsLoading={setIsLoading}

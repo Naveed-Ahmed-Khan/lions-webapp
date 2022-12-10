@@ -16,6 +16,9 @@ export default function JobFilters({
   setOpenFilter,
   allAreas,
   allCities,
+  allClasses,
+  allSubjects,
+  setIsLoading,
 }) {
   const router = useRouter();
   const [classes, setClasses] = useState([]);
@@ -23,26 +26,7 @@ export default function JobFilters({
   const [subjects, setSubjects] = useState([]);
   const [areas, setAreas] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
-  // const [gender, setGender] = useState([]);
-
-  // console.log(subjects);
-  // console.log(classes);
-  // console.log(qualification);
-
-  const allClasses = [
-    { label: "Class 1", value: "Class 1" },
-    { label: "Class 2", value: "Class 2" },
-    { label: "Class 3", value: "Class 3" },
-    { label: "Class 4", value: "Class 4" },
-    { label: "Class 5", value: "Class 5" },
-    { label: "Class 6", value: "Class 6" },
-    { label: "Class 7", value: "Class 7" },
-    { label: "Class 8", value: "Class 8" },
-    { label: "Class 9", value: "Class 9" },
-    { label: "Class 10", value: "Class 10" },
-    { label: "Class 11", value: "Class 11" },
-    { label: "Class 12", value: "Class 12" },
-  ];
+  const [search, setSearch] = useState("");
 
   const allQualifications = [
     { label: "Matric", value: "Matric" },
@@ -51,18 +35,6 @@ export default function JobFilters({
     { label: "Masters", value: "Masters" },
     { label: "MPhil", value: "MPhil" },
     { label: "PhD", value: "PhD" },
-  ];
-
-  const allSubjects = [
-    { label: "Chemistry", value: "Chemistry" },
-    { label: "Biology", value: "Biology" },
-    { label: "Physics", value: "Physics" },
-    { label: "Maths", value: "Maths" },
-    { label: "Computer", value: "Computer" },
-    { label: "English", value: "English" },
-    { label: "Urdu", value: "Urdu" },
-    { label: "Islamiat", value: "Islamiat" },
-    { label: "Pak Studies", value: "Pak Studies" },
   ];
 
   const classesHandler = (e) => {
@@ -129,38 +101,44 @@ export default function JobFilters({
       query["city"] = selectedCity;
     }
 
+    if (search) {
+      query["name"] = search;
+    }
+
     if (areas.length > 0) {
       query["area"] = areas.map((area) => {
         return area.name;
       });
     }
 
-    console.log(query);
     return query;
   };
+
   const getJobs = async (query) => {
     const res = await axios.get(
       `${process.env.NEXT_PUBLIC_API}/get-paginatedjobs`,
-      {
-        params: query,
-      }
+      { params: query }
     );
-    console.log(res.data);
     setFilteredJobs(res.data.jobs);
     router.push(
       {
         pathname: "/jobs",
         query: query,
       },
-      undefined
+      undefined,
+      {
+        shallow: false,
+      }
     );
   };
 
   const submitHandler = (e) => {
     e.preventDefault();
+    setIsLoading(true)
     const queryParams = createQueryString();
     queryParams && getJobs({ ...queryParams, page: 1 });
     setOpenFilter && setOpenFilter(false);
+    setIsLoading(false)
   };
 
   return (
@@ -176,7 +154,46 @@ export default function JobFilters({
       </header>
 
       <main className="flow-root p-6 overflow-y-auto">
-        <div className="-my-8 divide-y divide-gray-100">
+        <div className="divide-y divide-gray-100">
+          <div className="">
+            <fieldset>
+              <legend className="mb-3 text-xl text-primary font-medium">
+                Search
+              </legend>
+
+              <div className="relative h-fit">
+                <Input
+                  label=""
+                  name="search"
+                  value={search}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
+                />
+                <button
+                  className="group absolute py-[.95rem]  px-1 sm:px-2 right-0 top-7 sm:top-0 bg-white"
+                  onClick={() => {
+                    setSearch("");
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5 text-red-500"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </fieldset>
+          </div>
           <div className="py-8">
             <fieldset>
               <legend className="text-xl text-primary font-medium">
@@ -185,9 +202,11 @@ export default function JobFilters({
 
               <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
                 {allQualifications.map((item) => {
+                  const checked = qualification?.includes(item.value);
                   return (
                     <li key={item.value}>
                       <CheckBox
+                        defaultChecked={checked}
                         label={item.label}
                         name={item.value}
                         onChange={qualificationHandler}
@@ -207,11 +226,13 @@ export default function JobFilters({
 
               <ul className="px-2  grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto ">
                 {allClasses.map((item) => {
+                  const checked = classes.includes(item.name);
                   return (
-                    <li key={item.value}>
+                    <li key={item._id}>
                       <CheckBox
-                        label={item.label}
-                        name={item.value}
+                        defaultChecked={checked}
+                        label={item.name}
+                        name={item.name}
                         onChange={classesHandler}
                       />
                     </li>
@@ -229,11 +250,13 @@ export default function JobFilters({
 
               <ul className="px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 h-60 overflow-auto">
                 {allSubjects.map((item) => {
+                  const checked = subjects.includes(item.name);
                   return (
-                    <li key={item.value}>
+                    <li key={item._id}>
                       <CheckBox
-                        label={item.label}
-                        name={item.value}
+                        defaultChecked={checked}
+                        label={item.name}
+                        name={item.name}
                         onChange={subjectHandler}
                       />
                     </li>
@@ -270,18 +293,19 @@ export default function JobFilters({
               </FormGroup>
 
               <ul
-                className={`px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 overflow-auto ${
-                  selectedCity && "h-60 "
-                }`}
+                className={`px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 overflow-auto ${selectedCity && "h-60 "
+                  }`}
               >
                 {allAreas.map((area) => {
                   const { city_id } = area;
+                  const checked = areas?.includes(area.name);
                   if (city_id?.name !== selectedCity) {
                     return;
                   } else {
                     return (
                       <li key={area._id}>
                         <CheckBox
+                          defaultChecked={checked}
                           label={area.name}
                           name={area.name}
                           onChange={areasHandler}
@@ -297,15 +321,9 @@ export default function JobFilters({
       </main>
 
       <footer className="flex items-center justify-between p-6">
-        {/* <button
-          className="text-sm font-medium text-gray-600 underline"
-          type="button"
-        >
-          Clear all
-        </button> */}
-        {/*  <div className="w-full">
-        <Button
-            type={"submit"}
+        <div className="flex justify-between gap-3">
+          <Button
+            type={"button"}
             onClick={() => {
               setIsLoading(true);
               setAreas([]);
@@ -318,29 +336,9 @@ export default function JobFilters({
           >
             <p>Reset</p>
           </Button>
-          <Button type={"submit"}>
-            <p>Show results</p>
-          </Button>
-        </div> */}
-
-        <div className="flex justify-between gap-3">
           <Button
             type={"submit"}
-            onClick={() => {
-              // setIsLoading(true);
-              setAreas([]);
-              setClasses([]);
-              setQualification([]);
-              setSubjects([]);
-              setSelectedCity("");
-              // setSearch("");
-            }}
-          >
-            <p>Reset</p>
-          </Button>
-          <Button
-            type={"submit"}
-            // onClick={() => setIsLoading(true)}
+          // onClick={() => setIsLoading(true)}
           >
             <p>Show results</p>
           </Button>
