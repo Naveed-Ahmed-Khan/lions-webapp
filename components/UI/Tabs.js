@@ -11,15 +11,14 @@ export default function Tabs({ tabs, currentTab, setCurrentTab, tutor }) {
           <button
             key={tab.id}
             className={`flex items-center flex-shrink-0 px-4 py-3 space-x-1 
-            ${
-              currentTab === tab.name
+            ${currentTab === tab.name
                 ? "border border-b-0 rounded-t-lg dark:border-gray-500 dark:text-gray-50"
                 : "border-b dark:border-gray-500 dark:text-gray-500"
-            }
+              }
              `}
             onClick={() => setCurrentTab(tab.name)}
           >
-            {tutor[tab.value]?.length > 0 || tab.value === "" ? (
+            {tutor[tab.value]?.length > 0 || tab.value === true ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

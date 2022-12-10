@@ -83,8 +83,8 @@ export default function TutorSignup({ areas, cities }) {
   );
 }
 function Personal({ cities, areas, setCurrentStep }) {
-  console.log(cities);
-  console.log(areas);
+  // console.log(cities);
+  // console.log(areas);
 
   const { signup } = useAuth();
   const [error, setError] = useState("");
@@ -103,6 +103,7 @@ function Personal({ cities, areas, setCurrentStep }) {
       teachingModes: [],
       address: "",
     },
+    enableReinitialize: true,
     onSubmit: async (values) => {
       // console.log(values);
       localStorage.setItem("Personal", JSON.stringify(values));
@@ -127,11 +128,19 @@ function Personal({ cities, areas, setCurrentStep }) {
       formik.setFieldValue(
         "teachingModes",
         formik.values.teachingModes.filter(
-          (item) => item.name !== e.target.name
+          (item) => item !== e.target.name
         )
+      );
+      formik.setFieldValue(
+        "city", ""
+      );
+      formik.setFieldValue(
+        "area", ""
       );
     }
   };
+
+  console.log(formik.values.teachingModes)
 
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
@@ -182,8 +191,30 @@ function Personal({ cities, areas, setCurrentStep }) {
           />
         </FormGroup>
 
+        <div className="my-6">
+          <p className="text-gray-600 font-medium ">Modes of Teaching</p>
+          <div className="px-2 mt-2 grid grid-cols-1 sm:grid-cols-3 gap-8 ">
+            {modes.map((mode) => {
+              return (
+                <div key={mode.label}>
+                  <CheckBox
+                    label={mode.label}
+                    name={mode.value}
+                    onChange={modesHandler}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
         <FormGroup horizontal>
-          <Select required label="City" name={"city"} formik={formik}>
+          <Select
+            disabled={!formik.values.teachingModes?.includes("Tutor travels")}
+            required={formik.values.teachingModes?.includes("Tutor travels")}
+            label="City"
+            name={"city"}
+            formik={formik}>
             <option value="">Select</option>
             {cities.map((city) => {
               return (
@@ -229,22 +260,6 @@ function Personal({ cities, areas, setCurrentStep }) {
           </div>
         </div> */}
 
-        <div className="my-5">
-          <p className="text-gray-600 font-medium ">Modes of Teaching</p>
-          <div className="px-2 mt-2 grid grid-cols-1 sm:grid-cols-3 gap-8 ">
-            {modes.map((mode) => {
-              return (
-                <div key={mode.label}>
-                  <CheckBox
-                    label={mode.label}
-                    name={mode.value}
-                    onChange={modesHandler}
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
         <FormGroup>
           <TextArea required label="Address" name={"address"} formik={formik} />
         </FormGroup>

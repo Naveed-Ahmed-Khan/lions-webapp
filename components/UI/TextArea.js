@@ -18,7 +18,7 @@ const TextArea = ({
   return (
     <div className="flex flex-col">
       {label && (
-        <label className="mb-2 self-start text-sm sm:text-base font-medium text-neutral-600">
+        <label className={`mb-2 self-start text-sm sm:text-base font-medium text-neutral-600 ${disabled && "opacity-60"}`}>
           {label}
         </label>
       )}

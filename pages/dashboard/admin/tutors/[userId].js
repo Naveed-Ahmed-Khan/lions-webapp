@@ -76,11 +76,6 @@ export default function EditTutorProfile() {
     } else {
       setSubjectFilled(false);
     }
-    if (tutor?.locations?.length > 0) {
-      setLocationFilled(true);
-    } else {
-      setLocationFilled(false);
-    }
     if (tutor?.slots?.length > 0) {
       setAvailableFilled(true);
     } else {
@@ -95,6 +90,15 @@ export default function EditTutorProfile() {
       setSectionFilled(true);
     } else {
       setSectionFilled(false);
+    }
+    if (tutor?.teachingModes?.includes("Tutor travels")) {
+      if (tutor?.locations?.length > 0) {
+        setLocationFilled(true);
+      } else {
+        setLocationFilled(false);
+      }
+    } else {
+      setLocationFilled(true);
     }
   }, [tutor]);
 
@@ -132,13 +136,13 @@ export default function EditTutorProfile() {
   }, [tutor, profile]);
 
   const tabs = [
-    { id: 1, name: "Personal", value: "" },
+    { id: 1, name: "Sections", value: "sections" },
     { id: 2, name: "Qualification", value: "qualifications" },
     { id: 3, name: "Subjects", value: "subjectsTaught" },
     { id: 4, name: "Availability", value: "slots" },
-    { id: 5, name: "Locations", value: "locations" },
+    { id: 5, name: "Locations", value: !tutor?.teachingModes?.includes("Tutor travels") ? true : "locations" },
     { id: 6, name: "Experience", value: "experience" },
-    { id: 7, name: "Sections", value: "sections" },
+    { id: 7, name: "Personal", value: true },
   ];
   console.log(subjects);
   return (
@@ -161,9 +165,9 @@ export default function EditTutorProfile() {
                   locationFilled={locationFilled}
                   availableFilled={availableFilled}
                   setProfile={setProfile}
-                  // tutor={tutor}
-                  // profileStatus={tutor.profileStatus}
-                  // tutorId={tutor._id}
+                // tutor={tutor}
+                // profileStatus={tutor.profileStatus}
+                // tutorId={tutor._id}
                 />
               )}
             </div>

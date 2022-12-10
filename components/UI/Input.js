@@ -23,7 +23,7 @@ const Input = ({
           className={`${formik && formik.touched[name] && formik.errors[name]
             ? "text-red-400"
             : "text-neutral-600"
-            } mb-2 self-start text-sm sm:text-base font-medium `}
+            } mb-2 self-start text-sm sm:text-base font-medium ${disabled && "opacity-60"}`}
         >
           {label}
         </label>

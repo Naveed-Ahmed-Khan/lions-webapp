@@ -110,11 +110,12 @@ export default function EditPersonal({ tutor, updateData }) {
       formik.setFieldValue(
         "teachingModes",
         formik.values.teachingModes.filter(
-          (item) => item.name !== e.target.name
+          (item) => item !== e.target.name
         )
       );
     }
   };
+  console.log(formik.values.teachingModes)
 
   return (
     <div className="pb-12 w-full">

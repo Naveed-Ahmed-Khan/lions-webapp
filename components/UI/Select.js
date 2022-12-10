@@ -20,7 +20,7 @@ export default function Select({
   return (
     <div className="flex flex-col">
       {label && (
-        <label className="mb-2 self-start text-sm sm:text-base font-medium text-neutral-600">
+        <label className={`mb-2 self-start text-sm sm:text-base font-medium text-neutral-600 ${disabled && "opacity-60"}`}>
           {label}
         </label>
       )}
@@ -41,7 +41,7 @@ export default function Select({
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center">
           <svg
-            className={`text-gray-700 h-5 w-5 mr-2 bg-white`}
+            className={`text-gray-700 h-5 w-5 mr-2 bg-white ${disabled && "text-opacity-60"}`}
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
             fill="currentColor"

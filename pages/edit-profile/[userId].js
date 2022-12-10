@@ -76,11 +76,6 @@ export default function EditProfile() {
     } else {
       setSubjectFilled(false);
     }
-    if (tutor?.locations?.length > 0) {
-      setLocationFilled(true);
-    } else {
-      setLocationFilled(false);
-    }
     if (tutor?.slots?.length > 0) {
       setAvailableFilled(true);
     } else {
@@ -95,6 +90,15 @@ export default function EditProfile() {
       setSectionFilled(true);
     } else {
       setSectionFilled(false);
+    }
+    if (tutor?.teachingModes?.includes("Tutor travels")) {
+      if (tutor?.locations?.length > 0) {
+        setLocationFilled(true);
+      } else {
+        setLocationFilled(false);
+      }
+    } else {
+      setLocationFilled(true);
     }
   }, [tutor]);
 
@@ -136,10 +140,9 @@ export default function EditProfile() {
     { id: 2, name: "Qualification", value: "qualifications" },
     { id: 3, name: "Subjects", value: "subjectsTaught" },
     { id: 4, name: "Availability", value: "slots" },
-    { id: 5, name: "Locations", value: "locations" },
+    { id: 5, name: "Locations", value: !tutor?.teachingModes?.includes("Tutor travels") ? true : "locations" },
     { id: 6, name: "Experience", value: "experience" },
-    { id: 7, name: "Personal", value: "" },
-
+    { id: 7, name: "Personal", value: true },
   ];
   console.log(subjects);
   return (
