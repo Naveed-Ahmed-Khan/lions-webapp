@@ -16,6 +16,7 @@ import CheckBox from "../../../../components/UI/CheckBox";
 import useFetch from "../../../../hooks/useFetch";
 import Spinner from "../../../../components/UI/loader/Spinner";
 import { getCookie } from "cookies-next";
+import RichTextEditor from "../../../../components/UI/RichTextEditor";
 
 export default function AddJob() {
   const router = useRouter();
@@ -295,6 +296,7 @@ function Description({ setCurrentStep }) {
   console.log(currentUser);
   const router = useRouter();
   const [error, setError] = useState("");
+  const [description, setDescription] = useState("")
 
   const formik = useFormik({
     initialValues: {
@@ -339,10 +341,10 @@ function Description({ setCurrentStep }) {
         }
       }
 
-      router.push("/");
+      // router.push("/");
     },
   });
-
+  console.log(description)
   return (
     <div className=" pb-12 w-full max-w-screen-md mx-auto">
       <h2 className="mb-5 text-xl sm:text-2xl font-semibold text-primary">
@@ -376,7 +378,16 @@ function Description({ setCurrentStep }) {
             formik={formik}
           />
         </FormGroup>
-
+        {/* <FormGroup>
+          <RichTextEditor
+            required
+            label="Job Description"
+            name="description"
+            // formik={formik}
+            value={description}
+            onChange={setDescription}
+          />
+        </FormGroup> */}
         <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
           {/* <Button
             onClick={() => {
