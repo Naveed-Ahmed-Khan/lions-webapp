@@ -16,7 +16,7 @@ import CheckBox from "../../../../components/UI/CheckBox";
 import useFetch from "../../../../hooks/useFetch";
 import Spinner from "../../../../components/UI/loader/Spinner";
 import { getCookie } from "cookies-next";
-import RichTextEditor from "../../../../components/UI/RichTextEditor";
+const RichTextEditor = dynamic(() => import("../../../../components/UI/RichTextEditor"), { ssr: false })
 
 export default function AddJob() {
   const router = useRouter();
