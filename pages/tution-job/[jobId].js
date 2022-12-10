@@ -14,6 +14,8 @@ import Spinner from "../../components/UI/loader/Spinner";
 import useFetch from "../../hooks/useFetch";
 import { findHighestQualification } from "../../util/findHighestQualification";
 import Head from "next/head";
+import { idToDate } from "../../util/idToDate";
+import moment from "moment/moment";
 
 /* export async function getStaticPaths() {
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
@@ -76,9 +78,15 @@ export default function JobDescription() {
   const [isLoading, setIsLoading] = useState(false);
   const [applyMode, setApplyMode] = useState(false);
 
-  const timestamp = job?._id.toString().substring(0, 8);
-  const date = new Date(parseInt(timestamp, 16) * 1000);
-  const uploadedAt = date.toDateString();
+  let uploadedAt = "";
+  let endAt = "";
+  if (job?._id) {
+    const date = idToDate(job._id).toDateString()
+    uploadedAt = moment(date).format('DD/MM/YYYY');
+    endAt = moment(date).add(1, 'M').format('DD/MM/YYYY');
+    // console.log(uploadedAt)
+    // console.log(endAt)
+  }
 
   console.log(isLoading);
   const submitHandler = async (e) => {
@@ -153,8 +161,8 @@ export default function JobDescription() {
         "industry": "Education",
         "employmentType": "PART_TIME",
         "workHours": "04pm-09pm,evening",
-        "datePosted": "2022-11-22",
-        "validThrough": "2022-12-22",
+        "datePosted": "${uploadedAt}",
+        "validThrough": "${endAt}",
         "jobLocation": {
           "@type": "Place",
           "address": {

@@ -74,7 +74,7 @@ export default function Profile({ tutor }) {
         "@context": "https://schema.org/", 
         "@type": "Product", 
         "name": "${tutor?.name}",
-        "image": "http://lions-home-tutors.com/wp-content/uploads/2022/09/Dr.Yasir-Economics.png",
+        "image": "${tutor?.profilePic || "/images/profile.webp"}",
         "description": "🌟🌟🌟🌟🌟  We are providing  the most professional, trusted, reliable and affordable tutors. |Dr. Babar  📞 +923328200082 | پاکستان کا سب سے بڑا ہوم ٹیوٹرز نیٹ ورک |",
         "brand": {
           "@type": "Brand",
@@ -83,7 +83,7 @@ export default function Profile({ tutor }) {
         "sku": "221122",
         "offers": {
           "@type": "Offer",
-          "url": "https://lions-home-tutors.com/highly-experienced-o-a-level-business-and-economics-and-result-oriented-tutor-dr-yasir-kareem/",
+          "url": "https://www.educationist.org.pk/profile/${tutor?.profileId}",
           "priceCurrency": "PKR",
           "price": "30000",
           "availability": "https://schema.org/InStock",
