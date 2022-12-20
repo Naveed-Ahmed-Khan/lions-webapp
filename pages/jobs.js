@@ -3,12 +3,10 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
-import Alert from "../components/UI/Alert";
 import JobCard2 from "../components/UI/cards/JobCard2";
 import Container from "../components/UI/Container";
 import JobFilters from "../components/UI/filters/JobFilters";
 import Spinner from "../components/UI/loader/Spinner";
-import JobPagination from "../components/UI/pagination/JobPagination";
 
 export async function getServerSideProps({ query }) {
   console.log(query);

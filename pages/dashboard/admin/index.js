@@ -1,5 +1,4 @@
 import React from "react";
-import Table from "../../../components/UI/tables/Table";
 
 export default function Dashboard() {
   const headers = [];

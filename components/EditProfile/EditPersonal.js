@@ -1,24 +1,18 @@
 import React, { useEffect, useMemo, useState } from "react";
-
-import FormGroup from "../../components/UI/FormGroup";
 import Button from "../../components/UI/Button";
-import Container from "../../components/UI/Container";
+import FormGroup from "../../components/UI/FormGroup";
 import Input from "../../components/UI/Input";
-import InputFile from "../../components/UI/InputFile";
-import TextArea from "../../components/UI/TextArea";
 import Select from "../../components/UI/Select";
-import DatePicker from "../../components/UI/DatePicker";
-
+import TextArea from "../../components/UI/TextArea";
+import axios from "axios";
+import { getCookie } from "cookies-next";
+import { useFormik } from "formik";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useFormik } from "formik";
 import { useAuth } from "../../contexts/AuthContext";
-import * as yup from "yup";
-import axios from "axios";
+import useFetch from "../../hooks/useFetch";
 import { filetobase64 } from "../../util/filetobase64";
 import CheckBox from "../UI/CheckBox";
-import { getCookie } from "cookies-next";
-import useFetch from "../../hooks/useFetch";
 
 export default function EditPersonal({ tutor, updateData }) {
   const CITY_API = `${process.env.NEXT_PUBLIC_API}/get-allcities`;

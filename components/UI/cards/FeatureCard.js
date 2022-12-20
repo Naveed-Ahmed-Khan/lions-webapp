@@ -1,7 +1,5 @@
-import React from "react";
-import Button from "../Button";
 import { useRouter } from "next/router";
-import Anchor from "../Anchor";
+import React from "react";
 
 const FeatureCard = () => {
   const router = useRouter();

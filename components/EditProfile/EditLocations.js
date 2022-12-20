@@ -1,21 +1,11 @@
 import axios from "axios";
-import React, { useEffect, useMemo, useState } from "react";
-import Collapse from "../UI/Collapse";
-import Container from "../UI/Container";
-import ProfileSidebar from "../UI/ProfileSidebar";
-import Button from "../UI/Button";
-import Tabs from "../UI/Tabs";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import { getCookie } from "cookies-next";
 import { useFormik } from "formik";
-import { useAuth } from "../../contexts/AuthContext";
-import * as yup from "yup";
-import Input from "../UI/Input";
+import React, { useEffect, useState } from "react";
+import Button from "../UI/Button";
+import CheckBox from "../UI/CheckBox";
 import FormGroup from "../UI/FormGroup";
 import Select from "../UI/Select";
-import TextArea from "../UI/TextArea";
-import CheckBox from "../UI/CheckBox";
-import { getCookie } from "cookies-next";
 
 export default function EditLocations({
   setLocationFilled,

@@ -1,18 +1,11 @@
-/* eslint-disable @next/next/no-img-element */
-import Button from "../components/UI/Button";
-import Card from "../components/UI/cards/TutorCard";
-import JobCard from "../components/UI/cards/JobCard";
-import FeatureCard from "../components/UI/cards/FeatureCard";
-import Container from "../components/UI/Container";
-import Carousel from "../components/UI/Carousel";
-import { useStateContext } from "../contexts/StateContext";
 import axios from "axios";
-import Alert from "../components/UI/Alert";
-import Image from "next/image";
 import Anchor from "../components/UI/Anchor";
-import Link from "next/link";
+import FeatureCard from "../components/UI/cards/FeatureCard";
+import JobCard from "../components/UI/cards/JobCard";
+import Card from "../components/UI/cards/TutorCard";
+import Carousel from "../components/UI/Carousel";
+import Container from "../components/UI/Container";
 import { useAuth } from "../contexts/AuthContext";
-import useFetch from "../hooks/useFetch";
 
 export async function getStaticProps() {
   const tutors = await axios.get(

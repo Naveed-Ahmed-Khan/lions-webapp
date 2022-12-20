@@ -1,12 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import axios from "axios";
-import { useRouter } from "next/router";
 import React from "react";
-import Image from "next/image";
-import Collapse from "../../components/UI/Collapse";
-import Container from "../../components/UI/Container";
-import ProfileSidebar from "../../components/UI/ProfileSidebar";
 import JobCard2 from "../../components/UI/cards/JobCard2";
+import Container from "../../components/UI/Container";
 
 /* export async function getStaticPaths() {
   const users = await axios.get(

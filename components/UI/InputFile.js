@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import Button from "./Button";
-// import Spinner from "./Spinner";
+import React from "react";
 
 const InputFile = ({ required, onChange, name, label }) => {
   return (

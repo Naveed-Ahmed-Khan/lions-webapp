@@ -2,8 +2,6 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Anchor from "../../../../components/UI/Anchor";
-import Button from "../../../../components/UI/Button";
-import FormGroup from "../../../../components/UI/FormGroup";
 import Input from "../../../../components/UI/Input";
 import Spinner from "../../../../components/UI/loader/Spinner";
 import Table from "../../../../components/UI/tables/Table";
@@ -116,15 +114,15 @@ export default function Jobs() {
       setJobs(
         jobs.filter(
           (job) =>
-            job.title.toLowerCase().includes(search.toLowerCase()) 
-            // ||
-            // String(job.class).includes(search)
+            job.title.toLowerCase().includes(search.toLowerCase())
+          // ||
+          // String(job.class).includes(search)
         )
       );
-    }else{
+    } else {
       setJobs(data)
     }
-  }, [search,data]);
+  }, [search, data]);
 
   return (
     <div className="p-6 bg-white border border-gray-300 shadow-lg">
@@ -141,44 +139,44 @@ export default function Jobs() {
           <Spinner md />
         ) : (
           <>
-              <div className="mb-6 w-1/2 relative">
-                <Input
-                  required
-                  label="Search"
-                  name="search"
-                  value={search}
-                  onChange={(e) => {
-                    setSearch(e.target.value);
-                  }}
-                />
-                <button
-                  className="group absolute py-[.90rem]  px-1 sm:px-2 right-0 top-7 sm:top-8 bg-white"
-                  onClick={() => {
-                    setSearch("");
-                  }}
+            <div className="mb-6 w-1/2 relative">
+              <Input
+                required
+                label="Search"
+                name="search"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                }}
+              />
+              <button
+                className="group absolute py-[.90rem]  px-1 sm:px-2 right-0 top-7 sm:top-8 bg-white"
+                onClick={() => {
+                  setSearch("");
+                }}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth="2"
+                  stroke="currentColor"
+                  className="w-5 h-5 opacity-60 group-hover:opacity-100 text-red-500 "
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="2"
-                    stroke="currentColor"
-                    className="w-5 h-5 opacity-60 group-hover:opacity-100 text-red-500 "
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
-          <Table
-            header={header}
-            body={data}
-            actions={actions}
-            status={status}
-          />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+            <Table
+              header={header}
+              body={data}
+              actions={actions}
+              status={status}
+            />
           </>
         )}
       </section>

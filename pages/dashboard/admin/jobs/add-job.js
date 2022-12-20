@@ -4,7 +4,6 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useFormik } from "formik";
 import dynamic from "next/dynamic";
-const RichTextEditor = dynamic(() => import('../../../../components/UI/RichTextEditor.js'), { ssr: false })
 import { useRouter } from "next/router";
 import Button from "../../../../components/UI/Button";
 import CheckBox from "../../../../components/UI/CheckBox";
@@ -17,6 +16,7 @@ import Select from "../../../../components/UI/Select";
 import TextArea from "../../../../components/UI/TextArea";
 import { useAuth } from "../../../../contexts/AuthContext";
 import useFetch from "../../../../hooks/useFetch";
+const RichTextEditor = dynamic(() => import('../../../../components/UI/RichTextEditor.js'), { ssr: false })
 
 
 export default function AddJob() {

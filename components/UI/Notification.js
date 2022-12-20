@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { useAuth } from "../../contexts/AuthContext";
-import Anchor from "./Anchor";
-import Alert from "./Alert";
 import axios from "axios";
 import { getCookie } from "cookies-next";
-import useFetch from "../../hooks/useFetch";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../contexts/AuthContext";
+import useFetch from "../../hooks/useFetch";
+import Alert from "./Alert";
 import Spinner from "./loader/Spinner";
 
 export default function Notification({ children }) {

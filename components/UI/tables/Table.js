@@ -94,11 +94,10 @@ export default function Table({ header, body, status, actions }) {
                       : setClickledRow(data._id)
                   }
                   key={data._id}
-                  className={`border-b ${
-                    clickledRow === data._id
+                  className={`border-b ${clickledRow === data._id
                       ? "bg-gray-200 hover:bg-gray-200"
                       : "bg-white hover:bg-gray-50"
-                  }`}
+                    }`}
                 >
                   {header.map((item) => {
                     const { id, value, nestedValue, deepNested, image } = item;
@@ -136,9 +135,8 @@ export default function Table({ header, body, status, actions }) {
                         className="py-3 px-6 font-archivo tracking-wide text-white text-sm text-center whitespace-nowrap "
                       >
                         <p
-                          className={` py-1 px-3 rounded-full text-center ${
-                            data[value] ? colorTrue : colorFalse
-                          }`}
+                          className={` py-1 px-3 rounded-full text-center ${data[value] ? colorTrue : colorFalse
+                            }`}
                         >
                           {data[value] ? name : `not ${name}`}
                         </p>

@@ -7,7 +7,6 @@ import Container from "../../../../../components/UI/Container";
 import { useAuth } from "../../../../../contexts/AuthContext";
 const RichTextDisplay = dynamic(() => import('../../../../../components/UI/RichTextDisplay.js'), { ssr: false })
 
-
 /* export async function getStaticPaths() {
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
 

@@ -1,8 +1,7 @@
 import axios from "axios";
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
-import useSWR, { useSWRConfig } from "swr";
-import { useAuth } from "../contexts/AuthContext";
+import useSWR from "swr";
 
 const useFetch = (url, checkLoggedIn) => {
   // console.log(url);

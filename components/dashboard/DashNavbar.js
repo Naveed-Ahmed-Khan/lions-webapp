@@ -1,9 +1,6 @@
-/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import Image from "next/image";
-import React, { useState } from "react";
 import { useRouter } from "next/router";
-import Dropdown from "../UI/Dropdown";
+import React from "react";
 import { useAuth } from "../../contexts/AuthContext";
 
 const DashNavbar = ({ open, setOpen, setShowBackdrop }) => {

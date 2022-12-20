@@ -1,7 +1,4 @@
-import axios from "axios";
-import { getCookie } from "cookies-next";
 import React, { useEffect, useRef, useState } from "react";
-import { useAuth } from "../../../contexts/AuthContext";
 
 export default function Progress({
   setProfile,

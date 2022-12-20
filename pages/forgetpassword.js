@@ -1,17 +1,14 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import Container from "../components/UI/Container";
 
-import Image from "next/image";
-import Input from "../components/UI/Input";
-import { useFormik } from "formik";
-import { useAuth } from "../contexts/AuthContext";
-import * as yup from "yup";
-import { useRouter } from "next/router";
-import Button from "../components/UI/Button";
-import Spinner from "../components/UI/loader/Spinner";
 import axios from "axios";
-import { getCookie, setCookie } from "cookies-next";
+import { useFormik } from "formik";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import * as yup from "yup";
+import Button from "../components/UI/Button";
+import Input from "../components/UI/Input";
+import Spinner from "../components/UI/loader/Spinner";
 
 export default function ForgetPasswordPage() {
   const router = useRouter();

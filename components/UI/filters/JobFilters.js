@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
-import CheckBox from "../CheckBox";
-import Container from "../Container";
-import Input from "../Input";
-import InputFile from "../InputFile";
-import { useFormik } from "formik";
-import Button from "../Button";
-import { useStateContext } from "../../../contexts/StateContext";
 import axios from "axios";
 import { useRouter } from "next/router";
+import React, { useState } from "react";
+import Button from "../Button";
+import CheckBox from "../CheckBox";
 import FormGroup from "../FormGroup";
+import Input from "../Input";
 import Select from "../Select";
 
 export default function JobFilters({

@@ -1,5 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useAuth } from "../../contexts/AuthContext";
 import Backdrop from "../UI/Backdrop";
@@ -35,11 +35,10 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
       <div
         className={`md:hidden fixed flex flex-col z-[200] w-full max-w-fit 
         bg-gradient-to-br from-green-700 via-green-600 to-green-700
-        ${
-          open === true
+        ${open === true
             ? "translate-x-0 opacity-100"
             : "-translate-x-full opacity-0"
-        } transition ease-out duration-300`}
+          } transition ease-out duration-300`}
       >
         <nav className="bg-primary-200 px-5 w-[260px] h-screen justify-between">
           <div className="mt-6 mb-10 flex flex-col">
@@ -98,11 +97,10 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                           }}
                         >
                           <div
-                            className={`px-3 py-[14px] ${
-                              router.pathname === path
+                            className={`px-3 py-[14px] ${router.pathname === path
                                 ? "text-white bg-primary-light"
                                 : "text-gray-700"
-                            } rounded flex items-center gap-3 hover:text-white hover:bg-primary-light transition-all duration-150`}
+                              } rounded flex items-center gap-3 hover:text-white hover:bg-primary-light transition-all duration-150`}
                           >
                             <p className="text-base">{name}</p>
                           </div>
@@ -163,11 +161,10 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                               }}
                             >
                               <div
-                                className={`px-3 py-[14px] ${
-                                  router.pathname === path
+                                className={`px-3 py-[14px] ${router.pathname === path
                                     ? "text-white bg-primary-light"
                                     : "text-gray-700"
-                                } rounded flex items-center gap-3 hover:text-white hover:bg-primary-light transition-all duration-150`}
+                                  } rounded flex items-center gap-3 hover:text-white hover:bg-primary-light transition-all duration-150`}
                               >
                                 <p className="text-base">{name}</p>
                               </div>

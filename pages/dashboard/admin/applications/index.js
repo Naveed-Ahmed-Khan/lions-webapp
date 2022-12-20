@@ -8,7 +8,6 @@ import Input from "../../../../components/UI/Input";
 import Spinner from "../../../../components/UI/loader/Spinner";
 import Select from "../../../../components/UI/Select";
 import Table from "../../../../components/UI/tables/Table";
-import TextArea from "../../../../components/UI/TextArea";
 import useFetch from "../../../../hooks/useFetch";
 
 export default function Applications() {

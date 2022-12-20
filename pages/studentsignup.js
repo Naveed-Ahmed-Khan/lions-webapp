@@ -1,21 +1,21 @@
 import React, { useEffect, useMemo, useState } from "react";
 
-import ChevronDots from "../components/UI/ChevronDots";
-import FormGroup from "../components/UI/FormGroup";
 import Button from "../components/UI/Button";
+import ChevronDots from "../components/UI/ChevronDots";
 import Container from "../components/UI/Container";
+import FormGroup from "../components/UI/FormGroup";
 import Input from "../components/UI/Input";
 
+import Image from "next/image";
 import TextArea from "../components/UI/TextArea";
 import { filetobase64 } from "../util/filetobase64";
-import Image from "next/image";
 
-import { useFormik } from "formik";
-import { useAuth } from "../contexts/AuthContext";
-import * as yup from "yup";
 import axios from "axios";
-import Select from "../components/UI/Select";
+import { useFormik } from "formik";
 import { useRouter } from "next/router";
+import * as yup from "yup";
+import Select from "../components/UI/Select";
+import { useAuth } from "../contexts/AuthContext";
 
 export async function getServerSideProps() {
   const areas = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-areas`);

@@ -1,24 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useMemo, useState } from "react";
-import Collapse from "../../components/UI/Collapse";
-import Container from "../../components/UI/Container";
-import ProfileSidebar from "../../components/UI/ProfileSidebar";
-import Button from "../../components/UI/Button";
-import Tabs from "../../components/UI/Tabs";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { useFormik } from "formik";
-import { useAuth } from "../../contexts/AuthContext";
-import * as yup from "yup";
-import Input from "../../components/UI/Input";
-import FormGroup from "../../components/UI/FormGroup";
-import Select from "../../components/UI/Select";
-import TextArea from "../../components/UI/TextArea";
-import CheckBox from "../../components/UI/CheckBox";
-import { filetobase64 } from "../../util/filetobase64";
-import ProfileCarousel from "../UI/ProfileCarousel";
 import { getCookie } from "cookies-next";
+import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import Button from "../../components/UI/Button";
+import Collapse from "../../components/UI/Collapse";
+import FormGroup from "../../components/UI/FormGroup";
+import Input from "../../components/UI/Input";
+import TextArea from "../../components/UI/TextArea";
 import BackdropModal from "../UI/BackdropModal";
+import ProfileCarousel from "../UI/ProfileCarousel";
 
 export default function EditSections({ tutor, updateData }) {
   const [editMode, setEditMode] = useState(false);

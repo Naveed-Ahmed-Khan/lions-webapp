@@ -1,10 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import FormGroup from "../../../../components/UI/FormGroup";
-import Input from "../../../../components/UI/Input";
 import Spinner from "../../../../components/UI/loader/Spinner";
-import Select from "../../../../components/UI/Select";
 import Table from "../../../../components/UI/tables/Table";
 import useFetch from "../../../../hooks/useFetch";
 

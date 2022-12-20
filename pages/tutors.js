@@ -1,10 +1,10 @@
-import Container from "../components/UI/Container";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ReactPaginate from "react-paginate";
 import TutorCard2 from "../components/UI/cards/TutorCard2";
+import Container from "../components/UI/Container";
 import TutorFilters from "../components/UI/filters/TutorFilters";
 import Spinner from "../components/UI/loader/Spinner";
 

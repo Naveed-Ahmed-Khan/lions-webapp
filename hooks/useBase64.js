@@ -1,5 +1,3 @@
-import React from "react";
-
 const useBase64 = () => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

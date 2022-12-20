@@ -2,7 +2,6 @@ import Head from "next/head";
 import React, { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import useFetch from "../../hooks/useFetch";
-import Alert from "../UI/Alert";
 import Footer from "../UI/Footer";
 import Navbar from "../UI/Navbar";
 import Sidebar from "../UI/Sidebar";

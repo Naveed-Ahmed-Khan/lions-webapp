@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 
-import ChevronDots from "../components/UI/ChevronDots";
-import FormGroup from "../components/UI/FormGroup";
-import Button from "../components/UI/Button";
-import Container from "../components/UI/Container";
-import { useRouter } from "next/router";
+import axios from "axios";
 import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import AccessDenied from "../components/UI/AccessDenied";
+import Button from "../components/UI/Button";
+import CheckBox from "../components/UI/CheckBox";
+import ChevronDots from "../components/UI/ChevronDots";
+import Container from "../components/UI/Container";
+import FormGroup from "../components/UI/FormGroup";
 import Input from "../components/UI/Input";
 import Select from "../components/UI/Select";
 import TextArea from "../components/UI/TextArea";
 import { useAuth } from "../contexts/AuthContext";
-import AccessDenied from "../components/UI/AccessDenied";
-import axios from "axios";
-import CheckBox from "../components/UI/CheckBox";
 
 export async function getStaticProps() {
   const cities = await axios.get(

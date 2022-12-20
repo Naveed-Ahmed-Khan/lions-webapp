@@ -1,17 +1,13 @@
-/* eslint-disable @next/next/no-img-element */
 import React, { useState } from "react";
 import Container from "../components/UI/Container";
 
-import Image from "next/image";
-import Input from "../components/UI/Input";
+import axios from "axios";
 import { useFormik } from "formik";
-import { useAuth } from "../contexts/AuthContext";
-import * as yup from "yup";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import Button from "../components/UI/Button";
+import Input from "../components/UI/Input";
 import Spinner from "../components/UI/loader/Spinner";
-import axios from "axios";
-import { getCookie, setCookie } from "cookies-next";
 
 export default function VerificationCode() {
   const router = useRouter();

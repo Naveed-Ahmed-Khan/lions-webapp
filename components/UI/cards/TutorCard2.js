@@ -1,8 +1,5 @@
-import React from "react";
-import Link from "next/dist/client/link";
-import Image from "next/image";
-import Button from "../Button";
 import { useRouter } from "next/router";
+import React from "react";
 import { findHighestQualification } from "../../../util/findHighestQualification";
 import Anchor from "../Anchor";
 

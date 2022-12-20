@@ -1,18 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
-import Button from "../UI/Button";
-import Image from "next/image";
-import { useRouter } from "next/router";
-import { useFormik } from "formik";
-import { useAuth } from "../../contexts/AuthContext";
-import * as yup from "yup";
-import Input from "../UI/Input";
-import FormGroup from "../UI/FormGroup";
-import Select from "../UI/Select";
-
-import CheckBox from "../UI/CheckBox";
 import axios from "axios";
 import { getCookie } from "cookies-next";
+import { useFormik } from "formik";
+import React, { useState } from "react";
 import BackdropModal from "../UI/BackdropModal";
+import Button from "../UI/Button";
+import FormGroup from "../UI/FormGroup";
+import Input from "../UI/Input";
+import Select from "../UI/Select";
 
 export default function EditSubjects2({
   classes,

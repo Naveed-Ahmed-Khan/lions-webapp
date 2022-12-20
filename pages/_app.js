@@ -1,5 +1,4 @@
-import Router, { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useRouter } from "next/router";
 import MainLayout from "../components/layout/MainLayout";
 import { AuthProvider } from "../contexts/AuthContext";
 import { StateProvider } from "../contexts/StateContext";
