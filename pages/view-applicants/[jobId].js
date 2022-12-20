@@ -1,19 +1,14 @@
-/* eslint-disable @next/next/no-img-element */
 import axios from "axios";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import Image from "next/image";
-
-import Container from "../../components/UI/Container";
-import TextArea from "../../components/UI/TextArea";
-import Input from "../../components/UI/Input";
-import InputGroup from "../../components/UI/InputGroup";
-import FormGroup from "../../components/UI/FormGroup";
 import Button from "../../components/UI/Button";
-import useFetch from "../../hooks/useFetch";
+import Container from "../../components/UI/Container";
 import Rating from "../../components/UI/Rating";
+import TextArea from "../../components/UI/TextArea";
 import { useAuth } from "../../contexts/AuthContext";
-import { findHighestQualification } from "../../util/findHighestQualification";
+import useFetch from "../../hooks/useFetch";
+const RichTextDisplay = dynamic(() => import('../../components/UI/RichTextDisplay.js'), { ssr: false })
 
 /* export async function getServerSideProps(context) {
   const { jobId } = context.params;
@@ -88,7 +83,7 @@ export default function JobDescription() {
                 Posted on {uploadedAt} by You
               </p>
             </div>
-            <p className="">{job?.description}</p>
+            {job?.description && <RichTextDisplay value={job.description} />}
             <ul className="mt-4 grid grid-cols-1 gap-4 ">
               <li className="flex gap-2">
                 <svg

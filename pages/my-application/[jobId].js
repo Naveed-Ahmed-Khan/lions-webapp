@@ -1,21 +1,17 @@
-/* eslint-disable @next/next/no-img-element */
 import axios from "axios";
-import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-
-import Container from "../../components/UI/Container";
-import TextArea from "../../components/UI/TextArea";
-import Input from "../../components/UI/Input";
-import InputGroup from "../../components/UI/InputGroup";
-import FormGroup from "../../components/UI/FormGroup";
-import Button from "../../components/UI/Button";
-import { useAuth } from "../../contexts/AuthContext";
-import { useFormik } from "formik";
-import Radio from "../../components/UI/Radio";
-import useFetch from "../../hooks/useFetch";
 import { getCookie } from "cookies-next";
-import { findHighestQualification } from "../../util/findHighestQualification";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import Button from "../../components/UI/Button";
+import Container from "../../components/UI/Container";
+import FormGroup from "../../components/UI/FormGroup";
+import Input from "../../components/UI/Input";
+import Radio from "../../components/UI/Radio";
+import TextArea from "../../components/UI/TextArea";
+import { useAuth } from "../../contexts/AuthContext";
+import useFetch from "../../hooks/useFetch";
+const RichTextDisplay = dynamic(() => import('../../components/UI/RichTextDisplay.js'), { ssr: false })
 
 export default function JobDescription() {
   const router = useRouter();
@@ -108,9 +104,8 @@ export default function JobDescription() {
                   <p className="text-gray-800 text-sm font-medium">
                     Job Status:
                     <span
-                      className={`ml-2 py-1 px-1.5 rounded-full text-white ${
-                        job?.isOpen ? "bg-emerald-500" : "bg-rose-500"
-                      }`}
+                      className={`ml-2 py-1 px-1.5 rounded-full text-white ${job?.isOpen ? "bg-emerald-500" : "bg-rose-500"
+                        }`}
                     >
                       {job?.isOpen ? "Open" : "Closed"}
                     </span>
@@ -122,7 +117,7 @@ export default function JobDescription() {
               </p>
             </div>
 
-            <p>{job?.description}</p>
+            {job?.description && <RichTextDisplay value={job.description} />}
             <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 ">
               <li className="flex gap-2">
                 <svg

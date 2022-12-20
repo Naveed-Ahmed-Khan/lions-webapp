@@ -99,7 +99,7 @@ function Personal({ cities, areas, setCurrentStep }) {
       mobile: "",
       watsapp: "",
       city: "",
-      area: "",
+      // area: "",
       teachingModes: [],
       address: "",
     },
@@ -107,7 +107,6 @@ function Personal({ cities, areas, setCurrentStep }) {
     onSubmit: async (values) => {
       // console.log(values);
       localStorage.setItem("Personal", JSON.stringify(values));
-
       setCurrentStep((prev) => ++prev);
       localStorage.setItem("step", 2);
     },
@@ -134,9 +133,9 @@ function Personal({ cities, areas, setCurrentStep }) {
       formik.setFieldValue(
         "city", ""
       );
-      formik.setFieldValue(
-        "area", ""
-      );
+      // formik.setFieldValue(
+      //   "area", ""
+      // );
     }
   };
 
@@ -224,7 +223,7 @@ function Personal({ cities, areas, setCurrentStep }) {
               );
             })}
           </Select>
-          <Select
+          {/* <Select
             required
             disabled={!formik.values.city ? true : false}
             label="Area"
@@ -241,7 +240,7 @@ function Personal({ cities, areas, setCurrentStep }) {
                   </option>
                 );
               })}
-          </Select>
+          </Select> */}
         </FormGroup>
 
         {/* <div className="mt-5">

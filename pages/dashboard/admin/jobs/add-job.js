@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from "react";
 
-import ChevronDots from "../../../../components/UI/ChevronDots";
-import FormGroup from "../../../../components/UI/FormGroup";
-import Button from "../../../../components/UI/Button";
-import Container from "../../../../components/UI/Container";
-import { useRouter } from "next/router";
+import axios from "axios";
+import { getCookie } from "cookies-next";
 import { useFormik } from "formik";
+import dynamic from "next/dynamic";
+const RichTextEditor = dynamic(() => import('../../../../components/UI/RichTextEditor.js'), { ssr: false })
+import { useRouter } from "next/router";
+import Button from "../../../../components/UI/Button";
+import CheckBox from "../../../../components/UI/CheckBox";
+import ChevronDots from "../../../../components/UI/ChevronDots";
+import Container from "../../../../components/UI/Container";
+import FormGroup from "../../../../components/UI/FormGroup";
 import Input from "../../../../components/UI/Input";
+import Spinner from "../../../../components/UI/loader/Spinner";
 import Select from "../../../../components/UI/Select";
 import TextArea from "../../../../components/UI/TextArea";
 import { useAuth } from "../../../../contexts/AuthContext";
-import AccessDenied from "../../../../components/UI/AccessDenied";
-import axios from "axios";
-import CheckBox from "../../../../components/UI/CheckBox";
 import useFetch from "../../../../hooks/useFetch";
-import Spinner from "../../../../components/UI/loader/Spinner";
-import { getCookie } from "cookies-next";
+
 
 export default function AddJob() {
   const router = useRouter();
@@ -301,21 +303,22 @@ function Description({ setCurrentStep }) {
     initialValues: {
       title: "",
       budget: "",
-      description: "",
+      // description: "",
     },
     onSubmit: async (values) => {
       localStorage.setItem("Description", JSON.stringify(values));
 
       const student = JSON.parse(localStorage.getItem("Student"));
       const tutor = JSON.parse(localStorage.getItem("Tutor"));
-      const description = JSON.parse(localStorage.getItem("Description"));
+      const desc = JSON.parse(localStorage.getItem("Description"));
 
-      if (student && tutor && description) {
+      if (student && tutor && desc) {
         setError("");
         const data = {
           ...student,
           ...tutor,
-          ...description,
+          ...desc,
+          description,
           user_id: currentUser?._id,
           userModel: "Admin",
         };
@@ -368,7 +371,7 @@ function Description({ setCurrentStep }) {
             formik={formik}
           />
         </FormGroup>
-        <FormGroup>
+        {/* <FormGroup>
           <TextArea
             required
             label="Job Description"
@@ -376,17 +379,16 @@ function Description({ setCurrentStep }) {
             name="description"
             formik={formik}
           />
-        </FormGroup>
-        {/* <FormGroup>
+        </FormGroup> */}
+        <FormGroup>
           <RichTextEditor
             required
             label="Job Description"
             name="description"
-            // formik={formik}
             value={description}
             onChange={setDescription}
           />
-        </FormGroup> */}
+        </FormGroup>
         <div className="sm:pt-4 space-y-4 sm:space-y-0 sm:flex gap-8">
           {/* <Button
             onClick={() => {

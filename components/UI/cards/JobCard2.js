@@ -1,14 +1,16 @@
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React from "react";
 import { useAuth } from "../../../contexts/AuthContext";
-import { jobTimeStamp } from "../../../util/jobTimeStamp";
 import Anchor from "../Anchor";
 import Button from "../Button";
+const RichTextDisplay = dynamic(() => import('../RichTextDisplay.js'), { ssr: false })
 
 const JobCard2 = ({ applications, job, isSelected, isShortlisted }) => {
   const applicants = applications?.filter(app => app.job_id === job?._id).length
   const router = useRouter();
   const { currentUser } = useAuth();
+  console.log(job?.description)
   return (
     <div className="relative flex flex-col w-full overflow-hidden rounded-2xl shadow-xl">
       <div className="flex flex-col p-4 sm:p-8 space-y-4 bg-white border-b border-b-gray-300">
@@ -29,7 +31,7 @@ const JobCard2 = ({ applications, job, isSelected, isShortlisted }) => {
           </p>
         </div>
         <p className="mt-6 text-gray-700 h-24 overflow-y-auto">
-          {job?.description}
+          {job?.description && <RichTextDisplay value={job.description} />}
         </p>
         {router.pathname !== "/my-jobs" && (
           <div className="flex justify-between">

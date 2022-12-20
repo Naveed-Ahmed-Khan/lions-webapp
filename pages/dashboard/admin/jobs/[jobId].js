@@ -1,17 +1,12 @@
 import axios from "axios";
+import { getCookie } from "cookies-next";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
-
 import Container from "../../../../components/UI/Container";
-import TextArea from "../../../../components/UI/TextArea";
-import Input from "../../../../components/UI/Input";
-import InputGroup from "../../../../components/UI/InputGroup";
-import FormGroup from "../../../../components/UI/FormGroup";
-import Button from "../../../../components/UI/Button";
 import { useAuth } from "../../../../contexts/AuthContext";
-import { getCookie, getCookies } from "cookies-next";
 import { findHighestQualification } from "../../../../util/findHighestQualification";
+const RichTextDisplay = dynamic(() => import('../../../../components/UI/RichTextDisplay.js'), { ssr: false })
 
 /* export async function getStaticPaths() {
   const jobs = await axios.get(`${process.env.NEXT_PUBLIC_API}/get-jobs`);
@@ -140,7 +135,8 @@ export default function JobInAdmin({ job, applications }) {
                 Posted on {uploadedAt} by {job?.user_id?.name}
               </p>
             </div>
-            <p>{job?.description}</p>
+
+            {job?.description && <RichTextDisplay value={job.description} />}
             <ul className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4 ">
               <li className="flex gap-2">
                 <svg
