@@ -95,12 +95,27 @@ export default function Table({ header, body, status, actions }) {
                   }
                   key={data._id}
                   className={`border-b ${clickledRow === data._id
-                      ? "bg-gray-200 hover:bg-gray-200"
-                      : "bg-white hover:bg-gray-50"
+                    ? "bg-gray-200 hover:bg-gray-200"
+                    : "bg-white hover:bg-gray-50"
                     }`}
                 >
                   {header.map((item) => {
                     const { id, value, nestedValue, deepNested, image } = item;
+                    let finalValue = "-"
+
+                    if (value && nestedValue && deepNested) {
+                      if (data && data[value] && data[value][nestedValue]) {
+                        finalValue = data[value][nestedValue][deepNested]
+                      }
+                    } else if (value && nestedValue) {
+                      if (data && data[value]) {
+                        finalValue = data[value][nestedValue]
+                      }
+                    } else if (value) {
+                      if (data) {
+                        finalValue = data[value]
+                      }
+                    }
                     return (
                       <td
                         key={id}
@@ -116,13 +131,7 @@ export default function Table({ header, body, status, actions }) {
                             />
                           </div>
                         )}
-                        {!deepNested &&
-                          !nestedValue &&
-                          !image &&
-                          (data[value] || "-")}
-                        {!deepNested && nestedValue && data[value][nestedValue]}
-                        {deepNested && data[value][nestedValue][deepNested]}
-                        {/* {data[value][nestedValue]} */}
+                        {finalValue}
                       </td>
                     );
                   })}

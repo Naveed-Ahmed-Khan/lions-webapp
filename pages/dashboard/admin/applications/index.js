@@ -111,7 +111,7 @@ export default function Applications() {
     { id: 5, name: "Job Title", value: "job_id", nestedValue: "title" },
     // { id: 2, name: "City", value: "applicant_id", nestedValue: "city" },
     // { id: 3, name: "Phone", value: "applicant_id", nestedValue: "mobile" },
-    { id: 4, name: "WatsApp", value: "applicant_id", nestedValue: "watsapp" },
+    // { id: 4, name: "WatsApp", value: "applicant_id", nestedValue: "watsapp" },
     /* { id: 6, name: "Class", value: "job_id", nestedValue: "class" },
     { id: 7, name: "Subjects", value: "job_id", nestedValue: "subjects" }, */
     // { id: 8, name: "Location", value: "job_id", nestedValue: "location" },

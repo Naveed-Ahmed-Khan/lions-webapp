@@ -164,7 +164,7 @@ export default function Payments() {
   return (
     <div className="p-6 bg-white border border-gray-300 shadow-lg">
       <h2 className="text-primary-light text-4xl font-medium tracking-wide">
-        Applications
+        Payments
       </h2>
       <section className="mt-8">
         {isLoading ? (

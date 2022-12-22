@@ -20,7 +20,31 @@ const DashNavbar = ({ open, setOpen, setShowBackdrop }) => {
     <header className="sticky z-30 bg-white border-b border-b-gray-300">
       <nav className="p-5 ">
         <ul className={` `}>
-          <li className="flex justify-end items-center space-x-2">
+          <li className="flex justify-between items-center space-x-2">
+            <button
+              className="text-white outline-none md:hidden"
+              onClick={() => {
+                setOpen(true);
+                setShowBackdrop(true);
+              }}
+            >
+              {!open && (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-gray-800"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              )}
+            </button>
             {navigation.map((item) => (
               <Link key={item.title} href={item.path}>
                 <a

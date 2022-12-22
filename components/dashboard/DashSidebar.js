@@ -33,8 +33,7 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
     <>
       {/* Mobile Sidebar */}
       <div
-        className={`md:hidden fixed flex flex-col z-[200] w-full max-w-fit 
-        bg-gradient-to-br from-green-700 via-green-600 to-green-700
+        className={`md:hidden fixed flex flex-col z-[200] w-full max-w-fit bg-white
         ${open === true
             ? "translate-x-0 opacity-100"
             : "-translate-x-full opacity-0"
@@ -98,8 +97,8 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                         >
                           <div
                             className={`px-3 py-[14px] ${router.pathname === path
-                                ? "text-white bg-primary-light"
-                                : "text-gray-700"
+                              ? "text-white bg-primary-light"
+                              : "text-gray-700"
                               } rounded flex items-center gap-3 hover:text-white hover:bg-primary-light transition-all duration-150`}
                           >
                             <p className="text-base">{name}</p>
@@ -162,8 +161,8 @@ const DashSidebar = ({ open, setOpen, setShowBackdrop, showBackdrop }) => {
                             >
                               <div
                                 className={`px-3 py-[14px] ${router.pathname === path
-                                    ? "text-white bg-primary-light"
-                                    : "text-gray-700"
+                                  ? "text-white bg-primary-light"
+                                  : "text-gray-700"
                                   } rounded flex items-center gap-3 hover:text-white hover:bg-primary-light transition-all duration-150`}
                               >
                                 <p className="text-base">{name}</p>

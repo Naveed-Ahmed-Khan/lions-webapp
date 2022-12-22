@@ -228,7 +228,7 @@ export default function Pending() {
   return (
     <div className="p-6 bg-white border border-gray-300 shadow-lg">
       <h2 className="text-primary-light text-4xl font-medium tracking-wide">
-        Applications
+        Pending
       </h2>
       <section className="mt-8">
         {isLoading ? (
