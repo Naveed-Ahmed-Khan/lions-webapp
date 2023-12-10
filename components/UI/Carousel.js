@@ -1,14 +1,29 @@
-
 import Image from "next/image";
 import React, { useState } from "react";
 
 const Carousel = ({ achievements }) => {
   console.log(achievements);
   // const images = achievements.filter((image) => image?.type);
-  const images = achievements.filter((image) => image?.type === "achievement");
-  console.log(images);
+  // const images = achievements.filter((image) => image?.type === "achievement");
   const [currentImage, setCurrentImage] = useState(0);
   // console.log(currentImage);
+  const images = [
+    {
+      _id: "6318a1460ade2ab9c641b931",
+      title: "Ahmed Jamal",
+      desc: "Phd Topper",
+      image: "/images/grad-1.jpg",
+      type: "achievement",
+    },
+    {
+      _id: "6318a1460ade2ab9c641b932",
+      title: "Shafaqat Ali",
+      desc: "Gold Medalist",
+      image: "/images/medalist.jpg",
+      type: "achievement",
+    },
+  ];
+  console.log(images);
 
   return (
     <div className="group relative flex items-center justify-center w-full">
@@ -42,7 +57,7 @@ const Carousel = ({ achievements }) => {
         <Image
           priority
           layout="fill"
-          className="w-full h-full object-contain scale-100 group-hover:scale-110 transition-all duration-300 ease-out"
+          className="w-full h-full object-cover scale-100 group-hover:scale-110 transition-all duration-300 ease-out"
           src={images[currentImage]?.image}
           alt={images[currentImage]?.title}
         />
