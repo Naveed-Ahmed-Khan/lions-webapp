@@ -130,11 +130,11 @@ export default function JobFilters({
 
   const submitHandler = (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     const queryParams = createQueryString();
     queryParams && getJobs({ ...queryParams, page: 1 });
     setOpenFilter && setOpenFilter(false);
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   return (
@@ -167,7 +167,7 @@ export default function JobFilters({
                   }}
                 />
                 <button
-                  className="group absolute py-[.95rem]  px-1 sm:px-2 right-0 top-7 sm:top-0 bg-white"
+                  className="group absolute py-[.80rem]  px-1.5 sm:px-2 right-0.5 top-0.5 bg-white"
                   onClick={() => {
                     setSearch("");
                   }}
@@ -289,8 +289,9 @@ export default function JobFilters({
               </FormGroup>
 
               <ul
-                className={`px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 overflow-auto ${selectedCity && "h-60 "
-                  }`}
+                className={`px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 overflow-auto ${
+                  selectedCity && "h-60 "
+                }`}
               >
                 {allAreas.map((area) => {
                   const { city_id } = area;
@@ -334,7 +335,7 @@ export default function JobFilters({
           </Button>
           <Button
             type={"submit"}
-          // onClick={() => setIsLoading(true)}
+            // onClick={() => setIsLoading(true)}
           >
             <p>Show results</p>
           </Button>

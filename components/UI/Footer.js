@@ -30,9 +30,9 @@ const Footer = ({ classes }) => {
         { title: "Queta", href: "tutors?city=Queta" },
       ],
     },
-    /* {
+    {
       id: 2,
-      category: "Classes",
+      category: "Grades",
 
       items: [
         { title: "Junior(1-5)", href: "tutors?class=Junior" },
@@ -42,7 +42,7 @@ const Footer = ({ classes }) => {
         { title: "Bachelors", href: "tutors?class=Bachelors" },
         { title: "Masters", href: "tutors?class=Masters" },
       ],
-    }, */
+    },
   ];
 
   return (
@@ -100,7 +100,7 @@ const Footer = ({ classes }) => {
                 </div>
               );
             })}
-            <div className="">
+            {/* <div className="">
               <p className="font-medium tracking-wide text-white">Class</p>
               <ul className="mt-2 space-y-2">
                 {classes?.map((item) => {
@@ -117,7 +117,7 @@ const Footer = ({ classes }) => {
                   );
                 })}
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="flex flex-col justify-between pt-5 pb-10 border-t border-deep-purple-200 sm:flex-row">

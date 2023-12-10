@@ -11,7 +11,7 @@ const TutorCard = ({ tutorPic, tutor }) => {
     <div className="flex flex-col mx-auto overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
       <div>
         <Image
-          height={"100%"}
+          height={"80px"}
           width={"100%"}
           layout="responsive"
           className="object-cover object-top"
@@ -20,8 +20,9 @@ const TutorCard = ({ tutorPic, tutor }) => {
         />
 
         <div
-          className={`flex items-center justify-center px-6 py-3 ${tutor?.isVerified ? "bg-primary" : "bg-gray-500"
-            } `}
+          className={`flex items-center justify-center px-6 py-3 ${
+            tutor?.isVerified ? "bg-primary" : "bg-gray-500"
+          } `}
         >
           {tutor?.isVerified ? (
             <svg
@@ -30,7 +31,7 @@ const TutorCard = ({ tutorPic, tutor }) => {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth={2.5}
+              strokeWidth={1.5}
             >
               <path
                 strokeLinecap="round"
@@ -43,7 +44,7 @@ const TutorCard = ({ tutorPic, tutor }) => {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              strokeWidth={2}
+              strokeWidth={1.5}
               stroke="currentColor"
               className="w-6 h-6 text-white"
             >
@@ -55,7 +56,7 @@ const TutorCard = ({ tutorPic, tutor }) => {
             </svg>
           )}
 
-          <h2 className="mx-3 text-lg tracking-wide font-semibold text-white">
+          <h2 className="mx-3 text-lg tracking-wide text-white">
             {tutor?.isVerified ? "Verified" : "Unverified"}
           </h2>
         </div>
@@ -196,7 +197,7 @@ const TutorCard = ({ tutorPic, tutor }) => {
             </div>
           </div>
 
-          <div className="flex w-full items-center justify-between mt-4 mb-2">
+          <div className="flex w-full items-center justify-between pt-8 mb-0">
             <div className="w-full">
               <Anchor button href={`/profile/${tutor?.profileId}`}>
                 View Profile

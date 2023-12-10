@@ -5,7 +5,7 @@ import React from "react";
 import {
   Collapsable,
   Gallery,
-  Simple
+  Simple,
 } from "../../components/EditProfile/EditSections";
 import Container from "../../components/UI/Container";
 import Spinner from "../../components/UI/loader/Spinner";
@@ -64,9 +64,12 @@ export async function getServerSideProps({ params }) {
 }
 
 export default function Profile({ tutor }) {
-
   const APP_API = `${process.env.NEXT_PUBLIC_API}/get-myapplications/${tutor?._id}`;
-  const { data: applications, isLoading: appLoading, error } = useFetch(APP_API, false);
+  const {
+    data: applications,
+    isLoading: appLoading,
+    error,
+  } = useFetch(APP_API, false);
 
   function addProfileJsonLd() {
     return {
@@ -140,7 +143,7 @@ export default function Profile({ tutor }) {
             />
           </div>
           <div className="mt-4 flex items-end gap-2">
-            <h2 className="text-gray-700 text-2xl sm:text-3xl font-medium">
+            <h2 className="text-gray-700 text-center text-2xl sm:text-3xl font-medium">
               {tutor?.name}
             </h2>
             {tutor?.isVerified && (
@@ -209,52 +212,55 @@ export default function Profile({ tutor }) {
           {/*  <div className="block sm:hidden">
             <Button fullwidth>Apply Now</Button>
           </div> */}
-          {appLoading ? <Spinner md /> : <section className="bg-white md:bg-neutral-100 rounded md:p-8">
-            <div className="mb-8 md:flex items-center justify-between">
-              <h2 className="text-xl sm:text-2xl text-primary font-medium">
-                Feedbacks
-              </h2>
-            </div>
-            <div className="space-y-6">
-              {applications?.map((application) => {
-                const {
-                  feedback: { rating, comment },
-                  job_id: {
-                    user_id: { name, profilePic },
-                  },
-                } = application;
+          {appLoading ? (
+            <Spinner md />
+          ) : (
+            <section className="bg-white md:bg-neutral-100 rounded md:p-8">
+              <div className="mb-8 md:flex items-center justify-between">
+                <h2 className="text-xl sm:text-2xl text-primary font-medium">
+                  Feedbacks
+                </h2>
+              </div>
+              <div className="space-y-6">
+                {applications?.map((application) => {
+                  const {
+                    feedback: { rating, comment },
+                    job_id: {
+                      user_id: { name, profilePic },
+                    },
+                  } = application;
 
-                return (
-                  <div key={application._id}>
-                    {application?.feedback?.comment && (
-                      <div className="flex flex-col gap-8">
-                        <div className=" flex flex-col gap-4 md:bg-white bg-neutral-100 rounded py-4 px-4 md:px-8">
-                          <div className="flex gap-4 items-center">
-                            <Image
-                              height={50}
-                              width={50}
-                              objectFit={"cover"}
-                              className="rounded-full"
-                              src={profilePic}
-                              alt={""}
-                            />
-                            <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
-                              {name}
-                            </h3>
+                  return (
+                    <div key={application._id}>
+                      {application?.feedback?.comment && (
+                        <div className="flex flex-col gap-8">
+                          <div className=" flex flex-col gap-4 md:bg-white bg-neutral-100 rounded py-4 px-4 md:px-8">
+                            <div className="flex gap-4 items-center">
+                              <Image
+                                height={50}
+                                width={50}
+                                objectFit={"cover"}
+                                className="rounded-full"
+                                src={profilePic}
+                                alt={""}
+                              />
+                              <h3 className="text-gray-800 md:text-gray-700 text-lg font-semibold">
+                                {name}
+                              </h3>
+                            </div>
+                            <Rating isEditable={false} rating={rating} />
+                            <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
+                              {comment}
+                            </p>
                           </div>
-                          <Rating isEditable={false} rating={rating} />
-                          <p className="text-sm sm:text-base text-gray-700 md:text-gray-600">
-                            {comment}
-                          </p>
                         </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </section>}
-
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
         </section>
       </main>
     </Container>

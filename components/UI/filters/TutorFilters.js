@@ -132,7 +132,6 @@ export default function TutorFilters({
         shallow: false,
       }
     );
-
   };
 
   const submitHandler = (e) => {
@@ -174,7 +173,7 @@ export default function TutorFilters({
                   }}
                 />
                 <button
-                  className="group absolute py-[.95rem]  px-1 sm:px-2 right-0 top-7 sm:top-0 bg-white"
+                  className="group absolute py-[.80rem] px-1.5 sm:px-2 right-0 top-0.5 bg-white"
                   onClick={() => {
                     setSearch("");
                   }}
@@ -298,8 +297,9 @@ export default function TutorFilters({
               </FormGroup>
 
               <ul
-                className={`px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 overflow-auto ${selectedCity && "h-60 "
-                  }`}
+                className={`px-2 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-4 mt-4 overflow-auto ${
+                  selectedCity && "h-60 "
+                }`}
               >
                 {allAreas.map((area) => {
                   const { city_id } = area;
@@ -341,8 +341,9 @@ export default function TutorFilters({
           >
             <p>Reset</p>
           </Button>
-          <Button type={"submit"}
-          // onClick={() => setIsLoading(true)}
+          <Button
+            type={"submit"}
+            // onClick={() => setIsLoading(true)}
           >
             <p>Show results</p>
           </Button>
